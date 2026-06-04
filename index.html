@@ -273,7 +273,7 @@ html, body { height: 100%; margin: 0; }
 .dc-card > div > div > div:nth-child(3) * { max-width: 100% !important; min-width: 0 !important; }
 .dc-card > div > div > div:nth-child(3) > div:last-child { margin-top: auto !important; }
 /* RIGHT navbar: fixed sidebar (344 content + 36 padding = 380), no clip */
-.dc-card > div > div > div:nth-child(5) { width: 380px !important; overflow-y: auto !important; }
+.dc-card > div > div > div:nth-child(5) { width: 345px !important; overflow-y: auto !important; }
 /* CENTER: scrolls vertically; content fills the column and shrinks with it (no fixed 600px) */
 .dc-card > div > div > div:nth-child(4) { overflow-y: auto !important; overflow-x: hidden !important; }
 .dc-card > div > div > div:nth-child(4) * { max-width: 100% !important; }
@@ -339,7 +339,7 @@ html, body { height: 100%; margin: 0; }
 /* == Vela AI assistant panel (v2 design) == */
 [data-vela]{ box-sizing:border-box !important; position:fixed !important;
   top:22px !important; right:22px !important; bottom:22px !important; left:auto !important;
-  width:374px !important; height:auto !important; max-height:none !important;
+  width:345px !important; height:auto !important; max-height:none !important;
   flex:none !important; min-width:0 !important; z-index:60 !important;
   padding:0 !important; overflow:hidden !important;
   border:1px solid rgba(255,255,255,.6) !important; border-radius:26px !important;
@@ -348,9 +348,9 @@ html, body { height: 100%; margin: 0; }
   backdrop-filter:blur(26px) saturate(1.7) !important;
   box-shadow:0 30px 72px rgba(18,30,78,.22) !important;
   font-family:var(--font-primary); color:#07154d; }
-[data-vela].vela-collapsed{ width:374px !important; }
+[data-vela].vela-collapsed{ width:345px !important; }
 /* full-screen glass background layers (extended) */
-.chk-main{ box-sizing:border-box !important; padding-right:0 !important; }
+.chk-main{ box-sizing:border-box !important; padding-right:385px !important; }
 /* single unified full-screen glass background; old layered fills hidden */
 .chk-glass-grad, .chk-blob-a, .chk-blob-b{ display:none !important; }
 .chk-root{
