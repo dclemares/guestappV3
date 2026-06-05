@@ -602,10 +602,10 @@ html, body { height: 100%; margin: 0; }
         '<button class="mini-button">'+btnLabel+'</button>'+
       '</div>';
   }
-  function insight(chip,reason,strong,text){
+  function insight(strong,text,actionHtml){
     return '<article class="insight-card">'+
-        '<div class="insight-top"><span class="insight-chip">'+chip+'</span><span class="insight-reason">'+reason+'</span></div>'+
         '<p class="recommendation-text"><strong>'+strong+'</strong>'+text+'</p>'+
+        actionHtml+
       '</article>';
   }
 
@@ -613,29 +613,30 @@ html, body { height: 100%; margin: 0; }
   var IC_LOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="6" y="9" width="12" height="11" rx="2"/><path d="M9 9V6.7a3 3 0 0 1 6 0V9"/><path d="M12 13v3"/></svg>';
   var IC_CAR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 16h14l-1.6-5.2A2.4 2.4 0 0 0 15.1 9H8.9a2.4 2.4 0 0 0-2.3 1.8L5 16Z"/><path d="M4 16v3M20 16v3M7 19h1.5M15.5 19H17"/><path d="M7.5 13h9"/></svg>';
   var IC_CLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 1.5"/><path d="M8 4.5 6.5 3M16 4.5 17.5 3"/></svg>';
-  var IC_DOC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>';
-  var IC_CLK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
 
   var CONTENT =
     '<header class="vela-hero">'+
       '<div class="vela-title-row"><h1 class="vela-title">Vela</h1><span class="vela-badge">Your AI assistant</span></div>'+
-      '<p class="vela-intro">I can help you fill in your details, explain why each field is needed, and get you checked in faster.</p>'+
+      '<p class="vela-intro">I can help with arrival, property details, transport, and recommendations for a smoother stay.</p>'+
     '</header>'+
     '<div class="vela-divider"></div>'+
     '<div class="vela-scroll">'+
       '<section class="recommendations">'+
         '<header class="recommendations-header">'+
           '<div class="recommendations-title">'+
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v2M12 19v2M5 5l1.4 1.4M17.6 17.6 19 19M3 12h2M19 12h2M5 19l1.4-1.4M17.6 6.4 19 5"/><circle cx="12" cy="12" r="3.4"/></svg>'+
-            'Smart tips'+
+            '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8.2 2.7c.48 2.88 2.33 4.73 5.2 5.2-2.87.49-4.72 2.33-5.2 5.22C7.72 10.23 5.87 8.38 3 7.9c2.87-.47 4.72-2.32 5.2-5.2Z" fill="currentColor"/><path d="M14.9 10.8c.25 1.52 1.22 2.49 2.74 2.74-1.52.26-2.49 1.23-2.74 2.75-.25-1.52-1.23-2.5-2.75-2.75 1.52-.25 2.5-1.22 2.75-2.74Z" fill="currentColor"/></svg>'+
+            'Vela recommends'+
           '</div>'+
-          '<p class="recommendations-subtitle">Suggestions to complete your registration without mistakes.</p>'+
         '</header>'+
         '<div class="insight-list">'+
-          insight('Heads up','Spanish nationality','Add your second last name.',' Spain requires both surnames on official guest records.')+
-          insight('Tip','Faster check-in','Use your passport.',' Pick the same document you\'ll show on arrival to avoid delays.')+
-          card(IC_DOC,'What documents work?','Passport, ID or license','','Ask')+
-          card(IC_CLK,'When is this due?','Before arrival day','','Ask')+
+          insight('Review the property guidebook.',' It includes house rules, access details, and key property information.',
+            card(IC_BOOK,'Property guidebook','Key information','','Open'))+
+          insight('Early access may be useful.',' Your arrival time fits an early check-in so you can settle in calmly.',
+            card(IC_LOCK,'Early check-in','Access from 11:00','<span class="price">€25</span>','Add'))+
+          insight('If you are arriving from the airport.',' A direct transfer can avoid waits and connections on the way to the property.',
+            card(IC_CAR,'Airport transfer','Direct ride','<span class="price">€45</span>','Book'))+
+          insight('More time may help on departure day.',' A late check-out gives you extra time to pack and leave without rushing.',
+            card(IC_CLOCK,'Late check-out','Stay until 14:00','<span class="price">€30</span>','Add'))+
         '</div>'+
       '</section>'+
     '</div>'+
@@ -890,7 +891,7 @@ html, body { height: 100%; margin: 0; }
 /* == Landing V2: clean left navbar overlay (ported from registration) == */
 (function(){
   var NAV='<div class="brand">'+
-      '<div class="brand-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></div>'+
+      '<div class="brand-logo"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 16.8 13.2 22.5 24.5 9.8"/></svg></div>'+
       '<div class="brand-name">Casa del Mar</div>'+
     '</div>'+
     '<nav class="nav-menu">'+
