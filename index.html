@@ -1,8 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>5.2 _ Glass _ replica of 5.1 _static_</title><style>@font-face { font-family: ProximaNova; src: url("data:text/plain;base64,ZmlsZSBub3QgZm91bmQK") format("woff2"), url("data:text/plain;base64,ZmlsZSBub3QgZm91bmQK") format("woff"); font-weight: 300; font-style: normal; font-display: swap; }
-@font-face { font-family: ProximaNova; src: url("data:text/plain;base64,ZmlsZSBub3QgZm91bmQK") format("woff2"), url("data:text/plain;base64,ZmlsZSBub3QgZm91bmQK") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: ProximaNova; src: url("data:text/plain;base64,ZmlsZSBub3QgZm91bmQK") format("woff2"), url("data:text/plain;base64,ZmlsZSBub3QgZm91bmQK") format("woff"); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: ProximaNova; src: url("data:text/plain;base64,ZmlsZSBub3QgZm91bmQK") format("woff2"), url("data:text/plain;base64,ZmlsZSBub3QgZm91bmQK") format("woff"); font-weight: 600; font-style: normal; font-display: swap; }
-@font-face { font-family: ProximaNova; src: url("data:text/plain;base64,ZmlsZSBub3QgZm91bmQK") format("woff2"), url("data:text/plain;base64,ZmlsZSBub3QgZm91bmQK") format("woff"); font-weight: 700; font-style: normal; font-display: swap; }
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Guestapp V3</title><style>
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
@@ -306,6 +302,29 @@ html, body { height: 100%; margin: 0; }
 /* on small screens hide the left navbar too so the center never gets squeezed */
 @media (max-width: 767px) {
   .dc-card > div > div > div:nth-child(3) { display: none !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) { margin-left:0 !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(3) { margin-left:0 !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4),
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) { min-height:136px !important; height:auto !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2),
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2),
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > div:nth-child(2) { width: calc(100% - 64px) !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1),
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > div:nth-child(2) > div:nth-child(1) { min-height:118px !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1),
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) { display:grid !important; grid-template-columns:1fr !important; row-gap:10px !important; align-items:start !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1),
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(6) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) { width:auto !important; min-width:0 !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1),
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) { display:grid !important; grid-template-columns:34px minmax(0,1fr) auto !important; column-gap:10px !important; align-items:center !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) { display:block !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) { display:grid !important; grid-template-columns:34px minmax(0,1fr) auto !important; column-gap:10px !important; align-items:center !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div > div:nth-child(2),
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div > div:nth-child(3) { width:auto !important; min-width:0 !important; margin-left:0 !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div > div:nth-child(2) > div { max-width:100% !important; overflow:hidden !important; white-space:nowrap !important; text-overflow:ellipsis !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2),
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) { width:auto !important; min-width:0 !important; margin-left:0 !important; }
+  .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div { max-width:100% !important; overflow:hidden !important; white-space:nowrap !important; text-overflow:ellipsis !important; }
 }
 
 /* == Ticket SVG state cards (user design) == */
@@ -337,21 +356,27 @@ html, body { height: 100%; margin: 0; }
 /* VELA-INJECT */
 
 /* == Vela AI assistant panel (v2 design) == */
+@keyframes vela-rise{ from{ opacity:0; transform:translateY(34px) scale(.985); } to{ opacity:1; transform:translateY(0) scale(1); } }
 [data-vela]{ box-sizing:border-box !important; position:fixed !important;
-  top:22px !important; right:22px !important; bottom:22px !important; left:auto !important;
-  width:345px !important; height:auto !important; max-height:none !important;
+  top:auto !important; right:22px !important; bottom:0 !important; left:auto !important;
+  width:345px !important; height:calc(100vh - 22px) !important; block-size:calc(100vh - 22px) !important; max-height:none !important;
   flex:none !important; min-width:0 !important; z-index:60 !important;
   padding:0 !important; overflow:hidden !important;
-  border:1px solid rgba(255,255,255,.6) !important; border-radius:26px !important;
+  border:1px solid rgba(255,255,255,.6) !important; border-radius:26px 26px 0 0 !important;
   background:rgba(248,250,255,.80) !important;
   -webkit-backdrop-filter:blur(26px) saturate(1.7) !important;
   backdrop-filter:blur(26px) saturate(1.7) !important;
   box-shadow:0 30px 72px rgba(18,30,78,.22) !important;
+  transform-origin:bottom right !important; animation:vela-rise .38s cubic-bezier(.22,.7,.25,1) both !important;
   font-family:var(--font-primary); color:#07154d; }
 [data-vela].vela-collapsed{ width:345px !important; }
+.dc-card > div > div.chk-root > div[data-vela]:nth-child(5){ height:calc(100vh - 22px) !important; block-size:calc(100vh - 22px) !important; }
 /* full-screen glass background layers (extended) */
 .chk-main{ box-sizing:border-box !important; padding-right:0 !important; }
-.chk-main > div:nth-child(4){ box-sizing:border-box !important; padding-right:399px !important; }
+.chk-main > div:nth-child(4){ box-sizing:border-box !important; padding-right:402px !important; }
+@media (max-width: 1279px) {
+  .chk-main > div:nth-child(4){ padding-right:0 !important; }
+}
 /* single unified full-screen glass background; old layered fills hidden */
 .chk-glass-grad, .chk-blob-a, .chk-blob-b{ display:none !important; }
 .chk-root{
@@ -370,10 +395,10 @@ html, body { height: 100%; margin: 0; }
 .vela-object{ position:relative; width:100%; height:100%; overflow:hidden; }
 .vela-shape{ display:none !important; }
 
-.vela-avatar{ position:absolute; top:24px; left:24px; width:48px; height:48px; border-radius:50%;
+.vela-avatar{ position:absolute; top:24px; left:24px; width:44px; height:44px; border-radius:50%;
   background:linear-gradient(145deg,#1047ff 0%,#5d7cff 100%); display:flex; align-items:center; justify-content:center;
-  box-shadow:0 12px 28px rgba(18,75,255,.25); z-index:3; cursor:default; }
-.vela-avatar > svg{ width:31px; height:31px; color:#fff; transition:opacity .3s ease; }
+  box-shadow:0 10px 24px rgba(18,75,255,.22); z-index:3; cursor:default; }
+.vela-avatar > svg{ width:28px; height:28px; color:#fff; transition:opacity .3s ease; }
 .vela-avatar:hover > svg{ opacity:1; }
 .online-dot{ position:absolute; right:-1px; bottom:2px; width:13px; height:13px; border-radius:50%;
   background:#16c875; border:2px solid #fff; z-index:2; }
@@ -383,58 +408,58 @@ html, body { height: 100%; margin: 0; }
   color:#fff; font:800 14px/1 var(--font-primary); letter-spacing:-2px; white-space:nowrap; }
 .vela-avatar:hover .vela-chev{ opacity:.9; transform:translateX(0); }
 
-.vela-content{ position:absolute; top:24px; bottom:20px; left:24px; right:22px; z-index:1;
+.vela-content{ position:absolute; top:24px; bottom:24px; left:24px; right:22px; z-index:1;
   display:flex; flex-direction:column; min-height:0; }
-.vela-scroll{ flex:1; min-height:0; overflow-y:auto; padding-right:4px; padding-bottom:14px; scrollbar-width:none; }
+.vela-scroll{ flex:1; min-height:0; overflow-y:auto; padding-right:4px; padding-bottom:12px; scrollbar-width:none; }
 .vela-scroll::-webkit-scrollbar{ display:none; }
 
-.vela-hero{ margin-bottom:26px; padding-top:1px; }
-.vela-title-row{ display:flex; align-items:center; gap:11px; margin-bottom:15px; min-height:48px; padding-left:60px; }
-.vela-title{ margin:0; font-size:23px; line-height:1; font-weight:700; letter-spacing:-.055em; color:#07154d; }
-.vela-badge{ height:25px; padding:0 10px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
-  background:rgba(18,75,255,.08); color:#124bff; font-size:11.5px; line-height:1; font-weight:700; letter-spacing:-.015em; }
-.vela-kicker{ margin:0 0 8px; font-size:14px; line-height:1.35; font-weight:600; letter-spacing:-.025em; color:#07154d; }
-.vela-intro{ margin:0; max-width:382px; font-size:14px; line-height:1.58; font-weight:500; letter-spacing:-.018em; color:#354170; }
-.vela-divider{ height:1px; width:100%; margin:0 0 22px; background:#d5def0; }
+.vela-hero{ flex:0 0 auto; margin-bottom:0; padding-top:0; }
+.vela-title-row{ display:flex; align-items:center; gap:10px; margin-bottom:13px; min-height:44px; padding-left:56px; }
+.vela-title{ margin:0; font-size:21px; line-height:1; font-weight:700; letter-spacing:-.035em; color:#07154d; }
+.vela-badge{ height:23px; padding:0 9px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
+  background:rgba(18,75,255,.075); color:#124bff; font-size:11px; line-height:1; font-weight:700; letter-spacing:-.01em; }
+.vela-kicker{ margin:0 0 7px; font-size:13.2px; line-height:1.34; font-weight:650; letter-spacing:-.015em; color:#07154d; }
+.vela-intro{ margin:0; max-width:280px; font-size:12.6px; line-height:1.5; font-weight:500; letter-spacing:-.01em; color:#48547f; }
+.vela-divider{ flex:0 0 auto; height:1px; width:100%; margin:18px 0; background:rgba(203,214,236,.82); }
 
-.recommendations-header{ margin-bottom:17px; }
-.recommendations-title{ display:flex; align-items:center; gap:12px; margin-bottom:8px; font-size:14px; line-height:1;
-  font-weight:700; letter-spacing:-.02em; color:#07154d; }
-.recommendations-title svg{ width:15px; height:15px; color:#124bff; flex:0 0 auto; }
-.recommendations-subtitle{ margin:0; padding-left:27px; font-size:12.5px; line-height:1.45; font-weight:500; letter-spacing:-.015em; color:#5a6595; }
+.recommendations-header{ margin-bottom:14px; }
+.recommendations-title{ display:flex; align-items:center; gap:10px; margin-bottom:7px; font-size:13.2px; line-height:1;
+  font-weight:700; letter-spacing:-.012em; color:#07154d; }
+.recommendations-title svg{ width:14px; height:14px; color:#124bff; flex:0 0 auto; }
+.recommendations-subtitle{ margin:0; padding-left:24px; font-size:11.8px; line-height:1.42; font-weight:500; letter-spacing:-.008em; color:#65709a; }
 
-.insight-list{ display:flex; flex-direction:column; gap:12px; }
-.insight-card{ position:relative; padding:12px; border:1px solid rgba(213,224,246,.95); border-radius:15px;
-  background:linear-gradient(180deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.44) 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.84),0 8px 18px rgba(23,42,96,.035); }
-.insight-card::after{ content:""; position:absolute; top:12px; right:12px; width:6px; height:6px; border-radius:50%; background:rgba(18,75,255,.28); }
-.insight-top{ display:flex; align-items:center; gap:8px; margin-bottom:8px; padding-right:16px; }
-.insight-chip{ height:22px; padding:0 9px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
-  background:rgba(18,75,255,.075); color:#124bff; font-size:10.5px; line-height:1; font-weight:700; letter-spacing:-.012em; white-space:nowrap; }
-.insight-reason{ font-size:11px; line-height:1; font-weight:700; letter-spacing:-.012em; color:#707aa8; white-space:nowrap; }
-.recommendation-text{ margin:0 0 11px; padding-right:8px; font-size:13px; line-height:1.46; font-weight:500; letter-spacing:-.018em; color:#263269; }
-.recommendation-text strong{ display:block; margin-bottom:4px; font-size:13px; line-height:1.28; font-weight:600; color:#07154d; }
+.insight-list{ display:flex; flex-direction:column; gap:10px; }
+.insight-card{ position:relative; padding:10px; border:1px solid rgba(214,224,246,.74); border-radius:13px;
+  background:rgba(255,255,255,.50);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.76),0 6px 16px rgba(23,42,96,.028); }
+.insight-card::after{ display:none; }
+.insight-top{ display:flex; align-items:center; gap:7px; margin-bottom:7px; padding-right:0; }
+.insight-chip{ height:20px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
+  background:rgba(18,75,255,.07); color:#124bff; font-size:10px; line-height:1; font-weight:700; letter-spacing:-.008em; white-space:nowrap; }
+.insight-reason{ font-size:10.5px; line-height:1; font-weight:700; letter-spacing:-.008em; color:#7881aa; white-space:nowrap; }
+.recommendation-text{ margin:0 0 10px; padding-right:2px; font-size:12.2px; line-height:1.44; font-weight:500; letter-spacing:-.01em; color:#303b68; }
+.recommendation-text strong{ display:block; margin-bottom:3px; font-size:12.4px; line-height:1.24; font-weight:650; color:#07154d; }
 
-.action-card{ width:100%; min-height:50px; border:1px solid #d8e2f5; border-radius:11px; background:rgba(255,255,255,.64);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 2px 8px rgba(23,42,96,.025);
-  display:flex; align-items:center; padding:8px 10px 8px 11px; gap:12px; }
-.item-icon{ width:27px; height:27px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#14266f; background:rgba(235,242,255,.92); flex:0 0 auto; }
-.item-icon svg{ width:18px; height:18px; stroke-width:1.85; }
+.action-card{ width:100%; min-height:46px; border:1px solid rgba(216,226,245,.86); border-radius:10px; background:rgba(255,255,255,.66);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.76);
+  display:flex; align-items:center; padding:7px 8px 7px 9px; gap:9px; }
+.item-icon{ width:25px; height:25px; border-radius:7px; display:flex; align-items:center; justify-content:center; color:#14266f; background:rgba(235,242,255,.86); flex:0 0 auto; }
+.item-icon svg{ width:16.5px; height:16.5px; stroke-width:1.85; }
 .item-copy{ flex:1; min-width:0; }
-.item-title{ display:block; font-size:13.5px; line-height:1.1; font-weight:700; letter-spacing:-.02em; color:#07154d; }
-.item-subtitle{ display:block; margin-top:4px; font-size:11.5px; line-height:1; font-weight:500; letter-spacing:-.02em; color:#4f5d91; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.price{ margin-left:auto; padding-right:6px; font-size:12.5px; font-weight:700; color:#15225f; white-space:nowrap; }
-.mini-button{ appearance:none; height:31px; min-width:62px; border:1px solid #d3def4; border-radius:8px; background:rgba(255,255,255,.72);
-  color:#124bff; font-size:12.5px; line-height:1; font-weight:700; letter-spacing:-.02em; cursor:pointer; box-shadow:inset 0 1px 0 rgba(255,255,255,.82); }
+.item-title{ display:block; font-size:12.6px; line-height:1.1; font-weight:700; letter-spacing:-.012em; color:#07154d; }
+.item-subtitle{ display:block; margin-top:3px; font-size:11px; line-height:1; font-weight:500; letter-spacing:-.012em; color:#5a6695; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.price{ margin-left:auto; padding-right:4px; font-size:12px; font-weight:700; color:#15225f; white-space:nowrap; }
+.mini-button{ appearance:none; height:29px; min-width:58px; border:1px solid #d3def4; border-radius:8px; background:rgba(255,255,255,.74);
+  color:#124bff; font-size:11.8px; line-height:1; font-weight:700; letter-spacing:-.012em; cursor:pointer; box-shadow:inset 0 1px 0 rgba(255,255,255,.82); }
 
-.vela-chatbar{ flex:0 0 auto; width:100%; height:58px; margin-top:12px; padding:8px 9px 8px 18px; border:1px solid #d4dff4; border-radius:11px;
+.vela-chatbar{ flex:0 0 auto; width:100%; height:50px; margin-top:10px; padding:7px 8px 7px 14px; border:1px solid #d4dff4; border-radius:11px;
   background:rgba(255,255,255,.82); backdrop-filter:blur(8px);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 24px rgba(23,42,96,.07);
-  display:flex; align-items:center; gap:12px; z-index:5; }
-.vela-chatbar input{ flex:1; min-width:0; height:100%; border:0; outline:0; background:transparent; font:inherit; font-size:16px; line-height:1; font-weight:500; letter-spacing:-.02em; color:#17245d; }
-.vela-chatbar input::placeholder{ color:#8b95bf; }
-.send-button{ width:40px; height:40px; border:0; border-radius:9px; background:#124bff; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 22px rgba(18,75,255,.25); cursor:pointer; flex:0 0 auto; }
-.send-button svg{ width:19px; height:19px; stroke-width:2; }
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 8px 20px rgba(23,42,96,.055);
+  display:flex; align-items:center; gap:10px; z-index:5; }
+.vela-chatbar input{ flex:1; min-width:0; height:100%; border:0; outline:0; background:transparent; font:inherit; font-size:12px; line-height:normal; font-weight:400; letter-spacing:0; color:#17245d; }
+.vela-chatbar input::placeholder{ color:#6b6b95; }
+.send-button{ width:36px; height:36px; border:0; border-radius:9px; background:#124bff; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 18px rgba(18,75,255,.22); cursor:pointer; flex:0 0 auto; }
+.send-button svg{ width:17px; height:17px; stroke-width:2; }
 
 /* collapsed rail */
 .vela-rail{ display:none; position:absolute; inset:0; flex-direction:column; align-items:center; gap:16px; padding-top:48px; z-index:4; }
@@ -448,9 +473,8 @@ html, body { height: 100%; margin: 0; }
 
 /* === CHEKIN DS TYPOGRAPHY INJECT === */
 /* Proxima Nova is commercial; the Chekin DS ships Montserrat as the runtime
-   fallback. The original ProximaNova @font-face above points to broken
-   ("file not found") data URIs, so we redefine the same family here (last
-   matching @font-face wins) to render Montserrat from Google Fonts. */
+   fallback. Keep the ProximaNova family mapped to valid Montserrat sources so
+   exported markup renders consistently. */
 @font-face{font-family:ProximaNova;font-weight:300;font-style:normal;font-display:swap;src:local('Proxima Nova Light'),url('https://fonts.gstatic.com/s/montserrat/v31/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2') format('woff2');}
 @font-face{font-family:ProximaNova;font-weight:400;font-style:normal;font-display:swap;src:local('Proxima Nova Regular'),url('https://fonts.gstatic.com/s/montserrat/v31/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2') format('woff2');}
 @font-face{font-family:ProximaNova;font-weight:500;font-style:normal;font-display:swap;src:local('Proxima Nova Medium'),url('https://fonts.gstatic.com/s/montserrat/v31/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2') format('woff2');}
@@ -552,30 +576,29 @@ html, body { height: 100%; margin: 0; }
   var IC_CLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 1.5"/><path d="M8 4.5 6.5 3M16 4.5 17.5 3"/></svg>';
 
   var CONTENT =
+    '<header class="vela-hero">'+
+      '<div class="vela-title-row"><h1 class="vela-title">Vela</h1><span class="vela-badge">Your AI assistant</span></div>'+
+      '<p class="vela-intro">I can help with arrival, property details, transport, and recommendations for a smoother stay.</p>'+
+    '</header>'+
+    '<div class="vela-divider"></div>'+
     '<div class="vela-scroll">'+
-      '<header class="vela-hero">'+
-        '<div class="vela-title-row"><h1 class="vela-title">Vela</h1><span class="vela-badge">Asistente IA</span></div>'+
-        '<p class="vela-kicker">He preparado tu estancia con algunas sugerencias útiles.</p>'+
-        '<p class="vela-intro">Según los datos de tu reserva, puedo ayudarte con la llegada, la propiedad, el transporte y otras recomendaciones que pueden hacer tu estancia más cómoda.</p>'+
-      '</header>'+
-      '<div class="vela-divider"></div>'+
       '<section class="recommendations">'+
         '<header class="recommendations-header">'+
           '<div class="recommendations-title">'+
             '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8.2 2.7c.48 2.88 2.33 4.73 5.2 5.2-2.87.49-4.72 2.33-5.2 5.22C7.72 10.23 5.87 8.38 3 7.9c2.87-.47 4.72-2.32 5.2-5.2Z" fill="currentColor"/><path d="M14.9 10.8c.25 1.52 1.22 2.49 2.74 2.74-1.52.26-2.49 1.23-2.74 2.75-.25-1.52-1.23-2.5-2.75-2.75 1.52-.25 2.5-1.22 2.75-2.74Z" fill="currentColor"/></svg>'+
-            'Vela recomienda'+
+            'Vela recommends'+
           '</div>'+
-          '<p class="recommendations-subtitle">He analizado tu reserva y estas opciones podrían ayudarte antes de llegar.</p>'+
+          '<p class="recommendations-subtitle">Useful options before you arrive.</p>'+
         '</header>'+
         '<div class="insight-list">'+
-          insight('Información útil','Antes de llegar','Te recomiendo revisar el guidebook.',' Contiene las normas de la casa, instrucciones de acceso y detalles clave de la propiedad para evitar dudas durante tu estancia.',
-            card(IC_BOOK,'Property guidebook','Información clave','','Abrir'))+
-          insight('Llegada detectada','Más margen','Puede que te convenga acceder antes.',' Por tu horario de llegada, un early check-in podría ayudarte a entrar con más calma, dejar tus cosas y organizarte mejor antes de empezar la estancia.',
-            card(IC_LOCK,'Early check-in','Acceso desde las 11:00','<span class="price">€25</span>','Añadir'))+
-          insight('Ruta sugerida','Desde aeropuerto','He visto que vienes desde el aeropuerto.',' Un transfer directo puede reducir esperas, evitar combinaciones de transporte y llevarte directamente a la propiedad de forma más cómoda.',
-            card(IC_CAR,'Airport transfer','Traslado directo','<span class="price">€45</span>','Reservar'))+
-          insight('Salida optimizada','Más tiempo','Quizá te ayude disponer de más margen al salir.',' Un late check-out puede darte tiempo extra para preparar la salida, recoger con calma y evitar prisas el último día.',
-            card(IC_CLOCK,'Late check-out','Salida hasta las 14:00','<span class="price">€30</span>','Añadir'))+
+          insight('Helpful info','Before arrival','Review the property guidebook.',' It includes house rules, access details, and key property information.',
+            card(IC_BOOK,'Property guidebook','Key information','','Open'))+
+          insight('Arrival detected','More flexibility','Early access may be useful.',' Your arrival time fits an early check-in so you can settle in calmly.',
+            card(IC_LOCK,'Early check-in','Access from 11:00','<span class="price">€25</span>','Add'))+
+          insight('Suggested route','From the airport','You are arriving from the airport.',' A direct transfer can avoid waits and connections on the way to the property.',
+            card(IC_CAR,'Airport transfer','Direct ride','<span class="price">€45</span>','Book'))+
+          insight('Optimized departure','Extra time','More time may help on departure day.',' A late check-out gives you extra time to pack and leave without rushing.',
+            card(IC_CLOCK,'Late check-out','Stay until 14:00','<span class="price">€30</span>','Add'))+
         '</div>'+
       '</section>'+
     '</div>'+
@@ -592,7 +615,7 @@ html, body { height: 100%; margin: 0; }
     '</section>';
 
   var RAIL_HTML =
-    '<div class="vela-railava" data-vela-expand title="Abrir Vela">'+SPARK+'</div>'+
+    '<div class="vela-railava" data-vela-expand title="Open Vela">'+SPARK+'</div>'+
     '<div class="vela-railhint">VELA</div>';
 
   function findPanel(){
@@ -651,7 +674,7 @@ html, body { height: 100%; margin: 0; }
 </script>
 
 <script>
-/* == Navbar optical alignment (Montserrat sits high) + badge centering == */
+/* == Navbar optical alignment + badge centering == */
 (function(){
   function run(){
     var v=document.querySelector('[data-vela]');
@@ -660,6 +683,26 @@ html, body { height: 100%; margin: 0; }
     for(var i=0;i<row.children.length;i++){ var c=row.children[i];
       if(c!==v && !c.classList.contains('chk-main') && /Home/.test(c.textContent) && /Registration/.test(c.textContent)){ side=c; break; } }
     if(!side){ return setTimeout(run,300); }
+    function isStatusPill(el){
+      var cs=getComputedStyle(el), bg=cs.backgroundColor, rad=Number.parseFloat(cs.borderRadius)||0;
+      return bg && bg!=='rgba(0, 0, 0, 0)' && bg!=='transparent' && rad>=8 && el.textContent.trim().length<=8;
+    }
+    function alignNavLabel(lf, active){
+      lf.style.position='relative'; lf.style.top='0px';
+      lf.style.display='inline-flex'; lf.style.alignItems='center'; lf.style.height='24px';
+      lf.style.fontFamily='var(--font-primary)'; lf.style.fontSize='14.5px'; lf.style.fontWeight=active?'700':'600';
+      lf.style.lineHeight='1'; lf.style.letterSpacing='-0.01em';
+      lf.style.whiteSpace='nowrap';
+    }
+    function alignStatusPill(kd){
+      kd.style.position='relative'; kd.style.top='0px';
+      kd.style.display='inline-flex'; kd.style.alignItems='center'; kd.style.justifyContent='center';
+      kd.style.fontFamily='var(--font-primary)'; kd.style.fontSize='11.5px'; kd.style.fontWeight='700'; kd.style.lineHeight='1';
+      var pillW=kd.textContent.trim().indexOf(' ')>=0?'60px':'52px';
+      kd.style.setProperty('box-sizing','border-box','important'); kd.style.setProperty('width',pillW,'important'); kd.style.setProperty('height','24px','important');
+      kd.style.whiteSpace='nowrap';
+      kd.style.padding='0 10px'; kd.style.textAlign='center'; kd.style.flexShrink='0';
+    }
     var all=side.querySelectorAll('*');
     for(var i=0;i<all.length;i++){ var el=all[i];
       if(el.tagName==='svg'||el.closest('svg')) continue;
@@ -668,13 +711,14 @@ html, body { height: 100%; margin: 0; }
       if(!el.querySelector('svg')) continue;
       var leaves=el.querySelectorAll('*');
       for(var j=0;j<leaves.length;j++){ var lf=leaves[j];
-        if(lf.children.length===0 && lf.textContent.trim() && !lf.closest('svg')){
-          lf.style.position='relative'; lf.style.top='1.5px'; } }
+        if(lf.children.length===0 && lf.textContent.trim() && !lf.closest('svg') && !isStatusPill(lf)){
+          var active=(Number.parseFloat(getComputedStyle(lf).fontWeight)||0)>=600;
+          alignNavLabel(lf, active); } }
       var kids=el.querySelectorAll('*');
       for(var k=0;k<kids.length;k++){ var kd=kids[k]; var kcs=getComputedStyle(kd);
-        var bg=kcs.backgroundColor, rad=parseFloat(kcs.borderRadius)||0;
+        var bg=kcs.backgroundColor, rad=Number.parseFloat(kcs.borderRadius)||0;
         if(bg && bg!=='rgba(0, 0, 0, 0)' && bg!=='transparent' && rad>=8 && kd.textContent.trim().length<=8){
-          kd.style.textAlign='center'; kd.style.justifyContent='center'; } }
+          alignStatusPill(kd); } }
     }
   }
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',run); } else { run(); }
