@@ -1,0 +1,123 @@
+/* ============================================================================
+   Chekin · Guest App V3 — Sistema de diseño compartido
+   Una sola lógica para todas las páginas de CONTENIDO.
+   Fuera de alcance: landing de marketing (landingV1/index.html) e intro
+   cinematográfico (animations/hero-cinematic.html).
+
+   Uso:  <link rel="stylesheet" href="/styles/chekin-design-system.css" />
+   ========================================================================== */
+
+/* ---- Fuente: Montserrat (Google Fonts) ----------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* ---- Tipografía -------------------------------------------------------- */
+  --chekin-font-family-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --chekin-font-size-h1: 28px;        /* Título de página */
+  --chekin-font-size-h2: 22px;        /* Subtítulo / sección */
+  --chekin-font-size-h3: 18px;        /* Título de caja */
+  --chekin-font-size-body-lg: 16px;   /* Cuerpo destacado */
+  --chekin-font-size-body: 15px;      /* Cuerpo */
+  --chekin-font-size-sm: 13px;        /* Pequeño / label */
+  --chekin-font-size-caption: 12px;   /* Caption */
+
+  --chekin-font-weight-regular: 400;
+  --chekin-font-weight-medium: 500;
+  --chekin-font-weight-semibold: 600;
+  --chekin-font-weight-bold: 700;
+
+  --chekin-line-tight: 1.2;
+  --chekin-line-snug: 1.4;
+  --chekin-line-normal: 1.55;
+
+  /* ---- Espaciado (base 4px) --------------------------------------------- */
+  --chekin-space-1: 4px;   --chekin-space-2: 8px;   --chekin-space-3: 12px;
+  --chekin-space-4: 16px;  --chekin-space-5: 20px;  --chekin-space-6: 24px;
+  --chekin-space-8: 32px;  --chekin-space-10: 40px; --chekin-space-12: 48px;
+  --chekin-space-16: 64px;
+
+  --chekin-box-pad: var(--chekin-space-6);     /* 24px uniforme en cajas */
+  --chekin-box-gap: var(--chekin-space-6);     /* separación entre cajas */
+  --chekin-page-pad-y: var(--chekin-space-12); /* 48px */
+  --chekin-page-pad-x: var(--chekin-space-12); /* 48px */
+  --chekin-page-pad-bottom: 88px;
+
+  /* ---- Radios / sombras -------------------------------------------------- */
+  --chekin-radius-small: 4px;
+  --chekin-radius-input: 10px;
+  --chekin-radius-card: 12px;
+  --chekin-radius-modal: 20px;
+  --chekin-radius-pill: 9999px;
+
+  --chekin-shadow-card: 0px 4px 16px rgba(26,148,255,.08);
+  --chekin-shadow-raised: 0px 5px 15px rgba(26,148,255,.16);
+  --chekin-shadow-pop: 0px 12px 32px rgba(26,148,255,.18);
+
+  /* ---- Color (subconjunto canónico) ------------------------------------- */
+  --chekin-color-brand: #385bf8;
+  --chekin-color-brand-hover: #5975f5;
+  --chekin-text-primary: #161643;
+  --chekin-text-secondary: #6b6b95;
+  --chekin-text-tertiary: #9696b9;
+  --chekin-text-inverse: #ffffff;
+  --chekin-border-default: #dedeeb;
+  --chekin-surface-page: #f4f6f8;
+  --chekin-surface-card: #ffffff;
+}
+
+/* ---- Base: aplicar fuente al enlazar el sistema --------------------------- */
+body {
+  font-family: var(--chekin-font-family-primary);
+  color: var(--chekin-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---- Clases de rol tipográfico ------------------------------------------- */
+.ds-h1 {
+  font-size: var(--chekin-font-size-h1);
+  font-weight: var(--chekin-font-weight-bold);
+  line-height: var(--chekin-line-tight);
+  letter-spacing: -.02em;
+}
+.ds-h2 {
+  font-size: var(--chekin-font-size-h2);
+  font-weight: var(--chekin-font-weight-semibold);
+  line-height: var(--chekin-line-snug);
+}
+.ds-h3 {
+  font-size: var(--chekin-font-size-h3);
+  font-weight: var(--chekin-font-weight-semibold);
+  line-height: var(--chekin-line-snug);
+}
+.ds-body-lg {
+  font-size: var(--chekin-font-size-body-lg);
+  font-weight: var(--chekin-font-weight-regular);
+  line-height: var(--chekin-line-normal);
+}
+.ds-body {
+  font-size: var(--chekin-font-size-body);
+  font-weight: var(--chekin-font-weight-regular);
+  line-height: var(--chekin-line-normal);
+}
+.ds-sm {
+  font-size: var(--chekin-font-size-sm);
+  font-weight: var(--chekin-font-weight-medium);
+  line-height: var(--chekin-line-snug);
+}
+.ds-caption {
+  font-size: var(--chekin-font-size-caption);
+  font-weight: var(--chekin-font-weight-medium);
+  line-height: var(--chekin-line-snug);
+}
+
+/* ---- Cajas y layout ------------------------------------------------------ */
+.ds-card {
+  background: var(--chekin-surface-card);
+  border: 1px solid var(--chekin-border-default);
+  border-radius: var(--chekin-radius-card);
+  box-shadow: var(--chekin-shadow-card);
+  padding: var(--chekin-box-pad);   /* 24px uniforme: sup = inf = lateral */
+}
+.ds-stack > * + * { margin-top: var(--chekin-box-gap); }   /* 24px entre cajas */

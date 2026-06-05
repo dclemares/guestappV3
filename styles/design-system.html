@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chekin · Sistema de diseño</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Montserrat (Google Fonts) -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<!-- Sistema de diseño compartido -->
+<link rel="stylesheet" href="chekin-design-system.css" />
+<style>
+  :root {
+    /* === Tipografía ===================================================== */
+    --font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --fs-h1: 28px;   /* Título de página */
+    --fs-h2: 22px;   /* Subtítulo / sección */
+    --fs-h3: 18px;   /* Título de caja */
+    --fs-body-lg: 16px;
+    --fs-body: 15px;
+    --fs-sm: 13px;   /* pequeño / label */
+    --fs-caption: 12px;
+
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    --lh-tight: 1.2;
+    --lh-snug: 1.4;
+    --lh-normal: 1.55;
+
+    /* === Espaciado (base 4px) ========================================== */
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+    --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+    --space-12: 48px; --space-16: 64px;
+
+    --box-pad: var(--space-6);        /* 24px uniforme en cajas */
+    --box-gap: var(--space-6);        /* separación entre cajas */
+    --page-pad-y: var(--space-12);    /* 48px sup */
+    --page-pad-x: var(--space-12);    /* 48px lat */
+    --page-pad-bottom: 88px;
+
+    /* === Radios / sombras / color (tokens Chekin) ====================== */
+    --radius-card: 12px;
+    --shadow-card: 0px 4px 16px rgba(26,148,255,.08);
+    --ink: #161643;      /* texto primario */
+    --ink-2: #6b6b95;    /* secundario */
+    --ink-3: #9696b9;    /* terciario */
+    --brand: #385bf8;
+    --line: #dedeeb;
+    --bg: #f4f6f8;
+    --card: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 56px 32px 96px; }
+
+  .doc-kicker {
+    font-size: var(--fs-caption); font-weight: var(--fw-bold);
+    letter-spacing: .14em; text-transform: uppercase; color: var(--brand);
+  }
+  .doc-title { font-size: 38px; font-weight: var(--fw-bold); letter-spacing: -.02em; margin: 10px 0 6px; }
+  .doc-sub { font-size: var(--fs-body-lg); color: var(--ink-2); margin: 0 0 40px; }
+
+  .block { margin-top: 40px; }
+  .block-h {
+    font-size: var(--fs-caption); font-weight: var(--fw-bold);
+    letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3);
+    margin: 0 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
+  }
+
+  /* Card demo */
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius-card); box-shadow: var(--shadow-card);
+    padding: var(--box-pad);
+  }
+  .stack > * + * { margin-top: var(--box-gap); }
+
+  /* Type specimen rows */
+  .spec { display: flex; align-items: baseline; gap: 20px; padding: 14px 0; border-bottom: 1px dashed var(--line); }
+  .spec:last-child { border-bottom: 0; }
+  .spec .meta { flex: none; width: 188px; font-size: var(--fs-sm); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .spec .meta b { display: block; color: var(--ink-2); font-weight: var(--fw-semibold); font-size: var(--fs-caption); letter-spacing: .04em; text-transform: uppercase; }
+  .sample { min-width: 0; }
+
+  .t-h1 { font-size: var(--fs-h1); font-weight: var(--fw-bold); line-height: var(--lh-tight); }
+  .t-h2 { font-size: var(--fs-h2); font-weight: var(--fw-semibold); line-height: var(--lh-snug); }
+  .t-h3 { font-size: var(--fs-h3); font-weight: var(--fw-semibold); line-height: var(--lh-snug); }
+  .t-bodylg { font-size: var(--fs-body-lg); font-weight: var(--fw-regular); line-height: var(--lh-normal); }
+  .t-body { font-size: var(--fs-body); font-weight: var(--fw-regular); line-height: var(--lh-normal); }
+  .t-sm { font-size: var(--fs-sm); font-weight: var(--fw-medium); line-height: var(--lh-snug); color: var(--ink-2); }
+  .t-caption { font-size: var(--fs-caption); font-weight: var(--fw-medium); line-height: var(--lh-snug); color: var(--ink-3); letter-spacing: .03em; }
+
+  /* Spacing scale */
+  .scale { display: flex; flex-direction: column; gap: 10px; }
+  .scale-row { display: flex; align-items: center; gap: 14px; font-size: var(--fs-sm); color: var(--ink-2); }
+  .scale-row .bar { height: 16px; background: var(--brand); border-radius: 4px; opacity: .85; }
+  .scale-row .lbl { width: 120px; flex: none; font-variant-numeric: tabular-nums; }
+
+  /* Box spacing demo */
+  .boxdemo { position: relative; background: repeating-linear-gradient(45deg, #eef0f7, #eef0f7 8px, #e7eaf5 8px, #e7eaf5 16px); border-radius: var(--radius-card); }
+  .boxdemo .inner { background: var(--card); border-radius: 8px; outline: 1px dashed var(--brand); margin: var(--box-pad); padding: 0; }
+  .boxdemo .content { padding: 0; }
+  .pad-label { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font-size: var(--fs-caption); color: var(--brand); font-weight: var(--fw-semibold); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="doc-kicker">Guest App V3 · Foundations</span>
+    <h1 class="doc-title">Sistema de diseño</h1>
+    <p class="doc-sub">Una sola lógica para todas las páginas de contenido: tipografía Montserrat, escala de tamaños y espaciado uniforme en cajas.</p>
+
+    <!-- TIPOGRAFÍA -->
+    <section class="block">
+      <h2 class="block-h">Tipografía · Montserrat</h2>
+      <div class="card">
+        <div class="spec">
+          <div class="meta"><b>Título de página · h1</b>28px / 700 / 1.2</div>
+          <div class="sample t-h1">Welcome to Casa del Mar</div>
+        </div>
+        <div class="spec">
+          <div class="meta"><b>Subtítulo · h2</b>22px / 600 / 1.4</div>
+          <div class="sample t-h2">Completa tu registro antes de llegar</div>
+        </div>
+        <div class="spec">
+          <div class="meta"><b>Título de caja · h3</b>18px / 600 / 1.4</div>
+          <div class="sample t-h3">Datos del huésped</div>
+        </div>
+        <div class="spec">
+          <div class="meta"><b>Cuerpo destacado</b>16px / 400 / 1.55</div>
+          <div class="sample t-bodylg">Texto introductorio algo más grande para guiar al usuario.</div>
+        </div>
+        <div class="spec">
+          <div class="meta"><b>Cuerpo</b>15px / 400 / 1.55</div>
+          <div class="sample t-body">Texto base de párrafos, descripciones y contenido general de la interfaz.</div>
+        </div>
+        <div class="spec">
+          <div class="meta"><b>Pequeño / label</b>13px / 500 / 1.4</div>
+          <div class="sample t-sm">NOMBRE COMPLETO</div>
+        </div>
+        <div class="spec">
+          <div class="meta"><b>Caption</b>12px / 500 / 1.4</div>
+          <div class="sample t-caption">Nota auxiliar o pie de campo</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESPACIADO EN CAJAS -->
+    <section class="block">
+      <h2 class="block-h">Espaciado en cajas · 24px uniforme</h2>
+      <div class="boxdemo">
+        <span class="pad-label">padding 24px · igual sup / inf / lateral</span>
+        <div class="inner">
+          <div class="card" style="box-shadow:none;border:0;">
+            <div class="stack">
+              <h3 class="t-h3">Título de caja</h3>
+              <p class="t-body" style="margin:0;">El contenido respira con 24&nbsp;px en los cuatro lados. La separación entre cajas apiladas también es de 24&nbsp;px.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESCALA DE ESPACIADO -->
+    <section class="block">
+      <h2 class="block-h">Escala de espaciado · base 4px</h2>
+      <div class="card">
+        <div class="scale">
+          <div class="scale-row"><span class="lbl">space-1 · 4px</span><span class="bar" style="width:4px"></span></div>
+          <div class="scale-row"><span class="lbl">space-2 · 8px</span><span class="bar" style="width:8px"></span></div>
+          <div class="scale-row"><span class="lbl">space-3 · 12px</span><span class="bar" style="width:12px"></span></div>
+          <div class="scale-row"><span class="lbl">space-4 · 16px</span><span class="bar" style="width:16px"></span></div>
+          <div class="scale-row"><span class="lbl">space-5 · 20px</span><span class="bar" style="width:20px"></span></div>
+          <div class="scale-row"><span class="lbl">space-6 · 24px</span><span class="bar" style="width:24px"></span></div>
+          <div class="scale-row"><span class="lbl">space-8 · 32px</span><span class="bar" style="width:32px"></span></div>
+          <div class="scale-row"><span class="lbl">space-10 · 40px</span><span class="bar" style="width:40px"></span></div>
+          <div class="scale-row"><span class="lbl">space-12 · 48px</span><span class="bar" style="width:48px"></span></div>
+          <div class="scale-row"><span class="lbl">space-16 · 64px</span><span class="bar" style="width:64px"></span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Identity verification — Guest App V3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --blue:#385bf8; --blue-deep:#1047ff; --blue-2:#5d7cff;
+  --navy:#07154d; --navy-2:#161643;
+  --teal:#35e5bc; --green:#29d0b3; --green-deep:#12796a; --cap-green:#0f9f80; --amber:#f7b955;
+  --grey:#6b6b95; --grey-soft:#9696b9;
+  --line:#dedeeb; --line-soft:#e9edf6;
+  --bg:#f4f6f8; --card:#ffffff;
+  --frame-1:#0f1b3d; --frame-2:#1c2c57;
+  --font:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --font-2:'Poppins',sans-serif;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; min-height:100%; }
+body{
+  font-family:var(--font); color:var(--navy);
+  background:
+    radial-gradient(circle 280px at 340px 120px, rgba(56,91,248,.10), rgba(56,91,248,0) 72%),
+    linear-gradient(160deg, #eef2fa 0%, #f7f8fb 58%, #eef1f7 100%);
+  background-attachment:fixed; background-repeat:no-repeat;
+  -webkit-font-smoothing:antialiased;
+}
+button{ font:inherit; }
+
+/* ============ LAYOUT (como v1-cards) ============ */
+.app{ min-height:100vh; }
+.main{ margin-left:288px; margin-right:380px; padding:48px 56px 96px; }
+.verif-shell{ width:min(100%, 680px); }
+
+/* ============ TOP BAR (solo "Skip this step") ============ */
+.v-top{ display:flex; align-items:center; justify-content:flex-end; min-height:22px; margin-bottom:14px; }
+.v-skip{ font-size:12.5px; font-weight:600; color:var(--grey-soft); text-decoration:underline; text-underline-offset:3px;
+  background:none; border:0; cursor:pointer; padding:4px 2px; }
+.v-skip:hover{ color:var(--grey); }
+.v-skip.is-hidden{ visibility:hidden; }
+
+/* ============ SCREENS ============ */
+.screen{ display:none; animation:fade .32s ease; }
+.screen.active{ display:block; }
+@keyframes fade{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+
+/* ============ PAGE HEAD (como v1-cards) ============ */
+.page-head{ margin-bottom:22px; }
+.kicker{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+.page-head h1{ margin:10px 0 8px; font-size:34px; line-height:1.1; font-weight:800; letter-spacing:-.02em; }
+.page-head h1 .accent{ color:var(--blue); }
+.page-head .intro{ margin:0; max-width:480px; font-family:var(--font-2); font-size:15px; line-height:1.5; color:var(--grey); }
+
+/* ============ JOURNEY RAIL (estilo check-in journey de la landing) ============ */
+.journey{ display:flex; flex-direction:column; gap:18px; margin-top:6px; }
+.j-step{ position:relative; display:flex; align-items:stretch; gap:18px; }
+.j-rail{ position:relative; flex:none; width:48px; display:flex; align-items:center; justify-content:center; }
+.j-step:not(:last-child) .j-rail::after{ content:""; position:absolute; top:calc(50% + 30px); bottom:calc(-50% + 12px); left:50%; transform:translateX(-50%);
+  width:2px; background:rgba(56,91,248,.18); z-index:1; }
+.j-node{ width:48px; height:48px; flex:none; border-radius:50%; background:rgba(56,91,248,.15); border:1px solid rgba(56,91,248,.28);
+  box-shadow:0 0 0 5px rgba(56,91,248,.10); display:flex; align-items:center; justify-content:center; color:var(--blue); z-index:2; }
+.j-node svg{ width:22px; height:22px; stroke-width:1.9; }
+.j-card{ flex:1; min-width:0; background:rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.75); border-radius:18px;
+  box-shadow:0 10px 30px rgba(22,40,90,.10); padding:18px 22px; }
+.j-card b{ display:block; font-size:16px; font-weight:800; color:var(--navy-2); }
+.j-card span{ display:block; margin-top:4px; font-size:13px; line-height:1.5; color:var(--grey); font-family:var(--font-2); }
+
+/* ============ SECTION CARD (glass) ============ */
+.section{
+  margin-top:18px; border:1px solid rgba(255,255,255,.75); border-radius:18px; background:rgba(255,255,255,.60);
+  overflow:hidden; box-shadow:0 10px 30px rgba(22,40,90,.10);
+}
+.section-head{ min-height:48px; padding:0 18px; display:flex; align-items:center; border-bottom:1px solid rgba(214,222,242,.72); background:rgba(255,255,255,.50); }
+.section-title{ display:flex; align-items:center; gap:10px; margin:0; font-size:13px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#4f5b86; }
+.section-title svg{ width:17px; height:17px; color:var(--blue); stroke-width:2; }
+
+/* ============ DOCUMENT ROWS ============ */
+.opt-list{ display:flex; flex-direction:column; }
+.opt-row{ position:relative; display:flex; align-items:center; gap:14px; min-height:66px; padding:14px 18px;
+  border-bottom:1px solid rgba(233,237,246,.82); }
+.opt-row:last-child{ border-bottom:0; }
+.opt-ic{ width:44px; height:44px; flex:none; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  background:rgba(56,91,248,.10); color:var(--blue); }
+.opt-ic svg{ width:22px; height:22px; stroke-width:1.9; }
+.doc-opt{ cursor:pointer; transition:background .15s ease; }
+.doc-opt:hover{ background:rgba(56,91,248,.04); }
+.doc-opt .opt-name{ flex:1; font-size:14.5px; font-weight:800; color:var(--navy-2); }
+.doc-radio{ width:22px; height:22px; flex:none; border-radius:50%; border:2px solid var(--line);
+  display:flex; align-items:center; justify-content:center; transition:all .15s ease; }
+.doc-radio::after{ content:""; width:11px; height:11px; border-radius:50%; background:var(--blue);
+  transform:scale(0); transition:transform .15s ease; }
+.doc-opt.selected{ background:rgba(56,91,248,.06); }
+.doc-opt.selected::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--blue); }
+.doc-opt.selected .doc-radio{ border-color:var(--blue); }
+.doc-opt.selected .doc-radio::after{ transform:scale(1); }
+
+/* ============ CTA (centrado) ============ */
+.v-cta{ display:flex; align-items:center; justify-content:center; gap:9px; width:100%; max-width:340px;
+  height:52px; margin:24px auto 0; border:0; border-radius:9999px;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-2)); color:#fff; font-size:15px; font-weight:700;
+  cursor:pointer; box-shadow:0 14px 28px -12px rgba(16,71,255,.55);
+  transition:transform .12s ease, box-shadow .12s ease; }
+.v-cta:hover{ transform:translateY(-1px); box-shadow:0 18px 34px -12px rgba(16,71,255,.6); }
+.v-cta svg{ width:18px; height:18px; stroke-width:2.4; }
+
+/* ============ UNDER-18 ============ */
+.intro-foot{ display:flex; flex-direction:column; gap:9px; margin-top:16px; align-items:center; }
+.foot-strong{ font-size:13.5px; font-weight:700; color:var(--blue); cursor:pointer; }
+.foot-strong:hover{ opacity:.82; }
+.minor-note{ display:none; align-items:flex-start; gap:9px; margin:14px auto 0; padding:13px 16px; border-radius:14px;
+  background:rgba(41,208,179,.12); color:var(--green-deep); font-size:12.5px; font-weight:600; line-height:1.45; max-width:470px; }
+.minor-note.show{ display:flex; }
+.minor-note svg{ width:17px; height:17px; flex:none; margin-top:1px; }
+
+/* ============ CAPTURE STEPPER (mismos nodos circulares que el journey) ============ */
+.cap-steps{ display:flex; align-items:center; gap:14px; width:100%; margin:0 0 24px; }
+.cap-step{ width:46px; height:46px; flex:none; border-radius:50%; background:rgba(56,91,248,.15); border:1px solid rgba(56,91,248,.28);
+  box-shadow:0 0 0 5px rgba(56,91,248,.10); display:flex; align-items:center; justify-content:center; color:var(--blue); transition:all .25s ease; }
+.cap-step svg{ width:21px; height:21px; stroke-width:1.9; }
+.cap-step.active{ background:var(--blue); border-color:var(--blue); color:#fff; box-shadow:0 0 0 5px rgba(56,91,248,.18); animation:cap-pulse 1.8s ease-out infinite; }
+.cap-step.done{ background:rgba(41,208,179,.18); border-color:transparent; color:var(--cap-green); box-shadow:0 0 0 5px rgba(41,208,179,.12); }
+.cap-conn{ flex:1; height:3px; background:var(--line); border-radius:2px; overflow:hidden; }
+.cap-conn-fill{ height:100%; width:0; border-radius:2px; background:var(--blue); transition:width .12s linear; }
+.cap-conn-fill.done{ background:var(--cap-green); transition:width .35s ease, background .3s ease; }
+
+/* ============ CAMERA ============ */
+.cam-frame{ position:relative; width:100%; max-width:420px; margin:18px auto 0; aspect-ratio:4/3; border-radius:18px;
+  background:linear-gradient(150deg, var(--frame-1), var(--frame-2)); }
+.cam-frame.face{ background:linear-gradient(150deg,#8b8fa6,#9ea2b6); aspect-ratio:4/3.4; }
+.bracket{ position:absolute; width:28px; height:28px; border:2.6px solid #fff; }
+.bracket.tl{ top:15px; left:15px; border-right:0; border-bottom:0; border-top-left-radius:9px; }
+.bracket.tr{ top:15px; right:15px; border-left:0; border-bottom:0; border-top-right-radius:9px; }
+.bracket.bl{ bottom:15px; left:15px; border-right:0; border-top:0; border-bottom-left-radius:9px; }
+.bracket.br{ bottom:15px; right:15px; border-left:0; border-top:0; border-bottom-right-radius:9px; }
+.cam-guide{ position:absolute; inset:38px; border:1.5px dashed rgba(255,255,255,.30); border-radius:12px;
+  display:flex; align-items:center; gap:18px; padding:20px 24px; }
+.guide-photo{ width:84px; height:108px; flex:none; border:1.5px solid rgba(255,255,255,.28); border-radius:9px;
+  display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.38); }
+.guide-photo svg{ width:38px; height:38px; stroke-width:1.6; }
+.guide-lines{ flex:1; display:flex; flex-direction:column; gap:11px; }
+.guide-line{ height:11px; border-radius:6px; background:rgba(255,255,255,.20); }
+.cam-guide.back{ flex-direction:column; align-items:stretch; justify-content:center; gap:13px; }
+.back-block{ height:50px; border-radius:9px; background:rgba(255,255,255,.16); width:78%; }
+.mrz{ font-family:'Courier New', monospace; font-size:11.5px; letter-spacing:.6px; color:rgba(255,255,255,.42);
+  margin-top:6px; line-height:1.7; }
+.face-oval{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:46%; aspect-ratio:0.78; border:2.6px solid #fff; border-radius:50%;
+  background:rgba(255,255,255,.10); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.55); }
+.face-oval svg{ width:46%; height:46%; stroke-width:1.6; }
+.face-hint{ position:absolute; bottom:56px; left:0; right:0; text-align:center; color:#fff;
+  font-size:13.5px; font-weight:700; text-shadow:0 1px 6px rgba(0,0,0,.25); }
+.cam-status{ position:absolute; bottom:-18px; left:50%; transform:translateX(-50%);
+  display:inline-flex; align-items:center; gap:9px; padding:12px 22px; border-radius:9999px;
+  background:#fff; box-shadow:0 12px 26px -12px rgba(22,22,67,.4); white-space:nowrap;
+  font-size:14px; font-weight:700; color:var(--navy-2); }
+.cam-dot{ width:9px; height:9px; border-radius:50%; background:var(--green); box-shadow:0 0 0 4px rgba(41,208,179,.18);
+  animation:pulse 1.1s ease infinite; }
+@keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.45; } }
+.cam-alt{ display:flex; align-items:center; justify-content:center; gap:8px; margin:34px 0 0;
+  font-size:13px; font-weight:600; color:var(--grey); }
+.cam-alt svg{ width:17px; height:17px; color:var(--grey-soft); stroke-width:1.9; }
+.cam-alt a{ color:var(--blue); font-weight:700; cursor:pointer; }
+.cam-alt a:hover{ opacity:.82; }
+.face-checks{ display:flex; align-items:center; justify-content:center; gap:28px; margin-top:34px; }
+.face-checks span{ display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; color:var(--navy-2); }
+.face-checks svg{ width:16px; height:16px; color:var(--blue); stroke-width:2.6; }
+
+/* ============ LIVE-CAPTURE ANIMATION (de "Captura en vivo 3-5") ============ */
+.cam-scan{ position:absolute; left:7%; right:7%; top:7%; height:2px; z-index:3;
+  background:linear-gradient(90deg, transparent, rgba(56,91,248,.9), transparent);
+  box-shadow:0 0 12px 2px rgba(56,91,248,.7); animation:cap-scan 2.2s ease-in-out infinite; }
+.cam-frame.ok .bracket{ border-color:var(--cap-green); }
+.cam-frame.ok.face .face-oval{ border-color:var(--cap-green); }
+.cam-status{ z-index:7; }
+.cam-flash{ position:absolute; inset:0; z-index:5; border-radius:18px; background:#fff; animation:cap-flash .5s ease-out both; pointer-events:none; }
+.cam-success{ position:absolute; inset:0; z-index:6; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  background:rgba(15,159,128,.30); backdrop-filter:blur(1px); animation:cap-fade .3s ease-out both; }
+.cap-check{ width:72px; height:72px; border-radius:50%; background:var(--cap-green); color:#fff; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 30px rgba(15,159,128,.5); animation:cap-pop .45s cubic-bezier(.2,.7,.3,1) both; }
+.cap-check svg{ width:40px; height:40px; stroke-width:3; }
+.cap-label{ color:#fff; font-size:16px; font-weight:700; text-shadow:0 2px 8px rgba(0,0,0,.35); animation:cap-rise .4s ease-out .08s both; }
+.cap-ring{ width:20px; height:20px; flex:none; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:conic-gradient(var(--blue) 0deg, var(--line) 0); }
+.cap-ring i{ width:13px; height:13px; border-radius:50%; background:#fff; }
+.cap-done{ width:18px; height:18px; flex:none; border-radius:50%; background:var(--cap-green); display:flex; align-items:center; justify-content:center; }
+.cap-done svg{ width:11px; height:11px; color:#fff; stroke-width:3; }
+@keyframes cap-scan{ 0%{ top:7%; } 50%{ top:88%; } 100%{ top:7%; } }
+@keyframes cap-flash{ 0%{ opacity:0; } 30%{ opacity:.9; } 100%{ opacity:0; } }
+@keyframes cap-pop{ 0%{ transform:scale(.3); opacity:0; } 60%{ transform:scale(1.12); opacity:1; } 100%{ transform:scale(1); opacity:1; } }
+@keyframes cap-rise{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+@keyframes cap-fade{ from{ opacity:0; } to{ opacity:1; } }
+@keyframes cap-pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(56,91,248,.32); } 50%{ box-shadow:0 0 0 7px rgba(56,91,248,0); } }
+
+/* ============ SUCCESS ============ */
+.done-card{ padding:36px 24px; text-align:center; }
+.done-badge{ width:80px; height:80px; border-radius:50%; margin:0 auto 22px;
+  display:flex; align-items:center; justify-content:center; color:#fff;
+  background:linear-gradient(150deg,#2fe0b4,#13a87c); box-shadow:0 18px 36px -16px rgba(41,208,179,.6);
+  animation:pop .4s cubic-bezier(.2,.9,.3,1.3); }
+.done-badge svg{ width:40px; height:40px; stroke-width:3; }
+@keyframes pop{ from{ transform:scale(.6); opacity:0; } to{ transform:scale(1); opacity:1; } }
+.done-card .done-copy{ margin:0 auto 4px; max-width:360px; font-family:var(--font-2); font-size:13.5px; line-height:1.55; color:var(--grey); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1279px){
+  .main{ margin-right:0; }
+  .verif-shell{ width:min(100%, 760px); }
+}
+@media (max-width:767px){
+  .main{ margin-left:0; padding:28px 20px 80px; }
+  .page-head h1{ font-size:26px; }
+  .stepper{ gap:5px; }
+  .step-pill{ padding:8px 12px; font-size:12px; }
+  .step-line{ width:14px; }
+  .v-cta{ max-width:none; }
+}
+</style>
+<script src="../../components/chekin-navbar.js?v=warning-badges" defer></script>
+<script src="../../components/chekin-vela.js" defer></script>
+</head>
+<body>
+<div class="app">
+
+  <chekin-navbar active="registration"></chekin-navbar>
+
+  <main class="main">
+    <div class="verif-shell">
+
+      <!-- 1 · INTRO (estilo check-in journey) -->
+      <section class="screen active" data-screen="intro">
+        <div class="page-head">
+          <div class="kicker">Identity verification</div>
+          <h1>Verify your identity</h1>
+          <p class="intro">Three quick steps. It takes less than a minute.</p>
+        </div>
+
+        <div class="journey">
+          <div class="j-step">
+            <div class="j-rail">
+              <span class="j-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg></span>
+            </div>
+            <div class="j-card">
+              <b>Scan your document</b>
+              <span>Passport, national ID or driver's license</span>
+            </div>
+          </div>
+          <div class="j-step">
+            <div class="j-rail">
+              <span class="j-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="10" cy="8" r="3.4"/><path d="M4 19c.6-3 3-4.6 6-4.6 1 0 1.9.18 2.7.5"/><path d="m15.5 16.5 1.8 1.8 3.2-3.6"/></svg></span>
+            </div>
+            <div class="j-card">
+              <b>Confirm it's you</b>
+              <span>A quick face scan, matched to your document photo</span>
+            </div>
+          </div>
+          <div class="j-step">
+            <div class="j-rail">
+              <span class="j-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4h6a1 1 0 0 1 1 1v1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1V5a1 1 0 0 1 1-1Z"/><path d="m9.5 13 1.8 1.8 3.4-3.6"/></svg></span>
+            </div>
+            <div class="j-card">
+              <b>Confirm your details</b>
+              <span>Check the information on your entry form before it's sent</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="v-cta" id="start">Begin verification</button>
+      </section>
+
+      <!-- 2 · CHOOSE DOCUMENT -->
+      <section class="screen" data-screen="doc">
+        <div class="page-head">
+          <div class="kicker">Identity verification</div>
+          <h1>Choose your document</h1>
+          <p class="intro">Select the document you'll scan.</p>
+        </div>
+
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16M14 9.5h4M14 13h3"/></svg>
+              Document type
+            </h2>
+          </div>
+          <div class="opt-list">
+            <label class="opt-row doc-opt selected" data-doc="passport">
+              <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2.4"/><circle cx="12" cy="9" r="2.6"/><path d="M9 15.5h6"/></svg></span>
+              <span class="opt-name">Passport</span>
+              <span class="doc-radio"></span>
+            </label>
+            <label class="opt-row doc-opt" data-doc="id">
+              <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16M14 9.5h4M14 13h3"/></svg></span>
+              <span class="opt-name">National ID</span>
+              <span class="doc-radio"></span>
+            </label>
+            <label class="opt-row doc-opt" data-doc="license">
+              <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 17h14M6 17l1.2-4.2A2 2 0 0 1 9.1 11h5.8a2 2 0 0 1 1.9 1.4L18 17"/><circle cx="7.5" cy="17.5" r="1.6"/><circle cx="16.5" cy="17.5" r="1.6"/></svg></span>
+              <span class="opt-name">Driver's license</span>
+              <span class="doc-radio"></span>
+            </label>
+          </div>
+        </section>
+
+        <button class="v-cta" id="docContinue">Continue <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </section>
+
+      <!-- 3 · CAPTURE (rendered by JS) -->
+      <section class="screen" data-screen="capture">
+        <div id="captureBody"></div>
+      </section>
+
+      <!-- 4 · SUCCESS -->
+      <section class="screen" data-screen="done">
+        <div class="page-head">
+          <div class="kicker">Identity verification</div>
+          <h1>Identity verified</h1>
+        </div>
+        <section class="section">
+          <div class="done-card">
+            <div class="done-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 13 4 4L19 7"/></svg>
+            </div>
+            <p class="done-copy">We've confirmed your identity. You can continue with the rest of your registration.</p>
+            <button class="v-cta" id="finish">Continue registration</button>
+          </div>
+        </section>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- RIGHT VELA PANEL -->
+  <chekin-vela
+    intro="I'll guide you through verification: which documents work, how to get a clear photo, and why we ask for each step."
+    reco-title="Privacy & data" reco-icon="sun"
+    reco-subtitle="How we protect your information.">
+    <script type="application/json">
+    [
+      {"chip":"Privacy","reason":"GDPR compliant","strong":"Your data is safe","text":" Everything you share is encrypted and used only for your registration. Your photos are deleted from our system after your check-in date at the property."}
+    ]
+    </script>
+  </chekin-vela>
+
+</div>
+
+<script>
+/* ============================================================
+   Identity verification — simple state machine
+   ============================================================ */
+var screens = document.querySelectorAll('.screen');
+var captureBody = document.getElementById('captureBody');
+
+var state = { screen:'intro', doc:'passport', sub:0 };  // sub: 0 front · 1 back · 2 face
+var capRAF = null, capSuccessTimer = null;
+function clearCapTimers(){ if(capRAF){ clearInterval(capRAF); capRAF=null; } if(capSuccessTimer){ clearTimeout(capSuccessTimer); capSuccessTimer=null; } }
+
+/* ---- Vela content per screen ---- */
+var VELA = {
+  intro: [
+    {"chip":"Privacy","reason":"GDPR compliant","strong":"Your data is safe","text":" Everything you share is encrypted and used only for your registration. Your photos are deleted from our system after your check-in date at the property."}
+  ],
+  doc: [
+    {"chip":"Tip","reason":"Faster","strong":"Pick whichever you have on hand","text":" Any of the three works to verify you."}
+  ],
+  capture: [
+    {"chip":"Clear photo","reason":"Better read","strong":"Find good light and a flat background","text":" Rest the document on a surface and avoid glare."},
+    {"icon":"doc","title":"Can't read it?","subtitle":"You can upload a file","button":"Help"}
+  ],
+  face: [
+    {"chip":"Face scan","reason":"Confirm it's you","strong":"Why a face scan?","text":" We match your face to your document photo to confirm it's really you."},
+    {"icon":"doc","title":"Face uncovered","subtitle":"No hat or sunglasses","button":"View"}
+  ],
+  done: [
+    {"chip":"Done","reason":"Verified","strong":"Identity confirmed","text":" Continue with the rest of your registration whenever you like."}
+  ]
+};
+function setVela(key){
+  var el = document.querySelector('chekin-vela');
+  if(el && VELA[key]){ try{ el.items = VELA[key]; }catch(e){} }
+}
+
+/* ---- show screen ---- */
+function show(name){
+  state.screen = name;
+  screens.forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-screen')===name); });
+  setVela(name==='capture' && state.sub===2 ? 'face' : name);
+  clearCapTimers();
+}
+
+/* ---- capture pieces ---- */
+function brackets(){ return '<span class="bracket tl"></span><span class="bracket tr"></span><span class="bracket bl"></span><span class="bracket br"></span>'; }
+function frontGuide(){
+  return '<div class="cam-guide">'+
+    '<div class="guide-photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="9" r="3.4"/><path d="M5 19c1-3.3 3.7-5 7-5s6 1.7 7 5"/></svg></div>'+
+    '<div class="guide-lines"><div class="guide-line" style="width:82%"></div><div class="guide-line" style="width:68%"></div><div class="guide-line" style="width:74%"></div><div class="guide-line" style="width:56%"></div><div class="guide-line" style="width:40%"></div></div>'+
+  '</div>';
+}
+function backGuide(){
+  return '<div class="cam-guide back">'+
+    '<div class="back-block"></div>'+
+    '<div class="guide-line" style="width:62%"></div>'+
+    '<div class="guide-line" style="width:50%"></div>'+
+    '<div class="mrz">P&lt;ESPGARCIA&lt;&lt;MARIA&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>AB1234567ESP9103142F&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>'+
+  '</div>';
+}
+function stepperHTML(){
+  var icons = [
+    '<rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16"/>',
+    '<rect x="3" y="6" width="18" height="12" rx="2.4"/><path d="M3 10h18"/>',
+    '<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.4 7-5.4S18.2 16.4 19 20"/>'
+  ];
+  var check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path d="m5 12 5 5L20 7"/></svg>';
+  var html = '<div class="cap-steps">';
+  icons.forEach(function(ic, i){
+    if(i>0){
+      var ci = i-1;  // conector entre el nodo ci y el siguiente; se rellena mientras se escanea el paso ci
+      var fillCls = ci < state.sub ? ' done' : '';
+      var fillW = ci < state.sub ? '100%' : '0%';
+      var fillId = ci === state.sub ? ' id="capConnFill"' : '';
+      html += '<span class="cap-conn"><span class="cap-conn-fill'+fillCls+'"'+fillId+' style="width:'+fillW+'"></span></span>';
+    }
+    var cls = i<state.sub ? 'done' : (i===state.sub ? 'active' : '');
+    var icon = i<state.sub ? check : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">'+ic+'</svg>';
+    html += '<span class="cap-step '+cls+'">'+icon+'</span>';
+  });
+  return html + '</div>';
+}
+
+function renderCapture(){
+  var sub = state.sub;
+  var badge = '<div class="cam-status" id="capBadge"><span class="cap-ring" id="capRing"><i></i></span><span id="capText">'+(sub===2?'Detecting face':'Hold still')+' · 0%</span></div>';
+  var scan = '<div class="cam-scan" id="capScan"></div>';
+  var html = stepperHTML();
+
+  if(sub<2){
+    var title = sub===0 ? 'Photo of the <span class="accent">front</span>' : 'Now flip to the <span class="accent">back</span>';
+    html += '<div class="page-head"><h1 id="capTitle">'+title+'</h1><p class="intro" id="capSub">No need to tap anything — the photo is taken automatically.</p></div>';
+    html += '<div class="cam-frame" id="capFrame">'+brackets()+(sub===0?frontGuide():backGuide())+scan+badge+'</div>';
+    html += '<p class="cam-alt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 2l20 20"/><path d="M7 7H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12M9.5 5h5L16 7h3a2 2 0 0 1 2 2v7"/></svg>No camera? <a id="upload">Upload a file</a></p>';
+  } else {
+    html += '<div class="page-head"><h1 id="capTitle">Confirm it\'s <span class="accent">you</span></h1><p class="intro" id="capSub">Look at the camera — it captures automatically.</p></div>';
+    html += '<div class="cam-frame face" id="capFrame">'+
+      '<div class="face-oval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.4 7-5.4S18.2 16.4 19 20"/></svg></div>'+
+      '<div class="face-hint">Keep looking ahead</div>'+scan+badge+'</div>'+
+      '<div class="face-checks"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 12 5 5L20 7"/></svg>Face uncovered</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 12 5 5L20 7"/></svg>Good lighting</span></div>';
+  }
+  captureBody.innerHTML = html;
+
+  var up = document.getElementById('upload');
+  if(up) up.addEventListener('click', function(){ clearCapTimers(); onCaptured(); });
+
+  setVela(sub===2 ? 'face' : 'capture');
+  startScan();
+}
+
+/* live-capture: progress sweep → success flash → advance */
+var SCAN_MS = 2500, SUCCESS_MS = 1500;
+function updateBadge(p){
+  var ring = document.getElementById('capRing'), txt = document.getElementById('capText'), fill = document.getElementById('capConnFill');
+  if(ring) ring.style.background = 'conic-gradient(var(--blue) '+(p*3.6)+'deg, var(--line) 0)';
+  if(txt) txt.textContent = (state.sub===2?'Detecting face':'Hold still')+' · '+Math.round(p)+'%';
+  if(fill) fill.style.width = p+'%';
+}
+function startScan(){
+  clearCapTimers();
+  var start = Date.now();
+  capRAF = setInterval(function(){
+    var p = Math.min(100, (Date.now()-start)/SCAN_MS*100);
+    updateBadge(p);
+    if(p>=100){ clearInterval(capRAF); capRAF=null; onCaptured(); }
+  }, 40);
+}
+function onCaptured(){
+  var frame = document.getElementById('capFrame'), scan = document.getElementById('capScan'), badge = document.getElementById('capBadge');
+  if(scan) scan.style.display = 'none';
+  if(frame){
+    frame.classList.add('ok');
+    frame.insertAdjacentHTML('beforeend',
+      '<div class="cam-flash"></div>'+
+      '<div class="cam-success"><span class="cap-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 13 4 4L19 7"/></svg></span>'+
+      '<span class="cap-label">'+(state.sub===2?'Selfie captured!':'Photo taken!')+'</span></div>');
+  }
+  var fill = document.getElementById('capConnFill');
+  if(fill){ fill.style.width='100%'; fill.classList.add('done'); }
+  if(badge) badge.innerHTML = '<span class="cap-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 12 5 5L20 7"/></svg></span><span style="color:var(--cap-green)">Capture complete</span>';
+  var h = document.getElementById('capTitle'), sub2 = document.getElementById('capSub');
+  if(h) h.textContent = (state.sub===2?'Selfie ready!':'Photo saved!');
+  if(sub2) sub2.textContent = 'Moving to the next step…';
+  capSuccessTimer = setTimeout(advanceSub, SUCCESS_MS);
+}
+
+function advanceSub(){
+  clearCapTimers();
+  if(state.sub < 2){ state.sub++; renderCapture(); }
+  else { show('done'); }
+}
+
+/* ---- navigation ---- */
+function goCapture(){ state.sub = 0; show('capture'); renderCapture(); }
+
+document.getElementById('start').addEventListener('click', function(){ show('doc'); });
+document.getElementById('docContinue').addEventListener('click', goCapture);
+document.getElementById('finish').addEventListener('click', function(){ window.location.href='v3-guided.html'; });
+
+/* ---- document selection ---- */
+document.querySelectorAll('.doc-opt').forEach(function(opt){
+  opt.addEventListener('click', function(){
+    document.querySelectorAll('.doc-opt').forEach(function(o){ o.classList.remove('selected'); });
+    opt.classList.add('selected');
+    state.doc = opt.getAttribute('data-doc');
+  });
+});
+
+/* init — wait for the Web Component to register before touching .items */
+if(window.customElements){
+  customElements.whenDefined('chekin-vela').then(function(){ setVela(state.screen); });
+} else {
+  setVela('intro');
+}
+</script>
+</body>
+</html>

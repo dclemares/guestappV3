@@ -58,6 +58,7 @@
     "chekin-navbar .nav-badge{margin-left:auto;height:23px;padding:0 9px;border-radius:999px;",
     "  display:inline-flex;align-items:center;font-size:11.5px;font-weight:700;",
     "  background:rgba(120,140,255,.16);color:#c5ccfb;}",
+    "chekin-navbar .nav-badge.warning{background:rgba(255,183,0,.20);color:#ffcf5a;}",
     "chekin-navbar .nav-badge.teal{background:rgba(53,229,188,.16);color:#35e5bc;}",
     "chekin-navbar .nav-user{margin-top:auto;display:flex;align-items:center;gap:11px;",
     "  padding:16px 10px 4px;border-top:1px solid rgba(255,255,255,.08);}",
@@ -94,8 +95,8 @@
       { key: 'home', label: 'Home', icon: 'home' }
     ] },
     { label: 'Before your stay', items: [
-      { key: 'registration', label: 'Registration', icon: 'registration', badge: '2 left' },
-      { key: 'payments', label: 'Payments', icon: 'payments', badge: '€340' }
+      { key: 'registration', label: 'Registration', icon: 'registration', badge: '2 left', badgeClass: 'warning' },
+      { key: 'payments', label: 'Payments', icon: 'payments', badge: '€340', badgeClass: 'warning' }
     ] },
     { label: 'Your stay', items: [
       { key: 'virtual-keys', label: 'Virtual keys', icon: 'keys' },
