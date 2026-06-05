@@ -18,6 +18,8 @@
   if (window.customElements && customElements.get('chekin-navbar')) return;
 
   var FONT_HREF = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap';
+  var SCRIPT_SRC = document.currentScript && document.currentScript.src ? document.currentScript.src : window.location.href;
+  var LOGO_SRC = new URL('./assets/chekin-logo.jpeg', SCRIPT_SRC).href;
 
   function ensureFonts() {
     if (document.getElementById('chekin-fonts')) return;
@@ -36,8 +38,8 @@
     "chekin-navbar *{box-sizing:border-box;}",
     "chekin-navbar .brand{display:flex;align-items:center;gap:13px;padding:2px 6px 0;margin-bottom:26px;}",
     "chekin-navbar .brand-logo{width:46px;height:46px;border-radius:13px;flex:none;background:#fff;",
-    "  display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(56,91,248,.3);}",
-    "chekin-navbar .brand-logo svg{width:26px;height:26px;color:#385bf8;}",
+    "  display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 6px 16px rgba(56,91,248,.3);}",
+    "chekin-navbar .brand-logo img{width:100%;height:100%;display:block;object-fit:cover;border-radius:inherit;}",
     "chekin-navbar .brand-name{font-weight:700;font-size:16px;letter-spacing:-.17px;color:#fff;}",
     "chekin-navbar .nav-menu{display:flex;flex-direction:column;gap:4px;}",
     "chekin-navbar .nav-group{margin-top:18px;display:flex;flex-direction:column;gap:4px;}",
@@ -76,7 +78,6 @@
   }
 
   var IC = {
-    logo: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 16.8 13.2 22.5 24.5 9.8"/></svg>',
     home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
     registration: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/></svg>',
     payments: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18"/></svg>',
@@ -138,7 +139,7 @@
     });
 
     this.innerHTML =
-      '<div class="brand"><div class="brand-logo">' + IC.logo + '</div><div class="brand-name">' + esc(brand) + '</div></div>' +
+      '<div class="brand"><div class="brand-logo"><img src="' + LOGO_SRC + '" alt="" aria-hidden="true"></div><div class="brand-name">' + esc(brand) + '</div></div>' +
       '<nav class="nav-menu">' + menu + '</nav>' +
       '<div class="nav-user"><div class="nav-ava">' + esc(initials) + '</div>' +
         '<div class="nav-user-info"><div class="nav-user-name">' + esc(userName) + '</div>' +
