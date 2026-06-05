@@ -33,35 +33,46 @@ body{
 .app{ min-height:100vh; }
 .main{ margin-left:288px; margin-right:380px; padding:48px 56px 96px; }
 
-/* ============ LEFT NAVBAR ============ */
+/* ============ LEFT NAVBAR (matches landing) ============ */
 .nav{
   position:fixed; top:0; left:0; bottom:0; width:288px; z-index:40;
-  display:flex; flex-direction:column; padding:26px 18px 22px;
-  background:rgba(255,255,255,.62); backdrop-filter:blur(20px) saturate(1.4);
-  border-right:1px solid rgba(255,255,255,.7);
+  display:flex; flex-direction:column; padding:20px 16px;
+  background:rgba(20,20,58,.85); backdrop-filter:blur(18px) saturate(1.3);
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.08); color:#fff;
 }
-.brand{ display:flex; align-items:center; gap:11px; padding:6px 10px 0; margin-bottom:30px; }
-.brand-logo{ width:38px; height:38px; border-radius:11px; flex:none;
-  background:linear-gradient(145deg,var(--navy-2),#2b2b6b); color:#fff;
-  display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px;
-  box-shadow:0 8px 18px rgba(22,22,67,.22); }
-.brand-name{ font-weight:800; font-size:19px; letter-spacing:-.02em; }
+.brand{ display:flex; align-items:center; gap:13px; padding:2px 6px 0; margin-bottom:26px; }
+.brand-logo{ width:46px; height:46px; border-radius:13px; flex:none; background:#fff;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(56,91,248,.3); }
+.brand-logo svg{ width:26px; height:26px; color:var(--blue); }
+.brand-name{ font-weight:700; font-size:16px; letter-spacing:-.17px; color:#fff; }
+
 .nav-menu{ display:flex; flex-direction:column; gap:4px; }
+.nav-group{ margin-top:18px; display:flex; flex-direction:column; gap:4px; }
+.nav-label{ padding:0 14px; margin-bottom:6px; font-size:10px; font-weight:600;
+  letter-spacing:.126em; text-transform:uppercase; color:rgba(255,255,255,.38); }
 .nav-item{ position:relative; display:flex; align-items:center; gap:13px;
-  padding:11px 13px; border-radius:12px; color:var(--grey); font-weight:600; font-size:15px;
-  text-decoration:none; cursor:pointer; transition:background .15s ease,color .15s ease; }
-.nav-item svg{ width:20px; height:20px; flex:none; stroke-width:1.9; }
-.nav-item:hover{ background:rgba(56,91,248,.06); color:var(--navy); }
-.nav-item.active{ background:rgba(56,91,248,.10); color:var(--blue); font-weight:700; }
-.nav-badge{ position:absolute; left:24px; top:7px; min-width:17px; height:17px; padding:0 4px;
-  border-radius:999px; background:#ff2d6e; color:#fff; font-size:10px; font-weight:700;
-  display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 2px rgba(255,255,255,.9); }
-.nav-foot{ margin-top:auto; padding-top:16px; border-top:1px solid var(--line-soft);
-  display:flex; flex-direction:column; gap:3px; }
-.nav-foot a{ display:flex; align-items:center; gap:11px; padding:8px 13px; border-radius:10px;
-  color:var(--grey-soft); font-size:13.5px; font-weight:600; text-decoration:none; }
-.nav-foot a:hover{ background:rgba(56,91,248,.05); color:var(--grey); }
-.nav-foot svg{ width:17px; height:17px; flex:none; stroke-width:1.9; }
+  padding:11px 14px; border-radius:12px; color:rgba(255,255,255,.8); font-weight:600;
+  font-size:14.5px; letter-spacing:-.145px; text-decoration:none; cursor:pointer;
+  transition:background .15s ease, color .15s ease; }
+.nav-item svg{ width:20px; height:20px; flex:none; stroke-width:1.9; color:rgba(255,255,255,.72); }
+.nav-item:hover{ background:rgba(255,255,255,.06); color:#fff; }
+.nav-item:hover svg{ color:#fff; }
+.nav-item.active{ background:linear-gradient(90deg,rgba(56,91,248,.5),rgba(56,91,248,.3));
+  color:#fff; font-weight:700; box-shadow:0 8px 18px rgba(56,91,248,.3); }
+.nav-item.active svg{ color:#fff; }
+.nav-badge{ margin-left:auto; height:23px; padding:0 9px; border-radius:999px;
+  display:inline-flex; align-items:center; font-size:11.5px; font-weight:700;
+  background:rgba(120,140,255,.16); color:#c5ccfb; }
+.nav-badge.teal{ background:rgba(53,229,188,.16); color:var(--teal); }
+
+.nav-user{ margin-top:auto; display:flex; align-items:center; gap:11px;
+  padding:16px 10px 4px; border-top:1px solid rgba(255,255,255,.08); }
+.nav-ava{ width:40px; height:40px; flex:none; border-radius:50%; background:rgba(255,255,255,.1);
+  display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:600; color:#fff; }
+.nav-user-info{ min-width:0; }
+.nav-user-name{ font-size:13.5px; font-weight:600; color:#fff; }
+.nav-user-mail{ font-size:11.5px; font-weight:400; color:rgba(255,255,255,.5);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
 /* ============ RIGHT VELA PANEL ============ */
 .vela{ position:fixed; top:22px; right:22px; bottom:0; width:345px; z-index:40;
@@ -244,28 +255,63 @@ body{
   <!-- LEFT NAVBAR -->
   <aside class="nav">
     <div class="brand">
-      <div class="brand-logo">S</div>
-      <div class="brand-name">Stay&nbsp;Co.</div>
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
+      </div>
+      <div class="brand-name">Casa del Mar</div>
     </div>
     <nav class="nav-menu">
       <a class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
         Home
       </a>
-      <a class="nav-item active">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/></svg>
-        Guest Registration
-      </a>
-      <a class="nav-item">
-        <span class="nav-badge">1</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.2 12.3a1.6 1.6 0 0 0 1.6 1.3h8.4a1.6 1.6 0 0 0 1.6-1.3L22 7H6"/></svg>
-        Your Payments
-      </a>
+      <div class="nav-group">
+        <div class="nav-label">Before your stay</div>
+        <a class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/></svg>
+          Registration
+          <span class="nav-badge">2 left</span>
+        </a>
+        <a class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18"/></svg>
+          Payments
+          <span class="nav-badge">€340</span>
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">Your stay</div>
+        <a class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l2 2M14 9l2 2"/></svg>
+          Virtual keys
+        </a>
+        <a class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2M9 12h6"/></svg>
+          Luggage drop-off
+          <span class="nav-badge teal">NEW</span>
+        </a>
+        <a class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5Z"/><path d="M4 19a2 2 0 0 0 2 2h13"/></svg>
+          Guidebooks
+        </a>
+        <a class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.8 6.8 19.2l1-5.8L3.5 9.2l5.9-.9L12 3Z"/></svg>
+          Recommendations
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">Check-out</div>
+        <a class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>
+          Check-out instructions
+        </a>
+      </div>
     </nav>
-    <div class="nav-foot">
-      <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>Language</a>
-      <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .8-1 1.7"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/></svg>FAQs</a>
-      <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Privacy Policy</a>
+    <div class="nav-user">
+      <div class="nav-ava">CS</div>
+      <div class="nav-user-info">
+        <div class="nav-user-name">Carmen Specimen</div>
+        <div class="nav-user-mail">carmen@email.com</div>
+      </div>
     </div>
   </aside>
 
