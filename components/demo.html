@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chekin components — demo</title>
+<script src="./chekin-navbar.js" defer></script>
+<script src="./chekin-vela.js" defer></script>
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; }
+  body{ font-family:'Montserrat',sans-serif; color:#07154d;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%);
+    background-attachment:fixed; min-height:100vh; }
+  .main{ margin-left:288px; margin-right:380px; padding:48px 56px 96px; }
+  h1{ font-size:34px; font-weight:800; letter-spacing:-.02em; }
+  @media (max-width:1279px){ .main{ margin-right:0; } }
+  @media (max-width:767px){ .main{ margin-left:0; padding:28px 20px; } }
+</style>
+</head>
+<body>
+  <chekin-navbar active="registration"></chekin-navbar>
+
+  <main class="main">
+    <h1>Component demo</h1>
+    <p>The navbar and Vela panel are rendered entirely by the reusable components.</p>
+  </main>
+
+  <chekin-vela
+    intro="I can help you fill in your details, explain why each field is needed, and get you checked in faster."
+    reco-title="Smart tips" reco-icon="sun"
+    reco-subtitle="Suggestions to complete your registration without mistakes.">
+    <script type="application/json">
+    [
+      {"chip":"Heads up","reason":"Spanish nationality","strong":"Add your second last name","text":"Spain requires both surnames on official guest records."},
+      {"chip":"Tip","reason":"Faster check-in","strong":"Use your passport","text":"Pick the same document you'll show on arrival to avoid delays."},
+      {"icon":"doc","title":"What documents work?","subtitle":"Passport, ID or license","button":"Ask"},
+      {"icon":"clock-alt","title":"When is this due?","subtitle":"Before arrival day","button":"Ask"}
+    ]
+    </script>
+  </chekin-vela>
+</body>
+</html>

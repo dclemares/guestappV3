@@ -33,102 +33,6 @@ body{
 .app{ min-height:100vh; }
 .main{ margin-left:288px; margin-right:380px; padding:52px 64px 96px; }
 
-/* ============ LEFT NAVBAR (matches landing) ============ */
-.nav{
-  position:fixed; top:0; left:0; bottom:0; width:288px; z-index:40;
-  display:flex; flex-direction:column; padding:20px 16px;
-  background:rgba(20,20,58,.85); backdrop-filter:blur(18px) saturate(1.3);
-  box-shadow:inset -1px 0 0 rgba(255,255,255,.08); color:#fff;
-}
-.brand{ display:flex; align-items:center; gap:13px; padding:2px 6px 0; margin-bottom:26px; }
-.brand-logo{ width:46px; height:46px; border-radius:13px; flex:none; background:#fff;
-  display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(56,91,248,.3); }
-.brand-logo svg{ width:26px; height:26px; color:var(--blue); }
-.brand-name{ font-weight:700; font-size:16px; letter-spacing:-.17px; color:#fff; }
-
-.nav-menu{ display:flex; flex-direction:column; gap:4px; }
-.nav-group{ margin-top:18px; display:flex; flex-direction:column; gap:4px; }
-.nav-label{ padding:0 14px; margin-bottom:6px; font-size:10px; font-weight:600;
-  letter-spacing:.126em; text-transform:uppercase; color:rgba(255,255,255,.38); }
-.nav-item{ position:relative; display:flex; align-items:center; gap:13px;
-  padding:11px 14px; border-radius:12px; color:rgba(255,255,255,.8); font-weight:600;
-  font-size:14.5px; letter-spacing:-.145px; text-decoration:none; cursor:pointer;
-  transition:background .15s ease, color .15s ease; }
-.nav-item svg{ width:20px; height:20px; flex:none; stroke-width:1.9; color:rgba(255,255,255,.72); }
-.nav-item:hover{ background:rgba(255,255,255,.06); color:#fff; }
-.nav-item:hover svg{ color:#fff; }
-.nav-item.active{ background:linear-gradient(90deg,rgba(56,91,248,.5),rgba(56,91,248,.3));
-  color:#fff; font-weight:700; box-shadow:0 8px 18px rgba(56,91,248,.3); }
-.nav-item.active svg{ color:#fff; }
-.nav-badge{ margin-left:auto; height:23px; padding:0 9px; border-radius:999px;
-  display:inline-flex; align-items:center; font-size:11.5px; font-weight:700;
-  background:rgba(120,140,255,.16); color:#c5ccfb; }
-.nav-badge.teal{ background:rgba(53,229,188,.16); color:var(--teal); }
-
-.nav-user{ margin-top:auto; display:flex; align-items:center; gap:11px;
-  padding:16px 10px 4px; border-top:1px solid rgba(255,255,255,.08); }
-.nav-ava{ width:40px; height:40px; flex:none; border-radius:50%; background:rgba(255,255,255,.1);
-  display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:600; color:#fff; }
-.nav-user-info{ min-width:0; }
-.nav-user-name{ font-size:13.5px; font-weight:600; color:#fff; }
-.nav-user-mail{ font-size:11.5px; font-weight:400; color:rgba(255,255,255,.5);
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-
-/* ============ RIGHT VELA PANEL ============ */
-.vela{ position:fixed; top:22px; right:22px; bottom:0; width:345px; z-index:40;
-  border:1px solid rgba(255,255,255,.6); border-radius:26px 26px 0 0;
-  background:rgba(248,250,255,.80); backdrop-filter:blur(26px) saturate(1.7);
-  box-shadow:0 30px 72px rgba(18,30,78,.22); overflow:hidden;
-  display:flex; flex-direction:column; }
-.vela-inner{ position:absolute; top:24px; bottom:24px; left:24px; right:22px;
-  display:flex; flex-direction:column; min-height:0; }
-.vela-avatar{ position:absolute; top:0; left:0; width:44px; height:44px; border-radius:50%;
-  background:linear-gradient(145deg,var(--blue-deep),var(--blue-2)); display:flex;
-  align-items:center; justify-content:center; box-shadow:0 10px 24px rgba(18,75,255,.22); z-index:3; }
-.vela-avatar svg{ width:27px; height:27px; color:#fff; }
-.online-dot{ position:absolute; right:-1px; bottom:2px; width:13px; height:13px; border-radius:50%;
-  background:#16c875; border:2px solid #fff; }
-.vela-title-row{ display:flex; align-items:center; gap:10px; min-height:44px; padding-left:56px; margin-bottom:13px; }
-.vela-title{ margin:0; font-size:21px; font-weight:700; letter-spacing:-.035em; }
-.vela-badge{ height:23px; padding:0 9px; border-radius:999px; display:inline-flex; align-items:center;
-  background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:11px; font-weight:700; }
-.vela-intro{ margin:0 0 16px; max-width:280px; font-size:12.6px; line-height:1.5; font-weight:500; color:#48547f; }
-.vela-divider{ height:1px; width:100%; margin:0 0 16px; background:rgba(203,214,236,.82); }
-.vela-scroll{ flex:1; min-height:0; overflow-y:auto; padding-right:4px; scrollbar-width:none; }
-.vela-scroll::-webkit-scrollbar{ display:none; }
-.rec-title{ display:flex; align-items:center; gap:9px; margin-bottom:6px; font-size:13.2px; font-weight:700; }
-.rec-title svg{ width:14px; height:14px; color:var(--blue-deep); }
-.rec-sub{ margin:0 0 14px; padding-left:23px; font-size:11.8px; line-height:1.42; font-weight:500; color:#65709a; }
-.insight-card{ padding:11px; border:1px solid rgba(214,224,246,.74); border-radius:13px;
-  background:rgba(255,255,255,.55); margin-bottom:10px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.76),0 6px 16px rgba(23,42,96,.028); }
-.insight-top{ display:flex; align-items:center; gap:7px; margin-bottom:8px; }
-.insight-chip{ height:20px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center;
-  background:rgba(18,75,255,.07); color:var(--blue-deep); font-size:10px; font-weight:700; }
-.insight-reason{ font-size:10.5px; font-weight:700; color:#7881aa; }
-.insight-text{ margin:0; font-size:12.2px; line-height:1.44; font-weight:500; color:#303b68; }
-.insight-text strong{ display:block; margin-bottom:3px; font-size:12.4px; font-weight:700; color:var(--navy); }
-.action-card{ width:100%; min-height:46px; border:1px solid rgba(216,226,245,.86); border-radius:10px;
-  background:rgba(255,255,255,.66); display:flex; align-items:center; padding:7px 9px; gap:9px; margin-bottom:9px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.76); }
-.ac-icon{ width:25px; height:25px; border-radius:7px; flex:none; display:flex; align-items:center; justify-content:center;
-  color:#14266f; background:rgba(56,91,248,.10); }
-.ac-icon svg{ width:16px; height:16px; stroke-width:1.85; }
-.ac-copy{ flex:1; min-width:0; }
-.ac-title{ display:block; font-size:12.6px; font-weight:700; letter-spacing:-.012em; }
-.ac-sub{ display:block; margin-top:2px; font-size:11px; font-weight:500; color:#5a6695; }
-.ac-btn{ height:29px; min-width:54px; border:1px solid #d3def4; border-radius:8px; background:rgba(255,255,255,.74);
-  color:var(--blue-deep); font-size:11.6px; font-weight:700; cursor:pointer; }
-.vela-chatbar{ flex:none; height:50px; margin-top:10px; padding:7px 8px 7px 14px; border:1px solid #d4dff4;
-  border-radius:11px; background:rgba(255,255,255,.82); display:flex; align-items:center; gap:10px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 8px 20px rgba(23,42,96,.055); }
-.vela-chatbar input{ flex:1; min-width:0; height:100%; border:0; outline:0; background:transparent;
-  font:inherit; font-size:12px; font-weight:400; color:#17245d; }
-.vela-chatbar input::placeholder{ color:var(--grey); }
-.send-btn{ width:36px; height:36px; flex:none; border:0; border-radius:9px; background:var(--blue-deep);
-  color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
-.send-btn svg{ width:17px; height:17px; stroke-width:2; }
-
 /* ============ CENTER FORM (V2 · MINIMAL) ============ */
 .form-head{ margin-bottom:30px; }
 .form-kicker{ font-size:11.5px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--grey-soft); }
@@ -222,72 +126,14 @@ textarea.control{ height:auto; resize:vertical; min-height:40px; }
   .grid{ grid-template-columns:1fr; }
 }
 </style>
+<script src="../../components/chekin-navbar.js" defer></script>
+<script src="../../components/chekin-vela.js" defer></script>
 </head>
 <body>
 <div class="app">
 
   <!-- LEFT NAVBAR -->
-  <aside class="nav">
-    <div class="brand">
-      <div class="brand-logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
-      </div>
-      <div class="brand-name">Casa del Mar</div>
-    </div>
-    <nav class="nav-menu">
-      <a class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-        Home
-      </a>
-      <div class="nav-group">
-        <div class="nav-label">Before your stay</div>
-        <a class="nav-item active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/></svg>
-          Registration
-          <span class="nav-badge">2 left</span>
-        </a>
-        <a class="nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18"/></svg>
-          Payments
-          <span class="nav-badge">€340</span>
-        </a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-label">Your stay</div>
-        <a class="nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l2 2M14 9l2 2"/></svg>
-          Virtual keys
-        </a>
-        <a class="nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2M9 12h6"/></svg>
-          Luggage drop-off
-          <span class="nav-badge teal">NEW</span>
-        </a>
-        <a class="nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5Z"/><path d="M4 19a2 2 0 0 0 2 2h13"/></svg>
-          Guidebooks
-        </a>
-        <a class="nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.8 6.8 19.2l1-5.8L3.5 9.2l5.9-.9L12 3Z"/></svg>
-          Recommendations
-        </a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-label">Check-out</div>
-        <a class="nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>
-          Check-out instructions
-        </a>
-      </div>
-    </nav>
-    <div class="nav-user">
-      <div class="nav-ava">CS</div>
-      <div class="nav-user-info">
-        <div class="nav-user-name">Carmen Specimen</div>
-        <div class="nav-user-mail">carmen@email.com</div>
-      </div>
-    </div>
-  </aside>
+    <chekin-navbar active="registration"></chekin-navbar>
 
   <!-- CENTER FORM -->
   <main class="main">
@@ -435,48 +281,19 @@ textarea.control{ height:auto; resize:vertical; min-height:40px; }
   </main>
 
   <!-- RIGHT VELA PANEL -->
-  <aside class="vela">
-    <div class="vela-inner">
-      <div class="vela-avatar">
-        <svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>
-        <span class="online-dot"></span>
-      </div>
-      <div class="vela-title-row">
-        <h2 class="vela-title">Vela</h2>
-        <span class="vela-badge">Your AI assistant</span>
-      </div>
-      <p class="vela-intro">I can help you fill in your details, explain why each field is needed, and get you checked in faster.</p>
-      <div class="vela-divider"></div>
-      <div class="vela-scroll">
-        <div class="rec-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v2M12 19v2M5 5l1.4 1.4M17.6 17.6 19 19M3 12h2M19 12h2M5 19l1.4-1.4M17.6 6.4 19 5"/><circle cx="12" cy="12" r="3.4"/></svg>Smart tips</div>
-        <p class="rec-sub">Suggestions to complete your registration without mistakes.</p>
-
-        <div class="insight-card">
-          <div class="insight-top"><span class="insight-chip">Heads up</span><span class="insight-reason">Spanish nationality</span></div>
-          <p class="insight-text"><strong>Add your second last name</strong>Spain requires both surnames on official guest records.</p>
-        </div>
-        <div class="insight-card">
-          <div class="insight-top"><span class="insight-chip">Tip</span><span class="insight-reason">Faster check-in</span></div>
-          <p class="insight-text"><strong>Use your passport</strong>Pick the same document you'll show on arrival to avoid delays.</p>
-        </div>
-
-        <div class="action-card">
-          <span class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-          <span class="ac-copy"><span class="ac-title">What documents work?</span><span class="ac-sub">Passport, ID or license</span></span>
-          <button class="ac-btn">Ask</button>
-        </div>
-        <div class="action-card">
-          <span class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-          <span class="ac-copy"><span class="ac-title">When is this due?</span><span class="ac-sub">Before arrival day</span></span>
-          <button class="ac-btn">Ask</button>
-        </div>
-      </div>
-      <div class="vela-chatbar">
-        <input placeholder="Ask Vela anything…">
-        <button class="send-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-      </div>
-    </div>
-  </aside>
+    <chekin-vela
+    intro="I can help you fill in your details, explain why each field is needed, and get you checked in faster."
+    reco-title="Smart tips" reco-icon="sun"
+    reco-subtitle="Suggestions to complete your registration without mistakes.">
+    <script type="application/json">
+    [
+      {"chip":"Heads up","reason":"Spanish nationality","strong":"Add your second last name","text":"Spain requires both surnames on official guest records."},
+      {"chip":"Tip","reason":"Faster check-in","strong":"Use your passport","text":"Pick the same document you'll show on arrival to avoid delays."},
+      {"icon":"doc","title":"What documents work?","subtitle":"Passport, ID or license","button":"Ask"},
+      {"icon":"clock-alt","title":"When is this due?","subtitle":"Before arrival day","button":"Ask"}
+    ]
+    </script>
+  </chekin-vela>
 
 </div>
 
