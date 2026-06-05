@@ -530,7 +530,10 @@ html, body { height: 100%; margin: 0; }
 #lv2nav .nav-user-name{ font-size:13.5px; font-weight:600; color:#fff; }
 #lv2nav .nav-user-mail{ font-size:11.5px; font-weight:400; color:rgba(255,255,255,.5);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-/* hide auto-generated navbar content beneath the overlay; keep its 288px column as a spacer */
+/* hide auto-generated navbar content beneath the overlay; keep its 288px column as a spacer.
+   Transparent background so the translucent <chekin-navbar> shows the page gradient behind it
+   (matching the registration pages) instead of the column's dark fill. */
+.dc-card > div > div > div:nth-child(3){ background:transparent !important; }
 .dc-card > div > div > div:nth-child(3) > *{ visibility:hidden !important; }
 @media (max-width:767px){ #lv2nav{ display:none !important; } }
 
