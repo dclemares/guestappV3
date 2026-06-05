@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guest Summary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --blue:#385bf8; --blue-deep:#1047ff; --blue-2:#5d7cff;
+  --navy:#07154d; --navy-2:#161643;
+  --teal:#35e5bc; --green:#29d0b3; --amber:#f7b955;
+  --grey:#6b6b95; --grey-soft:#9696b9;
+  --line:#dedeeb; --line-soft:#e9edf6;
+  --bg:#f4f6f8; --card:#ffffff;
+  --font:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --font-2:'Poppins',sans-serif;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; min-height:100%; }
+body{
+  font-family:var(--font); color:var(--navy);
+  background:
+    radial-gradient(circle 280px at 340px 120px, rgba(56,91,248,.10), rgba(56,91,248,0) 72%),
+    linear-gradient(160deg, #eef2fa 0%, #f7f8fb 58%, #eef1f7 100%);
+  background-attachment:fixed; background-repeat:no-repeat;
+  -webkit-font-smoothing:antialiased;
+}
+button{ font:inherit; }
+.app{ min-height:100vh; }
+.main{ margin-left:288px; margin-right:380px; padding:42px 48px 88px; }
+.summary-shell{ width:min(100%, 680px); }
+
+.page-head{ margin-bottom:22px; }
+.kicker{ font-size:10.5px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--blue); }
+h1{ margin:8px 0 7px; font-size:27px; line-height:1.12; font-weight:800; }
+.intro{ margin:0; max-width:470px; font-family:var(--font-2); font-size:13px; line-height:1.5; color:var(--grey); }
+
+.section{
+  margin-top:18px; border:1px solid rgba(255,255,255,.75); border-radius:18px; background:rgba(255,255,255,.60);
+  overflow:hidden; box-shadow:0 10px 30px rgba(22,40,90,.10);
+}
+.section-head{ min-height:48px; padding:0 18px; display:flex; align-items:center; border-bottom:1px solid rgba(214,222,242,.72); background:rgba(255,255,255,.50); }
+.section-title{ display:flex; align-items:center; gap:10px; margin:0; font-size:13px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#4f5b86; }
+.section-title svg{ width:17px; height:17px; color:var(--blue); stroke-width:2; }
+.guest-list{ display:flex; flex-direction:column; }
+
+.guest-row{
+  position:relative; min-height:58px; padding:0; display:flex; align-items:stretch; justify-content:space-between; gap:0;
+  border:0; border-bottom:1px solid rgba(233,237,246,.82); background:transparent; color:inherit;
+}
+.guest-row:last-child{ border-bottom:0; }
+.guest-row.complete::before,
+.guest-row.incomplete::before{
+  content:""; position:absolute; left:0; top:0; bottom:0; width:5px; z-index:2;
+}
+.guest-row.complete::before{ background:#35e5bc; }
+.guest-row.incomplete::before{ background:#f0ad4e; }
+.guest-action-row{ width:100%; text-align:left; cursor:pointer; transition:background .15s ease; }
+.guest-action-row:hover{ background:rgba(247,185,85,.055); }
+.guest-main{ flex:1; display:flex; align-items:center; gap:10px; min-width:0; padding:0 18px 0 30px; }
+.guest-name{ margin:0; font-size:14px; line-height:1.25; font-weight:800; color:var(--navy); }
+.guest-side{
+  align-self:stretch; width:238px; display:flex; flex-direction:column; align-items:flex-end; justify-content:center;
+  gap:4px; flex:none; padding:0 18px 0 72px;
+  clip-path:polygon(22px 0, 100% 0, 100% 100%, 0 100%);
+}
+.complete .guest-side{ background:linear-gradient(111deg, rgba(53,229,188,0) 0%, rgba(53,229,188,0) 24%, rgba(53,229,188,.34) 56%, rgba(53,229,188,.82) 78%, rgba(53,229,188,1) 100%); }
+.incomplete .guest-side{ background:linear-gradient(111deg, rgba(247,185,85,0) 0%, rgba(247,185,85,0) 24%, rgba(247,185,85,.36) 56%, rgba(247,185,85,.84) 78%, rgba(247,185,85,1) 100%); }
+.guest-state{
+  display:inline-flex; align-items:center; gap:6px; font-size:11px; line-height:1; font-weight:800; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap;
+}
+.guest-state svg{ width:13px; height:13px; stroke-width:2.4; }
+.guest-state.complete{ color:#12796a; }
+.guest-state.incomplete{ color:#875611; }
+.state-copy{
+  display:flex; flex-direction:column; align-items:flex-end; gap:2px; min-width:0;
+}
+.guest-side.with-action{
+  flex-direction:row; align-items:center; justify-content:flex-end; gap:10px;
+}
+.finish-copy{
+  display:inline-flex; align-items:center; color:#875611; font-size:12.2px; line-height:1.44; font-weight:500; letter-spacing:0; text-transform:none; white-space:nowrap;
+}
+.state-arrow{
+  width:17px; height:25px; flex:none; display:inline-block;
+  background:url("assets/flecha-correcta.png") center / contain no-repeat;
+  filter:brightness(0) saturate(100%) invert(31%) sepia(52%) saturate(952%) hue-rotate(359deg) brightness(89%) contrast(91%);
+  transform-origin:center; transition:transform .18s ease;
+  will-change:transform;
+}
+.guest-action-row:hover .state-arrow{ transform:scale(1.16); }
+.complete .guest-name{ color:#0b2550; }
+.incomplete .guest-name{ color:#0b2550; }
+.add-row{ width:100%; text-align:left; cursor:pointer; background:rgba(244,246,251,.74); transition:background .15s ease; }
+.add-row:hover{ background:rgba(236,241,250,.96); }
+.add-row{ min-height:58px; }
+.add-row .guest-main{ padding-left:30px; }
+.add-icon{
+  width:26px; height:26px; border-radius:8px; flex:none; display:flex; align-items:center; justify-content:center;
+  background:rgba(56,91,248,.10); color:var(--blue);
+}
+.add-icon svg{ width:15px; height:15px; stroke-width:2.2; }
+.add-title{ display:block; font-size:13.5px; font-weight:700; color:var(--blue); }
+
+@media (max-width:1279px){
+  .main{ margin-right:0; }
+  .summary-shell{ width:min(100%, 760px); }
+}
+@media (max-width:767px){
+  .main{ margin-left:0; padding:26px 18px 72px; }
+  h1{ font-size:25px; }
+  .guest-row{ min-height:auto; align-items:stretch; flex-direction:column; }
+  .guest-main{ min-height:58px; }
+  .guest-side{ width:100%; min-height:40px; align-items:flex-start; padding:0 18px 0 30px; clip-path:none; }
+}
+</style>
+<script src="../components/chekin-navbar.js" defer></script>
+<script src="../components/chekin-vela.js" defer></script>
+</head>
+<body>
+<div class="app">
+  <chekin-navbar active="registration"></chekin-navbar>
+
+  <main class="main">
+    <div class="summary-shell">
+      <header class="page-head">
+        <div>
+          <div class="kicker">Guest Summary</div>
+          <h1>Guests for this booking</h1>
+          <p class="intro">Manage who is staying at Casa del Mar and make sure every guest is ready before arrival.</p>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 4 3 6 6 .8-4.4 4.2 1.1 6-5.7-2.9L6.3 21l1.1-6L3 10.8 9 10l3-6Z"/></svg>
+            Responsible for booking
+          </h2>
+        </div>
+        <div class="guest-list">
+          <article class="guest-row complete">
+            <div class="guest-main">
+              <h3 class="guest-name">Daniel Clemares Faerna</h3>
+            </div>
+            <div class="guest-side">
+              <span class="guest-state complete">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8"/><path d="m8.5 12.2 2.3 2.3 4.8-5"/></svg>
+                Complete
+              </span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>
+            Other guests
+          </h2>
+        </div>
+        <div class="guest-list">
+          <button class="guest-row guest-action-row incomplete" type="button" aria-label="Finish registration for Marta Garcia Lopez">
+            <div class="guest-main">
+              <h3 class="guest-name">Marta Garcia Lopez</h3>
+            </div>
+            <div class="guest-side with-action">
+              <span class="state-copy">
+                <span class="guest-state incomplete">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>
+                  Incomplete
+                </span>
+                <span class="finish-copy">Finish registration</span>
+              </span>
+              <span class="state-arrow" aria-hidden="true"></span>
+            </div>
+          </button>
+          <button class="guest-row add-row" type="button">
+            <span class="guest-main">
+              <span class="add-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg></span>
+              <span class="add-title">Add guest</span>
+            </span>
+          </button>
+          <button class="guest-row add-row" type="button">
+            <span class="guest-main">
+              <span class="add-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg></span>
+              <span class="add-title">Add guest</span>
+            </span>
+          </button>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.5"/><path d="M5 21c.8-4.1 3.3-6.2 7-6.2s6.2 2.1 7 6.2"/><path d="M8 3.8C8.9 2.7 10.3 2 12 2s3.1.7 4 1.8"/></svg>
+            Minors - under 18
+          </h2>
+        </div>
+        <div class="guest-list">
+          <button class="guest-row add-row" type="button">
+            <span class="guest-main">
+              <span class="add-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg></span>
+              <span class="add-title">Add guest</span>
+            </span>
+          </button>
+          <button class="guest-row add-row" type="button">
+            <span class="guest-main">
+              <span class="add-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg></span>
+              <span class="add-title">Add guest</span>
+            </span>
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <chekin-vela
+    intro="I can help you invite guests, finish pending forms, and keep the booking ready before arrival."
+    reco-title="Register every guest before arrival." reco-icon="sparkle"
+    reco-subtitle="The host needs a complete guest list before check-in so arrival can stay smooth.">
+    <script type="application/json">
+    [
+      {"chip":"Pending","reason":"5 guests","strong":"5 guests still need to complete registration.","text":" Share the booking or finish their forms before arrival."},
+      {"strong":"Minors have a lighter flow.","text":" Minors only fill the guest form - identity verification isn't required."},
+      {"icon":"users","title":"Change guest count","subtitle":"Adults and minors","button":"Edit"},
+      {"icon":"share","title":"Share booking","subtitle":"Send the registration link","button":"Share"}
+    ]
+    </script>
+  </chekin-vela>
+</div>
+
+</body>
+</html>

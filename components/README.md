@@ -108,7 +108,7 @@ card) — or a top-level `icon/title/subtitle/price/button` for a standalone
 action card.
 
 **Built-in icons:** `book`, `lock`, `car`, `clock`, `doc`, `clock-alt`,
-`parking`, `sun`, `sparkle`.
+`parking`, `users`, `share`, `sun`, `sparkle`.
 
 ```html
 <chekin-vela intro="I can help with your stay." reco-title="Vela recommends">
