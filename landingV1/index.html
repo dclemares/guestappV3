@@ -588,8 +588,17 @@ html, body { height: 100%; margin: 0; }
             '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8.2 2.7c.48 2.88 2.33 4.73 5.2 5.2-2.87.49-4.72 2.33-5.2 5.22C7.72 10.23 5.87 8.38 3 7.9c2.87-.47 4.72-2.32 5.2-5.2Z" fill="currentColor"/><path d="M14.9 10.8c.25 1.52 1.22 2.49 2.74 2.74-1.52.26-2.49 1.23-2.74 2.75-.25-1.52-1.23-2.5-2.75-2.75 1.52-.25 2.5-1.22 2.75-2.74Z" fill="currentColor"/></svg>'+
             'Vela recommends'+
           '</div>'+
+          '<p class="recommendations-subtitle">Useful options before you arrive.</p>'+
         '</header>'+
         '<div class="insight-list">'+
+          insight('Helpful info','Before arrival','Review the property guidebook.',' It includes house rules, access details, and key property information.',
+            card(IC_BOOK,'Property guidebook','Key information','','Open'))+
+          insight('Arrival detected','More flexibility','Early access may be useful.',' Your arrival time fits an early check-in so you can settle in calmly.',
+            card(IC_LOCK,'Early check-in','Access from 11:00','<span class="price">€25</span>','Add'))+
+          insight('Suggested route','From the airport','You are arriving from the airport.',' A direct transfer can avoid waits and connections on the way to the property.',
+            card(IC_CAR,'Airport transfer','Direct ride','<span class="price">€45</span>','Book'))+
+          insight('Optimized departure','Extra time','More time may help on departure day.',' A late check-out gives you extra time to pack and leave without rushing.',
+            card(IC_CLOCK,'Late check-out','Stay until 14:00','<span class="price">€30</span>','Add'))+
         '</div>'+
       '</section>'+
     '</div>'+
