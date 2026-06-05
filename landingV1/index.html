@@ -798,15 +798,14 @@ html, body { height: 100%; margin: 0; }
 
 <chekin-navbar active="registration"></chekin-navbar>
 <chekin-vela
-  intro="I can help you fill in your details, explain why each field is needed, and get you checked in faster."
-  reco-title="Smart tips" reco-icon="sun"
-  reco-subtitle="Suggestions to complete your registration without mistakes.">
+  intro="I can help with arrival, property details, transport, and recommendations for a smoother stay."
+  reco-title="Vela recommends">
   <script type="application/json">
   [
-    {"chip":"Heads up","reason":"Spanish nationality","strong":"Add your second last name","text":"Spain requires both surnames on official guest records."},
-    {"chip":"Tip","reason":"Faster check-in","strong":"Use your passport","text":"Pick the same document you'll show on arrival to avoid delays."},
-    {"icon":"doc","title":"What documents work?","subtitle":"Passport, ID or license","button":"Ask"},
-    {"icon":"clock-alt","title":"When is this due?","subtitle":"Before arrival day","button":"Ask"}
+    {"strong":"Review the property guidebook.","text":" It includes house rules, access details, and key property information.","action":{"icon":"book","title":"Property guidebook","subtitle":"Key information","button":"Open"}},
+    {"strong":"Early access may be useful.","text":" Your arrival time fits an early check-in so you can settle in calmly.","action":{"icon":"lock","title":"Early check-in","subtitle":"Access from 11:00","price":"€25","button":"Add"}},
+    {"strong":"If you are arriving from the airport.","text":" A direct transfer can avoid waits and connections on the way to the property.","action":{"icon":"car","title":"Airport transfer","subtitle":"Direct ride","price":"€45","button":"Book"}},
+    {"strong":"Driving to the property?","text":" Reserve a parking spot so you have a guaranteed space when you arrive.","action":{"icon":"parking","title":"Parking spot","subtitle":"On-site, per night","price":"€15","button":"Add"}}
   ]
   </script>
 </chekin-vela>
