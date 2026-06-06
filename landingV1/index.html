@@ -871,4 +871,17 @@ html, body { height: 100%; margin: 0; }
   </script>
 </chekin-vela>
 
+<script id="chk-header-typo">
+(function(){
+  function find(t){return Array.from(document.querySelectorAll('span')).find(function(e){return e.children.length===0&&e.textContent.trim()===t;});}
+  function set(el,st){if(el){for(var k in st){el.style.setProperty(k,st[k],'important');}}}
+  function apply(){
+    set(find('Welcome back'),{'font-size':'12px','font-weight':'700','letter-spacing':'.14em'});
+    set(find("Hi, let's check you in"),{'font-size':'34px','font-weight':'800','letter-spacing':'-.02em','line-height':'1.1'});
+    set(find('Complete the steps below before you arrive at the property.'),{'font-size':'15px','line-height':'1.5'});
+  }
+  if(document.readyState!=='loading'){apply();}else{document.addEventListener('DOMContentLoaded',apply);}
+  setTimeout(apply,400);setTimeout(apply,1500);
+})();
+</script>
 </body></html>
