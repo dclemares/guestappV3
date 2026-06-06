@@ -296,14 +296,13 @@ html, body { height: 100%; margin: 0; }
 .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1),
 .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) { height: auto !important; padding-top: 16px !important; padding-bottom: 16px !important; box-sizing: border-box !important; }
 /* Landing journey: visual gap and timeline icon alignment */
-.landing-timeline-host{ position:relative !important; }
-.landing-timeline-spine{ position:absolute !important; width:2px !important; border-radius:999px !important; background:rgba(120,130,175,.3) !important; pointer-events:none !important; z-index:0 !important; }
 .landing-journey-head{ margin-top:52px !important; }
 .landing-progress-count{ display:none !important; }
 .landing-step-rail{ position:relative !important; display:block !important; width:48px !important; flex:0 0 48px !important; align-items:normal !important; justify-content:normal !important; }
 .landing-step-rail > :first-child{ position:absolute !important; left:0 !important; top:50% !important; transform:translateY(-50%) !important; z-index:2 !important; display:grid !important; place-items:center !important; }
-.landing-step-rail > :nth-child(2){ display:none !important; }
+.landing-step-rail > :nth-child(2){ position:absolute !important; left:23px !important; top:calc(50% + 24px) !important; bottom:-30px !important; height:auto !important; margin:0 !important; z-index:1 !important; }
 .landing-step-rail--header > :first-child{ top:15px !important; transform:none !important; }
+.landing-step-rail--header > :nth-child(2){ top:63px !important; bottom:-38px !important; }
 /* progressive collapse: hide right navbar when space is tight */
 @media (max-width: 1279px) {
   .dc-card > div > div > div:nth-child(5) { display: none !important; }
@@ -626,39 +625,6 @@ html, body { height: 100%; margin: 0; }
     row.children[0].classList.add('landing-step-rail');
     if(modifier){ row.children[0].classList.add(modifier); }
   }
-  function drawSpine(rows){
-    rows=rows.filter(Boolean);
-    if(rows.length<2) return;
-    var host=rows[0].parentElement;
-    var firstIcon=rows[0].children[0] && rows[0].children[0].children[0];
-    var lastIcon=rows[rows.length-1].children[0] && rows[rows.length-1].children[0].children[0];
-    if(!host || !firstIcon || !lastIcon) return;
-    host.classList.add('landing-timeline-host');
-    var spine=host.querySelector('.landing-timeline-spine');
-    if(!spine){
-      spine=document.createElement('span');
-      spine.className='landing-timeline-spine';
-      spine.setAttribute('aria-hidden','true');
-      host.insertBefore(spine, rows[0]);
-    }
-    var hr=host.getBoundingClientRect();
-    var fr=firstIcon.getBoundingClientRect();
-    var lr=lastIcon.getBoundingClientRect();
-    var firstCenterY=fr.top + fr.height/2;
-    var lastCenterY=lr.top + lr.height/2;
-    spine.style.left=((fr.left + fr.width/2 - hr.left) - 1) + 'px';
-    spine.style.top=(firstCenterY - hr.top) + 'px';
-    spine.style.height=(lastCenterY - firstCenterY) + 'px';
-  }
-  var resizeBound=false;
-  function scheduleSpine(rows){
-    requestAnimationFrame(function(){ drawSpine(rows); });
-    setTimeout(function(){ drawSpine(rows); }, 350);
-    if(!resizeBound){
-      resizeBound=true;
-      window.addEventListener('resize', function(){ requestAnimationFrame(function(){ drawSpine(rows); }); });
-    }
-  }
   function tune(){
     var title=leaf('Your check-in journey');
     if(!title){ return setTimeout(tune,200); }
@@ -668,15 +634,9 @@ html, body { height: 100%; margin: 0; }
     var count=leafMatch(/^\d+\s+of\s+2\s+done$/i);
     if(count && count.parentElement){ count.parentElement.classList.add('landing-progress-count'); }
 
-    var rows=[
-      cardRowFrom(leaf('Guest registration')),
-      cardRowFrom(leaf('Tourist tax & deposit')),
-      cardRowFrom(leaf('Get your digital key'))
-    ];
-    markRail(rows[0]);
-    markRail(rows[1], 'landing-step-rail--header');
-    markRail(rows[2]);
-    scheduleSpine(rows);
+    markRail(cardRowFrom(leaf('Guest registration')));
+    markRail(cardRowFrom(leaf('Tourist tax & deposit')), 'landing-step-rail--header');
+    markRail(cardRowFrom(leaf('Get your digital key')));
   }
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',tune); } else { tune(); }
 })();
