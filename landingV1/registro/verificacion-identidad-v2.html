@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guest Registration — Guest App V3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --blue:#385bf8; --blue-deep:#1047ff; --blue-2:#5d7cff;
+  --navy:#07154d; --navy-2:#161643;
+  --teal:#35e5bc; --green:#29d0b3; --green-deep:#12796a; --cap-green:#0f9f80; --amber:#f7b955;
+  --grey:#6b6b95; --grey-soft:#9696b9;
+  --line:#dedeeb; --line-soft:#e9edf6;
+  --bg:#f4f6f8; --card:#ffffff;
+  --frame-1:#0f1b3d; --frame-2:#1c2c57;
+  --font:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --font-2:'Poppins',sans-serif;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; min-height:100%; }
+body{
+  font-family:var(--font); color:var(--navy);
+  background:
+    radial-gradient(circle 280px at 340px 120px, rgba(56,91,248,.10), rgba(56,91,248,0) 72%),
+    linear-gradient(160deg, #eef2fa 0%, #f7f8fb 58%, #eef1f7 100%);
+  background-attachment:fixed; background-repeat:no-repeat;
+  -webkit-font-smoothing:antialiased;
+}
+button{ font:inherit; }
+
+/* ============ LAYOUT (como v1-cards) ============ */
+.app{ min-height:100vh; }
+.main{ margin-left:288px; margin-right:380px; padding:48px 56px 96px; }
+.verif-shell{ width:min(100%, 680px); }
+
+/* ============ TOP BAR (solo "Skip this step") ============ */
+.v-top{ display:flex; align-items:center; justify-content:flex-end; min-height:22px; margin-bottom:14px; }
+.v-skip{ font-size:12.5px; font-weight:600; color:var(--grey-soft); text-decoration:underline; text-underline-offset:3px;
+  background:none; border:0; cursor:pointer; padding:4px 2px; }
+.v-skip:hover{ color:var(--grey); }
+.v-skip.is-hidden{ visibility:hidden; }
+
+/* ============ SCREENS ============ */
+.screen{ display:none; animation:fade .32s ease; }
+.screen.active{ display:block; }
+@keyframes fade{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+
+/* ============ PAGE HEAD (como v1-cards) ============ */
+.page-head{ margin-bottom:22px; }
+.kicker{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+.page-head h1{ margin:10px 0 8px; font-size:34px; line-height:1.1; font-weight:800; letter-spacing:-.02em; }
+.page-head h1 .accent{ color:var(--blue); }
+.page-head .intro{ margin:0; max-width:480px; font-family:var(--font-2); font-size:15px; line-height:1.5; color:var(--grey); }
+
+/* ============ JOURNEY RAIL (estilo check-in journey de la landing) ============ */
+.journey{ display:flex; flex-direction:column; gap:18px; margin-top:6px; }
+.j-step{ position:relative; display:flex; align-items:stretch; gap:18px; }
+.j-rail{ position:relative; flex:none; width:48px; display:flex; align-items:center; justify-content:center; }
+.j-step:not(:last-child) .j-rail::after{ content:""; position:absolute; top:calc(50% + 30px); bottom:calc(-50% + 12px); left:50%; transform:translateX(-50%);
+  width:2px; background:rgba(56,91,248,.18); z-index:1; }
+.j-node{ width:48px; height:48px; flex:none; border-radius:50%; background:rgba(56,91,248,.15); border:1px solid rgba(56,91,248,.28);
+  box-shadow:0 0 0 5px rgba(56,91,248,.10); display:flex; align-items:center; justify-content:center; color:var(--blue); z-index:2; }
+.j-node svg{ width:22px; height:22px; stroke-width:1.9; }
+.j-card{ flex:1; min-width:0; background:rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.75); border-radius:18px;
+  box-shadow:0 10px 30px rgba(22,40,90,.10); padding:18px 22px; }
+.j-card b{ display:block; font-size:16px; font-weight:800; color:var(--navy-2); }
+.j-card span{ display:block; margin-top:4px; font-size:13px; line-height:1.5; color:var(--grey); font-family:var(--font-2); }
+
+/* ============ SECTION CARD (glass) ============ */
+.section{
+  margin-top:18px; border:1px solid rgba(255,255,255,.75); border-radius:18px; background:rgba(255,255,255,.60);
+  overflow:hidden; box-shadow:0 10px 30px rgba(22,40,90,.10);
+}
+.section-head{ min-height:48px; padding:0 18px; display:flex; align-items:center; border-bottom:1px solid rgba(214,222,242,.72); background:rgba(255,255,255,.50); }
+.section-title{ display:flex; align-items:center; gap:10px; margin:0; font-size:13px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#4f5b86; }
+.section-title svg{ width:17px; height:17px; color:var(--blue); stroke-width:2; }
+
+/* ============ DOCUMENT ROWS ============ */
+.opt-list{ display:flex; flex-direction:column; }
+.opt-row{ position:relative; display:flex; align-items:center; gap:14px; min-height:66px; padding:14px 18px;
+  border-bottom:1px solid rgba(233,237,246,.82); }
+.opt-row:last-child{ border-bottom:0; }
+.opt-ic{ width:44px; height:44px; flex:none; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  background:rgba(56,91,248,.10); color:var(--blue); }
+.opt-ic svg{ width:22px; height:22px; stroke-width:1.9; }
+.doc-opt{ cursor:pointer; transition:background .15s ease; }
+.doc-opt:hover{ background:rgba(56,91,248,.04); }
+.doc-opt .opt-name{ flex:1; font-size:14.5px; font-weight:800; color:var(--navy-2); }
+.doc-radio{ width:22px; height:22px; flex:none; border-radius:50%; border:2px solid var(--line);
+  display:flex; align-items:center; justify-content:center; transition:all .15s ease; }
+.doc-radio::after{ content:""; width:11px; height:11px; border-radius:50%; background:var(--blue);
+  transform:scale(0); transition:transform .15s ease; }
+.doc-opt.selected{ background:rgba(56,91,248,.06); }
+.doc-opt.selected::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--blue); }
+.doc-opt.selected .doc-radio{ border-color:var(--blue); }
+.doc-opt.selected .doc-radio::after{ transform:scale(1); }
+
+/* ============ CTA (centrado) ============ */
+.v-cta{ display:flex; align-items:center; justify-content:center; gap:9px; width:100%; max-width:340px;
+  height:52px; margin:24px auto 0; border:0; border-radius:9999px;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-2)); color:#fff; font-size:15px; font-weight:700;
+  cursor:pointer; box-shadow:0 14px 28px -12px rgba(16,71,255,.55);
+  transition:transform .12s ease, box-shadow .12s ease; }
+.v-cta:hover{ transform:translateY(-1px); box-shadow:0 18px 34px -12px rgba(16,71,255,.6); }
+.v-cta svg{ width:18px; height:18px; stroke-width:2.4; }
+
+/* ============ UNDER-18 ============ */
+.intro-foot{ display:flex; flex-direction:column; gap:9px; margin-top:16px; align-items:center; }
+.foot-strong{ font-size:13.5px; font-weight:700; color:var(--blue); cursor:pointer; }
+.foot-strong:hover{ opacity:.82; }
+.minor-note{ display:none; align-items:flex-start; gap:9px; margin:14px auto 0; padding:13px 16px; border-radius:14px;
+  background:rgba(41,208,179,.12); color:var(--green-deep); font-size:12.5px; font-weight:600; line-height:1.45; max-width:470px; }
+.minor-note.show{ display:flex; }
+.minor-note svg{ width:17px; height:17px; flex:none; margin-top:1px; }
+
+/* ============ PROGRESO DE VERIFICACIÓN (dentro de Vela) ============ */
+.vela-prog{ margin:0; }
+.vela-prog-steps{ display:flex; align-items:center; gap:0; margin-top:12px; padding:0 8px; }
+chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
+.vp-node{ position:relative; z-index:2; width:34px; height:34px; flex:none; border-radius:50%; background:#e3e8fe; border:1px solid rgba(56,91,248,.28);
+  box-shadow:0 0 0 4px #eef1fe; display:flex; align-items:center; justify-content:center; color:#385bf8; transition:all .25s ease; }
+.vp-node svg{ width:16px; height:16px; stroke-width:2; }
+.vp-node.active{ background:#385bf8; border-color:#385bf8; color:#fff; box-shadow:0 0 0 4px #dbe1fe; animation:vp-pulse 1.6s ease-in-out infinite; }
+.vp-node.done{ background:#dcf3ec; border-color:transparent; color:#0f9f80; box-shadow:0 0 0 4px #e7f5f2; }
+.vp-conn{ position:relative; z-index:1; flex:1; height:3px; background:#e3e6f0; border-radius:2px; overflow:hidden; }
+.vp-fill{ height:100%; width:0; border-radius:2px; background:#385bf8; transition:width .12s linear; }
+.vp-fill.done{ background:#0f9f80; transition:width .35s ease, background .3s ease; }
+@keyframes vp-pulse{ 0%,100%{ box-shadow:0 0 0 4px #d3dbfe; } 50%{ box-shadow:0 0 0 4px #e9ecfe; } }
+
+/* ============ CAMERA ============ */
+.cam-frame{ position:relative; width:100%; max-width:420px; margin:18px auto 0; aspect-ratio:4/3; border-radius:18px;
+  background:linear-gradient(150deg, var(--frame-1), var(--frame-2)); }
+.cam-frame.face{ background:linear-gradient(150deg,#8b8fa6,#9ea2b6); aspect-ratio:4/3.4; }
+.bracket{ position:absolute; width:28px; height:28px; border:2.6px solid #fff; }
+.bracket.tl{ top:15px; left:15px; border-right:0; border-bottom:0; border-top-left-radius:9px; }
+.bracket.tr{ top:15px; right:15px; border-left:0; border-bottom:0; border-top-right-radius:9px; }
+.bracket.bl{ bottom:15px; left:15px; border-right:0; border-top:0; border-bottom-left-radius:9px; }
+.bracket.br{ bottom:15px; right:15px; border-left:0; border-top:0; border-bottom-right-radius:9px; }
+.cam-guide{ position:absolute; inset:38px; border:1.6px dashed rgba(22,22,67,.40); border-radius:12px;
+  background:rgba(255,255,255,.55); display:flex; align-items:center; gap:18px; padding:20px 24px; }
+.guide-photo{ width:84px; height:108px; flex:none; border:1.5px solid rgba(22,22,67,.26); border-radius:9px;
+  background:rgba(255,255,255,.45); display:flex; align-items:center; justify-content:center; color:rgba(22,22,67,.34); }
+.guide-photo svg{ width:38px; height:38px; stroke-width:1.6; }
+.guide-lines{ flex:1; display:flex; flex-direction:column; gap:11px; }
+.guide-line{ height:11px; border-radius:6px; background:rgba(22,22,67,.18); }
+.cam-guide.back{ flex-direction:column; align-items:stretch; justify-content:center; gap:13px; }
+.back-block{ height:50px; border-radius:9px; background:rgba(22,22,67,.15); width:78%; }
+.mrz{ font-family:'Courier New', monospace; font-size:11.5px; letter-spacing:.6px; color:rgba(22,22,67,.5);
+  margin-top:6px; line-height:1.7; }
+.face-oval{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:46%; aspect-ratio:0.78; border:2.6px solid #fff; border-radius:50%;
+  background:rgba(255,255,255,.10); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.55); }
+.face-oval svg{ width:46%; height:46%; stroke-width:1.6; }
+.face-hint{ position:absolute; bottom:56px; left:0; right:0; text-align:center; color:#fff;
+  font-size:13.5px; font-weight:700; text-shadow:0 1px 6px rgba(0,0,0,.25); }
+.cam-status{ position:absolute; bottom:-18px; left:50%; transform:translateX(-50%);
+  display:inline-flex; align-items:center; gap:9px; padding:12px 22px; border-radius:9999px;
+  background:#fff; box-shadow:0 12px 26px -12px rgba(22,22,67,.4); white-space:nowrap;
+  font-size:14px; font-weight:700; color:var(--navy-2); }
+.cam-dot.cam-dot-wait{ background:var(--amber); box-shadow:0 0 0 4px rgba(247,185,85,.20); }
+.cam-dot{ width:9px; height:9px; border-radius:50%; background:var(--green); box-shadow:0 0 0 4px rgba(41,208,179,.18);
+  animation:pulse 1.1s ease infinite; }
+@keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.45; } }
+.cam-alt{ display:flex; align-items:center; justify-content:center; gap:8px; margin:34px 0 0;
+  font-size:13px; font-weight:600; color:var(--grey); }
+.cam-alt svg{ width:17px; height:17px; color:var(--grey-soft); stroke-width:1.9; }
+.cam-alt a{ color:var(--blue); font-weight:700; cursor:pointer; }
+.cam-alt a:hover{ opacity:.82; }
+.cam-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; border-radius:18px; }
+.cam-guide-empty{ border-color:rgba(20,30,70,.38); }
+.vela-qr-card .qr-box{ width:108px; height:108px; margin:12px auto 2px; padding:9px; background:#fff;
+  border:1px solid #e7e9f3; border-radius:12px; box-shadow:0 4px 14px rgba(22,40,90,.08); }
+.vela-qr-card .qr-box svg{ display:block; }
+.cap-spin{ width:15px; height:15px; flex:none; border-radius:50%; border:2px solid var(--line); border-top-color:var(--blue); animation:cap-rot .7s linear infinite; }
+@keyframes cap-rot{ to{ transform:rotate(360deg); } }
+.cap-demo-row{ display:flex; justify-content:center; margin-top:18px; }
+.demo-ctrl{ display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border:1.6px dashed #c2a8f5; border-radius:10px;
+  background:repeating-linear-gradient(45deg,#faf7ff,#faf7ff 6px,#f3edff 6px,#f3edff 12px); color:#7c4dff;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11.5px; font-weight:700; letter-spacing:.02em; text-transform:uppercase; cursor:pointer; transition:filter .15s ease; }
+.demo-ctrl:hover{ filter:brightness(.97); }
+.demo-ctrl svg{ width:13px; height:13px; stroke-width:2.2; fill:currentColor; }
+.face-checks{ display:flex; align-items:center; justify-content:center; gap:28px; margin-top:34px; }
+.face-checks span{ display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; color:var(--navy-2); }
+.face-checks svg{ width:16px; height:16px; color:var(--blue); stroke-width:2.6; }
+
+/* ============ LIVE-CAPTURE ANIMATION (de "Captura en vivo 3-5") ============ */
+.cam-scan{ position:absolute; left:7%; right:7%; top:7%; height:2px; z-index:3;
+  background:linear-gradient(90deg, transparent, rgba(56,91,248,.9), transparent);
+  box-shadow:0 0 12px 2px rgba(56,91,248,.7); animation:cap-scan 2.2s ease-in-out infinite; }
+.cam-frame.ok .bracket{ border-color:var(--cap-green); }
+.cam-frame.ok.face .face-oval{ border-color:var(--cap-green); }
+.cam-status{ z-index:7; }
+.cam-flash{ position:absolute; inset:0; z-index:5; border-radius:18px; background:#fff; animation:cap-flash .5s ease-out both; pointer-events:none; }
+.cam-success{ position:absolute; inset:0; z-index:6; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  background:rgba(15,159,128,.30); backdrop-filter:blur(1px); animation:cap-fade .3s ease-out both; }
+.cap-check{ width:72px; height:72px; border-radius:50%; background:var(--cap-green); color:#fff; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 30px rgba(15,159,128,.5); animation:cap-pop .45s cubic-bezier(.2,.7,.3,1) both; }
+.cap-check svg{ width:40px; height:40px; stroke-width:3; }
+.cap-label{ color:#fff; font-size:16px; font-weight:700; text-shadow:0 2px 8px rgba(0,0,0,.35); animation:cap-rise .4s ease-out .08s both; }
+.cap-ring{ width:20px; height:20px; flex:none; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:conic-gradient(var(--blue) 0deg, var(--line) 0); }
+.cap-ring i{ width:13px; height:13px; border-radius:50%; background:#fff; }
+.cap-done{ width:18px; height:18px; flex:none; border-radius:50%; background:var(--cap-green); display:flex; align-items:center; justify-content:center; }
+.cap-done svg{ width:11px; height:11px; color:#fff; stroke-width:3; }
+@keyframes cap-scan{ 0%{ top:7%; } 50%{ top:88%; } 100%{ top:7%; } }
+@keyframes cap-flash{ 0%{ opacity:0; } 30%{ opacity:.9; } 100%{ opacity:0; } }
+@keyframes cap-pop{ 0%{ transform:scale(.3); opacity:0; } 60%{ transform:scale(1.12); opacity:1; } 100%{ transform:scale(1); opacity:1; } }
+@keyframes cap-rise{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+@keyframes cap-fade{ from{ opacity:0; } to{ opacity:1; } }
+@keyframes cap-pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(56,91,248,.32); } 50%{ box-shadow:0 0 0 7px rgba(56,91,248,0); } }
+
+/* ============ SUCCESS ============ */
+.done-wrap{ display:flex; flex-direction:column; align-items:center; text-align:center; padding-top:32px; }
+.done-card{ padding:44px 24px; text-align:center; }
+.done-badge{ position:relative; width:108px; height:108px; border-radius:50%; margin:0 auto 22px;
+  display:flex; align-items:center; justify-content:center; color:#fff;
+  background:linear-gradient(150deg,#2fe0b4,#13a87c); box-shadow:0 20px 44px -14px rgba(41,208,179,.65);
+  animation:done-pop .5s cubic-bezier(.2,.8,.3,1.4) both; }
+.done-badge svg{ width:54px; height:54px; stroke-width:3; animation:done-check .4s ease-out .18s both; }
+.done-badge::after{ content:""; position:absolute; inset:-8px; border-radius:50%; border:3px solid var(--cap-green);
+  opacity:0; animation:done-ring 1.9s ease-out .3s infinite; }
+@keyframes done-pop{ 0%{ transform:scale(.3); opacity:0; } 60%{ transform:scale(1.12); opacity:1; } 100%{ transform:scale(1); opacity:1; } }
+@keyframes done-check{ from{ opacity:0; transform:scale(.5); } to{ opacity:1; transform:scale(1); } }
+@keyframes done-ring{ 0%{ transform:scale(.7); opacity:.55; } 100%{ transform:scale(1.35); opacity:0; } }
+.done-title{ margin:0 0 8px; font-size:21px; font-weight:800; letter-spacing:-.01em; color:var(--navy-2); animation:cap-rise .45s ease-out .1s both; }
+.done-card .done-copy{ margin:0 auto; max-width:360px; font-family:var(--font-2); font-size:13.5px; line-height:1.55; color:var(--grey); animation:cap-rise .45s ease-out .16s both; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1279px){
+  .main{ margin-right:0; }
+  .verif-shell{ width:min(100%, 760px); }
+}
+@media (max-width:767px){
+  .main{ margin-left:0; padding:28px 20px 80px; }
+  .page-head h1{ font-size:26px; }
+  .stepper{ gap:5px; }
+  .step-pill{ padding:8px 12px; font-size:12px; }
+  .step-line{ width:14px; }
+  .v-cta{ max-width:none; }
+  .grid{ grid-template-columns:1fr; }
+}
+
+/* ============ REGISTRATION FORM (estilo v1-cards, vive dentro del flujo) ============ */
+.form-head{ margin-bottom:26px; }
+.form-kicker{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+.form-head h1{ margin:10px 0 8px; font-size:34px; font-weight:800; letter-spacing:-.02em; }
+.form-head p{ margin:0; font-family:var(--font-2); font-size:15px; color:var(--grey); max-width:480px; }
+.form{ display:flex; flex-direction:column; gap:22px; max-width:680px; }
+.card{ background:rgba(255,255,255,.60); border:1px solid rgba(255,255,255,.75); border-radius:18px; padding:22px 24px 24px;
+  box-shadow:0 10px 30px rgba(22,40,90,.10); }
+.card-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+.card-title{ display:flex; align-items:center; gap:11px; font-size:17px; font-weight:700; }
+.card-ic{ width:30px; height:30px; border-radius:9px; flex:none; display:flex; align-items:center; justify-content:center;
+  background:rgba(56,91,248,.10); color:var(--blue); }
+.card-ic svg{ width:18px; height:18px; stroke-width:1.9; }
+.why{ display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:700; color:var(--blue); cursor:pointer; text-decoration:none; }
+.why svg{ width:15px; height:15px; }
+.grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px 18px; }
+.field{ display:flex; flex-direction:column; gap:7px; }
+.field.full{ grid-column:1 / -1; }
+.field label{ font-size:13px; font-weight:700; color:var(--navy-2); }
+.field label .opt{ color:var(--grey-soft); font-weight:600; }
+.control{ height:46px; padding:0 14px; border:1px solid var(--line); border-radius:11px; background:#fbfbfe;
+  font:inherit; font-size:14.5px; color:var(--navy-2); outline:none; width:100%;
+  transition:border-color .15s ease, box-shadow .15s ease, background .15s ease; }
+.control::placeholder{ color:var(--grey-soft); }
+.control:focus{ border-color:var(--blue); background:#fff; box-shadow:0 0 0 3px rgba(56,91,248,.14); }
+.select{ position:relative; }
+.select > .control{ display:flex; align-items:center; cursor:pointer; user-select:none; }
+.select > .control .val{ flex:1; display:inline-flex; align-items:center; gap:7px; }
+.select > .control .val.placeholder{ color:var(--grey-soft); }
+.select > .control .chev{ width:16px; height:16px; color:var(--grey); transition:transform .2s ease; }
+.select.open > .control .chev{ transform:rotate(180deg); }
+.select .menu{ position:absolute; top:calc(100% + 6px); left:0; right:0; z-index:20; padding:6px;
+  background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 18px 40px -16px rgba(22,22,67,.30);
+  max-height:240px; overflow-y:auto; display:none; }
+.select.open .menu{ display:block; }
+.fopt-row{ display:flex; align-items:center; gap:10px; padding:9px 11px; border-radius:9px; cursor:pointer; font-size:14px; }
+.fopt-row:hover{ background:rgba(56,91,248,.07); }
+.opt-flag{ font-size:16px; }
+.phone{ display:flex; gap:0; }
+.phone .pref{ display:flex; align-items:center; gap:7px; height:46px; padding:0 12px; border:1px solid var(--line);
+  border-right:0; border-radius:11px 0 0 11px; background:#f3f5fb; font-size:14px; font-weight:600; white-space:nowrap; }
+.phone .control{ border-radius:0 11px 11px 0; }
+.sig-wrap{ position:relative; border:1.6px dashed #c4cef0; border-radius:14px; background:#fafbff; height:170px; overflow:hidden; }
+.sig-wrap canvas{ position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:crosshair; }
+.sig-hint{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:6px; pointer-events:none; color:var(--blue); }
+.sig-hint svg{ width:26px; height:26px; }
+.sig-hint b{ font-size:15px; font-weight:700; }
+.sig-hint span{ font-size:12.5px; color:var(--grey-soft); font-weight:500; }
+.sig-clear{ margin-top:12px; display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 14px;
+  border:1px solid var(--line); border-radius:9px; background:#fff; color:var(--grey); font:inherit; font-size:13px; font-weight:600; cursor:pointer; }
+.sig-clear svg{ width:14px; height:14px; }
+.agree-row{ display:flex; align-items:flex-start; gap:12px; padding:6px 0; cursor:pointer; }
+.chk{ width:22px; height:22px; flex:none; border:1.6px solid var(--line); border-radius:7px; background:#fff;
+  display:flex; align-items:center; justify-content:center; transition:all .15s ease; margin-top:1px; }
+.chk svg{ width:14px; height:14px; color:#fff; opacity:0; transform:scale(.6); transition:all .15s ease; }
+.agree-row.on .chk{ background:var(--blue); border-color:var(--blue); }
+.agree-row.on .chk svg{ opacity:1; transform:scale(1); }
+.agree-text{ font-size:14px; line-height:1.45; color:var(--navy-2); }
+.agree-text .opt{ color:var(--grey-soft); font-style:italic; }
+.legal{ margin:14px 0 0; font-size:12.5px; line-height:1.5; color:var(--grey-soft); }
+.legal a{ color:var(--blue); font-weight:700; text-decoration:none; }
+.submit-row{ display:flex; justify-content:flex-end; }
+.submit{ display:inline-flex; align-items:center; gap:10px; height:52px; padding:0 30px; border:0; border-radius:14px;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-2)); color:#fff; font:inherit; font-size:16px; font-weight:700;
+  cursor:pointer; box-shadow:0 14px 30px -10px rgba(16,71,255,.55); transition:transform .12s ease, box-shadow .12s ease; }
+.submit:hover{ transform:translateY(-1px); box-shadow:0 18px 36px -10px rgba(16,71,255,.6); }
+.submit svg{ width:18px; height:18px; }
+/* campo con ayuda de Vela */
+.field-help{ display:inline-flex; align-items:center; vertical-align:middle; margin-left:7px; padding:0;
+  border:0; background:none; cursor:pointer; color:var(--blue); }
+.fh-icon{ display:inline-flex; align-items:center; justify-content:center; }
+.fh-icon svg{ width:18px; height:18px; }
+.fh-text{ font-family:var(--font); font-size:12px; font-weight:500; color:var(--blue); white-space:nowrap;
+  max-width:0; opacity:0; overflow:hidden; transform:translateX(-4px);
+  transition:max-width .28s ease, opacity .2s ease, transform .28s ease, margin-left .28s ease; }
+.field-help:hover .fh-text{ max-width:90px; opacity:1; transform:translateX(0); margin-left:6px; }
+/* respuesta de Vela (animación) */
+.vela-answer{ border:1px solid rgba(56,91,248,.30); background:linear-gradient(180deg, rgba(56,91,248,.10), rgba(56,91,248,.03));
+  border-radius:14px; padding:12px 13px; margin:0 0 14px; animation:va-in .42s cubic-bezier(.2,.8,.3,1.1) both; }
+.vela-answer .va-head{ display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#1047ff; margin-bottom:6px; }
+.vela-answer .va-head svg{ width:14px; height:14px; }
+.vela-answer p{ margin:0; font-size:12.5px; line-height:1.5; color:var(--navy-2); }
+.vela-answer p strong{ font-weight:800; }
+@keyframes va-in{ from{ opacity:0; transform:translateY(-10px) scale(.97); } to{ opacity:1; transform:none; } }
+</style>
+<script src="../../components/chekin-navbar.js?v=warning-badges" defer></script>
+<script src="../../components/chekin-vela.js" defer></script>
+</head>
+<body>
+<div class="app">
+
+  <chekin-navbar active="registration"></chekin-navbar>
+
+  <main class="main">
+    <div class="verif-shell">
+
+      <!-- 1 · INTRO (estilo check-in journey) -->
+      <section class="screen active" data-screen="intro">
+        <div class="page-head">
+          <div class="kicker">Guest Registration</div>
+          <h1>Verify your identity</h1>
+          <p class="intro">Three quick steps. It takes less than a minute.</p>
+        </div>
+
+        <div class="journey">
+          <div class="j-step">
+            <div class="j-rail">
+              <span class="j-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg></span>
+            </div>
+            <div class="j-card">
+              <b>Scan your document</b>
+              <span>Passport, national ID or driver's license</span>
+            </div>
+          </div>
+          <div class="j-step">
+            <div class="j-rail">
+              <span class="j-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="10" cy="8" r="3.4"/><path d="M4 19c.6-3 3-4.6 6-4.6 1 0 1.9.18 2.7.5"/><path d="m15.5 16.5 1.8 1.8 3.2-3.6"/></svg></span>
+            </div>
+            <div class="j-card">
+              <b>Confirm it's you</b>
+              <span>A quick face scan, matched to your document photo</span>
+            </div>
+          </div>
+          <div class="j-step">
+            <div class="j-rail">
+              <span class="j-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4h6a1 1 0 0 1 1 1v1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1V5a1 1 0 0 1 1-1Z"/><path d="m9.5 13 1.8 1.8 3.4-3.6"/></svg></span>
+            </div>
+            <div class="j-card">
+              <b>Confirm your details</b>
+              <span>Check the information on your entry form before it's sent</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="v-cta" id="start">Begin verification</button>
+      </section>
+
+      <!-- 2 · CHOOSE DOCUMENT -->
+      <section class="screen" data-screen="doc">
+        <div class="page-head">
+          <div class="kicker">Guest Registration</div>
+          <h1>Choose your document</h1>
+          <p class="intro">Select the document you'll scan.</p>
+        </div>
+
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16M14 9.5h4M14 13h3"/></svg>
+              Document type
+            </h2>
+          </div>
+          <div class="opt-list">
+            <label class="opt-row doc-opt selected" data-doc="passport">
+              <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2.4"/><circle cx="12" cy="9" r="2.6"/><path d="M9 15.5h6"/></svg></span>
+              <span class="opt-name">Passport</span>
+              <span class="doc-radio"></span>
+            </label>
+            <label class="opt-row doc-opt" data-doc="id">
+              <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16M14 9.5h4M14 13h3"/></svg></span>
+              <span class="opt-name">National ID</span>
+              <span class="doc-radio"></span>
+            </label>
+            <label class="opt-row doc-opt" data-doc="license">
+              <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 17h14M6 17l1.2-4.2A2 2 0 0 1 9.1 11h5.8a2 2 0 0 1 1.9 1.4L18 17"/><circle cx="7.5" cy="17.5" r="1.6"/><circle cx="16.5" cy="17.5" r="1.6"/></svg></span>
+              <span class="opt-name">Driver's license</span>
+              <span class="doc-radio"></span>
+            </label>
+          </div>
+        </section>
+
+        <button class="v-cta" id="docContinue">Continue <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </section>
+
+      <!-- 3 · CAPTURE (rendered by JS) -->
+      <section class="screen" data-screen="capture">
+        <div id="captureBody"></div>
+      </section>
+
+      <!-- 4 · REGISTRATION FORM (vive dentro del flujo) -->
+      <section class="screen" data-screen="form">
+        <div class="form-head">
+          <div class="form-kicker">Guest Registration</div>
+          <h1>Review your details</h1>
+          <p>We've pre-filled your form from your document — check everything before sending it to your host.</p>
+        </div>
+
+        <form class="form" autocomplete="off" onsubmit="return false">
+
+          <!-- Nationality -->
+          <section class="card">
+            <div class="card-head">
+              <div class="card-title"><span class="card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg></span>Nationality</div>
+            </div>
+            <div class="field full" data-select data-value="ES">
+              <div class="select">
+                <div class="control" tabindex="0"><span class="val"><span class="opt-flag">🇪🇸</span>Spain</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></div>
+                <div class="menu">
+                  <div class="fopt-row" data-v="ES"><span class="opt-flag">🇪🇸</span>Spain</div>
+                  <div class="fopt-row" data-v="FR"><span class="opt-flag">🇫🇷</span>France</div>
+                  <div class="fopt-row" data-v="DE"><span class="opt-flag">🇩🇪</span>Germany</div>
+                  <div class="fopt-row" data-v="IT"><span class="opt-flag">🇮🇹</span>Italy</div>
+                  <div class="fopt-row" data-v="PT"><span class="opt-flag">🇵🇹</span>Portugal</div>
+                  <div class="fopt-row" data-v="GB"><span class="opt-flag">🇬🇧</span>United Kingdom</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Legal name -->
+          <section class="card">
+            <div class="card-head"><div class="card-title"><span class="card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/></svg></span>Legal name</div></div>
+            <div class="grid">
+              <div class="field"><label>First name</label><input class="control" value="Carmen"></div>
+              <div class="field"><label>Last name</label><input class="control" value="Española"></div>
+              <div class="field full"><label>Second last name <span class="opt">(optional)</span></label><input class="control" value="Española"></div>
+            </div>
+          </section>
+
+          <!-- Personal information -->
+          <section class="card">
+            <div class="card-head"><div class="card-title"><span class="card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M5 16c.6-1.6 2-2.4 3.5-2.4S11.4 14.4 12 16M14 9h4M14 12.5h4M14 15.5h2.5"/></svg></span>Personal information</div></div>
+            <div class="grid">
+              <div class="field"><label>Date of birth</label><input class="control" value="01 / 01 / 1980"></div>
+              <div class="field" data-select data-value="Female">
+                <label>Gender</label>
+                <div class="select">
+                  <div class="control" tabindex="0"><span class="val">Female</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></div>
+                  <div class="menu">
+                    <div class="fopt-row" data-v="Female">Female</div>
+                    <div class="fopt-row" data-v="Male">Male</div>
+                    <div class="fopt-row" data-v="Other">Other</div>
+                    <div class="fopt-row" data-v="Prefer not to say">Prefer not to say</div>
+                  </div>
+                </div>
+              </div>
+              <div class="field" data-select data-value="ES">
+                <label>Country of residence</label>
+                <div class="select">
+                  <div class="control" tabindex="0"><span class="val"><span class="opt-flag">🇪🇸</span>Spain</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></div>
+                  <div class="menu">
+                    <div class="fopt-row" data-v="ES"><span class="opt-flag">🇪🇸</span>Spain</div>
+                    <div class="fopt-row" data-v="FR"><span class="opt-flag">🇫🇷</span>France</div>
+                    <div class="fopt-row" data-v="PT"><span class="opt-flag">🇵🇹</span>Portugal</div>
+                    <div class="fopt-row" data-v="GB"><span class="opt-flag">🇬🇧</span>United Kingdom</div>
+                  </div>
+                </div>
+              </div>
+              <div class="field"><label>City of residence</label><input class="control" value="Madrid"></div>
+              <div class="field"><label>Residence address</label><input class="control" value="Avda de Madrid s/n"></div>
+              <div class="field"><label>Postal code</label><input class="control" value="28001"></div>
+            </div>
+          </section>
+
+          <!-- Document details -->
+          <section class="card">
+            <div class="card-head"><div class="card-title"><span class="card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>Document details</div></div>
+            <div class="grid">
+              <div class="field" data-select data-value="National ID card">
+                <label>Document type</label>
+                <div class="select">
+                  <div class="control" tabindex="0"><span class="val">National ID card</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></div>
+                  <div class="menu">
+                    <div class="fopt-row" data-v="Passport">Passport</div>
+                    <div class="fopt-row" data-v="National ID card">National ID card</div>
+                    <div class="fopt-row" data-v="Driver's license">Driver's license</div>
+                  </div>
+                </div>
+              </div>
+              <div class="field"><label>Document number <button type="button" class="field-help" id="docNumHelp" aria-label="Ask Vela where to find this"><span class="fh-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.7 5.5L19 10l-5.3 1.5L12 17l-1.7-5.5L5 10l5.3-1.5z"/></svg></span><span class="fh-text">Ask Vela</span></button></label><input class="control" value="99999999R"></div>
+            </div>
+          </section>
+
+          <!-- Contact information -->
+          <section class="card">
+            <div class="card-head"><div class="card-title"><span class="card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>Contact information</div></div>
+            <div class="grid">
+              <div class="field"><label>Email</label><input class="control" type="email" placeholder="you@email.com"></div>
+              <div class="field">
+                <label>Phone number <span class="opt">(optional)</span></label>
+                <div class="phone"><span class="pref">🇪🇸 +34</span><input class="control" placeholder="612 345 678"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Signature -->
+          <section class="card">
+            <div class="card-head"><div class="card-title"><span class="card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 18c3-1 4-9 7-9s2 6 4 6 3-3 7-3"/><path d="m14 20 6-6"/></svg></span>Signature</div></div>
+            <div class="sig-wrap" data-sig>
+              <canvas></canvas>
+              <div class="sig-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 18c3-1 4-9 7-9s2 6 4 6 3-3 7-3"/><path d="m14 20 6-6"/></svg>
+                <b>Draw your signature here</b>
+                <span>Use your mouse or finger</span>
+              </div>
+            </div>
+            <button type="button" class="sig-clear" data-sig-clear><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>Clear signature</button>
+          </section>
+
+          <!-- Agreements -->
+          <section class="card">
+            <div class="card-head"><div class="card-title"><span class="card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9.5 12 1.8 1.8L15 10"/></svg></span>Agreements</div></div>
+            <div class="agree-row" data-check>
+              <span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>
+              <span class="agree-text">Send me a copy of the <strong>contract</strong> by email.</span>
+            </div>
+            <div class="agree-row" data-check>
+              <span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>
+              <span class="agree-text"><span class="opt">(Optional)</span> I agree to receive marketing emails and other communications from the host.</span>
+            </div>
+            <p class="legal">By submitting you agree to sign the form with your name and accept the <a>Contract</a> and our <a>Privacy Policy</a>.</p>
+          </section>
+
+          <div class="submit-row">
+            <button class="submit" type="submit" id="formSubmit">Submit to host <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- RIGHT VELA PANEL -->
+  <chekin-vela
+    intro="I'll guide you through verification: which documents work, how to get a clear photo, and why we ask for each step."
+    reco-title="Privacy & data" reco-icon="sun"
+    reco-subtitle="How we protect your information.">
+    <script type="application/json">
+    [
+      {"chip":"Privacy","reason":"GDPR compliant","strong":"Your data is safe","text":" Everything you share is encrypted and used only for your registration. Your photos are deleted from our system after your check-in date at the property."}
+    ]
+    </script>
+  </chekin-vela>
+
+</div>
+
+<script>
+/* ============================================================
+   Identity verification — simple state machine
+   ============================================================ */
+var screens = document.querySelectorAll('.screen');
+var captureBody = document.getElementById('captureBody');
+
+var state = { screen:'intro', doc:'passport', sub:0, phase:0 };  // sub: 0 front · 1 back · 2 face | phase: 0 sin colocar · 1 colocada · 2 validada
+var capTimer = null, capRAF = null;
+function clearCapTimers(){ if(capTimer){ clearTimeout(capTimer); capTimer=null; } if(capRAF){ clearInterval(capRAF); capRAF=null; } }
+
+/* ---- Vela content per screen ---- */
+var VELA_HEAD = {
+  intro:   ['Privacy & data', 'How we protect your information.'],
+  doc:     ['Choosing your document', 'Any of these works to verify you.'],
+  capture: ['How to take the best photo', 'A clear shot speeds up your verification.'],
+  face:    ['How to take the best selfie', 'A clear face helps us match you faster.'],
+  form:    ['Good to know', 'Why we ask for your details.']
+};
+var VELA = {
+  intro: [
+    {"chip":"Privacy","reason":"GDPR compliant","strong":"Your data is safe","text":" Everything you share is encrypted and used only for your registration. Your photos are deleted from our system after your check-in date at the property."}
+  ],
+  doc: [
+    {"chip":"Tip","reason":"Faster","strong":"Pick whichever you have on hand","text":" Any of the three works to verify you."}
+  ],
+  capture: [
+    {"chip":"Lighting","reason":"Sharp capture","strong":"Good light, no glare","text":" Keep the whole DNI visible, well lit and free of reflections — don't cover any part of it."},
+    {"chip":"Framing","reason":"Best angle","strong":"Rest it on a table","text":" Lay the document flat on a surface and take the photo from directly above to frame it inside the marks."}
+  ],
+  face: [
+    {"chip":"Lighting","reason":"Clear face","strong":"Good, even light","text":" Take it in the shade — avoid backlight so your whole face is clearly lit."},
+    {"chip":"Face","reason":"Fully visible","strong":"Nothing covering your face","text":" Remove glasses, hats, masks or anything that hides your face."}
+  ],
+  form: [
+    {"chip":"Imported","reason":"From your document","strong":"We filled in your details","text":" Your details were imported from the document scan — please check everything is correct."},
+    {"chip":"Required by law","reason":"Guest record","strong":"Why we ask for this","text":" By local law, every tourist accommodation must keep a record of its guests, so we need a small amount of personal information from you."},
+    {"chip":"Faster","reason":"Before arrival","strong":"Save time on arrival","text":" Completing your check-in online before you arrive saves you time."}
+  ]
+};
+function setVela(key){
+  var el = document.querySelector('chekin-vela');
+  if(el){
+    if(VELA_HEAD[key]){ el.setAttribute('reco-title', VELA_HEAD[key][0]); el.setAttribute('reco-subtitle', VELA_HEAD[key][1]); }
+    if(VELA[key]){ try{ el.items = VELA[key]; }catch(e){} }
+    el.classList.toggle('has-prog', state.screen==='capture' || state.screen==='form');
+  }
+  // tras re-renderizar Vela, re-inyectar el indicador de progreso si procede
+  if(state.screen==='capture') injectVelaProgress(state.sub, false);
+  else if(state.screen==='form') injectVelaProgress(3, false);
+  else if(state.screen==='intro') injectVelaQR();
+}
+
+/* ---- show screen ---- */
+function show(name){
+  state.screen = name;
+  screens.forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-screen')===name); });
+  setVela(name==='capture' && state.sub===2 ? 'face' : name);
+  clearCapTimers();
+}
+
+/* ---- capture pieces ---- */
+function brackets(){ return '<span class="bracket tl"></span><span class="bracket tr"></span><span class="bracket bl"></span><span class="bracket br"></span>'; }
+function frontGuide(){
+  return '<div class="cam-guide">'+
+    '<div class="guide-photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="9" r="3.4"/><path d="M5 19c1-3.3 3.7-5 7-5s6 1.7 7 5"/></svg></div>'+
+    '<div class="guide-lines"><div class="guide-line" style="width:82%"></div><div class="guide-line" style="width:68%"></div><div class="guide-line" style="width:74%"></div><div class="guide-line" style="width:56%"></div><div class="guide-line" style="width:40%"></div></div>'+
+  '</div>';
+}
+function backGuide(){
+  return '<div class="cam-guide back">'+
+    '<div class="back-block"></div>'+
+    '<div class="guide-line" style="width:62%"></div>'+
+    '<div class="guide-line" style="width:50%"></div>'+
+    '<div class="mrz">P&lt;ESPGARCIA&lt;&lt;MARIA&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>AB1234567ESP9103142F&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>'+
+  '</div>';
+}
+/* indicador de progreso de verificación que vive DENTRO del panel Vela */
+function velaProgressHTML(sub, allDone){
+  var icons = [
+    '<rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16"/>',
+    '<rect x="3" y="6" width="18" height="12" rx="2.4"/><path d="M3 10h18"/>',
+    '<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.4 7-5.4S18.2 16.4 19 20"/>',
+    '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>'
+  ];
+  var check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path d="m5 12 5 5L20 7"/></svg>';
+  var shield = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
+  var html = '<div class="vela-prog"><div class="rec-title">'+shield+'Registration progress</div><p class="rec-sub">Where you are in your registration.</p><div class="vela-prog-steps">';
+  icons.forEach(function(ic, i){
+    if(i>0){
+      // este conector ENTRA al nodo i: se rellena mientras el paso i está activo,
+      // queda verde cuando ya hemos pasado el nodo i.
+      var cdone = allDone || i < sub;
+      var ccur  = !allDone && i === sub;
+      html += '<span class="vp-conn"><span class="vp-fill'+(cdone?' done':'')+'"'+(ccur?' id="velaConnFill"':'')+' style="width:'+(cdone?'100%':'0%')+'"></span></span>';
+    }
+    var done = allDone || i < sub;
+    var active = !allDone && i === sub;
+    var cls = done ? 'done' : (active ? 'active' : '');
+    var icon = done ? check : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">'+ic+'</svg>';
+    html += '<span class="vp-node '+cls+'">'+icon+'</span>';
+  });
+  return html + '</div><div class="vela-divider" style="margin-top:18px;"></div></div>';
+}
+function injectVelaProgress(sub, allDone){
+  var el = document.querySelector('chekin-vela'); if(!el) return;
+  var scroll = el.querySelector('.vela-scroll'); if(!scroll) return;
+  var existing = scroll.querySelector('.vela-prog'); if(existing) existing.remove();
+  scroll.insertAdjacentHTML('afterbegin', velaProgressHTML(sub, allDone));
+}
+
+/* QR decorativo autocontenido (símil) — patrones de esquina + módulos deterministas */
+function qrSVG(){
+  var N = 25, cells = '';
+  function loc(x, y, ox, oy){ var lx=x-ox, ly=y-oy; if(lx<0||ly<0||lx>6||ly>6) return null;
+    return (lx===0||lx===6||ly===0||ly===6) || (lx>=2&&lx<=4&&ly>=2&&ly<=4); }
+  for(var y=0;y<N;y++) for(var x=0;x<N;x++){
+    var f = loc(x,y,0,0); if(f===null) f = loc(x,y,N-7,0); if(f===null) f = loc(x,y,0,N-7);
+    var on = f!==null ? f : (((x*7 + y*13 + x*y*3) % 5) < 2);
+    if(on) cells += '<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';
+  }
+  return '<svg viewBox="0 0 '+N+' '+N+'" width="100%" height="100%" fill="#161643" shape-rendering="crispEdges">'+cells+'</svg>';
+}
+function injectVelaQR(){
+  var el = document.querySelector('chekin-vela'); if(!el) return;
+  var scroll = el.querySelector('.vela-scroll'); if(!scroll) return;
+  if(scroll.querySelector('.vela-qr-card')) return;
+  scroll.insertAdjacentHTML('beforeend',
+    '<article class="insight-card vela-qr-card">'+
+      '<div class="insight-top"><span class="insight-chip">No camera?</span></div>'+
+      '<p class="insight-text"><strong>Use your phone instead.</strong> Scan this code to continue the verification on your mobile.</p>'+
+      '<div class="qr-box">'+qrSVG()+'</div>'+
+    '</article>');
+}
+
+/* ====== captura en 3 momentos por paso ======
+   phase 0: imagen aún no colocada · phase 1: imagen colocada · phase 2: validada
+   Se avanza con un control de DEMO (no es UI de producto). */
+var CAP = [
+  { kind:'doc', side:'front', img:'assets/dni-anverso.jpg', title:'Photo of the <span class="accent">front</span>', place:'Place your document inside the frame', scan:'Hold still… capturing', okTitle:'Photo saved!', okLabel:'Photo taken!' },
+  { kind:'doc', side:'back',  img:'assets/dni-reverso.jpg', title:'Now flip to the <span class="accent">back</span>', place:'Place your document inside the frame', scan:'Hold still… capturing', okTitle:'Photo saved!', okLabel:'Photo taken!' },
+  { kind:'face', img:'assets/selfie.jpg', title:'Confirm it\'s <span class="accent">you</span>', place:'Look at the camera', scan:'Detecting face…', okTitle:'Selfie ready!', okLabel:'Selfie captured!' }
+];
+
+function camBadge(phase, info){
+  if(phase===0) return '<div class="cam-status"><span class="cam-dot cam-dot-wait"></span> '+info.place+'</div>';
+  if(phase===1) return '<div class="cam-status"><span class="cap-ring" id="capRing"><i></i></span><span id="capText">'+(info.kind==='face'?'Detecting face':'Hold still')+' · 0%</span></div>';
+  return '<div class="cam-status"><span class="cap-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 12 5 5L20 7"/></svg></span><span style="color:var(--cap-green)">Capture complete</span></div>';
+}
+function camContent(info, phase){
+  if(phase===0){
+    if(info.kind==='doc'){
+      // mesa + mockup del documento (símil) como guía de colocación
+      var guide = info.side==='front' ? frontGuide() : backGuide();
+      return '<img class="cam-photo" src="assets/mesa.jpg" alt="">'+brackets()+guide+'<div class="cam-scan"></div>'+camBadge(0, info);
+    }
+    return '<img class="cam-photo" src="assets/habitacion.jpg" alt="">'+brackets()+'<div class="face-oval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.4 7-5.4S18.2 16.4 19 20"/></svg></div><div class="cam-scan"></div>'+camBadge(0, info);
+  }
+  var photo = '<img class="cam-photo" src="'+info.img+'" alt="">';
+  if(phase===1){
+    // imagen colocada + barra de escaneo barriendo encima
+    return photo+brackets()+'<div class="cam-scan"></div>'+camBadge(1, info);
+  }
+  // validada
+  var overlay = '<div class="cam-success"><span class="cap-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 13 4 4L19 7"/></svg></span><span class="cap-label">'+info.okLabel+'</span></div>';
+  return photo+brackets()+overlay+camBadge(2, info);
+}
+function demoLabel(){
+  return CAP[state.sub].kind==='face' ? 'Demo · take selfie' : 'Demo · place document';
+}
+function syncVelaConn(){
+  var f = document.getElementById('velaConnFill'); if(!f) return;
+  f.style.width = (state.phase>=2?100:0)+'%';   // momento 2 lo anima updateRing; momento 3 = 100% verde
+  f.classList.toggle('done', state.phase>=2);
+}
+
+function renderCapture(){
+  var info = CAP[state.sub], phase = state.phase;
+  var title = phase===2 ? info.okTitle : info.title;
+  var sub = phase===2 ? 'Moving to the next step…'
+    : (info.kind==='face' ? 'Look at the camera — it captures automatically.' : 'No need to tap anything — the photo is taken automatically.');
+  var frameCls = 'cam-frame'+(info.kind==='face'?' face':'')+(phase===2?' ok':'');
+
+  var html = '<div class="page-head"><div class="kicker">Guest Registration</div><h1>'+title+'</h1><p class="intro">'+sub+'</p></div>';
+  html += '<div class="'+frameCls+'" id="capFrame">'+camContent(info, phase)+'</div>';
+  // "No camera? Upload a file": solo en doc (los 3 momentos); en selfie no se muestra
+  if(info.kind==='doc'){
+    html += '<p class="cam-alt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 2l20 20"/><path d="M7 7H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12M9.5 5h5L16 7h3a2 2 0 0 1 2 2v7"/></svg>No camera? <a id="upload">Upload a file</a></p>';
+  }
+  if(phase===0){
+    html += '<div class="cap-demo-row"><button class="demo-ctrl" id="demoBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 4 14 8-14 8V4Z"/></svg>'+demoLabel()+'</button></div>';
+  }
+  captureBody.innerHTML = html;
+
+  var demo = document.getElementById('demoBtn'); if(demo) demo.addEventListener('click', placeImage);
+  var up = document.getElementById('upload'); if(up) up.addEventListener('click', placeImage);
+
+  setVela(state.sub===2 ? 'face' : 'capture');
+  syncVelaConn();
+}
+
+/* momento 1 (clic demo) → colocada; luego momentos 2 y 3 corren solos */
+var CAPTURE_MS = 2200, VALIDATED_MS = 1300;
+function updateRing(p){
+  var ring = document.getElementById('capRing'), txt = document.getElementById('capText'), fill = document.getElementById('velaConnFill');
+  if(ring) ring.style.background = 'conic-gradient(var(--blue) '+(p*3.6)+'deg, var(--line) 0)';
+  if(txt) txt.textContent = (CAP[state.sub].kind==='face'?'Detecting face':'Hold still')+' · '+Math.round(p)+'%';
+  if(fill) fill.style.width = p+'%';
+}
+function placeImage(){
+  if(state.phase!==0) return;
+  state.phase = 1; renderCapture();            // imagen colocada + anillo de progreso
+  clearCapTimers();
+  var start = Date.now();
+  capRAF = setInterval(function(){
+    var p = Math.min(100, (Date.now()-start)/CAPTURE_MS*100);
+    updateRing(p);
+    if(p>=100){
+      clearInterval(capRAF); capRAF = null;
+      state.phase = 2; renderCapture();        // validada
+      capTimer = setTimeout(capNextStep, VALIDATED_MS);
+    }
+  }, 40);
+}
+function capNextStep(){
+  clearCapTimers();
+  if(state.sub < 2){ state.sub++; state.phase = 0; renderCapture(); }
+  else { show('form'); window.scrollTo(0,0); resizeSig(); }   // verificación completada → formulario (dentro del flujo)
+}
+
+/* ---- navigation ---- */
+function goCapture(){ state.sub = 0; state.phase = 0; show('capture'); renderCapture(); }
+
+document.getElementById('start').addEventListener('click', function(){ show('doc'); });
+document.getElementById('docContinue').addEventListener('click', goCapture);
+
+/* ---- document selection ---- */
+document.querySelectorAll('.doc-opt').forEach(function(opt){
+  opt.addEventListener('click', function(){
+    document.querySelectorAll('.doc-opt').forEach(function(o){ o.classList.remove('selected'); });
+    opt.classList.add('selected');
+    state.doc = opt.getAttribute('data-doc');
+  });
+});
+
+/* ============ FORM (custom selects, checkboxes, signature pad) ============ */
+document.querySelectorAll('[data-select]').forEach(function(wrap){
+  var sel = wrap.querySelector('.select');
+  var control = sel.querySelector('.control');
+  var valEl = sel.querySelector('.val');
+  control.addEventListener('click', function(e){
+    e.stopPropagation();
+    document.querySelectorAll('.select.open').forEach(function(s){ if(s!==sel) s.classList.remove('open'); });
+    sel.classList.toggle('open');
+  });
+  sel.querySelectorAll('.fopt-row').forEach(function(row){
+    row.addEventListener('click', function(){
+      valEl.innerHTML = row.innerHTML;
+      valEl.classList.remove('placeholder');
+      wrap.setAttribute('data-value', row.getAttribute('data-v'));
+      sel.classList.remove('open');
+    });
+  });
+});
+document.addEventListener('click', function(){
+  document.querySelectorAll('.select.open').forEach(function(s){ s.classList.remove('open'); });
+});
+document.querySelectorAll('[data-check]').forEach(function(row){
+  row.addEventListener('click', function(){ row.classList.toggle('on'); });
+});
+var _sigResizers = [];
+function resizeSig(){ _sigResizers.forEach(function(fn){ fn(); }); }
+document.querySelectorAll('[data-sig]').forEach(function(wrap){
+  var canvas = wrap.querySelector('canvas');
+  var hint = wrap.querySelector('.sig-hint');
+  var ctx = canvas.getContext('2d');
+  var drawing = false, dirty = false;
+  function resize(){
+    var r = wrap.getBoundingClientRect();
+    if(!r.width) return;
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = r.width * dpr; canvas.height = r.height * dpr;
+    ctx.scale(dpr, dpr);
+    ctx.lineWidth = 2.4; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#161643';
+  }
+  _sigResizers.push(resize);
+  function pos(e){ var r = canvas.getBoundingClientRect(); var p = e.touches ? e.touches[0] : e; return { x:p.clientX-r.left, y:p.clientY-r.top }; }
+  function start(e){ e.preventDefault(); drawing = true; var p = pos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y);
+    if(!dirty){ dirty = true; wrap.classList.add('signed'); hint.style.display='none'; } }
+  function move(e){ if(!drawing) return; e.preventDefault(); var p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+  function end(){ drawing = false; }
+  canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move); window.addEventListener('mouseup', end);
+  canvas.addEventListener('touchstart', start, {passive:false}); canvas.addEventListener('touchmove', move, {passive:false}); canvas.addEventListener('touchend', end);
+  var clearBtn = wrap.parentElement.querySelector('[data-sig-clear]');
+  if(clearBtn) clearBtn.addEventListener('click', function(){
+    ctx.clearRect(0,0,canvas.width,canvas.height); dirty=false; wrap.classList.remove('signed'); hint.style.display='flex';
+  });
+});
+var _fs = document.getElementById('formSubmit');
+if(_fs) _fs.addEventListener('click', function(){ _fs.innerHTML = 'Sent to host ✓'; _fs.style.background = 'var(--cap-green)'; });
+
+/* Vela: dónde encontrar el número de documento (animación dentro del panel) */
+var VSPARK = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.7 5.5L19 10l-5.3 1.5L12 17l-1.7-5.5L5 10l5.3-1.5z"/></svg>';
+function askVelaDocNumber(){
+  var el = document.querySelector('chekin-vela'); if(!el) return;
+  var scroll = el.querySelector('.vela-scroll'); if(!scroll) return;
+  var old = scroll.querySelector('.vela-answer'); if(old) old.remove();
+  var html = '<div class="vela-answer"><div class="va-head">'+VSPARK+'Vela</div>'+
+    '<p><strong>Where do I find my document number?</strong> On a DNI it\'s the code at the top-right of the front — 8 digits and a letter (e.g. 99999999R). On a passport it\'s at the top of the photo page.</p></div>';
+  scroll.insertAdjacentHTML('beforeend', html);   // abajo del todo, tras los consejos
+  scroll.scrollTo({ top:scroll.scrollHeight, behavior:'smooth' });
+}
+var _dh = document.getElementById('docNumHelp');
+if(_dh) _dh.addEventListener('click', askVelaDocNumber);
+
+/* init — wait for the Web Component to register before touching .items */
+if(window.customElements){
+  customElements.whenDefined('chekin-vela').then(function(){ setVela(state.screen); });
+} else {
+  setVela('intro');
+}
+</script>
+</body>
+</html>
