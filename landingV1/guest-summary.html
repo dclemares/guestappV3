@@ -234,5 +234,13 @@ h1{ margin:10px 0 8px; font-size:34px; line-height:1.1; font-weight:800; letter-
   </chekin-vela>
 </div>
 
+<script id="chk-flow-hook">
+(function(){
+  if(!/[?&]flow=1/.test(location.search)) return;
+  document.querySelectorAll('.add-row').forEach(function(b){
+    b.addEventListener('click', function(){ try{ window.parent.postMessage('flow:to-v2','*'); }catch(e){} });
+  });
+})();
+</script>
 </body>
 </html>

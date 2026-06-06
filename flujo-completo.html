@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Flujo completo — Guest App V3</title>
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; background:#0b1020; overflow:hidden; }
+  #stage{ position:fixed; inset:0; width:100%; height:100%; border:0; display:block; background:#0b1020; }
+
+  /* controles del flujo (no pertenecen a las pantallas) */
+  .flow-ctrl{ position:fixed; z-index:20; display:inline-flex; align-items:center; gap:7px;
+    padding:9px 15px; border:0; border-radius:9999px; cursor:pointer;
+    font:600 12.5px/1 -apple-system,BlinkMacSystemFont,'Montserrat',sans-serif; color:#fff;
+    background:rgba(11,16,32,.55); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    box-shadow:0 6px 20px -6px rgba(0,0,0,.5); transition:background .15s ease, opacity .2s ease; }
+  .flow-ctrl:hover{ background:rgba(11,16,32,.8); }
+  .flow-ctrl svg{ width:14px; height:14px; }
+  #flow-skip{ top:18px; right:22px; display:none; }
+  #flow-restart{ bottom:18px; left:22px; opacity:.7; }
+  #flow-restart:hover{ opacity:1; }
+</style>
+</head>
+<body>
+  <iframe id="stage" title="Guest App V3 — flujo completo"
+    allow="camera; microphone; autoplay; fullscreen"></iframe>
+
+  <button class="flow-ctrl" id="flow-skip">Saltar intro
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </button>
+  <button class="flow-ctrl" id="flow-restart">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+    Reiniciar flujo
+  </button>
+
+<script>
+  var STEPS = {
+    hero:    'animations/hero-cinematic.html',
+    landing: 'landingV1/index.html?flow=1',
+    summary: 'landingV1/guest-summary.html?flow=1',
+    v2:      'landingV1/registro/verificacion-identidad-v2.html?flow=1'
+  };
+  var stage   = document.getElementById('stage');
+  var skipBtn = document.getElementById('flow-skip');
+  var heroTimer = null;
+  var HERO_MS = 6500;  // duración del intro antes de aterrizar en la landing
+
+  function go(step){
+    if(heroTimer){ clearTimeout(heroTimer); heroTimer = null; }
+    stage.src = STEPS[step];
+    skipBtn.style.display = (step === 'hero') ? 'inline-flex' : 'none';
+    if(step === 'hero'){ heroTimer = setTimeout(function(){ go('landing'); }, HERO_MS); }
+  }
+
+  skipBtn.addEventListener('click', function(){ go('landing'); });
+  document.getElementById('flow-restart').addEventListener('click', function(){ go('hero'); });
+
+  // los hooks inyectados en cada pantalla avisan al contenedor para avanzar
+  window.addEventListener('message', function(e){
+    if(e.data === 'flow:to-summary') go('summary');
+    else if(e.data === 'flow:to-v2') go('v2');
+    else if(e.data === 'flow:restart') go('hero');
+  });
+
+  go('hero');
+</script>
+</body>
+</html>

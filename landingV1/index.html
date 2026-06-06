@@ -884,4 +884,15 @@ html, body { height: 100%; margin: 0; }
   setTimeout(apply,400);setTimeout(apply,1500);
 })();
 </script>
+<script id="chk-flow-hook">
+(function(){
+  if(!/[?&]flow=1/.test(location.search)) return;
+  function hook(){
+    var b=Array.from(document.querySelectorAll('button')).find(function(e){return e.textContent.trim()==='Start';});
+    if(b && !b.__flow){ b.__flow=1; b.addEventListener('click',function(){ try{window.parent.postMessage('flow:to-summary','*');}catch(e){} }, true); }
+  }
+  if(document.readyState!=='loading'){hook();}else{document.addEventListener('DOMContentLoaded',hook);}
+  setTimeout(hook,500); setTimeout(hook,1500); setTimeout(hook,3000);
+})();
+</script>
 </body></html>
