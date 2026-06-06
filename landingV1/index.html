@@ -295,6 +295,14 @@ html, body { height: 100%; margin: 0; }
 /* Tourist tax + Security deposit rows: equal 16px top/bottom padding to match the standalone cards (Guest registration, Get your digital key) */
 .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1),
 .dc-card > div > div > div:nth-child(4) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) { height: auto !important; padding-top: 16px !important; padding-bottom: 16px !important; box-sizing: border-box !important; }
+/* Landing journey: visual gap and timeline icon alignment */
+.landing-journey-head{ margin-top:52px !important; }
+.landing-progress-count{ display:none !important; }
+.landing-step-rail{ position:relative !important; display:block !important; width:48px !important; flex:0 0 48px !important; align-items:normal !important; justify-content:normal !important; }
+.landing-step-rail > :first-child{ position:absolute !important; left:0 !important; top:50% !important; transform:translateY(-50%) !important; z-index:2 !important; display:grid !important; place-items:center !important; }
+.landing-step-rail > :nth-child(2){ position:absolute !important; left:23px !important; top:calc(50% + 24px) !important; bottom:-15px !important; height:auto !important; margin:0 !important; z-index:1 !important; }
+.landing-step-rail--header > :first-child{ top:15px !important; transform:none !important; }
+.landing-step-rail--header > :nth-child(2){ top:63px !important; bottom:-15px !important; }
 /* progressive collapse: hide right navbar when space is tight */
 @media (max-width: 1279px) {
   .dc-card > div > div > div:nth-child(5) { display: none !important; }
@@ -580,6 +588,57 @@ html, body { height: 100%; margin: 0; }
     window.__ticketAnim={ set:function(a,b){ state.start=!!a; state.pay=!!b; apply(); }, state:function(){ return JSON.parse(JSON.stringify(state)); } };
   }
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',init); } else { init(); }
+})();
+</script>
+
+<script>
+/* == Landing journey spacing + timeline rail alignment == */
+(function(){
+  function leaf(text){
+    var all=document.querySelectorAll('body *');
+    for(var i=0;i<all.length;i++){
+      var el=all[i];
+      if(el.children.length===0 && (el.textContent||'').trim()===text){ return el; }
+    }
+    return null;
+  }
+  function leafMatch(rx){
+    var all=document.querySelectorAll('body *');
+    for(var i=0;i<all.length;i++){
+      var el=all[i];
+      if(el.children.length===0 && rx.test((el.textContent||'').trim())){ return el; }
+    }
+    return null;
+  }
+  function cardRowFrom(el){
+    var n=el;
+    while(n && n!==document.body){
+      var r=n.getBoundingClientRect();
+      var first=n.children[0] && n.children[0].getBoundingClientRect();
+      if(n.children.length===2 && getComputedStyle(n).display==='flex' && r.width>500 && first && first.width<=64){ return n; }
+      n=n.parentElement;
+    }
+    return null;
+  }
+  function markRail(row, modifier){
+    if(!row || !row.children[0]) return;
+    row.children[0].classList.add('landing-step-rail');
+    if(modifier){ row.children[0].classList.add(modifier); }
+  }
+  function tune(){
+    var title=leaf('Your check-in journey');
+    if(!title){ return setTimeout(tune,200); }
+    var head=title.parentElement && title.parentElement.parentElement;
+    if(head){ head.classList.add('landing-journey-head'); }
+
+    var count=leafMatch(/^\d+\s+of\s+2\s+done$/i);
+    if(count && count.parentElement){ count.parentElement.classList.add('landing-progress-count'); }
+
+    markRail(cardRowFrom(leaf('Guest registration')));
+    markRail(cardRowFrom(leaf('Tourist tax & deposit')), 'landing-step-rail--header');
+    markRail(cardRowFrom(leaf('Get your digital key')));
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',tune); } else { tune(); }
 })();
 </script>
 
