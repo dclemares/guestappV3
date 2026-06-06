@@ -123,12 +123,15 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
 .vp-node{ position:relative; z-index:2; width:34px; height:34px; flex:none; border-radius:50%; background:#e3e8fe; border:1px solid rgba(56,91,248,.28);
   box-shadow:0 0 0 4px #eef1fe; display:flex; align-items:center; justify-content:center; color:#385bf8; transition:all .25s ease; }
 .vp-node svg{ width:16px; height:16px; stroke-width:2; }
-.vp-node.active{ background:#385bf8; border-color:#385bf8; color:#fff; box-shadow:0 0 0 4px #dbe1fe; animation:vp-pulse 1.6s ease-in-out infinite; }
-.vp-node.done{ background:#dcf3ec; border-color:transparent; color:#0f9f80; box-shadow:0 0 0 4px #e7f5f2; }
-.vp-conn{ position:relative; z-index:1; flex:1; height:3px; background:#e3e6f0; border-radius:2px; overflow:hidden; }
-.vp-fill{ height:100%; width:0; border-radius:2px; background:#385bf8; transition:width .12s linear; }
-.vp-fill.done{ background:#0f9f80; transition:width .35s ease, background .3s ease; }
-@keyframes vp-pulse{ 0%,100%{ box-shadow:0 0 0 4px #d3dbfe; } 50%{ box-shadow:0 0 0 4px #e9ecfe; } }
+.vp-node.active{ background:#385bf8; border-color:#385bf8; color:#fff; box-shadow:0 0 0 5px #dbe1fe; animation:vp-pulse 1.6s ease-in-out infinite; }
+.vp-node.done{ background:#dff7f1; border-color:transparent; color:#0f9f80; box-shadow:0 0 0 5px #e8fbf6; }
+.vp-conn{ position:relative; z-index:1; flex:1; height:4px; margin:0 -2px; background:#e3e6f0; border-radius:999px; overflow:hidden; }
+.vp-fill{ position:relative; display:block; height:100%; width:0; border-radius:999px; background:linear-gradient(90deg,#0f9f80 0%,#20cfae 52%,#35e5bc 100%); box-shadow:0 0 12px rgba(15,159,128,.22); transition:width .18s linear; overflow:hidden; }
+.vp-fill.active::after{ content:""; position:absolute; inset:-1px; width:34%; min-width:28px; border-radius:inherit; background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.62),rgba(255,255,255,0)); transform:translateX(-120%); animation:vp-shimmer 1.15s ease-in-out infinite; }
+.vp-fill.done{ background:linear-gradient(90deg,#0f9f80 0%,#20cfae 100%); box-shadow:0 0 10px rgba(15,159,128,.18); transition:width .38s ease, background .3s ease; }
+.vp-fill.done::after{ display:none; }
+@keyframes vp-pulse{ 0%,100%{ box-shadow:0 0 0 5px #d3dbfe; } 50%{ box-shadow:0 0 0 5px #e9ecfe; } }
+@keyframes vp-shimmer{ 0%{ transform:translateX(-120%); } 100%{ transform:translateX(320%); } }
 
 /* ============ CAMERA ============ */
 .cam-frame{ position:relative; width:100%; max-width:420px; margin:18px auto 0; aspect-ratio:4/3; border-radius:18px;
@@ -629,7 +632,7 @@ function setVela(key){
   }
   // tras re-renderizar Vela, re-inyectar el indicador de progreso si procede
   if(state.screen==='capture') injectVelaProgress(state.sub, false);
-  else if(state.screen==='form') injectVelaProgress(3, false);
+  else if(state.screen==='form') injectVelaProgress(3, false, 100);
   else if(state.screen==='intro') injectVelaQR();
 }
 
@@ -658,7 +661,7 @@ function backGuide(){
   '</div>';
 }
 /* indicador de progreso de verificación que vive DENTRO del panel Vela */
-function velaProgressHTML(sub, allDone){
+function velaProgressHTML(sub, allDone, activeProgress){
   var icons = [
     '<rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16"/>',
     '<rect x="3" y="6" width="18" height="12" rx="2.4"/><path d="M3 10h18"/>',
@@ -674,7 +677,8 @@ function velaProgressHTML(sub, allDone){
       // queda verde cuando ya hemos pasado el nodo i.
       var cdone = allDone || i < sub;
       var ccur  = !allDone && i === sub;
-      html += '<span class="vp-conn"><span class="vp-fill'+(cdone?' done':'')+'"'+(ccur?' id="velaConnFill"':'')+' style="width:'+(cdone?'100%':'0%')+'"></span></span>';
+      var width = cdone ? 100 : (ccur && activeProgress ? activeProgress : 0);
+      html += '<span class="vp-conn"><span class="vp-fill'+(cdone || width===100?' done':'')+(ccur && width<100?' active':'')+'"'+(ccur?' id="velaConnFill"':'')+' style="width:'+width+'%"></span></span>';
     }
     var done = allDone || i < sub;
     var active = !allDone && i === sub;
@@ -684,11 +688,11 @@ function velaProgressHTML(sub, allDone){
   });
   return html + '</div><div class="vela-divider" style="margin-top:18px;"></div></div>';
 }
-function injectVelaProgress(sub, allDone){
+function injectVelaProgress(sub, allDone, activeProgress){
   var el = document.querySelector('chekin-vela'); if(!el) return;
   var scroll = el.querySelector('.vela-scroll'); if(!scroll) return;
   var existing = scroll.querySelector('.vela-prog'); if(existing) existing.remove();
-  scroll.insertAdjacentHTML('afterbegin', velaProgressHTML(sub, allDone));
+  scroll.insertAdjacentHTML('afterbegin', velaProgressHTML(sub, allDone, activeProgress));
 }
 
 /* QR decorativo autocontenido (símil) — patrones de esquina + módulos deterministas */
@@ -754,6 +758,7 @@ function syncVelaConn(){
   var f = document.getElementById('velaConnFill'); if(!f) return;
   f.style.width = (state.phase>=2?100:0)+'%';   // momento 2 lo anima updateRing; momento 3 = 100% verde
   f.classList.toggle('done', state.phase>=2);
+  f.classList.toggle('active', state.phase<2);
 }
 
 function renderCapture(){
