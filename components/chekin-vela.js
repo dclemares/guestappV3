@@ -76,6 +76,9 @@
     "chekin-vela .insight-reason{font-size:10.5px;font-weight:700;color:#7881aa;}",
     "chekin-vela .insight-text{margin:0;font-size:12.2px;line-height:1.44;font-weight:500;color:#303b68;}",
     "chekin-vela .insight-text strong{display:block;margin-bottom:3px;font-size:12.4px;font-weight:700;color:#07154d;}",
+    "chekin-vela .insight-row{display:flex;align-items:flex-start;gap:9px;}",
+    "chekin-vela .insight-ico{width:24px;height:24px;border-radius:7px;flex:none;display:flex;align-items:center;justify-content:center;color:#1047ff;background:rgba(56,91,248,.10);margin-top:1px;}",
+    "chekin-vela .insight-ico svg{width:15px;height:15px;stroke-width:1.9;}",
     "chekin-vela .action-card{width:100%;min-height:46px;border:1px solid rgba(216,226,245,.86);border-radius:10px;background:rgba(255,255,255,.66);",
     "  display:flex;align-items:center;padding:7px 9px;gap:9px;margin-bottom:9px;box-shadow:inset 0 1px 0 rgba(255,255,255,.76);}",
     "chekin-vela .insight-card .action-card{margin-bottom:0;margin-top:2px;}",
@@ -116,7 +119,8 @@
     'clock-alt': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
     parking: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9.5 16V8h3.1a2.4 2.4 0 0 1 0 4.8H9.5"/></svg>',
     users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>',
-    share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7 15.4 6.3M8.6 13.3l6.8 4.4"/></svg>'
+    share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7 15.4 6.3M8.6 13.3l6.8 4.4"/></svg>',
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11.4v4.6"/><circle cx="12" cy="7.9" r="1" fill="currentColor" stroke="none"/></svg>'
   };
 
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
@@ -142,6 +146,10 @@
       : '';
     var body = '<p class="insight-text">' + (it.strong ? '<strong>' + esc(it.strong) + '</strong>' : '') + esc(it.text || '') + '</p>';
     var action = it.action ? actionCard(it.action) : '';
+    if (it.icon) {
+      var ico = '<span class="insight-ico">' + (IC[it.icon] || '') + '</span>';
+      return '<article class="insight-card has-ico">' + top + '<div class="insight-row">' + ico + body + '</div>' + action + '</article>';
+    }
     return '<article class="insight-card">' + top + body + action + '</article>';
   }
 

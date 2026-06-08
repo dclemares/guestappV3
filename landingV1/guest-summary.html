@@ -116,9 +116,24 @@ h1{ margin:10px 0 8px; font-size:34px; line-height:1.1; font-weight:800; letter-
   .guest-main{ min-height:58px; }
   .guest-side{ width:100%; min-height:40px; align-items:flex-start; padding:0 18px 0 30px; clip-path:none; }
 }
+
+/* ===== Registration progress (recuento de huéspedes, dentro de Vela) ===== */
+.vela-prog{ margin:0; }
+chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
+.reg-stat{ display:flex; align-items:baseline; gap:6px; margin-top:9px; padding-left:23px; }
+.reg-num{ font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--navy-2); line-height:1; }
+.reg-total{ font-size:15px; font-weight:700; color:var(--grey-soft); }
+.reg-lbl{ margin-left:5px; font-family:var(--font-2); font-size:12px; color:var(--grey); }
+.reg-bar{ margin:11px 0 0; height:7px; border-radius:99px; background:#e3e6f0; overflow:hidden; }
+.reg-bar-fill{ height:100%; border-radius:99px; background:linear-gradient(90deg,#0f9f80,#2fe0b4); transition:width .5s ease; }
+.reg-dots{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-top:13px; }
+.reg-dot{ width:26px; height:26px; flex:none; border-radius:50%; border:1.6px solid var(--line); background:#fff;
+  display:flex; align-items:center; justify-content:center; color:var(--grey-soft); }
+.reg-dot svg{ width:13px; height:13px; stroke-width:2.8; }
+.reg-dot.done{ background:#dcf3ec; border-color:transparent; color:#0f9f80; box-shadow:0 0 0 3px rgba(15,159,128,.10); }
 </style>
 <script src="../components/chekin-navbar.js?v=warning-badges" defer></script>
-<script src="../components/chekin-vela.js?v=scroll-hint" defer></script>
+<script src="../components/chekin-vela.js?v=insight-info" defer></script>
 </head>
 <body>
 <div class="app">
@@ -221,12 +236,11 @@ h1{ margin:10px 0 8px; font-size:34px; line-height:1.1; font-weight:800; letter-
 
   <chekin-vela
     intro="I can help you invite guests, finish pending forms, and keep the booking ready before arrival."
-    reco-title="Register every guest before arrival." reco-icon="sparkle"
+    reco-title="Keep arrival on track." reco-icon="sparkle"
     reco-subtitle="The host needs a complete guest list before check-in so arrival can stay smooth.">
     <script type="application/json">
     [
-      {"chip":"Pending","reason":"5 guests","strong":"5 guests still need to complete registration.","text":" Share the booking or finish their forms before arrival."},
-      {"strong":"Minors have a lighter flow.","text":" Minors only fill the guest form - identity verification isn't required."},
+      {"icon":"info","strong":"Minors have a lighter flow.","text":" Minors only fill the guest form - identity verification isn't required."},
       {"icon":"users","title":"Change guest count","subtitle":"Adults and minors","button":"Edit"},
       {"icon":"share","title":"Share booking","subtitle":"Send the registration link","button":"Share"}
     ]
@@ -240,6 +254,32 @@ h1{ margin:10px 0 8px; font-size:34px; line-height:1.1; font-weight:800; letter-
   document.querySelectorAll('.add-row').forEach(function(b){
     b.addEventListener('click', function(){ try{ window.parent.postMessage('flow:to-v2','*'); }catch(e){} });
   });
+})();
+</script>
+
+<script id="chk-reg-progress">
+(function(){
+  var SHIELD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
+  var CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path d="m5 12 5 5L20 7"/></svg>';
+  /* Recuento de huéspedes de la reserva: registrados de un total */
+  var REGISTERED=1, TOTAL=6;
+  function progHTML(){
+    return '<div class="vela-prog"><div class="rec-title">'+SHIELD+'Register every guest before arrival.</div>'+
+      '<p class="rec-sub">Finish the pending registrations so your guests can check in without waiting.</p>'+
+      '<div class="reg-stat"><span class="reg-num">'+REGISTERED+'</span>'+
+        '<span class="reg-total">/ '+TOTAL+'</span>'+
+        '<span class="reg-lbl">guests registered</span></div>'+
+      '<div class="vela-divider" style="margin-top:18px;"></div></div>';
+  }
+  function inject(){
+    var el=document.querySelector('chekin-vela'); if(!el) return false;
+    var scroll=el.querySelector('.vela-scroll'); if(!scroll) return false;
+    if(!scroll.querySelector('.vela-prog')){ el.classList.add('has-prog'); scroll.insertAdjacentHTML('afterbegin', progHTML()); }
+    return true;
+  }
+  function tryInject(n){ if(inject()||n<=0) return; setTimeout(function(){ tryInject(n-1); }, 120); }
+  if(window.customElements && customElements.whenDefined){ customElements.whenDefined('chekin-vela').then(function(){ tryInject(25); }); }
+  tryInject(25);
 })();
 </script>
 </body>
