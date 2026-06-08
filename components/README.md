@@ -82,6 +82,7 @@ defaults to the current sample booking, so the empty tag renders the card for
 
 | Attribute | Default | Notes |
 |-----------|---------|-------|
+| `status` | `locked` | `locked` · `separated` · `digital-key` (`0` · `1` · `2` also work) |
 | `checkin-day` | `10` | left date day |
 | `checkin-month` | `Jun 2026` | left date month and year |
 | `checkin-time` | `Check-in 15:00` | supporting text under the left date |
@@ -92,22 +93,14 @@ defaults to the current sample booking, so the empty tag renders the card for
 | `booking-ref` | `8059.191.347` | booking reference |
 | `status-title` | `KEY LOCKED` | right-side status title |
 | `status-subtitle` | `FINISH CHECK-IN` | right-side status subtitle |
+| `digital-title` | `DIGITAL KEY` | green stub title |
+| `digital-subtitle` | `TAP TO OPEN THE DOOR` | green stub subtitle |
 | `location` | `Seville, Spain` | location row |
 
 ```html
-<chekin-booking-card
-  location="Seville, Spain"
-  checkin-day="10"
-  checkin-month="Jun 2026"
-  checkin-time="Check-in 15:00"
-  nights="2 nights"
-  checkout-day="12"
-  checkout-month="Jun 2026"
-  checkout-time="Check-out 11:00"
-  booking-ref="8059.191.347"
-  status-title="KEY LOCKED"
-  status-subtitle="FINISH CHECK-IN">
-</chekin-booking-card>
+<chekin-booking-card status="locked"></chekin-booking-card>
+<chekin-booking-card status="separated"></chekin-booking-card>
+<chekin-booking-card status="digital-key"></chekin-booking-card>
 ```
 
 ## `<chekin-vela>`

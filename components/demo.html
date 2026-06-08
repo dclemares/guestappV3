@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Chekin components — demo</title>
   <script src="./chekin-navbar.js?v=warning-badges" defer></script>
-  <script src="./chekin-booking-card.js?v=booking-card-ticket" defer></script>
-  <script src="./chekin-vela.js?v=scroll-hint" defer></script>
+  <script src="./chekin-booking-card.js?v=booking-card-statuses" defer></script>
+  <script src="./chekin-vela.js?v=flat-noreco" defer></script>
 <style>
   *{ box-sizing:border-box; }
   html,body{ margin:0; height:100%; }
@@ -30,23 +30,13 @@
         <h1>Component demo</h1>
         <p>The navbar, booking card and Vela panel are rendered entirely by the reusable components.</p>
       </div>
-      <chekin-booking-card
-        location="Seville, Spain"
-        checkin-day="10"
-        checkin-month="Jun 2026"
-        checkin-time="Check-in 15:00"
-        nights="2 nights"
-        checkout-day="12"
-        checkout-month="Jun 2026"
-        checkout-time="Check-out 11:00"
-        booking-ref="8059.191.347"
-        status-title="KEY LOCKED"
-        status-subtitle="FINISH CHECK-IN">
-      </chekin-booking-card>
+      <chekin-booking-card status="locked"></chekin-booking-card>
+      <chekin-booking-card status="separated"></chekin-booking-card>
+      <chekin-booking-card status="digital-key"></chekin-booking-card>
     </div>
   </main>
 
-  <chekin-vela
+  <chekin-vela flat-text
     intro="I can help you fill in your details, explain why each field is needed, and get you checked in faster."
     reco-title="Smart tips" reco-icon="sun"
     reco-subtitle="Suggestions to complete your registration without mistakes.">
