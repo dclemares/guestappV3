@@ -16,7 +16,7 @@ There is one source of truth — edit the component, every page updates.
 | File | What it is |
 |------|------------|
 | `chekin-navbar.js` | `<chekin-navbar>` — fixed left sidebar (288px) |
-| `chekin-booking-card.js` | `<chekin-booking-card>` - booking dates, reference and locked key ticket |
+| `chekin-booking-card.js` | `<chekin-booking-card>` - exact SVG booking ticket with notches and microperforations |
 | `chekin-vela.js`   | `<chekin-vela>` — fixed right assistant panel (345px) |
 | `demo.html`        | Live usage example / smoke test |
 
@@ -74,9 +74,11 @@ active item and optionally the brand / user.
 
 ## `<chekin-booking-card>`
 
-Responsive booking ticket. It defaults to the current sample booking, so the
-empty tag renders the card for `10 Jun 2026` to `12 Jun 2026`, `2 nights`,
-booking ref `8059.191.347`, and `KEY LOCKED / FINISH CHECK-IN`.
+Booking ticket rendered with the same SVG shape used in the landing: left and
+right masked cards, the center notches, and the microperforation pattern. It
+defaults to the current sample booking, so the empty tag renders the card for
+`10 Jun 2026` to `12 Jun 2026`, `2 nights`, booking ref `8059.191.347`, and
+`KEY LOCKED / FINISH CHECK-IN`.
 
 | Attribute | Default | Notes |
 |-----------|---------|-------|
@@ -90,10 +92,11 @@ booking ref `8059.191.347`, and `KEY LOCKED / FINISH CHECK-IN`.
 | `booking-ref` | `8059.191.347` | booking reference |
 | `status-title` | `KEY LOCKED` | right-side status title |
 | `status-subtitle` | `FINISH CHECK-IN` | right-side status subtitle |
-| `location` | — | optional location row |
+| `location` | `Seville, Spain` | location row |
 
 ```html
 <chekin-booking-card
+  location="Seville, Spain"
   checkin-day="10"
   checkin-month="Jun 2026"
   checkin-time="Check-in 15:00"
