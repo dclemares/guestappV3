@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Chekin components — demo</title>
   <script src="./chekin-navbar.js?v=warning-badges" defer></script>
-<script src="./chekin-vela.js?v=scroll-hint" defer></script>
+  <script src="./chekin-booking-card.js?v=booking-card-compact" defer></script>
+  <script src="./chekin-vela.js?v=scroll-hint" defer></script>
 <style>
   *{ box-sizing:border-box; }
   html,body{ margin:0; height:100%; }
@@ -14,7 +15,8 @@
       linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%);
     background-attachment:fixed; min-height:100vh; }
   .main{ margin-left:288px; margin-right:380px; padding:48px 56px 96px; }
-  h1{ font-size:34px; font-weight:800; letter-spacing:-.02em; }
+  h1{ font-size:34px; font-weight:800; letter-spacing:0; }
+  .component-stack{ display:flex; flex-direction:column; gap:28px; }
   @media (max-width:1279px){ .main{ margin-right:0; } }
   @media (max-width:767px){ .main{ margin-left:0; padding:28px 20px; } }
 </style>
@@ -23,8 +25,24 @@
   <chekin-navbar active="registration"></chekin-navbar>
 
   <main class="main">
-    <h1>Component demo</h1>
-    <p>The navbar and Vela panel are rendered entirely by the reusable components.</p>
+    <div class="component-stack">
+      <div>
+        <h1>Component demo</h1>
+        <p>The navbar, booking card and Vela panel are rendered entirely by the reusable components.</p>
+      </div>
+      <chekin-booking-card
+        checkin-day="10"
+        checkin-month="Jun 2026"
+        checkin-time="Check-in 15:00"
+        nights="2 nights"
+        checkout-day="12"
+        checkout-month="Jun 2026"
+        checkout-time="Check-out 11:00"
+        booking-ref="8059.191.347"
+        status-title="KEY LOCKED"
+        status-subtitle="FINISH CHECK-IN">
+      </chekin-booking-card>
+    </div>
   </main>
 
   <chekin-vela

@@ -1,8 +1,8 @@
 # Chekin Guest App V3 — shared components
 
 Reusable, framework-free Web Components for the Guest App V3 prototypes.
-Drop them into any page (no build step) and they render the navbar and the
-Vela assistant panel exactly as designed in the registration forms.
+Drop them into any page (no build step) and they render shared Guest App
+surfaces exactly as designed in the registration forms.
 
 Each component is **self-contained**: it injects its own CSS and the
 Montserrat font once, uses literal colors (no dependency on page CSS
@@ -16,6 +16,7 @@ There is one source of truth — edit the component, every page updates.
 | File | What it is |
 |------|------------|
 | `chekin-navbar.js` | `<chekin-navbar>` — fixed left sidebar (288px) |
+| `chekin-booking-card.js` | `<chekin-booking-card>` - booking dates, reference and locked key ticket |
 | `chekin-vela.js`   | `<chekin-vela>` — fixed right assistant panel (345px) |
 | `demo.html`        | Live usage example / smoke test |
 
@@ -28,6 +29,7 @@ them on your main content:
 ```html
 <head>
   <script src="../components/chekin-navbar.js" defer></script>
+  <script src="../components/chekin-booking-card.js" defer></script>
   <script src="../components/chekin-vela.js" defer></script>
   <style>
     /* leave room for the fixed sidebars */
@@ -40,6 +42,8 @@ them on your main content:
   <chekin-navbar active="registration"></chekin-navbar>
 
   <main class="main"> … your page … </main>
+
+  <chekin-booking-card></chekin-booking-card>
 
   <chekin-vela intro="…" reco-title="Vela recommends">
     <script type="application/json"> [ …items… ] </script>
@@ -66,6 +70,41 @@ active item and optionally the brand / user.
 
 ```html
 <chekin-navbar active="payments" brand="Villa Sol" user-name="Léa Martin"></chekin-navbar>
+```
+
+## `<chekin-booking-card>`
+
+Responsive booking ticket. It defaults to the current sample booking, so the
+empty tag renders the card for `10 Jun 2026` to `12 Jun 2026`, `2 nights`,
+booking ref `8059.191.347`, and `KEY LOCKED / FINISH CHECK-IN`.
+
+| Attribute | Default | Notes |
+|-----------|---------|-------|
+| `checkin-day` | `10` | left date day |
+| `checkin-month` | `Jun 2026` | left date month and year |
+| `checkin-time` | `Check-in 15:00` | supporting text under the left date |
+| `checkout-day` | `12` | right date day |
+| `checkout-month` | `Jun 2026` | right date month and year |
+| `checkout-time` | `Check-out 11:00` | supporting text under the right date |
+| `nights` | `2 nights` | stay length between the dates |
+| `booking-ref` | `8059.191.347` | booking reference |
+| `status-title` | `KEY LOCKED` | right-side status title |
+| `status-subtitle` | `FINISH CHECK-IN` | right-side status subtitle |
+| `location` | — | optional location row |
+
+```html
+<chekin-booking-card
+  checkin-day="10"
+  checkin-month="Jun 2026"
+  checkin-time="Check-in 15:00"
+  nights="2 nights"
+  checkout-day="12"
+  checkout-month="Jun 2026"
+  checkout-time="Check-out 11:00"
+  booking-ref="8059.191.347"
+  status-title="KEY LOCKED"
+  status-subtitle="FINISH CHECK-IN">
+</chekin-booking-card>
 ```
 
 ## `<chekin-vela>`
