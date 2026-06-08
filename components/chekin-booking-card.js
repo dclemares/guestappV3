@@ -23,7 +23,8 @@
  * Self-contained: injects its own CSS + the Montserrat font once.
  */
 (function () {
-  if (window.customElements && customElements.get('chekin-booking-card')) return;
+  var customElementsRegistry = window.customElements;
+  if (!customElementsRegistry || customElementsRegistry.get('chekin-booking-card')) return;
 
   var FONT_HREF = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600&display=swap';
   var idCounter = 0;
@@ -52,8 +53,9 @@
     "  transition:transform .6s cubic-bezier(.22,.7,.25,1),opacity .5s ease;}",
     "chekin-booking-card .tk-gkey:hover .tk-halo{transform:scale(1);opacity:1;}",
     "chekin-booking-card .tk-gcard{pointer-events:auto;cursor:pointer;}",
-    "chekin-booking-card .ticket-svg[data-status=\"locked\"],chekin-booking-card .ticket-svg[data-status=\"separated\"]{cursor:pointer;}",
-    "chekin-booking-card .ticket-svg[data-status=\"locked\"]:hover .tk-lock,chekin-booking-card .ticket-svg[data-status=\"separated\"]:hover .tk-lock{animation:booking-card-lock .45s ease-in-out;}",
+    "chekin-booking-card .tk-lock-hotspot{pointer-events:all;cursor:pointer;}",
+    "chekin-booking-card .tk-lock-content{pointer-events:all;cursor:pointer;}",
+    "chekin-booking-card .tk-lock-hotspot:hover + .tk-lock-content .tk-lock,chekin-booking-card .tk-lock-content:hover .tk-lock{animation:booking-card-lock .45s ease-in-out;}",
     "@keyframes booking-card-lock{0%,100%{transform:rotate(0)}15%{transform:rotate(-8deg)}30%{transform:rotate(7deg)}45%{transform:rotate(-5deg)}60%{transform:rotate(3deg)}80%{transform:rotate(-1.5deg)}}"
   ].join('\n');
 
@@ -102,8 +104,10 @@
   function defs(status, ids) {
     var separated = status === 'separated';
     var digital = status === 'digital-key';
-    var perfY = separated ? '124.8' : '136.8';
-    var perfH = separated ? '422.4' : '423';
+    var perfY = '132.8';
+    var perfH = '422.4';
+    var greenPerfY = '141.3';
+    var greenPerfH = '422.4';
     var navy = digital
       ? '<radialGradient id="' + ids.navySoft + '" cx="50%" cy="45%" r="80%"><stop offset="0%" stop-color="#141955"/><stop offset="100%" stop-color="#09103E"/></radialGradient>'
       : '<radialGradient id="' + ids.navySoft + '" cx="820" cy="320" r="760" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#141955"/><stop offset="100%" stop-color="#09103E"/></radialGradient>';
@@ -113,8 +117,8 @@
         ? '<filter id="' + ids.stubShadow + '" x="1540" y="20" width="670" height="690" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="30" stdDeviation="22" flood-color="#12164C" flood-opacity="0.2"/></filter>'
         : '<filter id="' + ids.stubShadow + '" x="1500" y="0" width="720" height="720" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="28" stdDeviation="22" flood-color="#12164C" flood-opacity="0.22"/></filter>';
     var greenDefs = digital
-      ? '<pattern id="' + ids.greenPerf + '" x="1657.8" y="136.8" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="3.2" cy="3.2" r="3.2" fill="black"/></pattern>' +
-        '<mask id="' + ids.greenMask + '" maskUnits="userSpaceOnUse"><rect width="2172" height="724" fill="black"/><path d="' + GREEN_CARD_PATH + '" fill="white"/><rect x="1657.8" y="136.8" width="6.4" height="423" fill="url(#' + ids.greenPerf + ')"/></mask>' +
+      ? '<pattern id="' + ids.greenPerf + '" x="1657.8" y="' + greenPerfY + '" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="3.2" cy="3.2" r="3.2" fill="black"/></pattern>' +
+        '<mask id="' + ids.greenMask + '" maskUnits="userSpaceOnUse"><rect width="2172" height="724" fill="black"/><path d="' + GREEN_CARD_PATH + '" fill="white"/><rect x="1657.8" y="' + greenPerfY + '" width="6.4" height="' + greenPerfH + '" fill="url(#' + ids.greenPerf + ')"/></mask>' +
         '<radialGradient id="' + ids.haloGrad + '" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.16"/><stop offset="46%" stop-color="#FFFFFF" stop-opacity="0.22"/><stop offset="66%" stop-color="#FFFFFF" stop-opacity="0.52"/><stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>'
       : '';
 
@@ -139,20 +143,20 @@
       '<text x="124" y="315" fill="white" font-size="92" font-weight="900" letter-spacing="-4">' + esc(data.checkinDay) + '</text>' +
       '<text x="238" y="315" fill="white" font-size="43" font-weight="780" letter-spacing="-1.2">' + esc(data.checkinMonth) + '</text>' +
       '<text x="126" y="372" fill="white" opacity="0.58" font-size="31" font-weight="560" letter-spacing="-0.7">' + esc(data.checkinTime) + '</text>' +
-      '<line x1="456" y1="306" x2="601" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
-      '<g transform="translate(622 290)" opacity="0.62"><path d="M29 18.4C25.3 22 20.4 24.2 15 24.2C6.7 24.2 0 17.5 0 9.2C0 4.5 2.2 0.4 5.6 -2.3C5 0 4.9 2.5 5.6 5C7.5 12.3 14.9 16.7 22.2 14.8C24.8 14.1 27.1 12.8 29 11V18.4Z" fill="none" stroke="white" stroke-width="2.4" stroke-linejoin="round"/></g>' +
-      '<text x="660" y="317" fill="white" opacity="0.58" font-size="32" font-weight="580" letter-spacing="-0.7">' + esc(data.nights) + '</text>' +
-      '<line x1="792" y1="306" x2="940" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
+      '<line x1="456" y1="306" x2="590" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
+      '<g transform="translate(616 290)" opacity="0.62"><path d="M29 18.4C25.3 22 20.4 24.2 15 24.2C6.7 24.2 0 17.5 0 9.2C0 4.5 2.2 0.4 5.6 -2.3C5 0 4.9 2.5 5.6 5C7.5 12.3 14.9 16.7 22.2 14.8C24.8 14.1 27.1 12.8 29 11V18.4Z" fill="none" stroke="white" stroke-width="2.4" stroke-linejoin="round"/></g>' +
+      '<text x="664" y="317" fill="white" opacity="0.58" font-size="32" font-weight="580" letter-spacing="-0.7">' + esc(data.nights) + '</text>' +
+      '<line x1="832" y1="306" x2="960" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
       '<text x="1019" y="315" fill="white" font-size="92" font-weight="900" letter-spacing="-4">' + esc(data.checkoutDay) + '</text>' +
       '<text x="1133" y="315" fill="white" font-size="43" font-weight="780" letter-spacing="-1.2">' + esc(data.checkoutMonth) + '</text>' +
       '<text x="1030" y="372" fill="white" opacity="0.58" font-size="31" font-weight="560" letter-spacing="-0.7">' + esc(data.checkoutTime) + '</text>' +
       '<text x="126" y="490" fill="white" opacity="0.7" font-size="28" font-weight="860" letter-spacing="7">BOOKING REF</text>' +
-      '<text x="410" y="490" fill="white" font-size="39" font-weight="860" letter-spacing="1">' + esc(data.bookingRef) + '</text>' +
+      '<text x="468" y="490" fill="white" font-size="39" font-weight="860" letter-spacing="1">' + esc(data.bookingRef) + '</text>' +
     '</g>';
   }
 
   function lockContent(data) {
-    return '<circle cx="1858" cy="260" r="78" fill="none" stroke="white" stroke-opacity="0.44" stroke-width="4"/>' +
+    return '<g class="tk-lock-content"><circle cx="1858" cy="260" r="78" fill="none" stroke="white" stroke-opacity="0.44" stroke-width="4"/>' +
       '<g class="tk-lock"><g transform="translate(1818 220)">' +
         '<rect x="10" y="26" width="60" height="46" rx="11" fill="none" stroke="white" stroke-width="4"/>' +
         '<path d="M24 26V16C24 4 33 0 40 0C47 0 56 4 56 16V26" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' +
@@ -160,11 +164,12 @@
         '<path d="M40 52V60" stroke="white" stroke-width="4" stroke-linecap="round"/>' +
       '</g></g>' +
       '<text x="1858" y="408" text-anchor="middle" fill="white" font-family="Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="38" font-weight="900" letter-spacing="0.4">' + esc(data.statusTitle) + '</text>' +
-      '<text x="1858" y="468" text-anchor="middle" fill="white" opacity="0.9" font-family="Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="27" font-weight="560" letter-spacing="3.2">' + esc(data.statusSubtitle) + '</text>';
+      '<text x="1858" y="468" text-anchor="middle" fill="white" opacity="0.9" font-family="Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="27" font-weight="560" letter-spacing="3.2">' + esc(data.statusSubtitle) + '</text></g>';
   }
 
   function lockedRightCard(data, ids, separated) {
-    var card = '<g filter="url(#' + ids.stubShadow + ')"><path d="' + RIGHT_CARD_PATH + '" fill="url(#' + ids.navySoft + ')" mask="url(#' + ids.rightMask + ')"/></g>' + lockContent(data);
+    var card = '<g filter="url(#' + ids.stubShadow + ')"><path d="' + RIGHT_CARD_PATH + '" fill="url(#' + ids.navySoft + ')" mask="url(#' + ids.rightMask + ')"/></g>' +
+      '<path class="tk-lock-hotspot" d="' + RIGHT_CARD_PATH + '" fill="transparent"/>' + lockContent(data);
     return separated ? '<g transform="rotate(1.35 1638 562)">' + card + '</g>' : card;
   }
 
@@ -240,5 +245,5 @@
     }
   }
 
-  customElements.define('chekin-booking-card', ChekinBookingCard);
+  customElementsRegistry.define('chekin-booking-card', ChekinBookingCard);
 })();
