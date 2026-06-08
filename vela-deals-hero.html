@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Carousel (price below) & Featured hero (no thumbs)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{
+    --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68;
+    --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82); --amber:#c98a16;
+  }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800;
+    background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  .vela{ position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; }
+  .v-avatar svg{ width:22px; height:22px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:12px; }
+  .v-title{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center;
+    background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .v-divider{ height:1px; width:100%; margin:0 0 14px; background:var(--line); }
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 13px;
+    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--amber); }
+  .addbtn{ border:0; cursor:pointer; font:inherit; font-weight:700; color:#fff; background:var(--blue); border-radius:8px; }
+  .addbtn:hover{ background:var(--blue-deep); }
+  .pr s{ color:var(--grey-soft); font-weight:600; font-size:11px; margin-right:5px; }
+  .save{ height:19px; display:inline-flex; align-items:center; padding:0 8px; border-radius:999px; background:var(--amber); color:#fff; font-size:9px; font-weight:800; letter-spacing:.04em; }
+
+  /* ===== Carousel base ===== */
+  .rail{ display:flex; gap:11px; overflow-x:auto; margin:0 -2px; padding:2px 2px 8px; scrollbar-width:thin; }
+  .rail::-webkit-scrollbar{ height:6px; } .rail::-webkit-scrollbar-thumb{ background:rgba(56,91,248,.25); border-radius:3px; }
+  .ccard{ flex:0 0 166px; border-radius:15px; overflow:hidden; background:#fff; box-shadow:0 6px 16px rgba(23,42,96,.1); }
+  .ccard .img{ position:relative; height:98px; background-size:cover; background-position:center; }
+  .ccard .img .save{ position:absolute; top:8px; left:8px; }
+  .ccard .info{ padding:10px 11px 12px; }
+  .ccard .info b{ display:block; font-size:12.4px; font-weight:700; }
+  .ccard .info small{ display:block; margin-top:1px; font-size:10.3px; color:#5a6695; }
+
+  /* 3b·1 — price + “+” inline */
+  .c1 .foot{ display:flex; align-items:center; justify-content:space-between; margin-top:9px; }
+  .c1 .foot .pr{ font-size:13px; font-weight:800; }
+  .c1 .add{ width:28px; height:28px; border-radius:9px; display:flex; align-items:center; justify-content:center; }
+  .c1 .add svg{ width:15px; height:15px; stroke-width:2.4; }
+
+  /* 3b·2 — price line + full-width Add */
+  .c2 .pr{ display:block; margin-top:8px; font-size:13.5px; font-weight:800; }
+  .c2 .addbtn{ display:block; width:100%; height:30px; margin-top:9px; border-radius:9px; font-size:11.4px; }
+
+  /* ===== Hero card (no thumbs) ===== */
+  .hcard{ position:relative; border-radius:16px; overflow:hidden; background:#fff; box-shadow:0 8px 20px rgba(23,42,96,.1); margin-top:12px; }
+  .hcard:first-of-type{ margin-top:0; }
+  .hcard .img{ position:relative; height:104px; background-size:cover; background-position:center; }
+  .hcard .img .save{ position:absolute; top:10px; right:10px; }
+
+  /* H1 — overlay caption on image */
+  .h1 .hcard .img::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,21,77,0) 38%, rgba(7,21,77,.6)); }
+  .h1 .hcard .cap{ position:absolute; left:12px; bottom:9px; z-index:2; color:#fff; }
+  .h1 .hcard .cap b{ display:block; font-size:14.5px; font-weight:800; letter-spacing:-.01em; }
+  .h1 .hcard .cap small{ display:block; font-size:10.4px; font-weight:500; opacity:.92; }
+  .h1 .bar{ display:flex; align-items:center; justify-content:space-between; padding:10px 12px; }
+  .h1 .bar .pr{ font-size:15px; font-weight:800; } .h1 .bar .addbtn{ height:30px; padding:0 16px; font-size:11.5px; border-radius:9px; }
+
+  /* H2 — caption below image */
+  .h2 .hcard .cb{ padding:11px 12px 0; } .h2 .hcard .cb b{ display:block; font-size:13.6px; font-weight:800; } .h2 .hcard .cb small{ display:block; margin-top:2px; font-size:10.6px; color:#5a6695; }
+  .h2 .bar{ display:flex; align-items:center; justify-content:space-between; padding:9px 12px 12px; }
+  .h2 .bar .pr{ font-size:15px; font-weight:800; } .h2 .bar .addbtn{ height:30px; padding:0 16px; font-size:11.5px; border-radius:9px; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · deals</div>
+    <h1>Carousel (price below) &amp; Featured hero (no thumbs)</h1>
+    <p>Developing 3b and 4a further. The featured hero drops the thumbnail list — every offer becomes a full-width hero card. Two takes of each.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  var PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>';
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+  var IMG={ room:'landingV1/assets/deals/room.jpg', transfer:'landingV1/assets/deals/transfer.jpg', parking:'landingV1/assets/deals/parking.jpg' };
+  var DEALS=[
+    {img:IMG.room,     t:'Early check-in',  s:'Access from 11:00',  p:'€25', was:'€35', save:'-30%'},
+    {img:IMG.transfer, t:'Airport transfer',s:'Direct ride',        p:'€45', was:'',    save:''},
+    {img:IMG.parking,  t:'Parking spot',    s:'On-site, per night', p:'€15', was:'',    save:''}
+  ];
+  function panel(inner){
+    return '<div class="vela"><div class="v-avatar">'+SPARK+'</div>'+
+      '<div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>'+
+      '<div class="v-divider"></div><div class="eye">Offers for your stay</div>'+ inner +'</div>';
+  }
+
+  // 3b·1 carousel price + plus
+  var C1='<div class="c1"><div class="rail">'+DEALS.map(function(d){
+    return '<div class="ccard"><div class="img" style="background-image:url('+d.img+')">'+(d.save?'<span class="save">'+d.save+'</span>':'')+'</div>'+
+      '<div class="info"><b>'+d.t+'</b><small>'+d.s+'</small>'+
+        '<div class="foot"><span class="pr">'+(d.was?'<s>'+d.was+'</s>':'')+d.p+'</span><button class="addbtn add">'+PLUS+'</button></div></div></div>';
+  }).join('')+'</div></div>';
+
+  // 3b·2 carousel price line + full Add
+  var C2='<div class="c2"><div class="rail">'+DEALS.map(function(d){
+    return '<div class="ccard"><div class="img" style="background-image:url('+d.img+')">'+(d.save?'<span class="save">'+d.save+'</span>':'')+'</div>'+
+      '<div class="info"><b>'+d.t+'</b><small>'+d.s+'</small>'+
+        '<span class="pr">'+(d.was?'<s>'+d.was+'</s>':'')+d.p+'</span><button class="addbtn">Add</button></div></div>';
+  }).join('')+'</div></div>';
+
+  // H1 hero, overlay caption
+  var H1='<div class="h1">'+DEALS.map(function(d){
+    return '<div class="hcard"><div class="img" style="background-image:url('+d.img+')">'+(d.save?'<span class="save">'+d.save+'</span>':'')+
+      '<span class="cap"><b>'+d.t+'</b><small>'+d.s+'</small></span></div>'+
+      '<div class="bar"><span class="pr">'+(d.was?'<s>'+d.was+'</s>':'')+d.p+'</span><button class="addbtn">Add to stay</button></div></div>';
+  }).join('')+'</div>';
+
+  // H2 hero, caption below image
+  var H2='<div class="h2">'+DEALS.map(function(d){
+    return '<div class="hcard"><div class="img" style="background-image:url('+d.img+')">'+(d.save?'<span class="save">'+d.save+'</span>':'')+'</div>'+
+      '<div class="cb"><b>'+d.t+'</b><small>'+d.s+'</small></div>'+
+      '<div class="bar"><span class="pr">'+(d.was?'<s>'+d.was+'</s>':'')+d.p+'</span><button class="addbtn">Add to stay</button></div></div>';
+  }).join('')+'</div>';
+
+  var cols=[
+    {tag:'3b·1', name:'Carousel · price + “+”', desc:'Photo, title, subtitle, price (old/new) and a “+” add. Compact swipe.', html:panel(C1)},
+    {tag:'3b·2', name:'Carousel · full Add', desc:'Same card but price line + a full-width Add button. Clearer CTA.', html:panel(C2)},
+    {tag:'4a·1', name:'Hero · overlay caption', desc:'Full-width hero cards, title over the photo, price + CTA bar below. No thumbs.', html:panel(H1)},
+    {tag:'4a·2', name:'Hero · caption below', desc:'Hero photo on top, title + subtitle + price + CTA beneath. Calmer, no overlay.', html:panel(H2)}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">'+c.tag+'</span>'+
+      '<div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+c.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

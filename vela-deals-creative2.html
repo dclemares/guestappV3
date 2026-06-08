@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Deals 3b/4a creative</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{
+    --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68;
+    --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82); --amber:#c98a16; --notch:#f1f3f8;
+  }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800;
+    background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  .vela{ position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; }
+  .v-avatar svg{ width:22px; height:22px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:12px; }
+  .v-title{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center;
+    background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .v-divider{ height:1px; width:100%; margin:0 0 14px; background:var(--line); }
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 13px;
+    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--amber); }
+  .addbtn{ border:0; cursor:pointer; font:inherit; font-weight:700; color:#fff; background:var(--blue); border-radius:8px; }
+  .addbtn:hover{ background:var(--blue-deep); }
+  .pr s{ color:var(--grey-soft); font-weight:600; font-size:11px; margin-right:5px; }
+  .save{ height:19px; display:inline-flex; align-items:center; padding:0 8px; border-radius:999px; background:var(--amber); color:#fff; font-size:9px; font-weight:800; letter-spacing:.04em; }
+
+  .rail{ display:flex; gap:11px; overflow-x:auto; margin:0 -2px; padding:2px 2px 8px; scrollbar-width:thin; }
+  .rail::-webkit-scrollbar{ height:6px; } .rail::-webkit-scrollbar-thumb{ background:rgba(56,91,248,.25); border-radius:3px; }
+
+  /* ===== C1 · Carousel · glass strip on photo ===== */
+  .c1 .gc{ flex:0 0 168px; height:158px; border-radius:16px; overflow:hidden; position:relative; background-size:cover; background-position:center; box-shadow:0 8px 18px rgba(23,42,96,.16); }
+  .c1 .gc::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,21,77,.05) 30%, rgba(7,21,77,.45)); }
+  .c1 .gc .save{ position:absolute; top:9px; left:9px; z-index:3; }
+  .c1 .glass{ position:absolute; left:8px; right:8px; bottom:8px; z-index:3; padding:8px 9px 9px; border-radius:12px;
+    background:rgba(10,22,60,.42); backdrop-filter:blur(9px); border:1px solid rgba(255,255,255,.22); color:#fff; }
+  .c1 .glass b{ display:block; font-size:12px; font-weight:700; }
+  .c1 .glass .row{ display:flex; align-items:center; justify-content:space-between; margin-top:7px; }
+  .c1 .glass .pr{ font-size:13px; font-weight:800; }
+  .c1 .glass .add{ height:24px; padding:0 11px; border-radius:7px; background:#fff; color:var(--blue-deep); border:0; font:inherit; font-size:10.4px; font-weight:800; cursor:pointer; }
+
+  /* ===== C2 · Carousel · duotone + price coin ===== */
+  .c2 .dc{ flex:0 0 166px; border-radius:16px; overflow:hidden; background:#fff; box-shadow:0 7px 16px rgba(23,42,96,.12); }
+  .c2 .img{ position:relative; height:104px; background-size:cover; background-position:center; }
+  .c2 .img::after{ content:''; position:absolute; inset:0; background:linear-gradient(150deg, rgba(56,91,248,.42), rgba(16,71,255,.12)); mix-blend-mode:multiply; }
+  .c2 .save{ position:absolute; top:9px; left:9px; z-index:3; background:#fff; color:var(--amber); }
+  .c2 .coin{ position:absolute; right:9px; bottom:-16px; z-index:3; width:46px; height:46px; border-radius:50%; background:#fff;
+    box-shadow:0 5px 14px rgba(7,21,77,.28); display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .c2 .info{ padding:22px 11px 12px; }
+  .c2 .info b{ display:block; font-size:12.5px; font-weight:700; } .c2 .info small{ display:block; margin-top:1px; font-size:10.3px; color:#5a6695; }
+
+  /* ===== H1 · Hero · floating glass info card ===== */
+  .h1 .hc{ position:relative; height:166px; border-radius:18px; overflow:hidden; background-size:cover; background-position:center; box-shadow:0 10px 24px rgba(23,42,96,.16); margin-top:12px; }
+  .h1 .hc:first-of-type{ margin-top:0; }
+  .h1 .hc::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,21,77,.08) 40%, rgba(7,21,77,.4)); }
+  .h1 .hc .save{ position:absolute; top:11px; right:11px; z-index:3; }
+  .h1 .glass{ position:absolute; left:11px; right:11px; bottom:11px; z-index:3; display:flex; align-items:center; gap:10px; padding:11px 11px 11px 13px; border-radius:14px;
+    background:rgba(10,22,60,.4); backdrop-filter:blur(11px); border:1px solid rgba(255,255,255,.24); color:#fff; }
+  .h1 .glass .tb{ flex:1; min-width:0; } .h1 .glass .tb b{ display:block; font-size:13.5px; font-weight:800; } .h1 .glass .tb small{ display:block; font-size:10.4px; opacity:.9; }
+  .h1 .glass .pr{ font-size:14px; font-weight:800; margin-right:2px; }
+  .h1 .glass .add{ height:30px; padding:0 14px; border-radius:9px; border:0; background:#fff; color:var(--blue-deep); font:inherit; font-size:11.4px; font-weight:800; cursor:pointer; }
+
+  /* ===== H2 · Hero · perforated price stub ===== */
+  .h2 .hc{ position:relative; display:flex; height:118px; border-radius:16px; overflow:hidden; background:#fff; box-shadow:0 9px 20px rgba(23,42,96,.13); margin-top:12px; }
+  .h2 .hc:first-of-type{ margin-top:0; }
+  .h2 .photo{ position:relative; flex:1; background-size:cover; background-position:center; }
+  .h2 .photo::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,21,77,0) 45%, rgba(7,21,77,.5)); }
+  .h2 .photo .save{ position:absolute; top:10px; left:10px; z-index:3; }
+  .h2 .photo .cap{ position:absolute; left:11px; bottom:9px; z-index:3; color:#fff; }
+  .h2 .photo .cap b{ display:block; font-size:13.5px; font-weight:800; } .h2 .photo .cap small{ display:block; font-size:10px; opacity:.92; }
+  .h2 .perf{ position:relative; width:0; align-self:stretch; border-left:2px dashed rgba(203,214,236,.95); margin:7px 0; }
+  .h2 .perf::before,.h2 .perf::after{ content:''; position:absolute; left:-7px; width:13px; height:13px; border-radius:50%; background:var(--notch); }
+  .h2 .perf::before{ top:-9px; } .h2 .perf::after{ bottom:-9px; }
+  .h2 .stub{ width:96px; flex:none; background:rgba(56,91,248,.06); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; padding:8px; }
+  .h2 .stub .pr{ font-size:15px; font-weight:800; } .h2 .stub .addbtn{ height:28px; padding:0 14px; font-size:10.8px; border-radius:999px; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · deals · creative</div>
+    <h1>Carousel &amp; Hero — bolder takes</h1>
+    <p>More creative spins on 3b and 4a: glass-on-photo, brand duotone with a price coin, a floating glass info card, and a hero with a perforated price stub.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  var PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>';
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+  var IMG={ room:'landingV1/assets/deals/room.jpg', transfer:'landingV1/assets/deals/transfer.jpg', parking:'landingV1/assets/deals/parking.jpg' };
+  var DEALS=[
+    {img:IMG.room,     t:'Early check-in',  s:'Access from 11:00',  p:'€25', was:'€35', save:'-30%'},
+    {img:IMG.transfer, t:'Airport transfer',s:'Direct ride',        p:'€45', was:'',    save:''},
+    {img:IMG.parking,  t:'Parking spot',    s:'On-site, per night', p:'€15', was:'',    save:''}
+  ];
+  function panel(inner){
+    return '<div class="vela"><div class="v-avatar">'+SPARK+'</div>'+
+      '<div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>'+
+      '<div class="v-divider"></div><div class="eye">Offers for your stay</div>'+ inner +'</div>';
+  }
+
+  var C1='<div class="c1"><div class="rail">'+DEALS.map(function(d){
+    return '<div class="gc" style="background-image:url('+d.img+')">'+(d.save?'<span class="save">'+d.save+'</span>':'')+
+      '<div class="glass"><b>'+d.t+'</b><div class="row"><span class="pr">'+d.p+'</span><button class="add">Add</button></div></div></div>';
+  }).join('')+'</div></div>';
+
+  var C2='<div class="c2"><div class="rail">'+DEALS.map(function(d){
+    return '<div class="dc"><div class="img" style="background-image:url('+d.img+')">'+(d.save?'<span class="save">'+d.save+'</span>':'')+'<span class="coin">'+d.p+'</span></div>'+
+      '<div class="info"><b>'+d.t+'</b><small>'+d.s+'</small></div></div>';
+  }).join('')+'</div></div>';
+
+  var H1='<div class="h1">'+DEALS.map(function(d){
+    return '<div class="hc" style="background-image:url('+d.img+')">'+(d.save?'<span class="save">'+d.save+'</span>':'')+
+      '<div class="glass"><span class="tb"><b>'+d.t+'</b><small>'+d.s+'</small></span><span class="pr">'+d.p+'</span><button class="add">Add</button></div></div>';
+  }).join('')+'</div>';
+
+  var H2='<div class="h2">'+DEALS.map(function(d){
+    return '<div class="hc"><div class="photo" style="background-image:url('+d.img+')">'+(d.save?'<span class="save">'+d.save+'</span>':'')+
+        '<span class="cap"><b>'+d.t+'</b><small>'+d.s+'</small></span></div>'+
+      '<span class="perf"></span>'+
+      '<div class="stub"><span class="pr">'+(d.was?'<s>'+d.was+'</s>':'')+d.p+'</span><button class="addbtn">Add</button></div></div>';
+  }).join('')+'</div>';
+
+  var cols=[
+    {tag:'3b★1', name:'Carousel · glass on photo', desc:'Full-image cards with a frosted glass strip (title, price, Add) over the photo. Immersive.', html:panel(C1)},
+    {tag:'3b★2', name:'Carousel · duotone + coin', desc:'Brand duotone wash on the photo and a price “coin” overlapping the corner. Playful.', html:panel(C2)},
+    {tag:'4a★1', name:'Hero · floating glass card', desc:'Hero photo with a frosted glass info card floating at the bottom. Premium.', html:panel(H1)},
+    {tag:'4a★2', name:'Hero · perforated stub', desc:'Hero photo + caption, a perforation, and a price stub on the right. Coupon × hero.', html:panel(H2)}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">'+c.tag+'</span>'+
+      '<div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+c.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

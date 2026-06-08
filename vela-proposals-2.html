@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — section proposals v2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{
+    --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68;
+    --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82);
+    --green:#0f9f80; --amber:#c98a16;
+  }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 70px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:620px; }
+
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800;
+    background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  /* ---- Panel chrome ---- */
+  .vela{ position:relative; border-radius:20px; padding:18px 16px 16px;
+    background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:16px; left:16px; width:42px; height:42px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px rgba(18,75,255,.22); }
+  .v-avatar svg{ width:25px; height:25px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:42px; padding-left:54px; margin-bottom:12px; }
+  .v-title{ margin:0; font-size:20px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:22px; padding:0 9px; border-radius:999px; display:inline-flex; align-items:center;
+    background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10.5px; font-weight:700; }
+  .v-intro{ margin:0 0 16px; font-family:'Poppins',sans-serif; font-size:12.4px; line-height:1.5; color:#48547f; }
+
+  /* shared section bits */
+  .ttl{ display:flex; align-items:center; gap:9px; font-size:13px; font-weight:700; color:var(--navy); }
+  .ttl svg{ width:15px; height:15px; flex:none; stroke-width:1.9; }
+  .sub{ margin:5px 0 0; padding-left:24px; font-size:11.8px; line-height:1.45; font-weight:500; color:var(--grey); }
+  .count{ margin:9px 0 0; padding-left:24px; font-family:'Poppins',sans-serif; font-size:12px; color:var(--grey); }
+  .count b{ font-family:'Montserrat',sans-serif; font-size:21px; font-weight:800; color:var(--navy); letter-spacing:-.02em; vertical-align:-2px; }
+
+  .action{ width:100%; min-height:46px; border:1px solid rgba(216,226,245,.86); border-radius:11px; background:rgba(255,255,255,.72);
+    display:flex; align-items:center; padding:8px 9px; gap:9px; margin-top:9px; box-shadow:inset 0 1px 0 rgba(255,255,255,.8); }
+  .ac-ic{ width:26px; height:26px; border-radius:7px; flex:none; display:flex; align-items:center; justify-content:center;
+    color:#14266f; background:rgba(56,91,248,.10); }
+  .ac-ic svg{ width:15px; height:15px; stroke-width:1.85; }
+  .ac-copy{ flex:1; min-width:0; }
+  .ac-t{ display:block; font-size:12.4px; font-weight:700; }
+  .ac-s{ display:block; margin-top:1px; font-size:10.8px; font-weight:500; color:#5a6695; }
+  .ac-btn{ height:28px; min-width:50px; border:1px solid #d3def4; border-radius:8px; background:rgba(255,255,255,.8);
+    color:var(--blue-deep); font:inherit; font-size:11.4px; font-weight:700; cursor:pointer; }
+
+  /* base eyebrow */
+  .eye{ font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); margin:0 0 9px; }
+  .hr{ height:1px; width:100%; margin:15px 0; background:var(--line); }
+
+  /* =========== E · Rail + colored eyebrow =========== */
+  .E-sec{ position:relative; padding-left:15px; margin-bottom:16px; }
+  .E-sec:last-child{ margin-bottom:0; }
+  .E-sec::before{ content:''; position:absolute; left:0; top:3px; bottom:3px; width:3px; border-radius:3px; background:var(--c); }
+  .E-sec .eye{ color:var(--c); margin-bottom:8px; }
+  .E-sec .sub,.E-sec .count{ padding-left:24px; }
+  .E-sec.prog{ --c:var(--blue); }
+  .E-sec.info{ --c:var(--amber); }
+  .E-sec.info .ttl svg{ color:var(--amber); }
+  .E-sec.act{ --c:var(--green); }
+
+  /* =========== F · Dot eyebrow + divider =========== */
+  .F-eye{ display:flex; align-items:center; gap:8px; font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); margin:0 0 10px; }
+  .F-eye::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--c); flex:none; }
+  .F-sec.prog{ --c:var(--blue); }
+  .F-sec.info{ --c:var(--amber); }
+  .F-sec.info .ttl svg{ color:var(--amber); }
+  .F-sec.act{ --c:var(--green); }
+
+  /* =========== G · Chip header (icon+label pill) =========== */
+  .G-chip{ display:inline-flex; align-items:center; gap:6px; height:23px; padding:0 10px 0 8px; border-radius:999px;
+    font-size:9.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin:0 0 10px;
+    background:var(--cbg); color:var(--c); }
+  .G-chip svg{ width:13px; height:13px; stroke-width:2; }
+  .G-sec{ margin-bottom:16px; } .G-sec:last-child{ margin-bottom:0; }
+  .G-sec .sub,.G-sec .count{ padding-left:0; }
+  .G-sec .ttl{ padding-left:1px; }
+  .G-sec.prog{ --c:var(--blue-deep); --cbg:rgba(56,91,248,.10); }
+  .G-sec.info{ --c:var(--amber); --cbg:rgba(201,138,22,.12); }
+  .G-sec.info .ttl svg{ color:var(--amber); }
+  .G-sec.act{ --c:var(--green); --cbg:rgba(15,159,128,.12); }
+
+  /* =========== H · Underlined eyebrow (editorial) =========== */
+  .H-eye{ position:relative; display:inline-block; padding-bottom:8px; margin:0 0 11px;
+    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--ink); }
+  .H-eye::after{ content:''; position:absolute; left:0; bottom:0; width:22px; height:2px; border-radius:2px; background:var(--c); }
+  .H-sec{ margin-bottom:16px; } .H-sec:last-child{ margin-bottom:0; }
+  .H-sec.prog{ --c:var(--blue); }
+  .H-sec.info{ --c:var(--amber); }
+  .H-sec.info .ttl svg{ color:var(--amber); }
+  .H-sec.act{ --c:var(--green); }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · v2</div>
+    <h1>Section ideas — between A &amp; C, no frames</h1>
+    <p>Building on eyebrow labels (A) and the accent rail (C). No backgrounds or boxes around text — only the action buttons stay as cards. Pick one or mix.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  var SHIELD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
+  var INFO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11.4v4.6"/><circle cx="12" cy="7.9" r="1" fill="currentColor" stroke="none"/></svg>';
+  var USERS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>';
+  var SHARE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7 15.4 6.3M8.6 13.3l6.8 4.4"/></svg>';
+  var BOLT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8Z"/></svg>';
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+
+  function chrome(inner){
+    return '<div class="vela">'+
+      '<div class="v-avatar">'+SPARK+'</div>'+
+      '<div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>'+
+      '<p class="v-intro">I can help you invite guests, finish pending forms, and keep the booking ready before arrival.</p>'+
+      inner+'</div>';
+  }
+  function actions(){
+    return '<div class="action"><span class="ac-ic">'+USERS+'</span><span class="ac-copy"><span class="ac-t">Change guest count</span><span class="ac-s">Adults and minors</span></span><button class="ac-btn">Edit</button></div>'+
+    '<div class="action"><span class="ac-ic">'+SHARE+'</span><span class="ac-copy"><span class="ac-t">Share booking</span><span class="ac-s">Send the registration link</span></span><button class="ac-btn">Share</button></div>';
+  }
+
+  // E — rail + colored eyebrow
+  var E =
+    '<div class="E-sec prog"><div class="eye">Your progress</div><div class="ttl">'+SHIELD+'Register every guest before arrival.</div><p class="sub">Finish the pending registrations so your guests can check in without waiting.</p><p class="count"><b>1</b> / 6 guests registered</p></div>'+
+    '<div class="E-sec info"><div class="eye">Good to know</div><div class="ttl">'+INFO+'Minors have a lighter flow.</div><p class="sub">Minors only fill the guest form — identity verification isn’t required.</p></div>'+
+    '<div class="E-sec act"><div class="eye">Quick actions</div>'+actions()+'</div>';
+
+  // F — dot eyebrow + divider
+  var F =
+    '<div class="F-sec prog"><div class="F-eye">Your progress</div><div class="ttl">'+SHIELD+'Register every guest before arrival.</div><p class="sub">Finish the pending registrations so your guests can check in without waiting.</p><p class="count"><b>1</b> / 6 guests registered</p></div>'+
+    '<div class="hr"></div>'+
+    '<div class="F-sec info"><div class="F-eye">Good to know</div><div class="ttl">'+INFO+'Minors have a lighter flow.</div><p class="sub">Minors only fill the guest form — identity verification isn’t required.</p></div>'+
+    '<div class="hr"></div>'+
+    '<div class="F-sec act"><div class="F-eye">Quick actions</div>'+actions()+'</div>';
+
+  // G — chip header
+  var G =
+    '<div class="G-sec prog"><span class="G-chip">'+SHIELD+'Your progress</span><div class="ttl">Register every guest before arrival.</div><p class="sub">Finish the pending registrations so your guests can check in without waiting.</p><p class="count"><b>1</b> / 6 guests registered</p></div>'+
+    '<div class="G-sec info"><span class="G-chip">'+INFO+'Good to know</span><div class="ttl">Minors have a lighter flow.</div><p class="sub">Minors only fill the guest form — identity verification isn’t required.</p></div>'+
+    '<div class="G-sec act"><span class="G-chip">'+BOLT+'Quick actions</span>'+actions()+'</div>';
+
+  // H — underlined eyebrow
+  var H =
+    '<div class="H-sec prog"><div class="H-eye">Your progress</div><div class="ttl">'+SHIELD+'Register every guest before arrival.</div><p class="sub">Finish the pending registrations so your guests can check in without waiting.</p><p class="count"><b>1</b> / 6 guests registered</p></div>'+
+    '<div class="H-sec info"><div class="H-eye">Good to know</div><div class="ttl">'+INFO+'Minors have a lighter flow.</div><p class="sub">Minors only fill the guest form — identity verification isn’t required.</p></div>'+
+    '<div class="H-sec act"><div class="H-eye">Quick actions</div>'+actions()+'</div>';
+
+  var cols=[
+    {tag:'E', name:'Rail + colored eyebrow', desc:'Accent rail (C) plus the label tinted in the section color. Structured but airy.', html:E},
+    {tag:'F', name:'Dot eyebrow + divider', desc:'A small colored dot before each label, thin dividers. Lighter than the rail.', html:F},
+    {tag:'G', name:'Chip header', desc:'Each section opens with a tinted icon+label pill. Content stays flat below.', html:G},
+    {tag:'H', name:'Underlined eyebrow', desc:'Editorial: short colored underline under each label. Minimal, no rails or dots.', html:H}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">Option '+c.tag+'</span>'+
+      '<div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+
+      chrome(c.html)+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

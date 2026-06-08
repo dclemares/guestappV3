@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Deals, creative ideas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{
+    --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68;
+    --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82);
+    --green:#0f9f80; --amber:#c98a16;
+  }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:700px; }
+
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800;
+    background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  .vela{ position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; }
+  .v-avatar svg{ width:22px; height:22px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:12px; }
+  .v-title{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center;
+    background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .v-divider{ height:1px; width:100%; margin:0 0 14px; background:var(--line); }
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 13px;
+    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--amber); }
+  .gic{ display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(145deg,#1047ff,#5d7cff); }
+  .addbtn{ border:0; cursor:pointer; font:inherit; font-weight:700; color:#fff; background:var(--blue); border-radius:9px; }
+  .addbtn:hover{ background:var(--blue-deep); }
+
+  /* ===== A · Contextual pitch (Vela proposes) ===== */
+  .pitch{ display:flex; gap:9px; align-items:flex-start; }
+  .pitch .mini{ width:26px; height:26px; flex:none; border-radius:50%; background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; margin-top:2px; }
+  .pitch .mini svg{ width:15px; height:15px; color:#fff; }
+  .pitch .bubble{ position:relative; flex:1; background:rgba(56,91,248,.06); border:1px solid rgba(56,91,248,.12); border-radius:4px 14px 14px 14px; padding:12px 13px; }
+  .pitch .bubble p{ margin:0; font-family:'Poppins',sans-serif; font-size:12.5px; line-height:1.55; color:var(--ink); }
+  .pitch .bubble b{ color:var(--navy); font-weight:700; }
+  .pitch-cta{ display:flex; gap:8px; margin-top:11px; }
+  .pitch-cta .yes{ height:32px; padding:0 15px; border:0; border-radius:9px; background:var(--blue); color:#fff; font:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+  .pitch-cta .no{ height:32px; padding:0 13px; border:1px solid rgba(56,91,248,.22); border-radius:9px; background:transparent; color:var(--blue-deep); font:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+  .more{ display:flex; align-items:center; gap:5px; margin-top:13px; padding:0; border:0; background:none; cursor:pointer;
+    font:inherit; font-size:11.5px; font-weight:700; color:var(--blue-deep); }
+  .more svg{ width:14px; height:14px; stroke-width:2.4; }
+
+  /* ===== B · Build-your-arrival (toggles + live total) ===== */
+  .addon{ display:flex; align-items:center; gap:11px; padding:11px 2px; }
+  .addon + .addon{ border-top:1px solid var(--line); }
+  .addon .ic{ width:21px; height:21px; flex:none; color:var(--blue); } .addon .ic svg{ width:18px; height:18px; stroke-width:1.9; }
+  .addon .bd{ flex:1; min-width:0; } .addon .bd b{ display:block; font-size:12.4px; font-weight:700; } .addon .bd small{ display:block; font-size:10.4px; color:#5a6695; }
+  .addon .pp{ font-size:12.2px; font-weight:800; color:var(--navy); margin-right:3px; }
+  .sw{ width:36px; height:21px; border-radius:999px; background:#cfd6ea; position:relative; flex:none; cursor:pointer; transition:.15s; }
+  .sw::after{ content:''; position:absolute; top:2.5px; left:2.5px; width:16px; height:16px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.22); transition:.15s; }
+  .sw.on{ background:var(--blue); } .sw.on::after{ left:17.5px; }
+  .total{ display:flex; align-items:baseline; justify-content:space-between; margin-top:13px; padding-top:12px; border-top:2px solid rgba(56,91,248,.16); }
+  .total .lbl{ font-size:11px; font-weight:700; color:var(--grey); text-transform:uppercase; letter-spacing:.08em; }
+  .total .amt{ font-size:20px; font-weight:800; letter-spacing:-.02em; }
+  .addall{ width:100%; height:38px; margin-top:11px; border:0; border-radius:11px; background:var(--blue); color:#fff; font:inherit; font-size:12.5px; font-weight:700; cursor:pointer; box-shadow:0 8px 18px rgba(56,91,248,.24); }
+
+  /* ===== C · Coupon / ticket ===== */
+  .coupon{ position:relative; display:flex; align-items:stretch; margin-top:11px; border-radius:13px; background:#fff;
+    box-shadow:0 6px 16px rgba(23,42,96,.07); overflow:hidden; }
+  .coupon:first-of-type{ margin-top:0; }
+  .coupon .stub{ width:52px; flex:none; display:flex; align-items:center; justify-content:center; color:#fff;
+    background:linear-gradient(160deg,#1047ff,#5d7cff); }
+  .coupon .stub svg{ width:20px; height:20px; }
+  .coupon .perf{ position:relative; width:1px; border-left:2px dashed rgba(203,214,236,.95); }
+  .coupon .perf::before,.coupon .perf::after{ content:''; position:absolute; left:-7px; width:12px; height:12px; border-radius:50%; background:rgba(244,246,249,1); }
+  .coupon .perf::before{ top:-6px; } .coupon .perf::after{ bottom:-6px; }
+  .coupon .body{ flex:1; padding:10px 12px; min-width:0; }
+  .coupon .body b{ display:block; font-size:12.6px; font-weight:700; }
+  .coupon .body small{ display:block; margin-top:1px; font-size:10.5px; color:#5a6695; }
+  .coupon .end{ display:flex; flex-direction:column; align-items:flex-end; justify-content:center; padding:0 11px 0 4px; gap:5px; }
+  .coupon .pr{ font-size:14px; font-weight:800; }
+  .coupon .add{ height:25px; padding:0 11px; border:0; border-radius:7px; background:var(--blue); color:#fff; font:inherit; font-size:10.6px; font-weight:700; cursor:pointer; }
+  .coupon .save{ position:absolute; top:8px; right:-26px; transform:rotate(45deg); background:var(--amber); color:#fff; font-size:8px; font-weight:800; letter-spacing:.06em; padding:2px 26px; }
+
+  /* ===== D · Stay timeline ===== */
+  .tl{ position:relative; margin-left:6px; padding-left:20px; }
+  .tl::before{ content:''; position:absolute; left:5px; top:6px; bottom:6px; width:2px; background:linear-gradient(var(--blue),rgba(56,91,248,.2)); border-radius:2px; }
+  .tl-item{ position:relative; padding-bottom:15px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{ content:''; position:absolute; left:-19px; top:3px; width:11px; height:11px; border-radius:50%; background:#fff; border:2.5px solid var(--blue); }
+  .tl-when{ font-size:9.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--grey-soft); margin-bottom:6px; }
+  .tl-deal{ display:flex; align-items:center; gap:10px; padding:9px 9px 9px 11px; border-radius:12px; background:rgba(56,91,248,.06); }
+  .tl-deal .ic{ width:20px; height:20px; flex:none; color:var(--blue); } .tl-deal .ic svg{ width:18px; height:18px; stroke-width:1.9; }
+  .tl-deal .bd{ flex:1; min-width:0; } .tl-deal .bd b{ display:block; font-size:12.2px; font-weight:700; }
+  .tl-deal .pr{ font-size:12px; font-weight:800; color:var(--navy); }
+  .tl-deal .add{ width:24px; height:24px; flex:none; border-radius:7px; border:0; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .tl-deal .add svg{ width:14px; height:14px; stroke-width:2.6; }
+  .tl-plain{ font-family:'Poppins',sans-serif; font-size:11.6px; color:var(--grey); }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · deals · creative</div>
+    <h1>Deals — a creative angle</h1>
+    <p>Vela is an assistant, not a shop shelf. These treat offers as something it proposes, helps you configure, or pins to your trip — not just cards in a row.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  var LOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="6" y="9" width="12" height="11" rx="2"/><path d="M9 9V6.7a3 3 0 0 1 6 0V9"/><path d="M12 13v3"/></svg>';
+  var CAR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 16h14l-1.6-5.2A2.4 2.4 0 0 0 15.1 9H8.9a2.4 2.4 0 0 0-2.3 1.8L5 16Z"/><path d="M4 16v3M20 16v3M7 19h1.5M15.5 19H17"/><path d="M7.5 13h9"/></svg>';
+  var PARK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9.5 16V8h3.1a2.4 2.4 0 0 1 0 4.8H9.5"/></svg>';
+  var PLANE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10.5 13.5 3 11l1-2 8 1 5-5a2 2 0 1 1 2 2l-5 5 1 8-2 1-2.5-7.5Z"/></svg>';
+  var PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>';
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 6 6 6-6 6"/></svg>';
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+
+  function panel(inner){
+    return '<div class="vela">'+
+      '<div class="v-avatar">'+SPARK+'</div>'+
+      '<div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>'+
+      '<div class="v-divider"></div>'+
+      '<div class="eye">Offers for your stay</div>'+ inner +'</div>';
+  }
+
+  // A — contextual pitch
+  var A =
+    '<div class="pitch"><span class="mini">'+SPARK+'</span>'+
+      '<div class="bubble"><p>You arrive around <b>10:30</b>. Want me to unlock <b>early check-in from 11:00</b> so your room is ready when you get there?</p>'+
+        '<div class="pitch-cta"><button class="yes">Add for €25</button><button class="no">Not now</button></div></div>'+
+    '</div>'+
+    '<button class="more">See 2 more extras '+CHEV+'</button>';
+
+  // B — build your arrival
+  var B =
+    '<div class="addon"><span class="ic">'+LOCK+'</span><span class="bd"><b>Early check-in</b><small>Access from 11:00</small></span><span class="pp">€25</span><span class="sw on"></span></div>'+
+    '<div class="addon"><span class="ic">'+CAR+'</span><span class="bd"><b>Airport transfer</b><small>Direct ride</small></span><span class="pp">€45</span><span class="sw"></span></div>'+
+    '<div class="addon"><span class="ic">'+PARK+'</span><span class="bd"><b>Parking spot</b><small>On-site, per night</small></span><span class="pp">€15</span><span class="sw on"></span></div>'+
+    '<div class="total"><span class="lbl">Extras total</span><span class="amt">€40</span></div>'+
+    '<button class="addall">Add to booking</button>';
+
+  // C — coupons
+  function coupon(ic,t,s,p,save){
+    return '<div class="coupon"><span class="stub">'+ic+'</span><span class="perf"></span>'+
+      '<span class="body"><b>'+t+'</b><small>'+s+'</small></span>'+
+      '<span class="end"><span class="pr">'+p+'</span><button class="add">Add</button></span>'+
+      (save?'<span class="save">'+save+'</span>':'')+'</div>';
+  }
+  var C = coupon(LOCK,'Early check-in','Access from 11:00','€25','-30%')+
+          coupon(CAR,'Airport transfer','Direct ride','€45','')+
+          coupon(PARK,'Parking spot','On-site, per night','€15','');
+
+  // D — stay timeline
+  var D =
+    '<div class="tl">'+
+      '<div class="tl-item"><div class="tl-when">On arrival · 11:00</div>'+
+        '<div class="tl-deal"><span class="ic">'+LOCK+'</span><span class="bd"><b>Early check-in</b></span><span class="pr">€25</span><button class="add">'+PLUS+'</button></div></div>'+
+      '<div class="tl-item"><div class="tl-when">Getting there</div>'+
+        '<div class="tl-deal"><span class="ic">'+PLANE+'</span><span class="bd"><b>Airport transfer</b></span><span class="pr">€45</span><button class="add">'+PLUS+'</button></div></div>'+
+      '<div class="tl-item"><div class="tl-when">At the property</div>'+
+        '<div class="tl-deal"><span class="ic">'+PARK+'</span><span class="bd"><b>Parking spot</b></span><span class="pr">€15</span><button class="add">'+PLUS+'</button></div></div>'+
+    '</div>';
+
+  var cols=[
+    {tag:'1', name:'Vela proposes (contextual)', desc:'A chat bubble where Vela pitches the most relevant extra from your data, with Add / Not now. One focus, very assistant.', html:panel(A)},
+    {tag:'2', name:'Build your arrival', desc:'Extras as toggles with a live running total + one “Add to booking”. Configurator, not a catalogue.', html:panel(B)},
+    {tag:'3', name:'Coupons', desc:'Ticket metaphor: stub, perforation, price stamp, a “-30%” ribbon. Playful, screams “deal”.', html:panel(C)},
+    {tag:'4', name:'Stay timeline', desc:'Offers pinned to moments of the trip (arrival, getting there, on-site). Contextual storytelling.', html:panel(D)}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">Idea '+c.tag+'</span>'+
+      '<div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+c.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

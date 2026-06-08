@@ -133,7 +133,7 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
 .reg-dot.done{ background:#dcf3ec; border-color:transparent; color:#0f9f80; box-shadow:0 0 0 3px rgba(15,159,128,.10); }
 </style>
 <script src="../components/chekin-navbar.js?v=warning-badges" defer></script>
-<script src="../components/chekin-vela.js?v=flat-noreco" defer></script>
+<script src="../components/chekin-vela.js?v=vela-components" defer></script>
 </head>
 <body>
 <div class="app">
@@ -239,9 +239,11 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
     reco-title="" reco-icon="sparkle">
     <script type="application/json">
     [
+      {"type":"section","label":"Good to know","tone":"amber"},
       {"icon":"info","strong":"Minors have a lighter flow.","text":" Minors only fill the guest form - identity verification isn't required."},
-      {"icon":"users","title":"Change guest count","subtitle":"Adults and minors","button":"Edit"},
-      {"icon":"share","title":"Share booking","subtitle":"Send the registration link","button":"Share"}
+      {"type":"section","label":"Quick actions","tone":"blue"},
+      {"type":"capsule","icon":"users","title":"Change guest count"},
+      {"type":"capsule","icon":"share","title":"Share booking link"}
     ]
     </script>
   </chekin-vela>

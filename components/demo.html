@@ -6,7 +6,7 @@
 <title>Chekin components — demo</title>
   <script src="./chekin-navbar.js?v=warning-badges" defer></script>
   <script src="./chekin-booking-card.js?v=booking-card-checkout-space-guard" defer></script>
-  <script src="./chekin-vela.js?v=flat-noreco" defer></script>
+  <script src="./chekin-vela.js?v=vela-components" defer></script>
 <style>
   *{ box-sizing:border-box; }
   html,body{ margin:0; height:100%; }
@@ -38,14 +38,23 @@
 
   <chekin-vela flat-text
     intro="I can help you fill in your details, explain why each field is needed, and get you checked in faster."
-    reco-title="Smart tips" reco-icon="sun"
-    reco-subtitle="Suggestions to complete your registration without mistakes.">
+    reco-title="">
     <script type="application/json">
     [
-      {"chip":"Heads up","reason":"Spanish nationality","strong":"Add your second last name","text":"Spain requires both surnames on official guest records."},
+      {"type":"section","label":"Smart tips","tone":"amber"},
       {"chip":"Tip","reason":"Faster check-in","strong":"Use your passport","text":"Pick the same document you'll show on arrival to avoid delays."},
-      {"icon":"doc","title":"What documents work?","subtitle":"Passport, ID or license","button":"Ask"},
-      {"icon":"clock-alt","title":"When is this due?","subtitle":"Before arrival day","button":"Ask"}
+      {"type":"section","label":"Quick actions","tone":"green"},
+      {"type":"capsule","icon":"users","title":"Change guest count"},
+      {"type":"capsule","icon":"share","title":"Share booking link"},
+      {"type":"section","label":"Offers for your stay","tone":"blue"},
+      {"type":"deals-carousel","deals":[
+        {"img":"../landingV1/assets/deals/room.jpg","title":"Early check-in","sub":"Access from 11:00","price":"€25","save":"-30%"},
+        {"img":"../landingV1/assets/deals/transfer.jpg","title":"Airport transfer","sub":"Direct ride","price":"€45"},
+        {"img":"../landingV1/assets/deals/parking.jpg","title":"Parking spot","sub":"On-site, per night","price":"€15"}
+      ]},
+      {"type":"deal-hero","img":"../landingV1/assets/deals/room.jpg","title":"Early check-in","sub":"Access from 11:00","price":"€25","old":"€35","save":"-30%"},
+      {"type":"deal","icon":"car","title":"Airport transfer","sub":"Direct ride","price":"€45"},
+      {"type":"banner","logo":"airalo","img":"../landingV1/assets/deals/beach.jpg","headline":"Activa tu eSIM al instante y olvídate del roaming.","priceLabel":"Desde","price":"4,00€","cta":"Ver planes","tag":"Patrocinado"}
     ]
     </script>
   </chekin-vela>

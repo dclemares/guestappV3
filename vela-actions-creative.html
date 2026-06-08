@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Quick actions, creative ideas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{
+    --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68;
+    --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82);
+    --green:#0f9f80; --amber:#c98a16;
+  }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 70px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800;
+    background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  .vela{ position:relative; border-radius:20px; padding:18px 16px 16px;
+    background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:16px; left:16px; width:42px; height:42px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px rgba(18,75,255,.22); }
+  .v-avatar svg{ width:25px; height:25px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:42px; padding-left:54px; margin-bottom:12px; }
+  .v-title{ margin:0; font-size:20px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:22px; padding:0 9px; border-radius:999px; display:inline-flex; align-items:center;
+    background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10.5px; font-weight:700; }
+  .v-intro{ margin:0 0 16px; font-family:'Poppins',sans-serif; font-size:12.4px; line-height:1.5; color:#48547f; }
+
+  .ttl{ display:flex; align-items:center; gap:9px; font-size:13px; font-weight:700; color:var(--navy); }
+  .ttl svg{ width:15px; height:15px; flex:none; stroke-width:1.9; }
+  .sub{ margin:5px 0 0; padding-left:24px; font-size:11.8px; line-height:1.45; font-weight:500; color:var(--grey); }
+  .count{ margin:9px 0 0; padding-left:24px; font-family:'Poppins',sans-serif; font-size:12px; color:var(--grey); }
+  .count b{ font-family:'Montserrat',sans-serif; font-size:21px; font-weight:800; color:var(--navy); letter-spacing:-.02em; vertical-align:-2px; }
+  .prog{ --c:var(--blue); } .info{ --c:var(--amber); } .info .ttl svg{ color:var(--amber); } .act{ --c:var(--green); }
+  .sec{ margin-bottom:16px; }
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 11px;
+    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--c); }
+
+  /* faux chat bar */
+  .chatbar{ margin-top:15px; height:46px; border:1px solid #d4dff4; border-radius:11px; background:rgba(255,255,255,.82);
+    display:flex; align-items:center; gap:10px; padding:0 8px 0 14px; box-shadow:inset 0 1px 0 rgba(255,255,255,.9); }
+  .chatbar input{ flex:1; border:0; background:transparent; font:inherit; font-size:12px; color:#17245d; outline:none; }
+  .chatbar input::placeholder{ color:#6b6b95; }
+  .send{ width:34px; height:34px; flex:none; border:0; border-radius:9px; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .send svg{ width:16px; height:16px; stroke-width:2; }
+
+  /* ===== 1 · Quick-reply chips (chat-native) ===== */
+  .hint{ font-size:9.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--grey-soft); margin:0 0 9px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{ display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 14px 0 11px; border-radius:999px;
+    border:1px solid rgba(56,91,248,.24); background:rgba(255,255,255,.72); color:var(--blue-deep); font-size:11.8px; font-weight:700; cursor:pointer;
+    box-shadow:0 2px 6px rgba(23,42,96,.05); }
+  .chip svg{ width:14px; height:14px; stroke-width:2; }
+  .chip:hover{ background:rgba(56,91,248,.09); border-color:rgba(56,91,248,.4); }
+
+  /* ===== 2 · Conversational links (Vela voice) ===== */
+  .convo{ display:flex; gap:9px; align-items:flex-start; }
+  .convo .mini{ width:24px; height:24px; flex:none; border-radius:50%; background:linear-gradient(145deg,#1047ff,#5d7cff);
+    display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .convo .mini svg{ width:14px; height:14px; color:#fff; }
+  .convo .bubble{ font-family:'Poppins',sans-serif; font-size:12.6px; line-height:1.72; color:var(--ink); }
+  .convo a{ color:var(--blue-deep); font-weight:700; text-decoration:none; cursor:pointer;
+    background:linear-gradient(transparent 64%, rgba(56,91,248,.18) 0); padding:0 1px; }
+  .convo a:hover{ background:linear-gradient(transparent 64%, rgba(56,91,248,.34) 0); }
+
+  /* ===== 3 · Launcher tiles (2-up, icon-forward) ===== */
+  .tiles{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .tile{ position:relative; border:1px solid rgba(216,226,245,.8); border-radius:15px; padding:13px 12px 12px;
+    background:rgba(255,255,255,.6); cursor:pointer; transition:.15s; overflow:hidden; }
+  .tile::after{ content:''; position:absolute; right:-18px; top:-18px; width:46px; height:46px; border-radius:50%; background:rgba(56,91,248,.07); }
+  .tile:hover{ border-color:rgba(56,91,248,.35); transform:translateY(-1px); }
+  .tile .ic{ width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+    color:#fff; background:linear-gradient(145deg,#1047ff,#5d7cff); margin-bottom:10px; }
+  .tile .ic svg{ width:16px; height:16px; stroke-width:2; }
+  .tile b{ display:block; font-size:12.2px; font-weight:700; }
+  .tile small{ display:block; margin-top:2px; font-size:10.6px; font-weight:500; color:#5a6695; }
+
+  /* ===== 4 · Verb-line (do-this) — flat tappable verbs with arrow ===== */
+  .verbs{ display:flex; flex-direction:column; }
+  .verb{ display:flex; align-items:center; gap:11px; padding:9px 0; cursor:pointer; }
+  .verb + .verb{ border-top:1px dashed rgba(203,214,236,.9); }
+  .verb .vic{ width:22px; height:22px; flex:none; color:var(--blue); }
+  .verb .vic svg{ width:18px; height:18px; stroke-width:2; }
+  .verb .vt{ flex:1; font-size:13px; font-weight:700; color:var(--navy); }
+  .verb .go{ font-size:11px; font-weight:800; letter-spacing:.04em; color:var(--blue-deep); display:inline-flex; align-items:center; gap:4px; }
+  .verb .go svg{ width:13px; height:13px; stroke-width:2.4; }
+  .verb:hover .vt{ color:var(--blue-deep); }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · creative</div>
+    <h1>Quick actions — a different angle</h1>
+    <p>Vela is a conversational assistant, so actions don’t have to be dashboard cards. These treat them as chat-native or assistant-voice elements. Headers keep the chosen Option 3 style.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  var SHIELD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
+  var INFO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11.4v4.6"/><circle cx="12" cy="7.9" r="1" fill="currentColor" stroke="none"/></svg>';
+  var USERS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>';
+  var SHARE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7 15.4 6.3M8.6 13.3l6.8 4.4"/></svg>';
+  var ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 6 6 6-6 6"/></svg>';
+  var PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>';
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+
+  function header(){
+    return '<div class="sec prog"><div class="eye">Your progress</div><div class="ttl">'+SHIELD+'Register every guest before arrival.</div><p class="sub">Finish the pending registrations so your guests can check in without waiting.</p><p class="count"><b>1</b> / 6 guests registered</p></div>'+
+    '<div class="sec info"><div class="eye">Good to know</div><div class="ttl">'+INFO+'Minors have a lighter flow.</div><p class="sub">Minors only fill the guest form — identity verification isn’t required.</p></div>';
+  }
+  function chatbar(){
+    return '<div class="chatbar"><input placeholder="Ask Vela anything…"><button class="send">'+ARROW+'</button></div>';
+  }
+  function panel(actionsHtml, withChat){
+    return '<div class="vela">'+
+      '<div class="v-avatar">'+SPARK+'</div>'+
+      '<div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>'+
+      '<p class="v-intro">I can help you invite guests, finish pending forms, and keep the booking ready before arrival.</p>'+
+      header()+ actionsHtml + (withChat?chatbar():'') +'</div>';
+  }
+
+  // 1 — quick-reply chips, sitting just above the chat input
+  var c1 =
+    '<div class="sec act"><p class="hint">Try one of these</p>'+
+      '<div class="chips">'+
+        '<span class="chip">'+PLUS+'Add another guest</span>'+
+        '<span class="chip">'+USERS+'Change guest count</span>'+
+        '<span class="chip">'+SHARE+'Share booking link</span>'+
+      '</div></div>';
+
+  // 2 — conversational, Vela talks with inline tappable verbs
+  var c2 =
+    '<div class="sec act"><div class="eye">Quick actions</div>'+
+      '<div class="convo"><span class="mini">'+SPARK+'</span>'+
+        '<div class="bubble">Whenever you’re ready, you can <a>change the guest count</a> or <a>share the booking link</a> so the rest of your party can register themselves.</div>'+
+      '</div></div>';
+
+  // 3 — launcher tiles
+  var c3 =
+    '<div class="sec act"><div class="eye">Quick actions</div>'+
+      '<div class="tiles">'+
+        '<div class="tile"><span class="ic">'+USERS+'</span><b>Guest count</b><small>Adults & minors</small></div>'+
+        '<div class="tile"><span class="ic">'+SHARE+'</span><b>Share link</b><small>Invite the party</small></div>'+
+      '</div></div>';
+
+  // 4 — verb lines with dashed separators + arrow
+  var c4 =
+    '<div class="sec act"><div class="eye">Quick actions</div>'+
+      '<div class="verbs">'+
+        '<div class="verb"><span class="vic">'+USERS+'</span><span class="vt">Change guest count</span><span class="go">Edit '+CHEV+'</span></div>'+
+        '<div class="verb"><span class="vic">'+SHARE+'</span><span class="vt">Share booking link</span><span class="go">Share '+CHEV+'</span></div>'+
+      '</div></div>';
+
+  var cols=[
+    {tag:'1', name:'Quick-reply chips', desc:'Chat-native suggestion pills, right above the input — like an assistant offering next steps.', html:panel(c1, true)},
+    {tag:'2', name:'Vela speaks (inline links)', desc:'Actions woven into a sentence as tappable verbs. Pure conversation, zero boxes.', html:panel(c2, true)},
+    {tag:'3', name:'Launcher tiles', desc:'Icon-forward 2-up tiles with a soft glow. Playful, app-launcher feel.', html:panel(c3, false)},
+    {tag:'4', name:'Verb lines', desc:'Bold action verbs on dashed-separated lines with an arrow. Editorial + scannable.', html:panel(c4, false)}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">Idea '+c.tag+'</span>'+
+      '<div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+c.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

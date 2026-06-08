@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Component decisions overview</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{ --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68; --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82); --green:#0f9f80; --amber:#c98a16; --notch:#f1f3f8; }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:40px 34px 100px;
+    background:radial-gradient(circle 300px at 320px 200px, rgba(79,107,255,.18), rgba(79,107,255,0) 70%), linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1740px; margin:0 auto 30px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 6px; font-size:32px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:720px; }
+  .grid{ display:flex; gap:26px; flex-wrap:wrap; max-width:1740px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .clabel{ display:flex; align-items:center; gap:8px; margin:0 0 4px; }
+  .cnum{ width:22px; height:22px; flex:none; border-radius:7px; background:var(--blue); color:#fff; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+  .cname{ font-size:13.5px; font-weight:800; }
+  .cdesc{ margin:0 0 12px 30px; font-family:'Poppins',sans-serif; font-size:11.5px; line-height:1.45; color:var(--grey); }
+  .cdesc b{ color:var(--navy); font-weight:700; }
+
+  /* Vela chrome */
+  .vela{ position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.68); border:1px solid rgba(255,255,255,.82); box-shadow:0 16px 40px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .va{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%; background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; z-index:2; }
+  .va svg{ width:22px; height:22px; color:#fff; }
+  .vtr{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:12px; }
+  .vt{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .vb{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center; background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .vd{ height:1px; width:100%; margin:0 0 13px; background:var(--line); }
+  .vintro{ margin:0 0 12px; font-family:'Poppins',sans-serif; font-size:12px; line-height:1.5; color:#5a6695; }
+
+  /* eyebrow (Option 3) — exact */
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 12px; font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--tk,var(--blue)); }
+  .eye.am{ --tk:var(--amber); }
+  .pr s{ color:var(--grey-soft); font-weight:600; font-size:11px; margin-right:5px; }
+  .save{ height:19px; display:inline-flex; align-items:center; padding:0 8px; border-radius:999px; font-size:9px; font-weight:800; letter-spacing:.04em; }
+
+  /* ===== 1 · Section headers (Option 3) — from proposals-3 body() ===== */
+  .c1 .sec{ margin-bottom:16px; } .c1 .sec:last-child{ margin-bottom:0; }
+  .c1 .ttl{ display:flex; align-items:center; gap:9px; font-size:13px; font-weight:700; color:var(--navy); }
+  .c1 .ttl svg{ width:15px; height:15px; flex:none; stroke-width:1.9; } .c1 .ttl.am svg{ color:var(--amber); }
+  .c1 .sub{ margin:5px 0 0; padding-left:24px; font-size:11.8px; line-height:1.45; font-weight:500; color:var(--grey); }
+  .c1 .count{ margin:9px 0 0; padding-left:24px; font-family:'Poppins',sans-serif; font-size:12px; color:var(--grey); }
+  .c1 .count b{ font-family:'Montserrat',sans-serif; font-size:21px; font-weight:800; color:var(--navy); letter-spacing:-.02em; vertical-align:-2px; }
+
+  /* ===== 2 · Quick actions · capsule B4.4 — from vela-actions-b4 (.v4) ===== */
+  .c2 .caps{ display:flex; flex-direction:column; gap:9px; }
+  .c2 .cap{ display:flex; align-items:center; gap:11px; min-height:48px; padding:0 12px 0 14px; border-radius:999px; cursor:pointer; transition:.15s; border:1px solid transparent; background:linear-gradient(90deg, rgba(56,91,248,.12), rgba(56,91,248,.03)); }
+  .c2 .cap:hover{ background:linear-gradient(90deg, rgba(56,91,248,.18), rgba(56,91,248,.05)); }
+  .c2 .cap .t{ flex:1; font-size:12.6px; font-weight:700; color:var(--navy); }
+  .c2 .cap .ic{ width:22px; height:22px; flex:none; color:var(--blue); } .c2 .cap .ic svg{ width:19px; height:19px; stroke-width:1.9; }
+  .c2 .cap .chev{ width:20px; height:20px; flex:none; color:var(--blue-deep); margin-right:6px; } .c2 .cap .chev svg{ width:20px; height:20px; stroke-width:2.2; }
+
+  /* ===== 3 · Deal coupon V1 — from vela-deals-coupon-2 (.v1) ===== */
+  .c3 .cp{ position:relative; margin-top:12px; border-radius:13px; background:#fff; box-shadow:0 6px 16px rgba(23,42,96,.08); display:flex; align-items:stretch; overflow:hidden; }
+  .c3 .cp:first-of-type{ margin-top:0; }
+  .c3 .stub{ width:52px; flex:none; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(160deg,#1047ff,#5d7cff); border-radius:13px 0 0 13px; }
+  .c3 .stub svg{ width:20px; height:20px; }
+  .c3 .perf{ position:relative; width:0; align-self:stretch; border-left:2px dashed rgba(203,214,236,.95); margin:7px 0; }
+  .c3 .perf::before,.c3 .perf::after{ content:''; position:absolute; left:-7px; width:14px; height:14px; border-radius:50%; background:var(--notch); }
+  .c3 .perf::before{ top:-14px; } .c3 .perf::after{ bottom:-14px; }
+  .c3 .body{ flex:1; min-width:0; padding:11px 12px; }
+  .c3 .body b{ display:block; font-size:12.6px; font-weight:700; } .c3 .body small{ display:block; margin-top:1px; font-size:10.5px; color:#5a6695; }
+  .c3 .end{ display:flex; flex-direction:column; align-items:flex-end; justify-content:center; padding:0 12px 0 4px; gap:6px; }
+  .c3 .end .pr{ font-size:14px; font-weight:800; } .c3 .addbtn{ height:25px; padding:0 12px; border:0; border-radius:8px; background:var(--blue); color:#fff; font:inherit; font-weight:700; font-size:10.6px; cursor:pointer; }
+  .c3 .ribbon{ position:absolute; top:9px; right:-23px; transform:rotate(45deg); z-index:2; background:var(--amber); color:#fff; font-size:8px; font-weight:800; letter-spacing:.06em; padding:2px 24px; }
+
+  /* ===== 4 · Contextual deal · V4 in bubble — from vela-deals-contextual ===== */
+  .c4 .pitch{ display:flex; gap:9px; align-items:flex-start; }
+  .c4 .mini{ width:26px; height:26px; flex:none; border-radius:50%; background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .c4 .mini svg{ width:15px; height:15px; color:#fff; }
+  .c4 .bubble{ position:relative; flex:1; background:rgba(56,91,248,.06); border:1px solid rgba(56,91,248,.12); border-radius:4px 14px 14px 14px; padding:11px 12px; }
+  .c4 .bubble p{ margin:0; font-family:'Poppins',sans-serif; font-size:12.4px; line-height:1.55; color:var(--ink); } .c4 .bubble p b{ color:var(--navy); font-weight:700; }
+  .c4 .v4cp{ position:relative; margin-top:11px; display:flex; flex-direction:column; border-radius:14px; background:#fff; box-shadow:0 6px 16px rgba(23,42,96,.14); overflow:hidden; }
+  .c4 .v4cp .top{ display:flex; align-items:center; gap:11px; padding:11px 12px; }
+  .c4 .thumb{ width:54px; height:46px; flex:none; border-radius:11px; background-size:cover; background-position:center; }
+  .c4 .v4cp .tb{ flex:1; min-width:0; } .c4 .v4cp .tb b{ display:block; font-size:13px; font-weight:700; } .c4 .v4cp .tb small{ display:block; margin-top:2px; font-size:10.8px; color:#5a6695; }
+  .c4 .tear{ position:relative; height:0; border-top:2px dashed rgba(56,91,248,.3); margin:0 9px; }
+  .c4 .tear::before,.c4 .tear::after{ content:''; position:absolute; top:-9px; width:14px; height:14px; border-radius:50%; background:var(--notch); }
+  .c4 .tear::before{ left:-16px; } .c4 .tear::after{ right:-16px; }
+  .c4 .redeem{ display:flex; align-items:center; justify-content:space-between; padding:11px 12px; background:rgba(56,91,248,.06); }
+  .c4 .redeem .pr{ font-size:15px; font-weight:800; } .c4 .addbtn{ height:30px; padding:0 16px; border:0; border-radius:9px; background:var(--blue); color:#fff; font:inherit; font-weight:800; font-size:11.5px; cursor:pointer; }
+  .c4 .ribbon{ position:absolute; top:8px; right:-22px; transform:rotate(45deg); z-index:3; background:var(--amber); color:#fff; font-size:8px; font-weight:800; letter-spacing:.06em; padding:2px 22px; }
+  .c4 .more{ display:flex; align-items:center; gap:5px; margin-top:11px; padding:0; border:0; background:none; cursor:pointer; font:inherit; font-size:11.5px; font-weight:700; color:var(--blue-deep); }
+  .c4 .more svg{ width:14px; height:14px; stroke-width:2.4; }
+
+  /* ===== 5 · Deals carousel · 3b★2 — from vela-deals-carousel-final ===== */
+  .c5 .railwrap{ position:relative; }
+  .c5 .rail{ display:flex; gap:12px; overflow-x:auto; overflow-y:visible; padding:8px 2px 30px; margin:0; scroll-snap-type:x mandatory; scrollbar-width:none; }
+  .c5 .rail::-webkit-scrollbar{ display:none; }
+  .c5 .railwrap::after{ content:''; position:absolute; top:0; bottom:14px; right:0; width:28px; pointer-events:none; background:linear-gradient(90deg, rgba(240,242,248,0), rgba(240,242,248,.96)); border-radius:0 16px 16px 0; }
+  .c5 .dc{ position:relative; scroll-snap-align:start; flex:0 0 134px; border-radius:16px; overflow:visible; background:#fff; box-shadow:0 7px 16px rgba(23,42,96,.12); }
+  .c5 .img{ position:relative; height:104px; border-radius:16px 16px 0 0; background-size:cover; background-position:center; overflow:hidden; }
+  .c5 .img::after{ content:''; position:absolute; inset:0; background:linear-gradient(150deg, rgba(56,91,248,.42), rgba(16,71,255,.12)); mix-blend-mode:multiply; }
+  .c5 .save{ position:absolute; top:9px; left:9px; z-index:3; background:#fff; color:var(--amber); }
+  .c5 .info{ position:relative; padding:22px 11px 12px; } .c5 .info b{ display:block; font-size:12.5px; font-weight:700; } .c5 .info small{ display:block; margin-top:1px; font-size:10.3px; color:#5a6695; }
+  .c5 .coin{ position:absolute; right:9px; top:72px; z-index:4; width:46px; height:46px; border-radius:50%; background:#fff; box-shadow:0 6px 16px rgba(7,21,77,.34),0 2px 5px rgba(7,21,77,.16); display:flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden; transition:background .24s ease, transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .24s ease; }
+  .c5 .coin .p,.c5 .coin .a{ position:absolute; left:0; right:0; text-align:center; transition:opacity .2s ease, transform .26s cubic-bezier(.34,1.56,.64,1); }
+  .c5 .coin .p{ font-size:12.5px; font-weight:800; color:var(--navy); }
+  .c5 .coin .a{ font-size:11.5px; font-weight:800; color:#fff; letter-spacing:.02em; opacity:0; transform:translateY(10px) scale(.8); }
+  .c5 .dc:hover .coin{ background:var(--blue); transform:scale(1.1); box-shadow:0 10px 22px rgba(56,91,248,.44); }
+  .c5 .dc:hover .coin .p{ opacity:0; transform:translateY(-10px) scale(.8); }
+  .c5 .dc:hover .coin .a{ opacity:1; transform:translateY(0) scale(1); }
+  .c5 .dots{ display:flex; gap:6px; justify-content:center; margin-top:-14px; position:relative; z-index:1; }
+  .c5 .dot{ width:7px; height:7px; border-radius:50%; background:rgba(56,91,248,.25); } .c5 .dot.on{ width:20px; border-radius:4px; background:var(--blue); }
+
+  /* ===== 6 · Deals hero · 4a★1·B — from vela-deals-hero-glass (.B) ===== */
+  .c6 .hc{ position:relative; height:166px; border-radius:18px; overflow:hidden; background-size:cover; background-position:center; box-shadow:0 10px 24px rgba(23,42,96,.16); }
+  .c6 .hc::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,21,77,.06) 38%, rgba(7,21,77,.42)); }
+  .c6 .save{ position:absolute; top:11px; right:11px; z-index:3; background:var(--amber); color:#fff; }
+  .c6 .glass{ position:absolute; left:11px; right:11px; bottom:11px; z-index:3; display:flex; align-items:center; gap:10px; padding:11px 11px 11px 13px; border-radius:14px; -webkit-backdrop-filter:blur(11px); backdrop-filter:blur(11px); background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.85); color:var(--navy); box-shadow:0 6px 16px rgba(7,21,77,.14); }
+  .c6 .glass .tb{ flex:1; min-width:0; } .c6 .glass .tb b{ display:block; font-size:13.5px; font-weight:800; } .c6 .glass .tb small{ display:block; font-size:10.4px; color:#5a6695; }
+  .c6 .glass .pr{ font-size:14px; font-weight:800; margin-right:2px; } .c6 .glass .add{ height:30px; padding:0 14px; border:0; border-radius:9px; background:var(--blue); color:#fff; font:inherit; font-size:11.4px; font-weight:800; cursor:pointer; }
+
+  /* ===== 7 · Sponsored banner · A (slim) — from vela-banner-abd (A) ===== */
+  .c7.vela{ overflow:hidden; padding-bottom:0; }
+  .c7 .logo{ display:inline-flex; align-items:center; gap:7px; }
+  .c7 .mark{ position:relative; width:22px; height:26px; flex:none; }
+  .c7 .mark i{ position:absolute; bottom:0; width:12px; border-radius:8px 8px 3px 3px; }
+  .c7 .mark i.a{ left:0; height:19px; background:linear-gradient(180deg,#ff8a5b,#ff4f6d); }
+  .c7 .mark i.b{ left:8px; height:26px; background:linear-gradient(180deg,#ec3f86,#7b3ff0); }
+  .c7 .wm{ font-weight:800; font-size:14px; letter-spacing:-.01em; color:#fff; }
+  .c7 .adA{ position:relative; margin:12px -16px 0; height:124px; background-size:cover; background-position:center; }
+  .c7 .adA::after{ content:''; position:absolute; inset:0; background:linear-gradient(115deg, rgba(255,90,80,.82) 6%, rgba(236,63,134,.66) 46%, rgba(123,63,240,.42)); }
+  .c7 .adtag{ position:absolute; z-index:6; top:11px; right:12px; height:17px; display:inline-flex; align-items:center; padding:0 7px; border-radius:999px; font-size:8px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; background:rgba(255,255,255,.26); color:#fff; backdrop-filter:blur(4px); }
+  .c7 .in{ position:absolute; inset:0; z-index:3; padding:13px 15px; display:flex; flex-direction:column; }
+  .c7 .in h4{ margin:8px 0 0; font-size:14px; font-weight:800; line-height:1.24; color:#fff; max-width:225px; }
+  .c7 .foot{ margin-top:auto; display:flex; align-items:center; gap:10px; }
+  .c7 .price{ color:#fff; font-size:12.5px; font-weight:600; } .c7 .price b{ font-size:14px; font-weight:800; }
+  .c7 .adcta{ margin-left:auto; height:31px; padding:0 16px; border:0; border-radius:9px; background:#fff; color:#16183a; font:inherit; font-size:11.5px; font-weight:800; cursor:pointer; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · component library</div>
+    <h1>Decisions — components to add to Vela</h1>
+    <p>Each locked-in component, copied exactly from its source. New building blocks for the <b>chekin-vela</b> component.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+
+<script>
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+  var SHIELD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
+  var INFO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11.4v4.6"/><circle cx="12" cy="7.9" r="1" fill="currentColor" stroke="none"/></svg>';
+  var USERS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>';
+  var SHARE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7 15.4 6.3M8.6 13.3l6.8 4.4"/></svg>';
+  var LOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="6" y="9" width="12" height="11" rx="2"/><path d="M9 9V6.7a3 3 0 0 1 6 0V9"/><path d="M12 13v3"/></svg>';
+  var CAR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 16h14l-1.6-5.2A2.4 2.4 0 0 0 15.1 9H8.9a2.4 2.4 0 0 0-2.3 1.8L5 16Z"/><path d="M4 16v3M20 16v3M7 19h1.5M15.5 19H17"/><path d="M7.5 13h9"/></svg>';
+  var PARK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9.5 16V8h3.1a2.4 2.4 0 0 1 0 4.8H9.5"/></svg>';
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 6 6 6-6 6"/></svg>';
+  var ROOM='landingV1/assets/deals/room.jpg', TRANSFER='landingV1/assets/deals/transfer.jpg', PARKIMG='landingV1/assets/deals/parking.jpg', BEACH='landingV1/assets/deals/beach.jpg';
+  function panel(cls, inner){ return '<div class="vela '+cls+'"><div class="va">'+SPARK+'</div><div class="vtr"><h2 class="vt">Vela</h2><span class="vb">Your AI assistant</span></div><div class="vd"></div>'+inner+'</div>'; }
+
+  // 1 — Section headers (Option 3), exact body() content
+  var c1 = panel('c1',
+    '<div class="sec"><div class="eye">Your progress</div><div class="ttl">'+SHIELD+'Register every guest before arrival.</div><p class="sub">Finish the pending registrations so your guests can check in without waiting.</p><p class="count"><b>1</b> / 6 guests registered</p></div>'+
+    '<div class="sec"><div class="eye am">Good to know</div><div class="ttl am">'+INFO+'Minors have a lighter flow.</div><p class="sub">Minors only fill the guest form — identity verification isn’t required.</p></div>');
+
+  // 2 — Quick actions capsule B4.4 (V4: gradient + chevron)
+  var c2 = panel('c2',
+    '<div class="eye">Quick actions</div><div class="caps">'+
+      '<div class="cap"><span class="ic">'+SHARE+'</span><span class="t">Share booking link</span><span class="chev">'+CHEV+'</span></div>'+
+      '<div class="cap"><span class="ic">'+USERS+'</span><span class="t">Change guest count</span><span class="chev">'+CHEV+'</span></div></div>');
+
+  // 3 — Deal coupon V1 (price = d.p only, ribbon on discounted)
+  var COUP=[{ic:LOCK,t:'Early check-in',s:'Access from 11:00',p:'€25',save:'-30%'},{ic:CAR,t:'Airport transfer',s:'Direct ride',p:'€45',save:''}];
+  var c3 = panel('c3',
+    '<div class="eye am">Offers for your stay</div>'+
+    COUP.map(function(d){ return '<div class="cp"><span class="stub">'+d.ic+'</span><span class="perf"></span><span class="body"><b>'+d.t+'</b><small>'+d.s+'</small></span><span class="end"><span class="pr">'+d.p+'</span><button class="addbtn">Add</button></span>'+(d.save?'<span class="ribbon">'+d.save+'</span>':'')+'</div>'; }).join(''));
+
+  // 4 — Contextual deal · V4 in bubble (exact copy + V4coupon)
+  var c4 = panel('c4',
+    '<div class="eye am">Offers for your stay</div>'+
+    '<div class="pitch"><span class="mini">'+SPARK+'</span><div class="bubble">'+
+      '<p>You arrive around <b>10:30</b> — want your room ready the moment you get there? Here’s a deal on <b>early check-in</b>:</p>'+
+      '<div class="v4cp"><div class="top"><span class="thumb" style="background-image:url('+ROOM+')"></span><span class="tb"><b>Early check-in</b><small>Access from 11:00</small></span></div>'+
+        '<div class="tear"></div><div class="redeem"><span class="pr"><s>€35</s>€25</span><button class="addbtn">Add to stay</button></div><span class="ribbon">-30%</span></div>'+
+      '<button class="more">See 2 more extras '+CHEV+'</button>'+
+    '</div></div>');
+
+  // 5 — Deals carousel 3b★2 (exact)
+  var CAR5=[{img:ROOM,t:'Early check-in',s:'Access from 11:00',p:'€25',save:'-30%'},{img:TRANSFER,t:'Airport transfer',s:'Direct ride',p:'€45',save:''},{img:PARKIMG,t:'Parking spot',s:'On-site, per night',p:'€15',save:''}];
+  var c5 = panel('c5',
+    '<div class="eye am">Offers for your stay</div>'+
+    '<div class="railwrap"><div class="rail">'+CAR5.map(function(d){ return '<div class="dc"><div class="img" style="background-image:url('+d.img+')">'+(d.save?'<span class="save">'+d.save+'</span>':'')+'</div><span class="coin"><span class="p">'+d.p+'</span><span class="a">Add</span></span><div class="info"><b>'+d.t+'</b><small>'+d.s+'</small></div></div>'; }).join('')+'</div></div>'+
+    '<div class="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div>');
+
+  // 6 — Deals hero 4a★1·B (light glass, inlineGlass markup)
+  var c6 = panel('c6',
+    '<div class="eye am">Offers for your stay</div>'+
+    '<div class="hc" style="background-image:url('+ROOM+')"><span class="save">-30%</span>'+
+      '<div class="glass"><span class="tb"><b>Early check-in</b><small>Access from 11:00</small></span><span class="pr"><s>€35</s>€25</span><button class="add">Add</button></div></div>');
+
+  // 7 — Sponsored banner A (slim) — banner-abd A
+  var c7 = panel('c7',
+    '<p class="vintro">Travelling abroad? Here’s something that might help on your trip.</p>'+
+    '<div class="adA" style="background-image:url('+BEACH+')"><span class="adtag">Patrocinado</span>'+
+      '<div class="in"><span class="logo"><span class="mark"><i class="a"></i><i class="b"></i></span><span class="wm">airalo</span></span>'+
+      '<h4>Activa tu eSIM al instante y olvídate del roaming.</h4>'+
+      '<div class="foot"><span class="price">Desde <b>4,00€</b></span><button class="adcta">Ver planes</button></div></div></div>');
+
+  var items=[
+    {n:'1', name:'Section headers (Option 3)', desc:'Eyebrow + hairline rule + coloured left tick. Shown with the Progress and Good-to-know sections (info icon + 1/6 count).', html:c1},
+    {n:'2', name:'Quick actions · capsule B4.4', desc:'Soft left-to-right blue gradient capsule, plain icon + bare chevron (V4).', html:c2},
+    {n:'3', name:'Deal coupon · V1', desc:'Icon stub + perforation, price + Add, “-30%” ribbon on the discounted one.', html:c3},
+    {n:'4', name:'Contextual deal · V4 in bubble', desc:'Vela proposes in a chat bubble; the V4 coupon (photo + tear + tinted redeem + ribbon) lives inside the reply, then “See 2 more extras”.', html:c4},
+    {n:'5', name:'Deals carousel · 3b★2', desc:'Duotone photo cards + price coin (→ Add on hover), peek, edge fade, dots, snap.', html:c5},
+    {n:'6', name:'Deals hero · 4a★1·B', desc:'Photo hero with a light frosted-glass info card (title, old/new price, Add).', html:c6},
+    {n:'7', name:'Sponsored banner · A (slim)', desc:'Full-bleed ad slot, Airalo gradient over the photo, “Patrocinado” marker.', html:c7}
+  ];
+  document.getElementById('grid').innerHTML = items.map(function(it){
+    return '<div class="col"><div class="clabel"><span class="cnum">'+it.n+'</span><span class="cname">'+it.name+'</span></div><p class="cdesc">'+it.desc+'</p>'+it.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

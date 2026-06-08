@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Quick actions (chips ↔ verb lines)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{
+    --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68;
+    --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82);
+    --green:#0f9f80; --amber:#c98a16;
+  }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 70px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800;
+    background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  .vela{ position:relative; border-radius:20px; padding:18px 16px 16px;
+    background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:16px; left:16px; width:42px; height:42px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px rgba(18,75,255,.22); }
+  .v-avatar svg{ width:25px; height:25px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:42px; padding-left:54px; margin-bottom:12px; }
+  .v-title{ margin:0; font-size:20px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:22px; padding:0 9px; border-radius:999px; display:inline-flex; align-items:center;
+    background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10.5px; font-weight:700; }
+  .v-intro{ margin:0 0 16px; font-family:'Poppins',sans-serif; font-size:12.4px; line-height:1.5; color:#48547f; }
+
+  .ttl{ display:flex; align-items:center; gap:9px; font-size:13px; font-weight:700; color:var(--navy); }
+  .ttl svg{ width:15px; height:15px; flex:none; stroke-width:1.9; }
+  .sub{ margin:5px 0 0; padding-left:24px; font-size:11.8px; line-height:1.45; font-weight:500; color:var(--grey); }
+  .count{ margin:9px 0 0; padding-left:24px; font-family:'Poppins',sans-serif; font-size:12px; color:var(--grey); }
+  .count b{ font-family:'Montserrat',sans-serif; font-size:21px; font-weight:800; color:var(--navy); letter-spacing:-.02em; vertical-align:-2px; }
+  .prog{ --c:var(--blue); } .info{ --c:var(--amber); } .info .ttl svg{ color:var(--amber); } .act{ --c:var(--green); }
+  .sec{ margin-bottom:16px; }
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 11px;
+    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--c); }
+
+  /* ===== A · Chips refined (one primary filled) ===== */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{ display:inline-flex; align-items:center; gap:7px; height:33px; padding:0 13px 0 11px; border-radius:999px;
+    border:1px solid rgba(56,91,248,.24); background:rgba(255,255,255,.74); color:var(--blue-deep); font-size:11.8px; font-weight:700; cursor:pointer; }
+  .chip svg{ width:14px; height:14px; stroke-width:2; }
+  .chip:hover{ background:rgba(56,91,248,.08); border-color:rgba(56,91,248,.42); }
+  .chip.primary{ background:var(--blue); border-color:var(--blue); color:#fff; box-shadow:0 6px 14px rgba(56,91,248,.28); }
+  .chip.primary:hover{ background:var(--blue-deep); }
+
+  /* ===== B · Full-width capsule rows ===== */
+  .caps{ display:flex; flex-direction:column; gap:9px; }
+  .cap{ display:flex; align-items:center; gap:11px; height:46px; padding:0 6px 0 13px; border-radius:999px;
+    border:1px solid rgba(56,91,248,.2); background:rgba(255,255,255,.7); cursor:pointer; }
+  .cap:hover{ border-color:rgba(56,91,248,.42); background:rgba(56,91,248,.05); }
+  .cap .ic{ width:22px; height:22px; flex:none; color:var(--blue); }
+  .cap .ic svg{ width:19px; height:19px; stroke-width:1.9; }
+  .cap .t{ flex:1; font-size:12.6px; font-weight:700; color:var(--navy); }
+  .cap .arr{ width:30px; height:30px; flex:none; border-radius:50%; background:rgba(56,91,248,.1); color:var(--blue-deep);
+    display:flex; align-items:center; justify-content:center; }
+  .cap .arr svg{ width:15px; height:15px; stroke-width:2.4; }
+
+  /* ===== C · Verb line + mini pill (blend 1+4) ===== */
+  .vrows{ display:flex; flex-direction:column; }
+  .vrow{ display:flex; align-items:center; gap:11px; padding:10px 0; }
+  .vrow + .vrow{ border-top:1px solid var(--line); }
+  .vrow .ic{ width:21px; height:21px; flex:none; color:var(--blue); }
+  .vrow .ic svg{ width:18px; height:18px; stroke-width:2; }
+  .vrow .t{ flex:1; font-size:13px; font-weight:700; color:var(--navy); }
+  .vrow .pill{ height:27px; padding:0 13px; border-radius:999px; border:1px solid rgba(56,91,248,.3);
+    background:rgba(255,255,255,.85); color:var(--blue-deep); font-size:11.3px; font-weight:700; cursor:pointer; }
+  .vrow .pill:hover{ background:rgba(56,91,248,.08); }
+
+  /* ===== D · Verb line minimal + chevron ===== */
+  .mrows{ display:flex; flex-direction:column; }
+  .mrow{ display:flex; align-items:center; gap:11px; padding:11px 0; cursor:pointer; }
+  .mrow + .mrow{ border-top:1px solid var(--line); }
+  .mrow .ic{ width:21px; height:21px; flex:none; color:var(--blue); }
+  .mrow .ic svg{ width:18px; height:18px; stroke-width:2; }
+  .mrow .t{ flex:1; font-size:13px; font-weight:700; color:var(--navy); }
+  .mrow .s{ font-size:10.6px; font-weight:500; color:#5a6695; margin-left:6px; }
+  .mrow .chev{ width:18px; height:18px; flex:none; color:var(--grey-soft); }
+  .mrow .chev svg{ width:18px; height:18px; stroke-width:2.2; }
+  .mrow:hover .t{ color:var(--blue-deep); } .mrow:hover .chev{ color:var(--blue); }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · chips ↔ verb lines</div>
+    <h1>Quick actions — refining 1 &amp; 4</h1>
+    <p>From suggestion chips to verb lines, plus blends of the two. No heavy cards. Tell me which one and I’ll lock the details.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  var SHIELD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
+  var INFO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11.4v4.6"/><circle cx="12" cy="7.9" r="1" fill="currentColor" stroke="none"/></svg>';
+  var USERS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>';
+  var SHARE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7 15.4 6.3M8.6 13.3l6.8 4.4"/></svg>';
+  var PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>';
+  var ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 6 6 6-6 6"/></svg>';
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+
+  function header(){
+    return '<div class="sec prog"><div class="eye">Your progress</div><div class="ttl">'+SHIELD+'Register every guest before arrival.</div><p class="sub">Finish the pending registrations so your guests can check in without waiting.</p><p class="count"><b>1</b> / 6 guests registered</p></div>'+
+    '<div class="sec info"><div class="eye">Good to know</div><div class="ttl">'+INFO+'Minors have a lighter flow.</div><p class="sub">Minors only fill the guest form — identity verification isn’t required.</p></div>';
+  }
+  function panel(actionsHtml){
+    return '<div class="vela">'+
+      '<div class="v-avatar">'+SPARK+'</div>'+
+      '<div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>'+
+      '<p class="v-intro">I can help you invite guests, finish pending forms, and keep the booking ready before arrival.</p>'+
+      header()+ actionsHtml +'</div>';
+  }
+
+  var A =
+    '<div class="sec act"><div class="eye">Quick actions</div><div class="chips">'+
+      '<span class="chip primary">'+PLUS+'Add guest</span>'+
+      '<span class="chip">'+USERS+'Change guest count</span>'+
+      '<span class="chip">'+SHARE+'Share booking link</span>'+
+    '</div></div>';
+
+  var B =
+    '<div class="sec act"><div class="eye">Quick actions</div><div class="caps">'+
+      '<div class="cap"><span class="ic">'+USERS+'</span><span class="t">Change guest count</span><span class="arr">'+ARROW+'</span></div>'+
+      '<div class="cap"><span class="ic">'+SHARE+'</span><span class="t">Share booking link</span><span class="arr">'+ARROW+'</span></div>'+
+    '</div></div>';
+
+  var C =
+    '<div class="sec act"><div class="eye">Quick actions</div><div class="vrows">'+
+      '<div class="vrow"><span class="ic">'+USERS+'</span><span class="t">Change guest count</span><button class="pill">Edit</button></div>'+
+      '<div class="vrow"><span class="ic">'+SHARE+'</span><span class="t">Share booking link</span><button class="pill">Share</button></div>'+
+    '</div></div>';
+
+  var D =
+    '<div class="sec act"><div class="eye">Quick actions</div><div class="mrows">'+
+      '<div class="mrow"><span class="ic">'+USERS+'</span><span class="t">Change guest count</span><span class="chev">'+CHEV+'</span></div>'+
+      '<div class="mrow"><span class="ic">'+SHARE+'</span><span class="t">Share booking link</span><span class="chev">'+CHEV+'</span></div>'+
+    '</div></div>';
+
+  var cols=[
+    {tag:'A', name:'Chips, refined', desc:'Suggestion pills with one primary filled (Add guest) for hierarchy. Wraps under the header.', html:panel(A)},
+    {tag:'B', name:'Capsule rows', desc:'Chip DNA stretched to full-width pill rows with a round arrow. Big tap target, airy.', html:panel(B)},
+    {tag:'C', name:'Verb line + pill', desc:'Blend 1+4: verb on a line, action as a small pill on the right. Named action kept.', html:panel(C)},
+    {tag:'D', name:'Verb line, minimal', desc:'Pure 4: bold verb + chevron, hairline separators. The lightest, most scannable.', html:panel(D)}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">Option '+c.tag+'</span>'+
+      '<div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+c.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

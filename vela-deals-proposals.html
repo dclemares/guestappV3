@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Deals / offers proposals</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{
+    --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68;
+    --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82);
+    --green:#0f9f80; --amber:#c98a16;
+  }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 70px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800;
+    background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  .vela{ position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; }
+  .v-avatar svg{ width:22px; height:22px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:12px; }
+  .v-title{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center;
+    background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .v-divider{ height:1px; width:100%; margin:0 0 14px; background:var(--line); }
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 13px;
+    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--amber); }
+
+  .gic{ display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(145deg,#1047ff,#5d7cff); }
+  .price{ font-weight:800; color:var(--navy); letter-spacing:-.01em; }
+  .addbtn{ border:0; cursor:pointer; font:inherit; font-weight:700; color:#fff; background:var(--blue); border-radius:9px; }
+  .addbtn:hover{ background:var(--blue-deep); }
+
+  /* ===== 1 · Rich offer cards ===== */
+  .d1 .deal{ display:flex; align-items:center; gap:11px; padding:11px; margin-top:10px; border-radius:14px;
+    border:1px solid rgba(216,226,245,.8); background:rgba(255,255,255,.6); }
+  .d1 .deal:first-of-type{ margin-top:0; }
+  .d1 .gic{ width:38px; height:38px; border-radius:11px; flex:none; }
+  .d1 .gic svg{ width:20px; height:20px; }
+  .d1 .body{ flex:1; min-width:0; }
+  .d1 .body b{ display:block; font-size:12.6px; font-weight:700; }
+  .d1 .body small{ display:block; margin-top:1px; font-size:10.6px; font-weight:500; color:#5a6695; }
+  .d1 .right{ display:flex; flex-direction:column; align-items:flex-end; gap:5px; }
+  .d1 .price{ font-size:13.5px; }
+  .d1 .addbtn{ height:26px; padding:0 12px; font-size:11px; }
+
+  /* ===== 2 · Deal capsule (B4.4 gradient) + price ===== */
+  .d2 .deal{ display:flex; align-items:center; gap:11px; min-height:50px; padding:0 8px 0 13px; margin-top:9px; border-radius:14px;
+    background:linear-gradient(90deg, rgba(56,91,248,.12), rgba(56,91,248,.03)); cursor:pointer; }
+  .d2 .deal:first-of-type{ margin-top:0; }
+  .d2 .ic{ width:22px; height:22px; flex:none; color:var(--blue); } .d2 .ic svg{ width:19px; height:19px; stroke-width:1.9; }
+  .d2 .body{ flex:1; min-width:0; } .d2 .body b{ display:block; font-size:12.5px; font-weight:700; } .d2 .body small{ display:block; font-size:10.3px; color:#5a6695; }
+  .d2 .price{ font-size:13px; margin-right:2px; }
+  .d2 .addbtn{ height:28px; padding:0 12px; font-size:11px; border-radius:999px; }
+
+  /* ===== 3 · Carousel ===== */
+  .d3 .rail{ display:flex; gap:10px; overflow-x:auto; padding-bottom:6px; margin:0 -4px; padding-left:4px; padding-right:4px; scrollbar-width:thin; }
+  .d3 .card{ flex:0 0 150px; border:1px solid rgba(216,226,245,.8); border-radius:15px; padding:12px; background:rgba(255,255,255,.62); }
+  .d3 .gic{ width:34px; height:34px; border-radius:10px; margin-bottom:30px; } .d3 .gic svg{ width:18px; height:18px; }
+  .d3 .card b{ display:block; font-size:12.2px; font-weight:700; }
+  .d3 .card small{ display:block; margin-top:1px; font-size:10.2px; color:#5a6695; }
+  .d3 .foot{ display:flex; align-items:center; justify-content:space-between; margin-top:10px; }
+  .d3 .price{ font-size:13px; }
+  .d3 .addbtn{ width:28px; height:28px; border-radius:9px; display:flex; align-items:center; justify-content:center; }
+  .d3 .addbtn svg{ width:15px; height:15px; stroke-width:2.4; }
+
+  /* ===== 4 · Featured + list ===== */
+  .d4 .feat{ position:relative; border-radius:16px; padding:13px; overflow:hidden;
+    background:linear-gradient(135deg, rgba(56,91,248,.14), rgba(56,91,248,.04)); border:1px solid rgba(56,91,248,.16); }
+  .d4 .ftag{ display:inline-flex; height:19px; align-items:center; padding:0 8px; border-radius:999px; font-size:9px; font-weight:800; letter-spacing:.08em;
+    text-transform:uppercase; background:var(--blue); color:#fff; margin-bottom:9px; }
+  .d4 .frow{ display:flex; align-items:center; gap:11px; }
+  .d4 .gic{ width:38px; height:38px; border-radius:11px; flex:none; } .d4 .gic svg{ width:20px; height:20px; }
+  .d4 .fbody{ flex:1; } .d4 .fbody b{ display:block; font-size:13.5px; font-weight:800; } .d4 .fbody small{ display:block; font-size:10.6px; color:#54608c; }
+  .d4 .fcta{ display:flex; align-items:center; justify-content:space-between; margin-top:11px; }
+  .d4 .price{ font-size:15px; } .d4 .price s{ color:var(--grey-soft); font-weight:600; font-size:11px; margin-right:5px; }
+  .d4 .addbtn{ height:30px; padding:0 16px; font-size:11.5px; }
+  .d4 .mini{ display:flex; align-items:center; gap:10px; padding:9px 2px; cursor:pointer; }
+  .d4 .mini + .mini{ border-top:1px solid var(--line); }
+  .d4 .mic{ width:20px; height:20px; flex:none; color:var(--blue); } .d4 .mic svg{ width:18px; height:18px; stroke-width:1.9; }
+  .d4 .mt{ flex:1; font-size:12.4px; font-weight:700; }
+  .d4 .mp{ font-size:12.4px; font-weight:800; color:var(--navy); }
+  .d4 .list{ margin-top:6px; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · deals</div>
+    <h1>Deals &amp; offers — how to show them</h1>
+    <p>Upsell extras carry a price and a CTA, so they get their own treatment. Four ways to present them inside Vela, consistent with the agreed style.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  var LOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="6" y="9" width="12" height="11" rx="2"/><path d="M9 9V6.7a3 3 0 0 1 6 0V9"/><path d="M12 13v3"/></svg>';
+  var CAR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 16h14l-1.6-5.2A2.4 2.4 0 0 0 15.1 9H8.9a2.4 2.4 0 0 0-2.3 1.8L5 16Z"/><path d="M4 16v3M20 16v3M7 19h1.5M15.5 19H17"/><path d="M7.5 13h9"/></svg>';
+  var PARK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9.5 16V8h3.1a2.4 2.4 0 0 1 0 4.8H9.5"/></svg>';
+  var PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>';
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+
+  var DEALS=[
+    {ic:LOCK, t:'Early check-in', s:'Access from 11:00', p:'€25', cta:'Add'},
+    {ic:CAR,  t:'Airport transfer', s:'Direct ride', p:'€45', cta:'Book'},
+    {ic:PARK, t:'Parking spot', s:'On-site, per night', p:'€15', cta:'Add'}
+  ];
+
+  function panel(inner){
+    return '<div class="vela">'+
+      '<div class="v-avatar">'+SPARK+'</div>'+
+      '<div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>'+
+      '<div class="v-divider"></div>'+
+      '<div class="eye">Offers for your stay</div>'+ inner +'</div>';
+  }
+
+  // 1 — rich cards
+  var D1='<div class="d1">'+DEALS.map(function(d){
+    return '<div class="deal"><span class="gic">'+d.ic+'</span><span class="body"><b>'+d.t+'</b><small>'+d.s+'</small></span>'+
+      '<span class="right"><span class="price">'+d.p+'</span><button class="addbtn">'+d.cta+'</button></span></div>';
+  }).join('')+'</div>';
+
+  // 2 — gradient capsule + price
+  var D2='<div class="d2">'+DEALS.map(function(d){
+    return '<div class="deal"><span class="ic">'+d.ic+'</span><span class="body"><b>'+d.t+'</b><small>'+d.s+'</small></span>'+
+      '<span class="price">'+d.p+'</span><button class="addbtn">'+d.cta+'</button></div>';
+  }).join('')+'</div>';
+
+  // 3 — carousel
+  var D3='<div class="d3"><div class="rail">'+DEALS.map(function(d){
+    return '<div class="card"><span class="gic">'+d.ic+'</span><b>'+d.t+'</b><small>'+d.s+'</small>'+
+      '<div class="foot"><span class="price">'+d.p+'</span><button class="addbtn">'+PLUS+'</button></div></div>';
+  }).join('')+'</div></div>';
+
+  // 4 — featured + list
+  var f=DEALS[0], rest=DEALS.slice(1);
+  var D4='<div class="d4"><div class="feat"><span class="ftag">Recommended</span>'+
+      '<div class="frow"><span class="gic">'+f.ic+'</span><span class="fbody"><b>'+f.t+'</b><small>'+f.s+'</small></span></div>'+
+      '<div class="fcta"><span class="price"><s>€35</s>'+f.p+'</span><button class="addbtn">'+f.cta+'</button></div>'+
+    '</div><div class="list">'+rest.map(function(d){
+      return '<div class="mini"><span class="mic">'+d.ic+'</span><span class="mt">'+d.t+'</span><span class="mp">'+d.p+'</span></div>';
+    }).join('')+'</div></div>';
+
+  var cols=[
+    {tag:'1', name:'Rich offer cards', desc:'Each deal a clear card: icon tile, copy, price and a solid CTA. Most explicit.', html:panel(D1)},
+    {tag:'2', name:'Gradient capsule + price', desc:'Reuses the B4.4 capsule DNA, adds price + Add. Consistent with quick actions.', html:panel(D2)},
+    {tag:'3', name:'Carousel', desc:'Swipeable mini-cards, price + “+”. Store-like, scales to many offers.', html:panel(D3)},
+    {tag:'4', name:'Featured + list', desc:'One highlighted deal (badge + strikethrough price) over a compact list.', html:panel(D4)}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">Option '+c.tag+'</span>'+
+      '<div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+c.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

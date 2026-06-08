@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Sponsored banners</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{
+    --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68;
+    --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82);
+  }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800;
+    background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  .vela{ position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; }
+  .v-avatar svg{ width:22px; height:22px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:12px; }
+  .v-title{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center;
+    background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .v-divider{ height:1px; width:100%; margin:0 0 13px; background:var(--line); }
+  .eye{ position:relative; display:flex; align-items:center; justify-content:space-between; padding-bottom:9px; margin:0 0 13px;
+    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye .spon{ letter-spacing:.06em; color:#9aa3c4; font-size:8.5px; }
+
+  /* Airalo-style logo (mockup) */
+  .logo{ display:inline-flex; align-items:center; gap:8px; }
+  .mark{ position:relative; width:26px; height:30px; flex:none; }
+  .mark i{ position:absolute; bottom:0; width:14px; border-radius:9px 9px 4px 4px; }
+  .mark i.a{ left:0; height:22px; background:linear-gradient(180deg,#ff8a5b,#ff4f6d); }
+  .mark i.b{ left:9px; height:30px; background:linear-gradient(180deg,#ec3f86,#7b3ff0); mix-blend-mode:multiply; opacity:.96; }
+  .wm{ font-weight:800; font-size:15px; letter-spacing:-.01em; }
+  .logo.dark .wm{ color:#16183a; } .logo.light .wm{ color:#fff; }
+
+  .adcta{ border:0; cursor:pointer; font:inherit; font-weight:800; border-radius:9px; }
+  .price{ font-weight:800; }
+  .tagspon{ position:absolute; z-index:4; top:9px; right:9px; height:18px; display:inline-flex; align-items:center; padding:0 8px; border-radius:999px;
+    font-size:8.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+
+  /* ===== A · Image hero banner ===== */
+  .adA{ position:relative; height:152px; border-radius:16px; overflow:hidden; background-size:cover; background-position:center; box-shadow:0 8px 20px rgba(23,42,96,.16); }
+  .adA::after{ content:''; position:absolute; inset:0; background:linear-gradient(95deg, rgba(6,16,48,.62) 30%, rgba(6,16,48,.12)); }
+  .adA .tagspon{ background:rgba(255,255,255,.28); color:#fff; backdrop-filter:blur(4px); }
+  .adA .inner{ position:absolute; inset:0; z-index:3; padding:13px 14px; display:flex; flex-direction:column; }
+  .adA h4{ margin:9px 0 0; font-size:14.5px; font-weight:800; line-height:1.25; color:#fff; max-width:215px; }
+  .adA .foot{ margin-top:auto; display:flex; align-items:center; gap:10px; }
+  .adA .price{ color:#fff; font-size:12.5px; } .adA .price b{ font-size:14px; }
+  .adA .adcta{ margin-left:auto; height:30px; padding:0 15px; background:#fff; color:#16183a; font-size:11.5px; }
+
+  /* ===== B · Glass on image (matches our hero-glass) ===== */
+  .adB{ position:relative; height:152px; border-radius:16px; overflow:hidden; background-size:cover; background-position:center; box-shadow:0 8px 20px rgba(23,42,96,.16); }
+  .adB::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,21,77,.05) 40%, rgba(7,21,77,.34)); }
+  .adB .tagspon{ background:rgba(255,255,255,.66); color:#444; }
+  .adB .glass{ position:absolute; left:11px; right:11px; bottom:11px; z-index:3; padding:11px 12px; border-radius:14px;
+    background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.85); box-shadow:0 6px 16px rgba(7,21,77,.14); }
+  .adB .glass .top{ display:flex; align-items:center; justify-content:space-between; }
+  .adB .glass .price{ color:var(--navy); font-size:12.5px; } .adB .glass .price b{ font-size:13.5px; }
+  .adB h4{ margin:7px 0 10px; font-size:12.8px; font-weight:700; line-height:1.32; color:var(--ink); }
+  .adB .adcta{ display:block; width:100%; height:31px; background:var(--blue); color:#fff; font-size:11.6px; }
+
+  /* ===== C · Clean white card ===== */
+  .adC{ position:relative; border-radius:16px; overflow:hidden; background:#fff; border:1px solid rgba(216,226,245,.85); box-shadow:0 7px 16px rgba(23,42,96,.1); }
+  .adC .strip{ position:relative; height:78px; background-size:cover; background-position:center; }
+  .adC .tagspon{ background:rgba(255,255,255,.85); color:#555; }
+  .adC .body{ padding:12px 13px 13px; }
+  .adC h4{ margin:10px 0 0; font-size:13px; font-weight:700; line-height:1.32; color:var(--navy); }
+  .adC .foot{ margin-top:11px; display:flex; align-items:center; gap:10px; }
+  .adC .price{ color:var(--navy); font-size:12px; } .adC .price b{ font-size:14px; }
+  .adC .adcta{ margin-left:auto; height:30px; padding:0 16px; background:var(--blue); color:#fff; font-size:11.5px; }
+
+  /* ===== D · Compact strip ===== */
+  .adD{ position:relative; display:flex; align-items:center; gap:11px; padding:11px 12px; border-radius:14px;
+    background:#fff; border:1px solid rgba(216,226,245,.85); box-shadow:0 5px 14px rgba(23,42,96,.08); }
+  .adD .mark{ width:22px; height:26px; } .adD .mark i.a{ width:12px; height:19px; } .adD .mark i.b{ width:12px; left:8px; height:26px; }
+  .adD .txt{ flex:1; min-width:0; }
+  .adD .txt b{ display:block; font-size:12.4px; font-weight:700; } .adD .txt small{ display:block; margin-top:1px; font-size:10.4px; color:#5a6695; }
+  .adD .txt small em{ font-style:normal; color:var(--navy); font-weight:800; }
+  .adD .adcta{ height:29px; padding:0 13px; background:var(--blue); color:#fff; font-size:11px; }
+  .adD .spon{ position:absolute; top:5px; right:9px; font-size:8px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#aab2cf; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · sponsored</div>
+    <h1>Advertising banners — e.g. Airalo</h1>
+    <p>Partner banners adapted to Vela’s narrow panel, each clearly marked as sponsored. Four placements from full-photo hero to a low-intrusion strip.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+  var ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var BEACH='landingV1/assets/deals/beach.jpg';
+  function logo(cls){ return '<span class="logo '+cls+'"><span class="mark"><i class="a"></i><i class="b"></i></span><span class="wm">airalo</span></span>'; }
+
+  function panel(eyeLabel, inner){
+    return '<div class="vela"><div class="v-avatar">'+SPARK+'</div>'+
+      '<div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>'+
+      '<div class="v-divider"></div>'+
+      '<div class="eye"><span>'+eyeLabel+'</span><span class="spon">Patrocinado</span></div>'+ inner +'</div>';
+  }
+
+  var A = panel('Para tu viaje',
+    '<div class="adA" style="background-image:url('+BEACH+')"><span class="tagspon">Ad</span>'+
+      '<div class="inner">'+logo('light')+
+        '<h4>Activa tu eSIM al instante y olvídate del roaming.</h4>'+
+        '<div class="foot"><span class="price">Desde <b>4,00€</b></span><button class="adcta">Ver planes</button></div></div></div>');
+
+  var B = panel('Para tu viaje',
+    '<div class="adB" style="background-image:url('+BEACH+')"><span class="tagspon">Ad</span>'+
+      '<div class="glass"><div class="top">'+logo('dark')+'<span class="price">Desde <b>4,00€</b></span></div>'+
+        '<h4>Activa tu eSIM al instante y olvídate del roaming.</h4>'+
+        '<button class="adcta">Ver planes</button></div></div>');
+
+  var C = panel('Para tu viaje',
+    '<div class="adC"><div class="strip" style="background-image:url('+BEACH+')"><span class="tagspon">Ad</span></div>'+
+      '<div class="body">'+logo('dark')+
+        '<h4>Activa tu eSIM al instante y olvídate del roaming.</h4>'+
+        '<div class="foot"><span class="price">Desde <b>4,00€</b></span><button class="adcta">Ver planes</button></div></div></div>');
+
+  var D = panel('Para tu viaje',
+    '<div class="adD"><span class="spon">Ad</span><span class="mark"><i class="a"></i><i class="b"></i></span>'+
+      '<span class="txt"><b>eSIM sin roaming · airalo</b><small>Datos al instante <em>desde 4,00€</em></small></span>'+
+      '<button class="adcta">Ver</button></div>');
+
+  var cols=[
+    {tag:'A', name:'Image hero', desc:'Full beach photo, white logo + headline, price + CTA. Maximum impact.', html:A},
+    {tag:'B', name:'Glass on photo', desc:'Beach photo + a light glass card (same language as our hero deal). Premium, on-system.', html:B},
+    {tag:'C', name:'Clean card', desc:'Photo strip on top, white body with logo, headline, price + blue CTA. Neutral, very legible.', html:C},
+    {tag:'D', name:'Compact strip', desc:'Slim one-line banner with logo + CTA. Lowest intrusion for inline placement.', html:D}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">Option '+c.tag+'</span>'+
+      '<div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+c.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

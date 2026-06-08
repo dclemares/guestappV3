@@ -97,6 +97,96 @@
     "chekin-vela .vela-chatbar input::placeholder{color:#6b6b95;}",
     "chekin-vela .send-btn{width:36px;height:36px;flex:none;border:0;border-radius:9px;background:#1047ff;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;}",
     "chekin-vela .send-btn svg{width:17px;height:17px;stroke-width:2;}",
+
+    /* ===== Section header (Option 3) ===== */
+    "chekin-vela .vela-sec{position:relative;display:block;padding-bottom:9px;margin:6px 0 12px;font-size:9.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#8b95bd;}",
+    "chekin-vela .vela-sec:first-child{margin-top:0;}",
+    "chekin-vela .vela-sec::before{content:\"\";position:absolute;left:0;right:0;bottom:0;height:1px;background:rgba(203,214,236,.82);}",
+    "chekin-vela .vela-sec::after{content:\"\";position:absolute;left:0;bottom:0;width:26px;height:2px;border-radius:2px;background:var(--tk,#385bf8);}",
+    "chekin-vela .vela-sec.amber{--tk:#c98a16;}chekin-vela .vela-sec.green{--tk:#0f9f80;}chekin-vela .vela-sec.blue{--tk:#385bf8;}",
+
+    /* ===== Quick action capsule (B4.4) ===== */
+    "chekin-vela .vela-cap{display:flex;align-items:center;gap:11px;min-height:48px;padding:0 12px 0 14px;border-radius:999px;cursor:pointer;transition:.15s;border:1px solid transparent;background:linear-gradient(90deg,rgba(56,91,248,.12),rgba(56,91,248,.03));margin-bottom:9px;}",
+    "chekin-vela .vela-cap:hover{background:linear-gradient(90deg,rgba(56,91,248,.18),rgba(56,91,248,.05));}",
+    "chekin-vela .vela-cap .cap-ic{width:22px;height:22px;flex:none;color:#385bf8;}chekin-vela .vela-cap .cap-ic svg{width:19px;height:19px;stroke-width:1.9;}",
+    "chekin-vela .vela-cap .cap-t{flex:1;font-size:12.6px;font-weight:700;color:#07154d;}",
+    "chekin-vela .vela-cap .cap-chev{width:20px;height:20px;flex:none;color:#1047ff;margin-right:6px;}chekin-vela .vela-cap .cap-chev svg{width:20px;height:20px;stroke-width:2.2;}",
+
+    /* ===== Deal coupon (V1) ===== */
+    "chekin-vela .vela-coupon{position:relative;margin-bottom:12px;border-radius:13px;background:#fff;box-shadow:0 6px 16px rgba(23,42,96,.08);display:flex;align-items:stretch;overflow:hidden;}",
+    "chekin-vela .vela-coupon .cp-stub{width:52px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(160deg,#1047ff,#5d7cff);border-radius:13px 0 0 13px;}chekin-vela .vela-coupon .cp-stub svg{width:20px;height:20px;}",
+    "chekin-vela .vela-coupon .cp-perf{position:relative;width:0;align-self:stretch;border-left:2px dashed rgba(203,214,236,.95);margin:7px 0;}",
+    "chekin-vela .vela-coupon .cp-perf::before,chekin-vela .vela-coupon .cp-perf::after{content:\"\";position:absolute;left:-7px;width:14px;height:14px;border-radius:50%;background:#f1f3f8;}",
+    "chekin-vela .vela-coupon .cp-perf::before{top:-14px;}chekin-vela .vela-coupon .cp-perf::after{bottom:-14px;}",
+    "chekin-vela .vela-coupon .cp-body{flex:1;min-width:0;padding:11px 12px;}chekin-vela .vela-coupon .cp-body b{display:block;font-size:12.6px;font-weight:700;}chekin-vela .vela-coupon .cp-body small{display:block;margin-top:1px;font-size:10.5px;color:#5a6695;}",
+    "chekin-vela .vela-coupon .cp-end{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding:0 12px 0 4px;gap:6px;}",
+    "chekin-vela .vela-coupon .cp-pr{font-size:14px;font-weight:800;color:#07154d;}chekin-vela .vela-coupon .cp-pr s{color:#8b95bd;font-weight:600;font-size:11px;margin-right:5px;}",
+    "chekin-vela .vela-coupon .cp-add{height:25px;padding:0 12px;border:0;border-radius:8px;background:#385bf8;color:#fff;font:inherit;font-weight:700;font-size:10.6px;cursor:pointer;}chekin-vela .vela-coupon .cp-add:hover{background:#1047ff;}",
+    "chekin-vela .vela-coupon .cp-ribbon{position:absolute;top:9px;right:-23px;transform:rotate(45deg);z-index:2;background:#c98a16;color:#fff;font-size:8px;font-weight:800;letter-spacing:.06em;padding:2px 24px;}",
+
+    /* ===== Deals carousel (3b★2) ===== */
+    "chekin-vela .vela-carwrap{position:relative;}",
+    "chekin-vela .vela-carwrap::after{content:\"\";position:absolute;top:0;bottom:14px;right:0;width:28px;pointer-events:none;background:linear-gradient(90deg,rgba(248,250,255,0),rgba(248,250,255,.96));border-radius:0 16px 16px 0;transition:opacity .2s ease;}",
+    "chekin-vela .vela-carwrap.atEnd::after{opacity:0;}",
+    "chekin-vela .vela-car{display:flex;gap:12px;overflow-x:auto;overflow-y:visible;padding:8px 2px 30px;scroll-snap-type:x mandatory;scrollbar-width:none;}",
+    "chekin-vela .vela-car::-webkit-scrollbar{display:none;}",
+    "chekin-vela .vela-dc{position:relative;scroll-snap-align:start;flex:0 0 134px;border-radius:16px;overflow:visible;background:#fff;box-shadow:0 7px 16px rgba(23,42,96,.12);}",
+    "chekin-vela .vela-dc .dc-img{position:relative;height:104px;border-radius:16px 16px 0 0;background-size:cover;background-position:center;overflow:hidden;}",
+    "chekin-vela .vela-dc .dc-img::after{content:\"\";position:absolute;inset:0;background:linear-gradient(150deg,rgba(56,91,248,.42),rgba(16,71,255,.12));mix-blend-mode:multiply;}",
+    "chekin-vela .vela-dc .dc-save{position:absolute;top:9px;left:9px;z-index:3;height:18px;display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;background:#fff;color:#c98a16;font-size:9px;font-weight:800;letter-spacing:.04em;}",
+    "chekin-vela .vela-dc .dc-info{position:relative;padding:22px 11px 12px;}chekin-vela .vela-dc .dc-info b{display:block;font-size:12.5px;font-weight:700;}chekin-vela .vela-dc .dc-info small{display:block;margin-top:1px;font-size:10.3px;color:#5a6695;}",
+    "chekin-vela .vela-dc .dc-coin{position:absolute;right:9px;top:72px;z-index:4;width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(7,21,77,.34),0 2px 5px rgba(7,21,77,.16);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:background .24s ease,transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .24s ease;}",
+    "chekin-vela .vela-dc .dc-coin .p,chekin-vela .vela-dc .dc-coin .a{position:absolute;left:0;right:0;text-align:center;transition:opacity .2s ease,transform .26s cubic-bezier(.34,1.56,.64,1);}",
+    "chekin-vela .vela-dc .dc-coin .p{font-size:12.5px;font-weight:800;color:#07154d;}",
+    "chekin-vela .vela-dc .dc-coin .a{font-size:11.5px;font-weight:800;color:#fff;letter-spacing:.02em;opacity:0;transform:translateY(10px) scale(.8);}",
+    "chekin-vela .vela-dc:hover .dc-coin{background:#385bf8;transform:scale(1.1);box-shadow:0 10px 22px rgba(56,91,248,.44);}",
+    "chekin-vela .vela-dc:hover .dc-coin .p{opacity:0;transform:translateY(-10px) scale(.8);}",
+    "chekin-vela .vela-dc:hover .dc-coin .a{opacity:1;transform:translateY(0) scale(1);}",
+    "chekin-vela .vela-dots{display:flex;gap:6px;justify-content:center;margin:-14px 0 14px;position:relative;z-index:1;}",
+    "chekin-vela .vela-dots .dot{width:7px;height:7px;border-radius:50%;background:rgba(56,91,248,.25);transition:width .25s ease,background .25s ease;}",
+    "chekin-vela .vela-dots .dot.on{width:20px;border-radius:4px;background:#385bf8;}",
+
+    /* ===== Deals hero (4a★1·B, frosted glass) ===== */
+    "chekin-vela .vela-hero{position:relative;height:166px;border-radius:18px;overflow:hidden;background-size:cover;background-position:center;box-shadow:0 10px 24px rgba(23,42,96,.16);margin-bottom:12px;}",
+    "chekin-vela .vela-hero::after{content:\"\";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,21,77,.06) 38%,rgba(7,21,77,.42));}",
+    "chekin-vela .vela-hero .h-save{position:absolute;top:11px;right:11px;z-index:3;height:19px;display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;background:#c98a16;color:#fff;font-size:9px;font-weight:800;letter-spacing:.04em;}",
+    "chekin-vela .vela-hero .h-glass{position:absolute;left:11px;right:11px;bottom:11px;z-index:3;display:flex;align-items:center;gap:10px;padding:11px 11px 11px 13px;border-radius:14px;-webkit-backdrop-filter:blur(11px);backdrop-filter:blur(11px);background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.85);color:#07154d;box-shadow:0 6px 16px rgba(7,21,77,.14);}",
+    "chekin-vela .vela-hero .h-tb{flex:1;min-width:0;}chekin-vela .vela-hero .h-tb b{display:block;font-size:13.5px;font-weight:800;}chekin-vela .vela-hero .h-tb small{display:block;font-size:10.4px;color:#5a6695;}",
+    "chekin-vela .vela-hero .h-pr{font-size:14px;font-weight:800;margin-right:2px;}chekin-vela .vela-hero .h-pr s{color:#8b95bd;font-weight:600;font-size:11px;margin-right:5px;}",
+    "chekin-vela .vela-hero .h-add{height:30px;padding:0 14px;border:0;border-radius:9px;background:#385bf8;color:#fff;font:inherit;font-size:11.4px;font-weight:800;cursor:pointer;}",
+
+    /* ===== Contextual deal (V4 in bubble) ===== */
+    "chekin-vela .vela-ctx{display:flex;gap:9px;align-items:flex-start;margin-bottom:12px;}",
+    "chekin-vela .vela-ctx .ctx-mini{width:26px;height:26px;flex:none;border-radius:50%;background:linear-gradient(145deg,#1047ff,#5d7cff);display:flex;align-items:center;justify-content:center;margin-top:1px;}chekin-vela .vela-ctx .ctx-mini svg{width:15px;height:15px;color:#fff;}",
+    "chekin-vela .vela-ctx .ctx-bubble{position:relative;flex:1;min-width:0;background:rgba(56,91,248,.06);border:1px solid rgba(56,91,248,.12);border-radius:4px 14px 14px 14px;padding:11px 12px;}",
+    "chekin-vela .vela-ctx .ctx-bubble p{margin:0;font-family:'Poppins',sans-serif;font-size:12.4px;line-height:1.55;color:#303b68;}chekin-vela .vela-ctx .ctx-bubble p b{color:#07154d;font-weight:700;}",
+    "chekin-vela .vela-ctx .ctx-cp{position:relative;margin-top:11px;display:flex;flex-direction:column;border-radius:14px;background:#fff;box-shadow:0 6px 16px rgba(23,42,96,.14);overflow:hidden;}",
+    "chekin-vela .vela-ctx .ctx-top{display:flex;align-items:center;gap:11px;padding:11px 12px;}",
+    "chekin-vela .vela-ctx .ctx-thumb{width:54px;height:46px;flex:none;border-radius:11px;background-size:cover;background-position:center;}",
+    "chekin-vela .vela-ctx .ctx-tb{flex:1;min-width:0;}chekin-vela .vela-ctx .ctx-tb b{display:block;font-size:13px;font-weight:700;}chekin-vela .vela-ctx .ctx-tb small{display:block;margin-top:2px;font-size:10.8px;color:#5a6695;}",
+    "chekin-vela .vela-ctx .ctx-tear{position:relative;height:0;border-top:2px dashed rgba(56,91,248,.3);margin:0 9px;}",
+    "chekin-vela .vela-ctx .ctx-tear::before,chekin-vela .vela-ctx .ctx-tear::after{content:\"\";position:absolute;top:-9px;width:14px;height:14px;border-radius:50%;background:#eef0fa;}",
+    "chekin-vela .vela-ctx .ctx-tear::before{left:-16px;}chekin-vela .vela-ctx .ctx-tear::after{right:-16px;}",
+    "chekin-vela .vela-ctx .ctx-redeem{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;background:rgba(56,91,248,.06);}",
+    "chekin-vela .vela-ctx .ctx-pr{font-size:15px;font-weight:800;color:#07154d;}chekin-vela .vela-ctx .ctx-pr s{color:#8b95bd;font-weight:600;font-size:11px;margin-right:5px;}",
+    "chekin-vela .vela-ctx .ctx-add{height:30px;padding:0 16px;border:0;border-radius:9px;background:#385bf8;color:#fff;font:inherit;font-weight:800;font-size:11.5px;cursor:pointer;}",
+    "chekin-vela .vela-ctx .ctx-ribbon{position:absolute;top:8px;right:-22px;transform:rotate(45deg);z-index:3;background:#c98a16;color:#fff;font-size:8px;font-weight:800;letter-spacing:.06em;padding:2px 22px;}",
+    "chekin-vela .vela-ctx .ctx-more{display:flex;align-items:center;gap:5px;margin-top:11px;padding:0;border:0;background:none;cursor:pointer;font:inherit;font-size:11.5px;font-weight:700;color:#1047ff;}chekin-vela .vela-ctx .ctx-more svg{width:14px;height:14px;stroke-width:2.4;}",
+
+    /* ===== Sponsored banner (A, full-bleed) ===== */
+    "chekin-vela .vela-banner{position:relative;margin:4px -26px 12px -24px;height:124px;background-size:cover;background-position:center;overflow:hidden;}",
+    "chekin-vela .vela-banner::after{content:\"\";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,90,80,.82) 6%,rgba(236,63,134,.66) 46%,rgba(123,63,240,.42));}",
+    "chekin-vela .vela-banner .bn-tag{position:absolute;z-index:6;top:11px;right:14px;height:17px;display:inline-flex;align-items:center;padding:0 7px;border-radius:999px;font-size:8px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;background:rgba(255,255,255,.26);color:#fff;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}",
+    "chekin-vela .vela-banner .bn-in{position:absolute;inset:0;z-index:3;padding:13px 24px;display:flex;flex-direction:column;}",
+    "chekin-vela .vela-banner .bn-logo{display:inline-flex;align-items:center;gap:7px;}",
+    "chekin-vela .vela-banner .bn-mark{position:relative;width:22px;height:26px;flex:none;}chekin-vela .vela-banner .bn-mark i{position:absolute;bottom:0;width:12px;border-radius:8px 8px 3px 3px;}",
+    "chekin-vela .vela-banner .bn-mark i.a{left:0;height:19px;background:linear-gradient(180deg,#ff8a5b,#ff4f6d);}chekin-vela .vela-banner .bn-mark i.b{left:8px;height:26px;background:linear-gradient(180deg,#ec3f86,#7b3ff0);}",
+    "chekin-vela .vela-banner .bn-wm{font-weight:800;font-size:14px;letter-spacing:-.01em;color:#fff;}",
+    "chekin-vela .vela-banner h4{margin:8px 0 0;font-size:14px;font-weight:800;line-height:1.24;color:#fff;max-width:225px;}",
+    "chekin-vela .vela-banner .bn-foot{margin-top:auto;display:flex;align-items:center;gap:10px;}",
+    "chekin-vela .vela-banner .bn-price{color:#fff;font-size:12.5px;font-weight:600;}chekin-vela .vela-banner .bn-price b{font-size:14px;font-weight:800;}",
+    "chekin-vela .vela-banner .bn-cta{margin-left:auto;height:31px;padding:0 16px;border:0;border-radius:9px;background:#fff;color:#16183a;font:inherit;font-size:11.5px;font-weight:800;cursor:pointer;}",
+
     "@media (max-width:1279px){chekin-vela{display:none;}}"
   ].join('\n');
 
@@ -109,6 +199,7 @@
 
   var SPARK = '<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
   var SEND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 6 6 6-6 6"/></svg>';
 
   var IC = {
     sparkle: '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8.2 2.7c.48 2.88 2.33 4.73 5.2 5.2-2.87.49-4.72 2.33-5.2 5.22C7.72 10.23 5.87 8.38 3 7.9c2.87-.47 4.72-2.32 5.2-5.2Z" fill="currentColor"/><path d="M14.9 10.8c.25 1.52 1.22 2.49 2.74 2.74-1.52.26-2.49 1.23-2.74 2.75-.25-1.52-1.23-2.5-2.75-2.75 1.52-.25 2.5-1.22 2.75-2.74Z" fill="currentColor"/></svg>',
@@ -159,7 +250,66 @@
     '</div>';
   }
 
+  // --- typed components (data-driven via it.type) ---
+  function icon(name) { return (name && IC[name]) ? IC[name] : IC.sparkle; }
+  function url(u) { return String(u == null ? '' : u).replace(/["'()<>]/g, ''); }       // sanitize for CSS url()
+  function price(it, cls) { return '<span class="' + cls + '">' + (it.old ? '<s>' + esc(it.old) + '</s>' : '') + esc(it.price || '') + '</span>'; }
+
+  function sectionItem(it) {
+    var tone = it.tone === 'amber' ? ' amber' : it.tone === 'green' ? ' green' : ' blue';
+    return '<div class="vela-sec' + tone + '">' + esc(it.label || '') + '</div>';
+  }
+  function capsuleItem(it) {
+    return '<div class="vela-cap"><span class="cap-ic">' + icon(it.icon) + '</span>' +
+      '<span class="cap-t">' + esc(it.title || '') + '</span><span class="cap-chev">' + CHEV + '</span></div>';
+  }
+  function couponItem(it) {
+    return '<div class="vela-coupon"><span class="cp-stub">' + icon(it.icon) + '</span><span class="cp-perf"></span>' +
+      '<span class="cp-body"><b>' + esc(it.title || '') + '</b><small>' + esc(it.sub || '') + '</small></span>' +
+      '<span class="cp-end">' + price(it, 'cp-pr') + '<button class="cp-add">' + esc(it.cta || 'Add') + '</button></span>' +
+      (it.save ? '<span class="cp-ribbon">' + esc(it.save) + '</span>' : '') + '</div>';
+  }
+  function dealCard(d) {
+    return '<div class="vela-dc"><div class="dc-img" style="background-image:url(' + url(d.img) + ')">' +
+      (d.save ? '<span class="dc-save">' + esc(d.save) + '</span>' : '') + '</div>' +
+      '<span class="dc-coin"><span class="p">' + esc(d.price || '') + '</span><span class="a">' + esc(d.cta || 'Add') + '</span></span>' +
+      '<div class="dc-info"><b>' + esc(d.title || '') + '</b><small>' + esc(d.sub || '') + '</small></div></div>';
+  }
+  function carouselItem(it) {
+    var deals = it.deals || [];
+    var dots = deals.map(function (_, i) { return '<span class="dot' + (i === 0 ? ' on' : '') + '"></span>'; }).join('');
+    return '<div class="vela-carwrap"><div class="vela-car">' + deals.map(dealCard).join('') + '</div></div>' +
+      '<div class="vela-dots">' + dots + '</div>';
+  }
+  function heroItem(it) {
+    return '<div class="vela-hero" style="background-image:url(' + url(it.img) + ')">' +
+      (it.save ? '<span class="h-save">' + esc(it.save) + '</span>' : '') +
+      '<div class="h-glass"><span class="h-tb"><b>' + esc(it.title || '') + '</b><small>' + esc(it.sub || '') + '</small></span>' +
+      price(it, 'h-pr') + '<button class="h-add">' + esc(it.cta || 'Add') + '</button></div></div>';
+  }
+  function contextualItem(it) {
+    var d = it.deal || {};
+    return '<div class="vela-ctx"><span class="ctx-mini">' + SPARK + '</span><div class="ctx-bubble">' +
+      '<p>' + (it.msg || '') + '</p>' +
+      '<div class="ctx-cp"><div class="ctx-top"><span class="ctx-thumb" style="background-image:url(' + url(d.img) + ')"></span>' +
+        '<span class="ctx-tb"><b>' + esc(d.title || '') + '</b><small>' + esc(d.sub || '') + '</small></span></div>' +
+        '<div class="ctx-tear"></div><div class="ctx-redeem">' + price(d, 'ctx-pr') +
+        '<button class="ctx-add">' + esc(d.cta || 'Add to stay') + '</button></div>' +
+        (d.save ? '<span class="ctx-ribbon">' + esc(d.save) + '</span>' : '') + '</div>' +
+      (it.more ? '<button class="ctx-more">' + esc(it.more) + ' ' + CHEV + '</button>' : '') +
+      '</div></div>';
+  }
+  function bannerItem(it) {
+    var logo = '<span class="bn-logo"><span class="bn-mark"><i class="a"></i><i class="b"></i></span><span class="bn-wm">' + esc(it.logo || 'airalo') + '</span></span>';
+    return '<div class="vela-banner" style="background-image:url(' + url(it.img) + ')"><span class="bn-tag">' + esc(it.tag || 'Patrocinado') + '</span>' +
+      '<div class="bn-in">' + logo + '<h4>' + esc(it.headline || '') + '</h4>' +
+      '<div class="bn-foot"><span class="bn-price">' + (it.priceLabel ? esc(it.priceLabel) + ' ' : '') + '<b>' + esc(it.price || '') + '</b></span>' +
+      '<button class="bn-cta">' + esc(it.cta || 'Ver planes') + '</button></div></div></div>';
+  }
+  var TYPES = { section: sectionItem, capsule: capsuleItem, deal: couponItem, 'deals-carousel': carouselItem, 'deal-hero': heroItem, 'deal-contextual': contextualItem, banner: bannerItem };
+
   function renderItem(it, flat) {
+    if (it && it.type && TYPES[it.type]) return TYPES[it.type](it);
     if (flat && !hasCTA(it)) return flatItem(it);
     var isInsight = it.strong || it.text || it.chip || it.reason;
     if (!isInsight) return actionCard(it);
@@ -226,6 +376,22 @@
       setTimeout(update, 80);
     }
 
+    _setupCarousels() {
+      var wraps = this.querySelectorAll('.vela-carwrap');
+      Array.prototype.forEach.call(wraps, function (wrap) {
+        var rail = wrap.querySelector('.vela-car');
+        var dotsEl = wrap.nextElementSibling && wrap.nextElementSibling.classList.contains('vela-dots') ? wrap.nextElementSibling : null;
+        var dots = dotsEl ? [].slice.call(dotsEl.children) : [];
+        if (!rail) return;
+        function step() { var c = rail.querySelector('.vela-dc'); return c ? c.offsetWidth + 12 : 146; }
+        rail.addEventListener('scroll', function () {
+          var i = Math.max(0, Math.min(dots.length - 1, Math.round(rail.scrollLeft / step())));
+          dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
+          wrap.classList.toggle('atEnd', rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4);
+        }, { passive: true });
+      });
+    }
+
     render() {
       this._teardownScrollHint();
       // Read JSON items the FIRST time we render — before innerHTML wipes the
@@ -263,6 +429,7 @@
           '</form>' +
         '</div>';
       this._setupScrollHint();
+      this._setupCarousels();
     }
   }
 

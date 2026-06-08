@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Contextual pitch with coupons (V1 / V4) + images</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{
+    --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68;
+    --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82); --amber:#c98a16; --notch:#eef1f7;
+  }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800;
+    background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  .vela{ position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; }
+  .v-avatar svg{ width:22px; height:22px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:12px; }
+  .v-title{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center;
+    background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .v-divider{ height:1px; width:100%; margin:0 0 14px; background:var(--line); }
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 13px;
+    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--amber); }
+  .addbtn{ border:0; cursor:pointer; font:inherit; font-weight:700; color:#fff; background:var(--blue); border-radius:8px; }
+  .addbtn:hover{ background:var(--blue-deep); }
+  .pr s{ color:var(--grey-soft); font-weight:600; font-size:11px; margin-right:5px; }
+  .ribbon{ position:absolute; top:9px; right:-23px; transform:rotate(45deg); z-index:3; background:var(--amber); color:#fff;
+    font-size:8px; font-weight:800; letter-spacing:.06em; padding:2px 24px; }
+
+  /* contextual pitch */
+  .pitch{ display:flex; gap:9px; align-items:flex-start; margin-bottom:12px; }
+  .pitch .mini{ width:26px; height:26px; flex:none; border-radius:50%; background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .pitch .mini svg{ width:15px; height:15px; color:#fff; }
+  .pitch .bubble{ position:relative; flex:1; background:rgba(56,91,248,.06); border:1px solid rgba(56,91,248,.12); border-radius:4px 14px 14px 14px; padding:11px 12px; }
+  .pitch .bubble p{ margin:0; font-family:'Poppins',sans-serif; font-size:12.4px; line-height:1.55; color:var(--ink); }
+  .pitch .bubble b{ color:var(--navy); font-weight:700; }
+  .more{ display:flex; align-items:center; gap:5px; margin-top:13px; padding:0; border:0; background:none; cursor:pointer;
+    font:inherit; font-size:11.5px; font-weight:700; color:var(--blue-deep); }
+  .more svg{ width:14px; height:14px; stroke-width:2.4; }
+
+  /* ===== V1 coupon with photo stub ===== */
+  .v1cp{ position:relative; display:flex; align-items:stretch; border-radius:14px; background:#fff; box-shadow:0 8px 20px rgba(23,42,96,.12); overflow:hidden; }
+  .v1cp .photo{ position:relative; width:78px; flex:none; background-size:cover; background-position:center; }
+  .v1cp .pbadge{ position:absolute; bottom:6px; left:6px; height:18px; padding:0 7px; border-radius:999px; background:var(--amber); color:#fff; font-size:9px; font-weight:800; display:inline-flex; align-items:center; letter-spacing:.03em; }
+  /* coupon embedded inside Vela's reply bubble */
+  .bubble .v1cp,.bubble .v4cp{ margin-top:11px; box-shadow:0 6px 16px rgba(23,42,96,.14); }
+  .bubble .more{ margin-top:11px; }
+  .v1cp .perf{ position:relative; width:0; border-left:2px dashed rgba(203,214,236,.95); margin:7px 0; }
+  .v1cp .perf::before,.v1cp .perf::after{ content:''; position:absolute; left:-7px; width:12px; height:12px; border-radius:50%; background:var(--notch); }
+  .v1cp .perf::before{ top:-9px; } .v1cp .perf::after{ bottom:-9px; }
+  .v1cp .body{ flex:1; min-width:0; padding:12px; }
+  .v1cp .body b{ display:block; font-size:13px; font-weight:700; } .v1cp .body small{ display:block; margin-top:2px; font-size:10.8px; color:#5a6695; }
+  .v1cp .end{ display:flex; flex-direction:column; align-items:flex-end; justify-content:center; padding:0 13px 0 4px; gap:7px; }
+  .v1cp .pr{ font-size:14.5px; font-weight:800; } .v1cp .addbtn{ height:27px; padding:0 14px; font-size:11px; }
+
+  /* ===== V4 coupon with photo thumb + tinted redeem ===== */
+  .v4cp{ position:relative; display:flex; flex-direction:column; border-radius:14px; background:#fff; box-shadow:0 8px 20px rgba(23,42,96,.12); overflow:hidden; }
+  .v4cp .top{ display:flex; align-items:center; gap:11px; padding:11px 12px; }
+  .v4cp .thumb{ width:54px; height:46px; flex:none; border-radius:11px; background-size:cover; background-position:center; }
+  .v4cp .top .tb{ flex:1; min-width:0; } .v4cp .top .tb b{ display:block; font-size:13px; font-weight:700; } .v4cp .top .tb small{ display:block; margin-top:2px; font-size:10.8px; color:#5a6695; }
+  .v4cp .tear{ position:relative; height:0; border-top:2px dashed rgba(56,91,248,.3); margin:0 9px; }
+  .v4cp .tear::before,.v4cp .tear::after{ content:''; position:absolute; top:-9px; width:14px; height:14px; border-radius:50%; background:var(--notch); }
+  .v4cp .tear::before{ left:-16px; } .v4cp .tear::after{ right:-16px; }
+  .v4cp .redeem{ display:flex; align-items:center; justify-content:space-between; padding:11px 12px; background:rgba(56,91,248,.06); }
+  .v4cp .redeem .pr{ font-size:15px; font-weight:800; } .v4cp .redeem .addbtn{ height:30px; padding:0 16px; font-size:11.5px; border-radius:9px; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · contextual + coupon</div>
+    <h1>Vela proposes — with the V1 &amp; V4 coupon + real photo</h1>
+    <p>The contextual pitch wraps the offer: Vela reasons from your data, then shows the deal as the saved coupon (V1 or V4) with a real image. A “see more” keeps the rest one tap away.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 6 6 6-6 6"/></svg>';
+  var ROOM='landingV1/assets/deals/room.jpg';
+
+  function panel(inner){
+    return '<div class="vela"><div class="v-avatar">'+SPARK+'</div>'+
+      '<div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>'+
+      '<div class="v-divider"></div><div class="eye">Offers for your stay</div>'+ inner +'</div>';
+  }
+  // Vela's reply bubble that CONTAINS the coupon + see-more as part of its message
+  function msg(couponHtml){
+    return '<div class="pitch"><span class="mini">'+SPARK+'</span>'+
+      '<div class="bubble">'+
+        '<p>You arrive around <b>10:30</b> — want your room ready the moment you get there? Here’s a deal on <b>early check-in</b>:</p>'+
+        couponHtml +
+        '<button class="more">See 2 more extras '+CHEV+'</button>'+
+      '</div></div>';
+  }
+
+  // V1 coupon with photo stub (discount as a badge on the photo)
+  var V1coupon = '<div class="v1cp"><span class="photo" style="background-image:url('+ROOM+')"><span class="pbadge">-30%</span></span><span class="perf"></span>'+
+      '<span class="body"><b>Early check-in</b><small>Access from 11:00</small></span>'+
+      '<span class="end"><span class="pr"><s>€35</s>€25</span><button class="addbtn">Add</button></span></div>';
+
+  // V4 coupon with photo thumb + tinted redeem
+  var V4coupon = '<div class="v4cp"><div class="top"><span class="thumb" style="background-image:url('+ROOM+')"></span>'+
+        '<span class="tb"><b>Early check-in</b><small>Access from 11:00</small></span></div>'+
+      '<div class="tear"></div>'+
+      '<div class="redeem"><span class="pr"><s>€35</s>€25</span><button class="addbtn">Add to stay</button></div>'+
+      '<span class="ribbon">-30%</span></div>';
+
+  var V1 = msg(V1coupon);
+  var V4 = msg(V4coupon);
+
+  var cols=[
+    {tag:'V1', name:'Contextual + V1 coupon', desc:'Vela pitches, then the V1 ticket with the photo as the vertical stub, perforation, price + Add, “-30%” ribbon.', html:panel(V1)},
+    {tag:'V4', name:'Contextual + V4 coupon', desc:'Vela pitches, then the V4 ticket: photo thumb up top, perforated tear, tinted redeem strip + ribbon.', html:panel(V4)}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">'+c.tag+'</span>'+
+      '<div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+c.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

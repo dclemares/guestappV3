@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Carousel 3b★2 (final)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{
+    --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68;
+    --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82); --amber:#c98a16;
+  }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:40px 30px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:760px; margin:0 auto 24px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:28px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:13.5px; color:var(--grey); }
+  .wrap{ max-width:760px; margin:0 auto; display:flex; gap:30px; align-items:flex-start; flex-wrap:wrap; }
+
+  .vela{ width:372px; position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; }
+  .v-avatar svg{ width:22px; height:22px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:12px; }
+  .v-title{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center;
+    background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .v-divider{ height:1px; width:100%; margin:0 0 14px; background:var(--line); }
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 13px;
+    font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--amber); }
+  .save{ height:19px; display:inline-flex; align-items:center; padding:0 8px; border-radius:999px; background:var(--amber); color:#fff; font-size:9px; font-weight:800; letter-spacing:.04em; }
+
+  /* ===== carousel ===== */
+  .railwrap{ position:relative; }
+  .rail{ display:flex; gap:12px; overflow-x:auto; overflow-y:visible; padding:8px 4px 30px; margin:0 -4px;
+    scroll-snap-type:x mandatory; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  .rail::-webkit-scrollbar{ display:none; }
+  .railwrap::after{ content:''; position:absolute; top:0; bottom:14px; right:-2px; width:34px; pointer-events:none;
+    background:linear-gradient(90deg, rgba(244,246,249,0), rgba(244,246,249,.92)); border-radius:0 16px 16px 0; }
+  .railwrap.atEnd::after{ opacity:0; transition:opacity .2s; }
+
+  .dc{ position:relative; scroll-snap-align:start; flex:0 0 134px; border-radius:16px; overflow:visible; background:#fff; box-shadow:0 7px 16px rgba(23,42,96,.12); }
+  .dc .img{ position:relative; height:104px; border-radius:16px 16px 0 0; background-size:cover; background-position:center; overflow:hidden; }
+  .dc .img::after{ content:''; position:absolute; inset:0; background:linear-gradient(150deg, rgba(56,91,248,.42), rgba(16,71,255,.12)); mix-blend-mode:multiply; }
+  .dc .save{ position:absolute; top:9px; left:9px; z-index:3; background:#fff; color:var(--amber); }
+  .dc .info{ position:relative; padding:22px 11px 12px; }
+  .dc .info b{ display:block; font-size:12.5px; font-weight:700; } .dc .info small{ display:block; margin-top:1px; font-size:10.3px; color:#5a6695; }
+
+  /* coin → Add morph on hover */
+  .coin{ position:absolute; right:9px; top:72px; z-index:4; width:46px; height:46px; border-radius:50%; background:#fff;
+    box-shadow:0 6px 16px rgba(7,21,77,.34), 0 2px 5px rgba(7,21,77,.16); display:flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden;
+    transition: background .24s ease, transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .24s ease; }
+  .coin .p,.coin .a{ position:absolute; left:0; right:0; text-align:center; transition: opacity .2s ease, transform .26s cubic-bezier(.34,1.56,.64,1); }
+  .coin .p{ font-size:12.5px; font-weight:800; color:var(--navy); }
+  .coin .a{ font-size:11.5px; font-weight:800; color:#fff; letter-spacing:.02em; opacity:0; transform:translateY(10px) scale(.8); }
+  .dc:hover .coin{ background:var(--blue); transform:scale(1.1); box-shadow:0 10px 22px rgba(56,91,248,.44); }
+  .dc:hover .coin .p{ opacity:0; transform:translateY(-10px) scale(.8); }
+  .dc:hover .coin .a{ opacity:1; transform:translateY(0) scale(1); }
+
+  /* pagination dots */
+  .dots{ display:flex; gap:6px; justify-content:center; margin-top:-14px; position:relative; z-index:1; }
+  .dot{ width:7px; height:7px; border-radius:50%; background:rgba(56,91,248,.25); transition: width .25s ease, background .25s ease; }
+  .dot.on{ width:20px; border-radius:4px; background:var(--blue); }
+
+  .hint{ margin:24px auto 0; max-width:372px; font-family:'Poppins',sans-serif; font-size:12px; color:var(--grey); }
+  .hint b{ color:var(--navy); }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · carousel · final</div>
+    <h1>3b★2 — coin → Add on hover + clearer carousel</h1>
+    <p>Hover a card: the price coin morphs into a blue “Add”. The rail snaps, peeks the next card, fades at the edge and shows pagination dots.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="vela">
+      <div class="v-avatar"></div>
+      <div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>
+      <div class="v-divider"></div>
+      <div class="eye">Offers for your stay</div>
+      <div class="railwrap"><div class="rail" id="rail"></div></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="hint">Prueba: <b>pasa el ratón</b> por una tarjeta (la moneda de precio se transforma en <b>Add</b>) y <b>arrastra/scroll horizontal</b> para deslizar el carrusel.</div>
+  </div>
+
+<script>
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+  var PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>';
+  document.querySelector('.v-avatar').innerHTML = SPARK;
+  var IMG={ room:'landingV1/assets/deals/room.jpg', transfer:'landingV1/assets/deals/transfer.jpg', parking:'landingV1/assets/deals/parking.jpg' };
+  var DEALS=[
+    {img:IMG.room,     t:'Early check-in',  s:'Access from 11:00',  p:'€25', save:'-30%'},
+    {img:IMG.transfer, t:'Airport transfer',s:'Direct ride',        p:'€45', save:''},
+    {img:IMG.parking,  t:'Parking spot',    s:'On-site, per night', p:'€15', save:''}
+  ];
+  var rail=document.getElementById('rail');
+  rail.innerHTML = DEALS.map(function(d){
+    return '<div class="dc"><div class="img" style="background-image:url('+d.img+')">'+(d.save?'<span class="save">'+d.save+'</span>':'')+'</div>'+
+      '<span class="coin"><span class="p">'+d.p+'</span><span class="a">Add</span></span>'+
+      '<div class="info"><b>'+d.t+'</b><small>'+d.s+'</small></div></div>';
+  }).join('');
+
+  var dots=document.getElementById('dots');
+  dots.innerHTML = DEALS.map(function(_,i){ return '<span class="dot'+(i===0?' on':'')+'"></span>'; }).join('');
+  var dotEls=[].slice.call(dots.children);
+  var wrap=rail.parentElement;
+  function step(){ var c=rail.querySelector('.dc'); return c ? c.offsetWidth + 12 : 170; }
+  rail.addEventListener('scroll', function(){
+    var i=Math.round(rail.scrollLeft/step());
+    i=Math.max(0,Math.min(dotEls.length-1,i));
+    dotEls.forEach(function(d,k){ d.classList.toggle('on', k===i); });
+    wrap.classList.toggle('atEnd', rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4);
+  }, {passive:true});
+</script>
+</body>
+</html>

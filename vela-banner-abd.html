@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Banners A · B · D</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{ --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68; --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82); }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 100px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800;
+    background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  .vela{ position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .v-avatar{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; z-index:2; }
+  .v-avatar svg{ width:22px; height:22px; color:#fff; }
+  .v-titlerow{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:10px; }
+  .v-title{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .v-badge{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center; background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .v-intro{ margin:0 0 8px; font-family:'Poppins',sans-serif; font-size:12px; line-height:1.5; color:#5a6695; }
+
+  .logo{ display:inline-flex; align-items:center; gap:7px; }
+  .mark{ position:relative; width:22px; height:26px; flex:none; }
+  .mark i{ position:absolute; bottom:0; width:12px; border-radius:8px 8px 3px 3px; }
+  .mark i.a{ left:0; height:19px; background:linear-gradient(180deg,#ff8a5b,#ff4f6d); }
+  .mark i.b{ left:8px; height:26px; background:linear-gradient(180deg,#ec3f86,#7b3ff0); }
+  .wm{ font-weight:800; font-size:14px; letter-spacing:-.01em; }
+  .logo.light .wm{ color:#fff; } .logo.dark .wm{ color:#16183a; }
+  .adcta{ border:0; cursor:pointer; font:inherit; font-weight:800; border-radius:9px; }
+  .adtag{ position:absolute; z-index:6; height:17px; display:inline-flex; align-items:center; padding:0 7px; border-radius:999px;
+    font-size:8px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; }
+
+  /* SIM chip (B + combo) */
+  .sim{ position:absolute; width:72px; height:54px; border-radius:10px; z-index:7; transform:rotate(-13deg);
+    background:linear-gradient(135deg,#ffffff,#eef0fb); box-shadow:0 14px 26px rgba(7,21,77,.32); border:1px solid rgba(0,0,0,.05); display:flex; align-items:center; justify-content:center; }
+  .sim .gold{ width:30px; height:23px; border-radius:5px; background:linear-gradient(135deg,#f7d27a,#d89a2c); position:relative; }
+  .sim .gold::before{ content:''; position:absolute; inset:4px; border:1px solid rgba(255,255,255,.55); border-radius:2px; }
+  .sim .gold::after{ content:''; position:absolute; left:50%; top:3px; bottom:3px; width:1px; background:rgba(255,255,255,.5); }
+
+  /* ===== A · Full-bleed takeover ===== */
+  .pA{ overflow:hidden; padding-bottom:0; }
+  .adA{ position:relative; margin:12px -16px 0; height:158px; background-size:cover; background-position:center; }
+  .adA::after{ content:''; position:absolute; inset:0; background:linear-gradient(115deg, rgba(255,90,80,.82) 6%, rgba(236,63,134,.66) 46%, rgba(123,63,240,.42)); }
+  .adA .adtag{ top:11px; right:12px; background:rgba(255,255,255,.26); color:#fff; backdrop-filter:blur(4px); }
+  .adA .in{ position:absolute; inset:0; z-index:3; padding:14px 15px; display:flex; flex-direction:column; }
+  .adA h4{ margin:10px 0 0; font-size:15px; font-weight:800; line-height:1.25; color:#fff; max-width:225px; }
+  .adA .foot{ margin-top:auto; display:flex; align-items:center; gap:10px; }
+  .adA .price{ color:#fff; font-size:12.5px; font-weight:600; } .adA .price b{ font-size:14px; font-weight:800; }
+  .adA .adcta{ margin-left:auto; height:31px; padding:0 16px; background:#fff; color:#16183a; font-size:11.5px; }
+
+  /* ===== B · Pop-out SIM chip ===== */
+  .pB{ overflow:visible; }
+  .adB{ position:relative; margin-top:30px; border-radius:16px; padding:14px 15px 15px; color:#fff;
+    background:linear-gradient(120deg,#ff7a59,#ec3f86 52%,#7b3ff0); box-shadow:0 14px 30px rgba(123,63,240,.35); }
+  .adB .adtag{ bottom:13px; right:13px; background:rgba(255,255,255,.22); color:#fff; }
+  .adB .sim{ top:-26px; right:18px; }
+  .adB h4{ margin:6px 0 0; font-size:15px; font-weight:800; line-height:1.24; max-width:200px; }
+  .adB .price{ display:block; margin-top:8px; font-size:12.5px; font-weight:600; opacity:.95; } .adB .price b{ font-size:14px; font-weight:800; }
+  .adB .adcta{ margin-top:12px; height:32px; padding:0 16px; background:#fff; color:#16183a; font-size:11.6px; }
+
+  /* ===== D · Tilted + sticker ===== */
+  .pD{ overflow:visible; }
+  .adD{ position:relative; margin:22px 5px 14px; border-radius:15px; overflow:hidden; transform:rotate(-2.2deg);
+    box-shadow:0 18px 34px rgba(7,21,77,.26); background-size:cover; background-position:center; height:142px; }
+  .adD::after{ content:''; position:absolute; inset:0; background:linear-gradient(110deg, rgba(236,63,134,.82), rgba(123,63,240,.42)); }
+  .adD .adtag{ bottom:12px; left:13px; background:rgba(0,0,0,.26); color:#fff; }
+  .adD .in{ position:absolute; inset:0; z-index:3; padding:13px 14px; display:flex; flex-direction:column; color:#fff; }
+  .adD h4{ margin:8px 0 0; font-size:14px; font-weight:800; line-height:1.24; max-width:200px; }
+  .adD .foot{ margin-top:auto; display:flex; align-items:center; gap:10px; }
+  .adD .price{ font-size:12.5px; font-weight:600; } .adD .price b{ font-size:14px; font-weight:800; }
+  .adD .adcta{ margin-left:auto; height:30px; padding:0 15px; background:#fff; color:#16183a; font-size:11.4px; }
+  .adD .sticker{ position:absolute; z-index:8; top:-13px; right:-6px; transform:rotate(15deg); width:54px; height:54px; border-radius:50%;
+    background:#ffd23f; color:#16183a; display:flex; align-items:center; justify-content:center; text-align:center; font-size:9px; font-weight:800; line-height:1.05;
+    box-shadow:0 8px 16px rgba(7,21,77,.25); }
+
+  /* ===== A+B combo ===== */
+  .pAB{ overflow:hidden; padding-bottom:0; }
+  .adAB{ position:relative; margin:34px -16px 0; height:158px; background-size:cover; background-position:center; }
+  .adAB::after{ content:''; position:absolute; inset:0; background:linear-gradient(115deg, rgba(255,90,80,.84) 6%, rgba(236,63,134,.68) 46%, rgba(123,63,240,.45)); }
+  .adAB .adtag{ top:11px; right:12px; background:rgba(255,255,255,.26); color:#fff; backdrop-filter:blur(4px); }
+  .adAB .sim{ top:-22px; right:16px; transform:rotate(-12deg); }
+  .adAB .in{ position:absolute; inset:0; z-index:3; padding:14px 15px; display:flex; flex-direction:column; }
+  .adAB h4{ margin:10px 0 0; font-size:15px; font-weight:800; line-height:1.25; color:#fff; max-width:215px; }
+  .adAB .foot{ margin-top:auto; display:flex; align-items:center; gap:10px; }
+  .adAB .price{ color:#fff; font-size:12.5px; font-weight:600; } .adAB .price b{ font-size:14px; font-weight:800; }
+  .adAB .adcta{ margin-left:auto; height:31px; padding:0 16px; background:#fff; color:#16183a; font-size:11.5px; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · sponsored · A·B·D</div>
+    <h1>Banners A · B · D — refined (+ A×B combo)</h1>
+    <p>Polished full-bleed, pop-out chip and tilted+sticker, with the sponsor tag clear of the logo. Plus a combo: full-bleed takeover with the SIM chip popping out.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+  var BEACH='landingV1/assets/deals/beach.jpg';
+  function logo(cls){ return '<span class="logo '+cls+'"><span class="mark"><i class="a"></i><i class="b"></i></span><span class="wm">airalo</span></span>'; }
+  function head(){ return '<div class="v-avatar">'+SPARK+'</div><div class="v-titlerow"><h2 class="v-title">Vela</h2><span class="v-badge">Your AI assistant</span></div>'; }
+  var intro='<p class="v-intro">Travelling abroad? Here’s something that might help on your trip.</p>';
+  var sim='<div class="sim"><span class="gold"></span></div>';
+
+  var A = '<div class="vela pA">'+head()+intro+
+    '<div class="adA" style="background-image:url('+BEACH+')"><span class="adtag">Patrocinado</span>'+
+      '<div class="in">'+logo('light')+'<h4>Activa tu eSIM al instante y olvídate del roaming.</h4>'+
+      '<div class="foot"><span class="price">Desde <b>4,00€</b></span><button class="adcta">Ver planes</button></div></div></div></div>';
+
+  var B = '<div class="vela pB">'+head()+intro+
+    '<div class="adB">'+sim+'<span class="adtag">Patrocinado</span>'+
+      logo('light')+'<h4>eSIM al instante, sin roaming en 200+ países.</h4>'+
+      '<span class="price">Desde <b>4,00€</b></span><button class="adcta">Ver planes</button></div></div>';
+
+  var D = '<div class="vela pD">'+head()+intro+
+    '<div class="adD" style="background-image:url('+BEACH+')"><span class="sticker">SIN<br>ROAMING</span><span class="adtag">Patrocinado</span>'+
+      '<div class="in">'+logo('light')+'<h4>Activa tu eSIM y olvídate del roaming.</h4>'+
+      '<div class="foot"><span class="price">Desde <b>4,00€</b></span><button class="adcta">Ver planes</button></div></div></div></div>';
+
+  var AB = '<div class="vela pAB">'+head()+intro+
+    '<div class="adAB" style="background-image:url('+BEACH+')">'+sim+'<span class="adtag">Patrocinado</span>'+
+      '<div class="in">'+logo('light')+'<h4>Activa tu eSIM al instante y olvídate del roaming.</h4>'+
+      '<div class="foot"><span class="price">Desde <b>4,00€</b></span><button class="adcta">Ver planes</button></div></div></div></div>';
+
+  var cols=[
+    {tag:'A', name:'Full-bleed takeover', desc:'Edge-to-edge ad slot, brand gradient over the beach. Sponsor tag top-right, clear of the logo.', html:A},
+    {tag:'B', name:'Pop-out SIM chip', desc:'Brand-gradient banner, SIM popping out the top. “Patrocinado” moved to the bottom-right.', html:B},
+    {tag:'D', name:'Tilted + sticker', desc:'Rotated, lifted, with the promo sticker now top-right so it never covers the logo.', html:D},
+    {tag:'A×B', name:'Full-bleed + pop-out', desc:'The combo: edge-to-edge takeover with the SIM chip escaping into Vela. Most disruptive.', html:AB}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">'+c.tag+'</span>'+
+      '<div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+c.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

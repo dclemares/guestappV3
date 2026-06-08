@@ -127,7 +127,7 @@ textarea.control{ height:auto; resize:vertical; min-height:40px; }
 }
 </style>
 <script src="../../components/chekin-navbar.js?v=warning-badges" defer></script>
-<script src="../../components/chekin-vela.js?v=flat-noreco" defer></script>
+<script src="../../components/chekin-vela.js?v=vela-components" defer></script>
 </head>
 <body>
 <div class="app">
@@ -283,14 +283,15 @@ textarea.control{ height:auto; resize:vertical; min-height:40px; }
   <!-- RIGHT VELA PANEL -->
     <chekin-vela flat-text
     intro="I can help you fill in your details, explain why each field is needed, and get you checked in faster."
-    reco-title="Smart tips" reco-icon="sun"
-    reco-subtitle="Suggestions to complete your registration without mistakes.">
+    reco-title="">
     <script type="application/json">
     [
+      {"type":"section","label":"Smart tips","tone":"amber"},
       {"chip":"Heads up","reason":"Spanish nationality","strong":"Add your second last name","text":"Spain requires both surnames on official guest records."},
       {"chip":"Tip","reason":"Faster check-in","strong":"Use your passport","text":"Pick the same document you'll show on arrival to avoid delays."},
-      {"icon":"doc","title":"What documents work?","subtitle":"Passport, ID or license","button":"Ask"},
-      {"icon":"clock-alt","title":"When is this due?","subtitle":"Before arrival day","button":"Ask"}
+      {"type":"section","label":"Ask Vela","tone":"blue"},
+      {"type":"capsule","icon":"doc","title":"What documents work?"},
+      {"type":"capsule","icon":"clock-alt","title":"When is this due?"}
     ]
     </script>
   </chekin-vela>
