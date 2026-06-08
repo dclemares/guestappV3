@@ -146,7 +146,7 @@
       '<line x1="456" y1="306" x2="602" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
       '<g transform="translate(628 290)" opacity="0.62"><path d="M29 18.4C25.3 22 20.4 24.2 15 24.2C6.7 24.2 0 17.5 0 9.2C0 4.5 2.2 0.4 5.6 -2.3C5 0 4.9 2.5 5.6 5C7.5 12.3 14.9 16.7 22.2 14.8C24.8 14.1 27.1 12.8 29 11V18.4Z" fill="none" stroke="white" stroke-width="2.4" stroke-linejoin="round"/></g>' +
       '<text x="680" y="317" fill="white" opacity="0.58" font-size="32" font-weight="580" letter-spacing="-0.7">' + esc(data.nights) + '</text>' +
-      '<line x1="820" y1="306" x2="960" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
+      '<line x1="820" y1="306" x2="997" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
       '<text x="1019" y="315" fill="white" font-size="92" font-weight="900" letter-spacing="-4">' + esc(data.checkoutDay) + '</text>' +
       '<text x="1133" y="315" fill="white" font-size="43" font-weight="780" letter-spacing="-1.2">' + esc(data.checkoutMonth) + '</text>' +
       '<text x="1030" y="372" fill="white" opacity="0.58" font-size="31" font-weight="560" letter-spacing="-0.7">' + esc(data.checkoutTime) + '</text>' +
