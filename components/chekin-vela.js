@@ -408,6 +408,10 @@
       var recoIcon = this.getAttribute('reco-icon') || 'sparkle';
       var flat = this.hasAttribute('flat-text');
       var items = this._cache || [];
+      // Avoid a double rule: when the content opens with a section header (and
+      // there is no reco header), the section's own hairline replaces the divider.
+      var firstIsSection = items[0] && items[0].type === 'section';
+      var showDivider = showReco || !firstIsSection;
 
       var list = items.map(function (it) { return renderItem(it, flat); }).join('');
       this.innerHTML =
@@ -415,7 +419,7 @@
           '<div class="vela-avatar">' + SPARK + '<span class="online-dot"></span></div>' +
           '<div class="vela-title-row"><h2 class="vela-title">Vela</h2><span class="vela-badge">Your AI assistant</span></div>' +
           '<p class="vela-intro">' + esc(intro) + '</p>' +
-          '<div class="vela-divider"></div>' +
+          (showDivider ? '<div class="vela-divider"></div>' : '') +
           '<div class="vela-scroll">' +
             (showReco
               ? '<div class="rec-title">' + (IC[recoIcon] || IC.sparkle) + esc(recoTitle) + '</div>' +
