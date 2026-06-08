@@ -36,6 +36,12 @@
   var RIGHT_VIEWBOX_PAD = 66;
   var GREEN_STUB_WIDTH = 413;
   var GREEN_RIGHT_INSET = 4;
+  var CONTENT_OFFSET_X = 25;
+  var LEFT_CARD_EDGE_X = 71;
+  var CHECKIN_DAY_X = 124;
+  var CHECKOUT_DAY_X = 1019;
+  var CHECKOUT_MONTH_X = 1133;
+  var CHECKOUT_TIME_X = 1030;
 
   function fmt(n) {
     return String(Math.round(n * 100) / 100);
@@ -188,27 +194,47 @@
     return Math.max(116, String(value || '').length * 13.5 + 22);
   }
 
-  function shouldHideNights(data, layout) {
-    var cx = layout.contentDx;
-    var dx = layout.dx;
+  function estimateCheckoutWidth(data) {
+    var dayWidth = Math.max(92, String(data.checkoutDay || '').length * 49);
+    var monthWidth = String(data.checkoutMonth || '').length * 24 + 18;
+    var timeWidth = String(data.checkoutTime || '').length * 17.5 + 18;
+
+    return Math.max(
+      CHECKOUT_DAY_X + dayWidth,
+      CHECKOUT_MONTH_X + monthWidth,
+      CHECKOUT_TIME_X + timeWidth
+    );
+  }
+
+  function checkoutDxForContent(data, layout) {
+    if (layout.dx >= 0) return layout.dx;
+
+    var minRightGap = CONTENT_OFFSET_X + CHECKIN_DAY_X - LEFT_CARD_EDGE_X;
+    var maxCheckoutDx = layout.split - CONTENT_OFFSET_X - minRightGap - estimateCheckoutWidth(data);
+
+    return Math.max(layout.dx, Math.min(0, maxCheckoutDx));
+  }
+
+  function shouldHideNights(data, layout, checkoutDx) {
+    var cx = checkoutDx / 2;
     var leftLineLength = 611 + cx - 500;
-    var rightLineLength = 953 + dx - (842 + cx);
+    var rightLineLength = 953 + checkoutDx - (842 + cx);
     var nightsTextRight = 689 + cx + estimateNightsWidth(data.nights);
-    var checkoutDateLeft = 1019 + dx;
+    var checkoutDateLeft = CHECKOUT_DAY_X + checkoutDx;
 
     return leftLineLength < 20 || rightLineLength < 20 || nightsTextRight > checkoutDateLeft - 58;
   }
 
   function leftContent(data, layout) {
-    var dx = layout.dx;
-    var cx = layout.contentDx;
-    var nightsGroup = shouldHideNights(data, layout)
+    var checkoutDx = checkoutDxForContent(data, layout);
+    var cx = checkoutDx / 2;
+    var nightsGroup = shouldHideNights(data, layout, checkoutDx)
       ? ''
       : '<g class="tk-nights">' +
         '<line x1="500" y1="306" x2="' + fmt(611 + cx) + '" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
         '<g transform="translate(' + fmt(637 + cx) + ' 290)" opacity="0.62"><path d="M29 18.4C25.3 22 20.4 24.2 15 24.2C6.7 24.2 0 17.5 0 9.2C0 4.5 2.2 0.4 5.6 -2.3C5 0 4.9 2.5 5.6 5C7.5 12.3 14.9 16.7 22.2 14.8C24.8 14.1 27.1 12.8 29 11V18.4Z" fill="none" stroke="white" stroke-width="2.4" stroke-linejoin="round"/></g>' +
         '<text x="' + fmt(689 + cx) + '" y="317" fill="white" opacity="0.58" font-size="32" font-weight="580" letter-spacing="-0.7">' + esc(data.nights) + '</text>' +
-        '<line x1="' + fmt(842 + cx) + '" y1="306" x2="' + fmt(953 + dx) + '" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
+        '<line x1="' + fmt(842 + cx) + '" y1="306" x2="' + fmt(953 + checkoutDx) + '" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
       '</g>';
 
     return '<g transform="translate(25 25)" font-family="Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">' +
@@ -221,9 +247,9 @@
       '<text x="238" y="315" fill="white" font-size="43" font-weight="780" letter-spacing="-1.2">' + esc(data.checkinMonth) + '</text>' +
       '<text x="126" y="372" fill="white" opacity="0.58" font-size="31" font-weight="560" letter-spacing="-0.7">' + esc(data.checkinTime) + '</text>' +
       nightsGroup +
-      '<text x="' + fmt(1019 + dx) + '" y="315" fill="white" font-size="92" font-weight="900" letter-spacing="-4">' + esc(data.checkoutDay) + '</text>' +
-      '<text x="' + fmt(1133 + dx) + '" y="315" fill="white" font-size="43" font-weight="780" letter-spacing="-1.2">' + esc(data.checkoutMonth) + '</text>' +
-      '<text x="' + fmt(1030 + dx) + '" y="372" fill="white" opacity="0.58" font-size="31" font-weight="560" letter-spacing="-0.7">' + esc(data.checkoutTime) + '</text>' +
+      '<text x="' + fmt(CHECKOUT_DAY_X + checkoutDx) + '" y="315" fill="white" font-size="92" font-weight="900" letter-spacing="-4">' + esc(data.checkoutDay) + '</text>' +
+      '<text x="' + fmt(CHECKOUT_MONTH_X + checkoutDx) + '" y="315" fill="white" font-size="43" font-weight="780" letter-spacing="-1.2">' + esc(data.checkoutMonth) + '</text>' +
+      '<text x="' + fmt(CHECKOUT_TIME_X + checkoutDx) + '" y="372" fill="white" opacity="0.58" font-size="31" font-weight="560" letter-spacing="-0.7">' + esc(data.checkoutTime) + '</text>' +
       '<text x="126" y="490" fill="white" opacity="0.7" font-size="28" font-weight="860" letter-spacing="7">BOOKING REF</text>' +
       '<text x="468" y="490" fill="white" font-size="39" font-weight="860" letter-spacing="1">' + esc(data.bookingRef) + '</text>' +
     '</g>';
