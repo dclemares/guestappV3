@@ -48,6 +48,11 @@
     "  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}",
     "chekin-vela *{box-sizing:border-box;}",
     "chekin-vela .vela-inner{position:absolute;top:24px;bottom:24px;left:24px;right:22px;display:flex;flex-direction:column;min-height:0;}",
+    "chekin-vela .vela-inner::after{content:\"\";position:absolute;left:0;right:0;bottom:60px;height:34px;pointer-events:none;",
+    "  background:linear-gradient(180deg,rgba(248,250,255,0),rgba(248,250,255,.94));",
+    "  box-shadow:0 18px 26px -24px rgba(18,30,78,.62);opacity:0;transform:translateY(4px);",
+    "  transition:opacity .22s ease,transform .22s ease;z-index:4;}",
+    "chekin-vela.has-scroll-below .vela-inner::after{opacity:1;transform:translateY(0);}",
     "chekin-vela .vela-avatar{position:absolute;top:0;left:0;width:44px;height:44px;border-radius:50%;",
     "  background:linear-gradient(145deg,#1047ff,#5d7cff);display:flex;align-items:center;justify-content:center;",
     "  box-shadow:0 10px 24px rgba(18,75,255,.22);z-index:3;}",
@@ -59,7 +64,7 @@
     "  background:rgba(18,75,255,.075);color:#1047ff;font-size:11px;font-weight:700;}",
     "chekin-vela .vela-intro{margin:0 0 16px;max-width:280px;font-size:12.6px;line-height:1.5;font-weight:500;color:#48547f;}",
     "chekin-vela .vela-divider{height:1px;width:100%;margin:0 0 16px;background:rgba(203,214,236,.82);}",
-    "chekin-vela .vela-scroll{flex:1;min-height:0;overflow-y:auto;padding-right:4px;scrollbar-width:none;}",
+    "chekin-vela .vela-scroll{position:relative;z-index:1;flex:1;min-height:0;overflow-y:auto;padding-right:4px;scrollbar-width:none;}",
     "chekin-vela .vela-scroll::-webkit-scrollbar{display:none;}",
     "chekin-vela .rec-title{display:flex;align-items:center;gap:9px;margin-bottom:6px;font-size:13.2px;font-weight:700;}",
     "chekin-vela .rec-title svg{width:14px;height:14px;color:#1047ff;flex:none;}",
@@ -81,7 +86,7 @@
     "chekin-vela .ac-sub{display:block;margin-top:2px;font-size:11px;font-weight:500;color:#5a6695;}",
     "chekin-vela .ac-price{margin-left:auto;padding-right:4px;font-size:12px;font-weight:700;color:#15225f;white-space:nowrap;}",
     "chekin-vela .ac-btn{height:29px;min-width:54px;border:1px solid #d3def4;border-radius:8px;background:rgba(255,255,255,.74);color:#1047ff;font-size:11.6px;font-weight:700;cursor:pointer;}",
-    "chekin-vela .vela-chatbar{flex:none;height:50px;margin-top:10px;padding:7px 8px 7px 14px;border:1px solid #d4dff4;border-radius:11px;background:rgba(255,255,255,.82);",
+    "chekin-vela .vela-chatbar{position:relative;z-index:5;flex:none;height:50px;margin-top:10px;padding:7px 8px 7px 14px;border:1px solid #d4dff4;border-radius:11px;background:rgba(255,255,255,.82);",
     "  display:flex;align-items:center;gap:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 8px 20px rgba(23,42,96,.055);}",
     "chekin-vela .vela-chatbar input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font:inherit;font-size:12px;font-weight:400;color:#17245d;}",
     "chekin-vela .vela-chatbar input::placeholder{color:#6b6b95;}",
@@ -151,11 +156,45 @@
   class ChekinVela extends HTMLElement {
     static get observedAttributes() { return ['intro', 'reco-title', 'reco-subtitle', 'reco-icon']; }
     connectedCallback() { ensureFonts(); ensureCSS(); this.render(); }
+    disconnectedCallback() { this._teardownScrollHint(); }
     attributeChangedCallback() { if (this.isConnected) this.render(); }
     set items(v) { this._items = v; this._cache = v; if (this.isConnected) this.render(); }
     get items() { return this._cache || []; }
 
+    _teardownScrollHint() {
+      if (this._scrollEl && this._scrollHintUpdate) this._scrollEl.removeEventListener('scroll', this._scrollHintUpdate);
+      if (this._scrollHintObserver) this._scrollHintObserver.disconnect();
+      if (this._scrollHintResize) this._scrollHintResize.disconnect();
+      this._scrollEl = null;
+      this._scrollHintObserver = null;
+      this._scrollHintResize = null;
+      this._scrollHintUpdate = null;
+      this.classList.remove('has-scroll-below');
+    }
+
+    _setupScrollHint() {
+      var scroll = this.querySelector('.vela-scroll');
+      if (!scroll) return;
+      var host = this;
+      var update = function () {
+        var below = scroll.scrollHeight - scroll.clientHeight - scroll.scrollTop > 2;
+        host.classList.toggle('has-scroll-below', below);
+      };
+      this._scrollEl = scroll;
+      this._scrollHintUpdate = update;
+      scroll.addEventListener('scroll', update, { passive: true });
+      this._scrollHintObserver = new MutationObserver(update);
+      this._scrollHintObserver.observe(scroll, { childList: true, subtree: true, characterData: true });
+      if (window.ResizeObserver) {
+        this._scrollHintResize = new ResizeObserver(update);
+        this._scrollHintResize.observe(scroll);
+      }
+      requestAnimationFrame(update);
+      setTimeout(update, 80);
+    }
+
     render() {
+      this._teardownScrollHint();
       // Read JSON items the FIRST time we render — before innerHTML wipes the
       // <script> child. attributeChangedCallback can trigger render during the
       // element upgrade, ahead of connectedCallback, so cache here defensively.
@@ -184,6 +223,7 @@
             '<button class="send-btn" type="submit" aria-label="Send">' + SEND + '</button>' +
           '</form>' +
         '</div>';
+      this._setupScrollHint();
     }
   }
 
