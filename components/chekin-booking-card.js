@@ -90,7 +90,7 @@
   }
 
   var CSS = [
-    "chekin-booking-card{display:block;width:min(100%,920px);height:var(--booking-card-fixed-height,auto);aspect-ratio:2128/575;box-sizing:border-box;",
+    "chekin-booking-card{display:block;width:min(100%,920px);height:var(--booking-card-fixed-height,auto);aspect-ratio:2128/575;box-sizing:border-box;overflow:visible;",
     "  font-family:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;",
     "  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}",
     "chekin-booking-card *{box-sizing:border-box;}",
@@ -161,11 +161,12 @@
     var navy = digital
       ? '<radialGradient id="' + ids.navySoft + '" cx="50%" cy="45%" r="80%"><stop offset="0%" stop-color="#141955"/><stop offset="100%" stop-color="#09103E"/></radialGradient>'
       : '<radialGradient id="' + ids.navySoft + '" cx="820" cy="320" r="760" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#141955"/><stop offset="100%" stop-color="#09103E"/></radialGradient>';
+    var shadowBounds = 'x="-260" y="-180" width="7000" height="1080" filterUnits="userSpaceOnUse"';
     var stubFilter = separated
-      ? '<filter id="' + ids.stubShadow + '" x="1480" y="0" width="740" height="740" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="30" stdDeviation="22" flood-color="#12164C" flood-opacity="0.22"/></filter>'
+      ? '<filter id="' + ids.stubShadow + '" ' + shadowBounds + '><feDropShadow dx="0" dy="30" stdDeviation="22" flood-color="#12164C" flood-opacity="0.22"/></filter>'
       : digital
-        ? '<filter id="' + ids.stubShadow + '" x="1540" y="20" width="670" height="690" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="30" stdDeviation="22" flood-color="#12164C" flood-opacity="0.2"/></filter>'
-        : '<filter id="' + ids.stubShadow + '" x="1500" y="0" width="720" height="720" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="28" stdDeviation="22" flood-color="#12164C" flood-opacity="0.22"/></filter>';
+        ? '<filter id="' + ids.stubShadow + '" ' + shadowBounds + '><feDropShadow dx="0" dy="30" stdDeviation="22" flood-color="#12164C" flood-opacity="0.2"/></filter>'
+        : '<filter id="' + ids.stubShadow + '" ' + shadowBounds + '><feDropShadow dx="0" dy="28" stdDeviation="22" flood-color="#12164C" flood-opacity="0.22"/></filter>';
     var greenDefs = digital
       ? '<pattern id="' + ids.greenPerf + '" x="' + fmt(layout.greenPerfX) + '" y="' + greenPerfY + '" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="3.2" cy="3.2" r="3.2" fill="black"/></pattern>' +
         '<mask id="' + ids.greenMask + '" maskUnits="userSpaceOnUse"><rect width="6000" height="724" fill="black"/><path d="' + greenPath + '" fill="white"/><rect x="' + fmt(layout.greenPerfX) + '" y="' + greenPerfY + '" width="6.4" height="' + greenPerfH + '" fill="url(#' + ids.greenPerf + ')"/></mask>' +
@@ -174,7 +175,7 @@
 
     return '<defs>' +
       navy +
-      '<filter id="' + ids.mainShadow + '" x="0" y="0" width="1800" height="700" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="34" stdDeviation="28" flood-color="#12164C" flood-opacity="0.24"/></filter>' +
+      '<filter id="' + ids.mainShadow + '" ' + shadowBounds + '><feDropShadow dx="0" dy="34" stdDeviation="28" flood-color="#12164C" flood-opacity="0.24"/></filter>' +
       stubFilter +
       '<pattern id="' + ids.perf + '" x="' + fmt(layout.perfX) + '" y="' + perfY + '" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="3.2" cy="3.2" r="3.2" fill="black"/></pattern>' +
       '<mask id="' + ids.leftMask + '" maskUnits="userSpaceOnUse"><rect width="6000" height="724" fill="black"/><path d="' + leftPath + '" fill="white"/><rect x="' + fmt(layout.perfX) + '" y="' + perfY + '" width="6.4" height="' + perfH + '" fill="url(#' + ids.perf + ')"/></mask>' +
@@ -183,9 +184,32 @@
     '</defs>';
   }
 
+  function estimateNightsWidth(value) {
+    return Math.max(116, String(value || '').length * 13.5 + 22);
+  }
+
+  function shouldHideNights(data, layout) {
+    var cx = layout.contentDx;
+    var dx = layout.dx;
+    var leftLineLength = 611 + cx - 500;
+    var rightLineLength = 953 + dx - (842 + cx);
+    var nightsTextRight = 689 + cx + estimateNightsWidth(data.nights);
+    var checkoutDateLeft = 1019 + dx;
+
+    return leftLineLength < 20 || rightLineLength < 20 || nightsTextRight > checkoutDateLeft - 58;
+  }
+
   function leftContent(data, layout) {
     var dx = layout.dx;
     var cx = layout.contentDx;
+    var nightsGroup = shouldHideNights(data, layout)
+      ? ''
+      : '<g class="tk-nights">' +
+        '<line x1="500" y1="306" x2="' + fmt(611 + cx) + '" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
+        '<g transform="translate(' + fmt(637 + cx) + ' 290)" opacity="0.62"><path d="M29 18.4C25.3 22 20.4 24.2 15 24.2C6.7 24.2 0 17.5 0 9.2C0 4.5 2.2 0.4 5.6 -2.3C5 0 4.9 2.5 5.6 5C7.5 12.3 14.9 16.7 22.2 14.8C24.8 14.1 27.1 12.8 29 11V18.4Z" fill="none" stroke="white" stroke-width="2.4" stroke-linejoin="round"/></g>' +
+        '<text x="' + fmt(689 + cx) + '" y="317" fill="white" opacity="0.58" font-size="32" font-weight="580" letter-spacing="-0.7">' + esc(data.nights) + '</text>' +
+        '<line x1="' + fmt(842 + cx) + '" y1="306" x2="' + fmt(953 + dx) + '" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
+      '</g>';
 
     return '<g transform="translate(25 25)" font-family="Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">' +
       '<g transform="translate(130 139)" opacity="0.72">' +
@@ -196,10 +220,7 @@
       '<text x="124" y="315" fill="white" font-size="92" font-weight="900" letter-spacing="-4">' + esc(data.checkinDay) + '</text>' +
       '<text x="238" y="315" fill="white" font-size="43" font-weight="780" letter-spacing="-1.2">' + esc(data.checkinMonth) + '</text>' +
       '<text x="126" y="372" fill="white" opacity="0.58" font-size="31" font-weight="560" letter-spacing="-0.7">' + esc(data.checkinTime) + '</text>' +
-      '<line x1="500" y1="306" x2="' + fmt(611 + cx) + '" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
-      '<g transform="translate(' + fmt(637 + cx) + ' 290)" opacity="0.62"><path d="M29 18.4C25.3 22 20.4 24.2 15 24.2C6.7 24.2 0 17.5 0 9.2C0 4.5 2.2 0.4 5.6 -2.3C5 0 4.9 2.5 5.6 5C7.5 12.3 14.9 16.7 22.2 14.8C24.8 14.1 27.1 12.8 29 11V18.4Z" fill="none" stroke="white" stroke-width="2.4" stroke-linejoin="round"/></g>' +
-      '<text x="' + fmt(689 + cx) + '" y="317" fill="white" opacity="0.58" font-size="32" font-weight="580" letter-spacing="-0.7">' + esc(data.nights) + '</text>' +
-      '<line x1="' + fmt(842 + cx) + '" y1="306" x2="' + fmt(953 + dx) + '" y2="306" stroke="white" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="9 9"/>' +
+      nightsGroup +
       '<text x="' + fmt(1019 + dx) + '" y="315" fill="white" font-size="92" font-weight="900" letter-spacing="-4">' + esc(data.checkoutDay) + '</text>' +
       '<text x="' + fmt(1133 + dx) + '" y="315" fill="white" font-size="43" font-weight="780" letter-spacing="-1.2">' + esc(data.checkoutMonth) + '</text>' +
       '<text x="' + fmt(1030 + dx) + '" y="372" fill="white" opacity="0.58" font-size="31" font-weight="560" letter-spacing="-0.7">' + esc(data.checkoutTime) + '</text>' +
