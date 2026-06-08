@@ -52,8 +52,9 @@
     "  transition:transform .6s cubic-bezier(.22,.7,.25,1),opacity .5s ease;}",
     "chekin-booking-card .tk-gkey:hover .tk-halo{transform:scale(1);opacity:1;}",
     "chekin-booking-card .tk-gcard{pointer-events:auto;cursor:pointer;}",
-    "chekin-booking-card:hover .tk-lock{animation:booking-card-lock .45s ease-in-out;}",
-    "@keyframes booking-card-lock{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}55%{transform:translateX(3px)}80%{transform:translateX(-1px)}}"
+    "chekin-booking-card .ticket-svg[data-status=\"locked\"],chekin-booking-card .ticket-svg[data-status=\"separated\"]{cursor:pointer;}",
+    "chekin-booking-card .ticket-svg[data-status=\"locked\"]:hover .tk-lock,chekin-booking-card .ticket-svg[data-status=\"separated\"]:hover .tk-lock{animation:booking-card-lock .45s ease-in-out;}",
+    "@keyframes booking-card-lock{0%,100%{transform:rotate(0)}15%{transform:rotate(-8deg)}30%{transform:rotate(7deg)}45%{transform:rotate(-5deg)}60%{transform:rotate(3deg)}80%{transform:rotate(-1.5deg)}}"
   ].join('\n');
 
   function ensureCSS() {
