@@ -69,6 +69,8 @@
     "chekin-vela .rec-title{display:flex;align-items:center;gap:9px;margin-bottom:6px;font-size:13.2px;font-weight:700;}",
     "chekin-vela .rec-title svg{width:14px;height:14px;color:#1047ff;flex:none;}",
     "chekin-vela .rec-sub{margin:0 0 14px;padding-left:23px;font-size:11.8px;line-height:1.42;font-weight:500;color:#65709a;}",
+    "chekin-vela .vela-flat{margin:0 0 2px;}",
+    "chekin-vela .vela-flat .insight-top{margin-bottom:6px;}",
     "chekin-vela .insight-card{padding:11px;border:1px solid rgba(214,224,246,.74);border-radius:13px;background:rgba(255,255,255,.55);margin-bottom:10px;",
     "  box-shadow:inset 0 1px 0 rgba(255,255,255,.76),0 6px 16px rgba(23,42,96,.028);}",
     "chekin-vela .insight-top{display:flex;align-items:center;gap:7px;margin-bottom:8px;}",
@@ -135,7 +137,30 @@
     '</div>';
   }
 
-  function renderItem(it) {
+  // An item "carries a CTA" when it has its own button or an embedded action card.
+  function hasCTA(it) { return !!(it.button || it.action); }
+
+  // Flat / header style (like the reco header): inline icon + bold title + grey
+  // subtitle, no card box. Used by the `flat-text` mode for CTA-less items.
+  function flatItem(it) {
+    var title = it.strong || it.title || '';
+    var sub = it.text || it.subtitle || '';
+    if (typeof sub === 'string') sub = sub.trim();
+    var top = (it.chip || it.reason)
+      ? '<div class="insight-top">' +
+          (it.chip ? '<span class="insight-chip">' + esc(it.chip) + '</span>' : '') +
+          (it.reason ? '<span class="insight-reason">' + esc(it.reason) + '</span>' : '') +
+        '</div>'
+      : '';
+    var icon = (it.icon && IC[it.icon]) ? IC[it.icon] : IC.sparkle;
+    return '<div class="vela-flat">' + top +
+      '<div class="rec-title">' + icon + esc(title) + '</div>' +
+      (sub ? '<p class="rec-sub">' + esc(sub) + '</p>' : '') +
+    '</div>';
+  }
+
+  function renderItem(it, flat) {
+    if (flat && !hasCTA(it)) return flatItem(it);
     var isInsight = it.strong || it.text || it.chip || it.reason;
     if (!isInsight) return actionCard(it);
     var top = (it.chip || it.reason)
@@ -162,7 +187,7 @@
   }
 
   class ChekinVela extends HTMLElement {
-    static get observedAttributes() { return ['intro', 'reco-title', 'reco-subtitle', 'reco-icon']; }
+    static get observedAttributes() { return ['intro', 'reco-title', 'reco-subtitle', 'reco-icon', 'flat-text']; }
     connectedCallback() { ensureFonts(); ensureCSS(); this.render(); }
     disconnectedCallback() { this._teardownScrollHint(); }
     attributeChangedCallback() { if (this.isConnected) this.render(); }
@@ -209,12 +234,16 @@
       if (!Array.isArray(this._cache)) this._cache = readItems(this);
 
       var intro = this.getAttribute('intro') || 'I can help you with your stay — ask me anything.';
-      var recoTitle = this.getAttribute('reco-title') || 'Vela recommends';
+      // reco-title absent → default header; reco-title="" (explicit empty) → hide the reco header entirely.
+      var recoAttr = this.getAttribute('reco-title');
+      var recoTitle = recoAttr === null ? 'Vela recommends' : recoAttr;
+      var showReco = recoTitle !== '';
       var recoSub = this.getAttribute('reco-subtitle') || '';
       var recoIcon = this.getAttribute('reco-icon') || 'sparkle';
+      var flat = this.hasAttribute('flat-text');
       var items = this._cache || [];
 
-      var list = items.map(renderItem).join('');
+      var list = items.map(function (it) { return renderItem(it, flat); }).join('');
       this.innerHTML =
         '<div class="vela-inner">' +
           '<div class="vela-avatar">' + SPARK + '<span class="online-dot"></span></div>' +
@@ -222,8 +251,10 @@
           '<p class="vela-intro">' + esc(intro) + '</p>' +
           '<div class="vela-divider"></div>' +
           '<div class="vela-scroll">' +
-            '<div class="rec-title">' + (IC[recoIcon] || IC.sparkle) + esc(recoTitle) + '</div>' +
-            (recoSub ? '<p class="rec-sub">' + esc(recoSub) + '</p>' : '') +
+            (showReco
+              ? '<div class="rec-title">' + (IC[recoIcon] || IC.sparkle) + esc(recoTitle) + '</div>' +
+                (recoSub ? '<p class="rec-sub">' + esc(recoSub) + '</p>' : '')
+              : '') +
             list +
           '</div>' +
           '<form class="vela-chatbar" onsubmit="return false">' +
