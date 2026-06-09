@@ -127,6 +127,8 @@
     "chekin-vela .vela-sec::after{content:\"\";position:absolute;left:0;bottom:0;width:26px;height:2px;border-radius:2px;background:var(--tk,#385bf8);}",
     "chekin-vela .vela-sec.amber{--tk:#c98a16;}chekin-vela .vela-sec.green{--tk:#0f9f80;}chekin-vela .vela-sec.blue{--tk:#385bf8;}",
     "chekin-vela .vela-sec-sub{margin:-4px 0 13px;font-family:'Poppins',sans-serif;font-size:11.6px;line-height:1.45;font-weight:500;color:#65709a;}",
+    "chekin-vela .vela-sec.has-see{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;}",
+    "chekin-vela .vela-sec-see{font-size:10.5px;font-weight:800;letter-spacing:0;text-transform:none;color:#1047ff;cursor:pointer;white-space:nowrap;}",
 
     /* ===== Quick action capsule (B4.4) ===== */
     "chekin-vela .vela-cap{display:flex;align-items:center;gap:11px;min-height:48px;padding:0 12px 0 14px;border-radius:999px;cursor:pointer;transition:.15s;border:1px solid transparent;background:linear-gradient(90deg,rgba(56,91,248,.12),rgba(56,91,248,.03));margin-bottom:9px;}",
@@ -197,7 +199,7 @@
     "chekin-vela .vela-ctx .ctx-more{display:flex;align-items:center;gap:5px;margin-top:11px;padding:0;border:0;background:none;cursor:pointer;font:inherit;font-size:11.5px;font-weight:700;color:#1047ff;}chekin-vela .vela-ctx .ctx-more svg{width:14px;height:14px;stroke-width:2.4;}",
 
     /* ===== Sponsored banner (A, slim 75px, full-bleed, pinned bottom) ===== */
-    "chekin-vela .vela-banner{position:relative;flex:none;margin:14px -22px -24px -24px;height:75px;background-size:cover;background-position:center;overflow:hidden;}",
+    "chekin-vela .vela-banner{position:relative;z-index:6;flex:none;margin:14px -22px -24px -24px;height:75px;background-size:cover;background-position:center;overflow:hidden;}",
     "chekin-vela .vela-banner::after{content:\"\";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,90,80,.85) 4%,rgba(236,63,134,.7) 44%,rgba(123,63,240,.5));}",
     "chekin-vela .vela-banner .bn-in{position:absolute;inset:0;z-index:3;padding:0 14px 0 24px;display:flex;align-items:center;gap:11px;}",
     "chekin-vela .vela-banner .bn-mark{position:relative;width:20px;height:24px;flex:none;}chekin-vela .vela-banner .bn-mark i{position:absolute;bottom:0;width:11px;border-radius:7px 7px 3px 3px;}",
@@ -282,7 +284,8 @@
 
   function sectionItem(it) {
     var tone = it.tone === 'amber' ? ' amber' : it.tone === 'green' ? ' green' : ' blue';
-    return '<div class="vela-sec' + tone + '">' + esc(it.label || '') + '</div>' +
+    var see = it.see ? '<a class="vela-sec-see">' + esc(it.see) + '</a>' : '';
+    return '<div class="vela-sec' + tone + (it.see ? ' has-see' : '') + '"><span>' + esc(it.label || '') + '</span>' + see + '</div>' +
       (it.sub ? '<p class="vela-sec-sub">' + esc(it.sub) + '</p>' : '');
   }
   function capsuleItem(it) {
