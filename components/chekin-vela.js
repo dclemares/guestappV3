@@ -231,6 +231,16 @@
     "chekin-vela .vela-banner .bn-slide.ed:hover .bn-link svg{transform:translateX(5px);}",
     "chekin-vela .vela-banner .bn-slide.ed:hover .bn-star{animation:velaStarPop .55s cubic-bezier(.34,1.56,.64,1) forwards;}",
     "@keyframes velaStarPop{0%{transform:translateY(-50%) rotate(-6deg) scale(1);}45%{transform:translateY(-50%) rotate(6deg) scale(1.2);}72%{transform:translateY(-50%) rotate(-3deg) scale(1.06);}100%{transform:translateY(-50%) rotate(0deg) scale(1.12);}}",
+    "chekin-vela .vela-promo{position:relative;margin:34px 0 10px;border-radius:16px;padding:15px 16px 16px;color:#fff;overflow:visible;background:linear-gradient(122deg,#1047ff,#4f6bff 48%,#7b3ff0);box-shadow:0 16px 32px rgba(70,63,240,.34);cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;}",
+    "chekin-vela .vela-promo:hover{transform:translateY(-2px);box-shadow:0 22px 40px rgba(70,63,240,.42);}",
+    "chekin-vela .vela-promo .pr-kik{font-size:8.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;opacity:.92;}",
+    "chekin-vela .vela-promo h4{margin:5px 0 0;font-size:15px;font-weight:800;line-height:1.22;letter-spacing:-.01em;max-width:205px;}",
+    "chekin-vela .vela-promo .pr-cta{margin-top:12px;height:32px;padding:0 16px;border:0;border-radius:9px;background:#fff;color:#16183a;font:inherit;font-size:11.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}chekin-vela .vela-promo .pr-cta svg{width:13px;height:13px;stroke-width:2.4;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}",
+    "chekin-vela .vela-promo:hover .pr-cta svg{transform:translateX(4px);}",
+    "chekin-vela .vela-promo .pr-star{position:absolute;top:-22px;right:16px;z-index:7;width:64px;height:64px;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:9px;font-weight:900;line-height:1.05;filter:drop-shadow(0 10px 18px rgba(7,21,77,.34));transform:rotate(8deg);transform-origin:center;transition:transform .4s cubic-bezier(.34,1.56,.64,1);}",
+    "chekin-vela .vela-promo:hover .pr-star{transform:rotate(-2deg) scale(1.1);}",
+    "chekin-vela .vela-promo .pr-star::before{content:\"\";position:absolute;inset:0;background:#ff4c5c;clip-path:polygon(50% 0,61% 12%,76% 6%,79% 23%,95% 25%,90% 41%,100% 50%,90% 59%,95% 75%,79% 77%,76% 94%,61% 88%,50% 100%,39% 88%,24% 94%,21% 77%,5% 75%,10% 59%,0 50%,10% 41%,5% 25%,21% 23%,24% 6%,39% 12%);}",
+    "chekin-vela .vela-promo .pr-star span{position:relative;z-index:2;}",
 
     "@media (max-width:1279px){chekin-vela{display:none;}}"
   ].join('\n');
@@ -381,6 +391,16 @@
     return '<div class="vela-banner"' + (slides.length > 1 ? ' data-rotate="1"' : '') + '>' +
       slides.map(function (s, i) { return bannerSlide(s, i === 0); }).join('') + '</div>';
   }
+  function promoItem(it) {
+    var head = esc(it.headline || '').replace(/\n/g, '<br>');
+    var star = esc(it.sticker || '').replace(/\n/g, '<br>');
+    return '<div class="vela-promo">' +
+      (it.sticker ? '<span class="pr-star"><span>' + star + '</span></span>' : '') +
+      (it.kik ? '<span class="pr-kik">' + esc(it.kik) + '</span>' : '') +
+      '<h4>' + head + '</h4>' +
+      '<button class="pr-cta">' + esc(it.cta || 'Reservar') + ' ' + SEND + '</button>' +
+      '</div>';
+  }
   function guidebookItem(it) {
     return '<div class="vela-gb">' + (it.chapters || []).map(function (c) {
       return '<div class="vela-chap"><span class="gb-ic">' + icon(c.icon) + '</span>' +
@@ -388,7 +408,7 @@
         '<span class="gb-chev">' + CHEV + '</span></div>';
     }).join('') + '</div>';
   }
-  var TYPES = { section: sectionItem, capsule: capsuleItem, deal: couponItem, 'deals-carousel': carouselItem, 'deal-hero': heroItem, 'deal-contextual': contextualItem, banner: bannerItem, guidebook: guidebookItem };
+  var TYPES = { section: sectionItem, capsule: capsuleItem, deal: couponItem, 'deals-carousel': carouselItem, 'deal-hero': heroItem, 'deal-contextual': contextualItem, banner: bannerItem, guidebook: guidebookItem, promo: promoItem };
 
   function renderItem(it, flat) {
     if (it && it.type && TYPES[it.type]) return TYPES[it.type](it);
