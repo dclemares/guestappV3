@@ -901,13 +901,35 @@ html, body { height: 100%; margin: 0; }
 </script>
 <script id="chk-flow-hook">
 (function(){
-  if(!/[?&]flow=1/.test(location.search)) return;
+  if(!/[?&]flow=[12]/.test(location.search)) return;
   function hook(){
     var b=Array.from(document.querySelectorAll('button')).find(function(e){return e.textContent.trim()==='Start';});
     if(b && !b.__flow){ b.__flow=1; b.addEventListener('click',function(){ try{window.parent.postMessage('flow:to-summary','*');}catch(e){} }, true); }
   }
   if(document.readyState!=='loading'){hook();}else{document.addEventListener('DOMContentLoaded',hook);}
   setTimeout(hook,500); setTimeout(hook,1500); setTimeout(hook,3000);
+})();
+</script>
+<script id="chk-flow2-patch">
+(function(){
+  if(!/[?&]flow=2/.test(location.search)) return;
+  function leaf(text){ return Array.from(document.querySelectorAll('div,span,p,h1,h2,h3')).find(function(el){ return el.children.length===0 && (el.textContent||'').trim()===text; }); }
+  function patch(){
+    // Hide the whole "Tourist tax & deposit" STEP ROW (timeline node + card) so the journey collapses with no gap.
+    var gr=leaf('Guest registration');
+    var k3=leaf('Get your digital key') || leaf('Access your property');
+    if(gr && k3){
+      var anc=[]; var n=gr; while(n){ anc.push(n); n=n.parentElement; }
+      var lca=k3; while(lca && anc.indexOf(lca)===-1) lca=lca.parentElement;
+      if(lca){ var row=Array.prototype.slice.call(lca.children).find(function(c){ return /Tourist tax/.test(c.textContent||''); }); if(row){ row.style.display='none'; } }
+    }
+    // Rewrite the digital-key card copy.
+    var t=leaf('Get your digital key'); if(t){ t.textContent='Access your property'; }
+    var s=Array.from(document.querySelectorAll('div,span,p')).find(function(el){ return el.children.length===0 && /^Unlocks once/.test((el.textContent||'').trim()); });
+    if(s){ s.textContent='Complete check-in to unlock access to the property'; }
+  }
+  if(document.readyState!=='loading'){patch();}else{document.addEventListener('DOMContentLoaded',patch);}
+  setTimeout(patch,200); setTimeout(patch,800); setTimeout(patch,1800);
 })();
 </script>
 </body></html>

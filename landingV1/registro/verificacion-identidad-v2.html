@@ -697,6 +697,13 @@ var captureBody = document.getElementById('captureBody');
 
 /* ---- scenario params (Approach A): ?doc=passport|id|license · ?fail=front|back|selfie · ?selfie=0 ---- */
 var PARAMS = new URLSearchParams(location.search);
+var FLOW2 = /[?&]flow=2/.test(location.search);   // chained flow 2: end → external form screen
+/* In flow 2 the verification ends by handing off to the redesigned form screen
+   (form-redesign-5-boxed) via the parent controller; otherwise show the built-in form. */
+function goToForm(){
+  if(FLOW2){ try{ window.parent.postMessage('flow:to-form','*'); }catch(e){} return; }
+  show('form'); window.scrollTo(0,0); resizeSig();
+}
 var EU = ['ES','FR','DE','IT','PT','GB','NL','BE','IE','AT','SE','DK','FI','PL','GR'];
 var failParam = PARAMS.get('fail');                       // front|back|selfie
 var FAIL_KEY = failParam === 'selfie' ? 'face' : failParam;   // map to internal step key
@@ -960,7 +967,7 @@ function placeImage(){
 function capNextStep(){
   clearCapTimers();
   if(state.sub < state.steps.length - 1){ state.sub++; state.phase = 0; renderCapture(); }
-  else { show('form'); window.scrollTo(0,0); resizeSig(); }   // verification completed → form (inside the flow)
+  else { goToForm(); }   // verification completed → form (built-in, or external in flow 2)
 }
 
 /* ---- skip-verification modal ---- */
@@ -972,7 +979,7 @@ if(skipModal){
   document.getElementById('skipConfirm').addEventListener('click', function(){
     closeSkipModal();
     clearCapTimers();
-    show('form'); window.scrollTo(0,0); resizeSig();   // skip → land in the form
+    goToForm();   // skip → land in the form (built-in, or external in flow 2)
   });
   skipModal.addEventListener('click', function(e){ if(e.target === skipModal) closeSkipModal(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !skipModal.hidden) closeSkipModal(); });
