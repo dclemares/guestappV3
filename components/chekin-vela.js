@@ -63,6 +63,26 @@
     "chekin-vela .vela-badge{height:23px;padding:0 9px;border-radius:999px;display:inline-flex;align-items:center;",
     "  background:rgba(18,75,255,.075);color:#1047ff;font-size:11px;font-weight:700;}",
     "chekin-vela .vela-intro{margin:0 0 16px;max-width:280px;font-size:12.6px;line-height:1.5;font-weight:500;color:#48547f;}",
+    "chekin-vela .vela-heading{margin:2px 0 14px;}",
+    "chekin-vela .vela-heading b{display:block;font-size:19px;font-weight:800;letter-spacing:-.025em;color:#07154d;line-height:1.18;}",
+    "chekin-vela .vela-heading p{margin:6px 0 0;font-family:'Poppins',sans-serif;font-size:12.4px;line-height:1.5;font-weight:500;color:#48547f;}",
+    "chekin-vela .vela-gb{margin-bottom:6px;}",
+    "chekin-vela .vela-chap{position:relative;display:flex;align-items:center;gap:12px;padding:12px 12px;cursor:pointer;border-radius:12px;transition:background .2s ease,transform .2s cubic-bezier(.34,1.4,.5,1);}",
+    "chekin-vela .vela-chap::after{content:\"\";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:rgba(203,214,236,.82);transition:opacity .18s ease;}",
+    "chekin-vela .vela-chap:last-child::after{display:none;}",
+    "chekin-vela .vela-chap:hover{background:rgba(56,91,248,.06);}",
+    "chekin-vela .vela-chap:hover::after{opacity:0;}",
+    "chekin-vela .vela-chap:active{transform:scale(.99);}",
+    "chekin-vela .vela-chap .gb-ic{width:34px;height:34px;flex:none;border-radius:10px;background:rgba(56,91,248,.10);color:#14266f;display:flex;align-items:center;justify-content:center;transition:transform .22s cubic-bezier(.34,1.56,.64,1),background .2s ease,color .2s ease;}",
+    "chekin-vela .vela-chap .gb-ic svg{width:18px;height:18px;stroke-width:1.85;}",
+    "chekin-vela .vela-chap:hover .gb-ic{background:rgba(56,91,248,.18);color:#1047ff;transform:scale(1.08) rotate(-3deg);}",
+    "chekin-vela .vela-chap .gb-tx{flex:1;min-width:0;}",
+    "chekin-vela .vela-chap .gb-tx b{display:block;font-size:12.9px;font-weight:700;transition:color .18s ease,transform .2s ease;}",
+    "chekin-vela .vela-chap .gb-tx small{display:block;margin-top:1px;font-size:10.6px;color:#5a6695;}",
+    "chekin-vela .vela-chap:hover .gb-tx b{color:#1047ff;transform:translateX(2px);}",
+    "chekin-vela .vela-chap .gb-chev{width:18px;height:18px;flex:none;color:#8b95bd;opacity:.7;transition:transform .22s cubic-bezier(.34,1.56,.64,1),color .2s ease,opacity .2s ease;}",
+    "chekin-vela .vela-chap .gb-chev svg{width:18px;height:18px;stroke-width:2.2;}",
+    "chekin-vela .vela-chap:hover .gb-chev{transform:translateX(5px);color:#385bf8;opacity:1;}",
     "chekin-vela .vela-divider{height:1px;width:100%;margin:0 0 16px;background:rgba(203,214,236,.82);}",
     "chekin-vela .vela-scroll{position:relative;z-index:1;flex:1;min-height:0;overflow-y:auto;padding-right:4px;scrollbar-width:none;}",
     "chekin-vela .vela-scroll::-webkit-scrollbar{display:none;}",
@@ -215,7 +235,10 @@
     parking: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9.5 16V8h3.1a2.4 2.4 0 0 1 0 4.8H9.5"/></svg>',
     users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>',
     share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7 15.4 6.3M8.6 13.3l6.8 4.4"/></svg>',
-    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11.4v4.6"/><circle cx="12" cy="7.9" r="1" fill="currentColor" stroke="none"/></svg>'
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11.4v4.6"/><circle cx="12" cy="7.9" r="1" fill="currentColor" stroke="none"/></svg>',
+    wifi: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4.5 11a11 11 0 0 1 15 0M7.5 14.5a6.5 6.5 0 0 1 9 0"/><circle cx="12" cy="18.5" r="1.3" fill="currentColor" stroke="none"/></svg>',
+    home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>',
+    pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>'
   };
 
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
@@ -310,7 +333,14 @@
       '<span class="bn-right"><span class="bn-tag">' + esc(it.tag || 'Patrocinado') + '</span>' +
       '<button class="bn-cta">' + esc(it.cta || 'Ver planes') + '</button></span></div></div>';
   }
-  var TYPES = { section: sectionItem, capsule: capsuleItem, deal: couponItem, 'deals-carousel': carouselItem, 'deal-hero': heroItem, 'deal-contextual': contextualItem, banner: bannerItem };
+  function guidebookItem(it) {
+    return '<div class="vela-gb">' + (it.chapters || []).map(function (c) {
+      return '<div class="vela-chap"><span class="gb-ic">' + icon(c.icon) + '</span>' +
+        '<span class="gb-tx"><b>' + esc(c.title || '') + '</b>' + (c.sub ? '<small>' + esc(c.sub) + '</small>' : '') + '</span>' +
+        '<span class="gb-chev">' + CHEV + '</span></div>';
+    }).join('') + '</div>';
+  }
+  var TYPES = { section: sectionItem, capsule: capsuleItem, deal: couponItem, 'deals-carousel': carouselItem, 'deal-hero': heroItem, 'deal-contextual': contextualItem, banner: bannerItem, guidebook: guidebookItem };
 
   function renderItem(it, flat) {
     if (it && it.type && TYPES[it.type]) return TYPES[it.type](it);
@@ -341,7 +371,7 @@
   }
 
   class ChekinVela extends HTMLElement {
-    static get observedAttributes() { return ['intro', 'reco-title', 'reco-subtitle', 'reco-icon', 'flat-text']; }
+    static get observedAttributes() { return ['intro', 'reco-title', 'reco-subtitle', 'reco-icon', 'flat-text', 'hide-header', 'heading', 'heading-sub']; }
     connectedCallback() { ensureFonts(); ensureCSS(); this.render(); }
     disconnectedCallback() { this._teardownScrollHint(); }
     attributeChangedCallback() { if (this.isConnected) this.render(); }
@@ -411,6 +441,9 @@
       var recoSub = this.getAttribute('reco-subtitle') || '';
       var recoIcon = this.getAttribute('reco-icon') || 'sparkle';
       var flat = this.hasAttribute('flat-text');
+      var hideHeader = this.hasAttribute('hide-header');
+      var heading = this.getAttribute('heading') || '';
+      var headingSub = this.getAttribute('heading-sub') || '';
       var items = this._cache || [];
       // Sponsored banners render full-bleed OUTSIDE the scroll (pinned above the
       // chatbar) so they can reach the panel edges without the scroll clipping them.
@@ -425,9 +458,11 @@
       var bannerHTML = banners.map(bannerItem).join('');
       this.innerHTML =
         '<div class="vela-inner">' +
-          '<div class="vela-avatar">' + SPARK + '<span class="online-dot"></span></div>' +
-          '<div class="vela-title-row"><h2 class="vela-title">Vela</h2><span class="vela-badge">Your AI assistant</span></div>' +
-          '<p class="vela-intro">' + esc(intro) + '</p>' +
+          (hideHeader
+            ? (heading ? '<div class="vela-heading"><b>' + esc(heading) + '</b>' + (headingSub ? '<p>' + esc(headingSub) + '</p>' : '') + '</div>' : '')
+            : '<div class="vela-avatar">' + SPARK + '<span class="online-dot"></span></div>' +
+              '<div class="vela-title-row"><h2 class="vela-title">Vela</h2><span class="vela-badge">Your AI assistant</span></div>' +
+              '<p class="vela-intro">' + esc(intro) + '</p>') +
           (showDivider ? '<div class="vela-divider"></div>' : '') +
           '<div class="vela-scroll">' +
             (showReco

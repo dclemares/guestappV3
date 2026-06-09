@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Guidebooks · Chapter list (hover)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{ --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68; --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82); }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:48px 30px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:760px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:28px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:13.5px; color:var(--grey); }
+  .wrap{ max-width:760px; margin:0 auto; display:flex; gap:30px; align-items:flex-start; flex-wrap:wrap; }
+
+  .vela{ width:372px; position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8); box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .va{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%; background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; }
+  .va svg{ width:22px; height:22px; color:#fff; }
+  .vtr{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:12px; }
+  .vt{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .vb{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center; background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .vd{ height:1px; width:100%; margin:0 0 13px; background:var(--line); }
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 12px; font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--blue); }
+  .sub-ctx{ margin:-4px 0 12px; font-family:'Poppins',sans-serif; font-size:11.6px; line-height:1.45; font-weight:500; color:var(--grey); }
+
+  /* ===== Chapter list with hover animations ===== */
+  .chap{ position:relative; display:flex; align-items:center; gap:12px; padding:12px 12px; cursor:pointer; border-radius:12px;
+    transition:background .2s ease, transform .2s cubic-bezier(.34,1.4,.5,1); }
+  .chap::after{ content:''; position:absolute; left:12px; right:12px; bottom:0; height:1px; background:var(--line); transition:opacity .18s ease; }
+  .chap:last-child::after{ display:none; }
+  .chap:hover{ background:rgba(56,91,248,.06); }
+  .chap:hover::after{ opacity:0; }
+  .chap:active{ transform:scale(.99); }
+
+  .ic{ width:34px; height:34px; flex:none; border-radius:10px; background:rgba(56,91,248,.10); color:#14266f;
+    display:flex; align-items:center; justify-content:center; transition:transform .22s cubic-bezier(.34,1.56,.64,1), background .2s ease, color .2s ease; }
+  .ic svg{ width:18px; height:18px; stroke-width:1.85; transition:transform .22s ease; }
+  .chap:hover .ic{ background:rgba(56,91,248,.18); color:var(--blue-deep); transform:scale(1.08) rotate(-3deg); }
+
+  .tx{ flex:1; min-width:0; }
+  .tx b{ display:block; font-size:12.9px; font-weight:700; transition:color .18s ease, transform .2s ease; }
+  .tx small{ display:block; margin-top:1px; font-size:10.6px; color:#5a6695; }
+  .chap:hover .tx b{ color:var(--blue-deep); transform:translateX(2px); }
+
+  .chev{ width:18px; height:18px; flex:none; color:var(--grey-soft); transition:transform .22s cubic-bezier(.34,1.56,.64,1), color .2s ease, opacity .2s ease; opacity:.7; }
+  .chev svg{ width:18px; height:18px; stroke-width:2.2; }
+  .chap:hover .chev{ transform:translateX(5px); color:var(--blue); opacity:1; }
+
+  /* gentle staggered entrance */
+  @keyframes chapIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+  .chap{ animation:chapIn .4s ease both; }
+  .chap:nth-child(2){ animation-delay:.05s; } .chap:nth-child(3){ animation-delay:.1s; }
+  .chap:nth-child(4){ animation-delay:.15s; } .chap:nth-child(5){ animation-delay:.2s; }
+
+  .hint{ margin:22px auto 0; max-width:372px; font-family:'Poppins',sans-serif; font-size:12px; color:var(--grey); }
+  .hint b{ color:var(--navy); }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · guidebook</div>
+    <h1>Option A — chapter list with hover</h1>
+    <p>Hover the chapters: the row highlights, the icon scales and deepens, the title shifts to blue and the chevron slides right.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="vela">
+      <div class="va"></div>
+      <div class="vtr"><h2 class="vt">Vela</h2><span class="vb">Your AI assistant</span></div>
+      <div class="vd"></div>
+      <div class="eye">Guidebook</div>
+      <p class="sub-ctx">Everything about the property, in one place.</p>
+      <div id="list"></div>
+    </div>
+    <div class="hint">Prueba: <b>pasa el ratón</b> por cada capítulo para ver la animación (fila, icono, título y chevron).</div>
+  </div>
+
+<script>
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+  document.querySelector('.va').innerHTML=SPARK;
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 6 6 6-6 6"/></svg>';
+  var WIFI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4.5 11a11 11 0 0 1 15 0M7.5 14.5a6.5 6.5 0 0 1 9 0"/><circle cx="12" cy="18.5" r="1.3" fill="currentColor" stroke="none"/></svg>';
+  var DOC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>';
+  var HOME='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>';
+  var PIN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>';
+
+  var chaps=[
+    {ic:WIFI,t:'Wi-Fi & access',s:'Network, password, door code'},
+    {ic:DOC,t:'House rules',s:'Quiet hours, smoking, pets'},
+    {ic:HOME,t:'Home & appliances',s:'A/C, kitchen, washer'},
+    {ic:PIN,t:'The area',s:'Restaurants, beach, transport'}
+  ];
+  document.getElementById('list').innerHTML = chaps.map(function(c){
+    return '<div class="chap"><span class="ic">'+c.ic+'</span><span class="tx"><b>'+c.t+'</b><small>'+c.s+'</small></span><span class="chev">'+CHEV+'</span></div>';
+  }).join('');
+</script>
+</body>
+</html>

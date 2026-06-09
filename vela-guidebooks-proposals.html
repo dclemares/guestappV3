@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Guidebooks proposals</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{ --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --ink:#303b68; --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82); --green:#0f9f80; --amber:#c98a16; }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:34px 30px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+      linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1700px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+  .grid{ display:flex; gap:24px; flex-wrap:wrap; max-width:1700px; margin:0 auto; align-items:flex-start; }
+  .col{ width:372px; }
+  .col > .label{ display:block; margin:0 0 12px; font-size:12.5px; font-weight:800; color:var(--navy); }
+  .col > .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .col > .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800; background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+
+  .vela{ position:relative; border-radius:20px; padding:16px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.8); box-shadow:0 18px 44px rgba(22,40,90,.12); backdrop-filter:blur(8px); }
+  .va{ position:absolute; top:15px; left:16px; width:38px; height:38px; border-radius:50%; background:linear-gradient(145deg,#1047ff,#5d7cff); display:flex; align-items:center; justify-content:center; }
+  .va svg{ width:22px; height:22px; color:#fff; }
+  .vtr{ display:flex; align-items:center; gap:9px; min-height:38px; padding-left:48px; margin-bottom:12px; }
+  .vt{ margin:0; font-size:18px; font-weight:700; letter-spacing:-.035em; }
+  .vb{ height:21px; padding:0 8px; border-radius:999px; display:inline-flex; align-items:center; background:rgba(18,75,255,.075); color:var(--blue-deep); font-size:10px; font-weight:700; }
+  .vd{ height:1px; width:100%; margin:0 0 13px; background:var(--line); }
+  .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 12px; font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+  .eye::before{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+  .eye::after{ content:''; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--blue); }
+  .sub-ctx{ margin:-4px 0 13px; font-family:'Poppins',sans-serif; font-size:11.6px; line-height:1.45; font-weight:500; color:var(--grey); }
+
+  /* ===== A · Chapter list ===== */
+  .gbA .chap{ display:flex; align-items:center; gap:11px; padding:11px 2px; cursor:pointer; }
+  .gbA .chap + .chap{ border-top:1px solid var(--line); }
+  .gbA .ic{ width:32px; height:32px; flex:none; border-radius:9px; background:rgba(56,91,248,.10); color:#14266f; display:flex; align-items:center; justify-content:center; }
+  .gbA .ic svg{ width:17px; height:17px; stroke-width:1.85; }
+  .gbA .tx{ flex:1; min-width:0; } .gbA .tx b{ display:block; font-size:12.8px; font-weight:700; } .gbA .tx small{ display:block; margin-top:1px; font-size:10.6px; color:#5a6695; }
+  .gbA .chev{ width:18px; height:18px; flex:none; color:var(--grey-soft); } .gbA .chev svg{ width:18px; height:18px; stroke-width:2.2; }
+
+  /* ===== B · Featured cover + quick chips ===== */
+  .gbB .hero{ position:relative; height:128px; border-radius:16px; overflow:hidden; background-size:cover; background-position:center; box-shadow:0 10px 24px rgba(23,42,96,.16); margin-bottom:12px; }
+  .gbB .hero::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,21,77,.05) 35%, rgba(7,21,77,.62)); }
+  .gbB .glass{ position:absolute; left:11px; right:11px; bottom:11px; z-index:3; display:flex; align-items:center; gap:10px; padding:10px 10px 10px 13px; border-radius:14px; -webkit-backdrop-filter:blur(11px); backdrop-filter:blur(11px); background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.85); }
+  .gbB .glass .tb{ flex:1; min-width:0; } .gbB .glass .tb b{ display:block; font-size:13.5px; font-weight:800; } .gbB .glass .tb small{ display:block; font-size:10.4px; color:#5a6695; }
+  .gbB .glass .open{ height:30px; padding:0 15px; border:0; border-radius:9px; background:var(--blue); color:#fff; font:inherit; font-size:11.4px; font-weight:800; cursor:pointer; }
+  .gbB .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .gbB .chip{ display:inline-flex; align-items:center; gap:6px; height:31px; padding:0 12px 0 10px; border-radius:999px; border:1px solid rgba(56,91,248,.22); background:rgba(255,255,255,.7); color:var(--blue-deep); font-size:11.4px; font-weight:700; cursor:pointer; }
+  .gbB .chip svg{ width:14px; height:14px; stroke-width:2; }
+
+  /* ===== C · Key info surfaced ===== */
+  .gbC .info{ display:flex; align-items:center; gap:11px; padding:11px 12px; border:1px solid rgba(214,224,246,.8); border-radius:13px; background:rgba(255,255,255,.6); margin-bottom:9px; }
+  .gbC .ic{ width:32px; height:32px; flex:none; border-radius:9px; background:rgba(56,91,248,.10); color:#14266f; display:flex; align-items:center; justify-content:center; } .gbC .ic svg{ width:17px; height:17px; stroke-width:1.9; }
+  .gbC .tx{ flex:1; min-width:0; } .gbC .tx small{ display:block; font-size:9.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--grey-soft); }
+  .gbC .tx b{ display:block; margin-top:2px; font-size:13.5px; font-weight:800; letter-spacing:-.01em; }
+  .gbC .tx .mono{ font-family:'Poppins',sans-serif; }
+  .gbC .copy{ width:30px; height:30px; flex:none; border-radius:8px; border:1px solid #d3def4; background:rgba(255,255,255,.8); color:var(--blue-deep); display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .gbC .copy svg{ width:15px; height:15px; stroke-width:1.9; }
+  .gbC .more{ display:flex; align-items:center; gap:5px; margin-top:4px; padding:0; border:0; background:none; cursor:pointer; font:inherit; font-size:11.5px; font-weight:700; color:var(--blue-deep); } .gbC .more svg{ width:14px; height:14px; stroke-width:2.4; }
+
+  /* ===== D · Topic carousel ===== */
+  .gbD .rail{ display:flex; gap:11px; overflow-x:auto; padding:2px 2px 6px; scrollbar-width:none; }
+  .gbD .rail::-webkit-scrollbar{ display:none; }
+  .gbD .tcard{ flex:0 0 122px; border-radius:15px; overflow:hidden; background:#fff; box-shadow:0 6px 16px rgba(23,42,96,.1); cursor:pointer; }
+  .gbD .timg{ position:relative; height:88px; background-size:cover; background-position:center; }
+  .gbD .timg::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,21,77,0) 45%, rgba(7,21,77,.45)); }
+  .gbD .tic{ position:absolute; top:8px; left:8px; width:24px; height:24px; border-radius:7px; background:rgba(255,255,255,.92); color:var(--blue-deep); display:flex; align-items:center; justify-content:center; } .gbD .tic svg{ width:14px; height:14px; stroke-width:2; }
+  .gbD .tcard .tt{ padding:9px 10px 11px; } .gbD .tcard .tt b{ display:block; font-size:12px; font-weight:700; } .gbD .tcard .tt small{ display:block; margin-top:1px; font-size:9.8px; color:#5a6695; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · guidebooks</div>
+    <h1>Guidebooks — ways to show them in Vela</h1>
+    <p>From a chapter list to surfacing the most-asked answers directly. Pick one (or mix) and I’ll build it into the chekin-vela component like the deals.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+
+<script>
+  var SPARK='<svg viewBox="0 0 32 32" fill="none"><path fill="currentColor" d="M16 2.8c1.18 7.05 5.7 11.6 12.76 12.76C21.7 16.74 17.18 21.27 16 28.32 14.82 21.27 10.3 16.74 3.24 15.56 10.3 14.4 14.82 9.85 16 2.8Z"/></svg>';
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 6 6 6-6 6"/></svg>';
+  var WIFI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4.5 11a11 11 0 0 1 15 0M7.5 14.5a6.5 6.5 0 0 1 9 0"/><circle cx="12" cy="18.5" r="1.3" fill="currentColor" stroke="none"/></svg>';
+  var DOC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>';
+  var HOME='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>';
+  var PIN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>';
+  var KEY='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="8" cy="9" r="4"/><path d="m11.2 11.2 8 8M16 16l2.2-2.2M18.5 18.5l2.2-2.2"/></svg>';
+  var CLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+  var COPY='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+  var IMG={ room:'landingV1/assets/deals/room.jpg', beach:'landingV1/assets/deals/beach.jpg', hab:'landingV1/registro/assets/habitacion.jpg', mesa:'landingV1/registro/assets/mesa.jpg' };
+
+  function panel(inner){
+    return '<div class="vela"><div class="va">'+SPARK+'</div><div class="vtr"><h2 class="vt">Vela</h2><span class="vb">Your AI assistant</span></div><div class="vd"></div>'+inner+'</div>';
+  }
+
+  // A — chapter list
+  var chaps=[
+    {ic:WIFI,t:'Wi-Fi & access',s:'Network, password, door code'},
+    {ic:DOC,t:'House rules',s:'Quiet hours, smoking, pets'},
+    {ic:HOME,t:'Home & appliances',s:'A/C, kitchen, washer'},
+    {ic:PIN,t:'The area',s:'Restaurants, beach, transport'}
+  ];
+  var A = panel('<div class="gbA"><div class="eye">Guidebook</div><p class="sub-ctx">Everything about the property, in one place.</p>'+
+    chaps.map(function(c){ return '<div class="chap"><span class="ic">'+c.ic+'</span><span class="tx"><b>'+c.t+'</b><small>'+c.s+'</small></span><span class="chev">'+CHEV+'</span></div>'; }).join('')+'</div>');
+
+  // B — featured cover + chips
+  var B = panel('<div class="gbB"><div class="eye">Guidebook</div>'+
+    '<div class="hero" style="background-image:url('+IMG.room+')"><div class="glass"><span class="tb"><b>Casa del Mar guidebook</b><small>12 chapters · house rules, wifi, area</small></span><button class="open">Open</button></div></div>'+
+    '<div class="chips"><span class="chip">'+WIFI+'Wi-Fi</span><span class="chip">'+KEY+'Door code</span><span class="chip">'+CLOCK+'Check-out</span><span class="chip">'+PIN+'The area</span></div></div>');
+
+  // C — key info surfaced
+  var C = panel('<div class="gbC"><div class="eye">Good to know</div><p class="sub-ctx">The answers guests ask for most — straight from the guidebook.</p>'+
+    '<div class="info"><span class="ic">'+WIFI+'</span><span class="tx"><small>Wi-Fi · CasaDelMar_5G</small><b class="mono">marbella-2026</b></span><button class="copy">'+COPY+'</button></div>'+
+    '<div class="info"><span class="ic">'+KEY+'</span><span class="tx"><small>Building door code</small><b class="mono">4417#</b></span><button class="copy">'+COPY+'</button></div>'+
+    '<div class="info"><span class="ic">'+CLOCK+'</span><span class="tx"><small>Check-out</small><b>Before 11:00</b></span></div>'+
+    '<button class="more">Open full guidebook '+CHEV+'</button></div>');
+
+  // D — topic carousel
+  var topics=[
+    {img:IMG.hab,ic:HOME,t:'Welcome',s:'Getting in'},
+    {img:IMG.room,ic:DOC,t:'House rules',s:'The basics'},
+    {img:IMG.mesa,ic:KEY,t:'Appliances',s:'How it works'},
+    {img:IMG.beach,ic:PIN,t:'The area',s:'What to do'}
+  ];
+  var D = panel('<div class="gbD"><div class="eye">Guidebook</div><p class="sub-ctx">Browse the property guide by topic.</p>'+
+    '<div class="rail">'+topics.map(function(t){ return '<div class="tcard"><div class="timg" style="background-image:url('+t.img+')"><span class="tic">'+t.ic+'</span></div><div class="tt"><b>'+t.t+'</b><small>'+t.s+'</small></div></div>'; }).join('')+'</div></div>');
+
+  var cols=[
+    {tag:'A', name:'Chapter list', desc:'A tidy table of contents — icon + chapter + hint + chevron. Tap to open each section.', html:A},
+    {tag:'B', name:'Featured cover + chips', desc:'A cover hero with “Open”, plus quick-access chips for the most-used info.', html:B},
+    {tag:'C', name:'Key info surfaced', desc:'Vela surfaces the answers directly: Wi-Fi, door code, check-out — with copy. + full guidebook.', html:C},
+    {tag:'D', name:'Topic carousel', desc:'Swipeable photo cards per topic (Welcome, Rules, Appliances, The area).', html:D}
+  ];
+  document.getElementById('grid').innerHTML = cols.map(function(c){
+    return '<div class="col"><span class="tag">Option '+c.tag+'</span><div class="label">'+c.name+'<small>'+c.desc+'</small></div>'+c.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>

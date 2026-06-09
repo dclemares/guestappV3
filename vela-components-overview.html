@@ -135,6 +135,20 @@
   .c7 .bn-tag{ height:15px; display:inline-flex; align-items:center; padding:0 8px; border-radius:999px; font-size:7.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; background:rgba(255,255,255,.26); color:#fff; backdrop-filter:blur(4px); }
   .c7 .bn-cta{ height:30px; padding:0 14px; border:0; border-radius:9px; background:#fff; color:#16183a; font:inherit; font-size:11px; font-weight:800; cursor:pointer; }
 
+  /* ===== 9 · Guidebook · chapter list (hover) ===== */
+  .c9 .chap{ position:relative; display:flex; align-items:center; gap:12px; padding:12px 12px; cursor:pointer; border-radius:12px; transition:background .2s ease; }
+  .c9 .chap::after{ content:''; position:absolute; left:12px; right:12px; bottom:0; height:1px; background:var(--line); transition:opacity .18s ease; }
+  .c9 .chap:last-child::after{ display:none; }
+  .c9 .chap:hover{ background:rgba(56,91,248,.06); } .c9 .chap:hover::after{ opacity:0; }
+  .c9 .gb-ic{ width:34px; height:34px; flex:none; border-radius:10px; background:rgba(56,91,248,.10); color:#14266f; display:flex; align-items:center; justify-content:center; transition:transform .22s cubic-bezier(.34,1.56,.64,1), background .2s, color .2s; }
+  .c9 .gb-ic svg{ width:18px; height:18px; stroke-width:1.85; }
+  .c9 .chap:hover .gb-ic{ background:rgba(56,91,248,.18); color:var(--blue-deep); transform:scale(1.08) rotate(-3deg); }
+  .c9 .gb-tx{ flex:1; min-width:0; } .c9 .gb-tx b{ display:block; font-size:12.9px; font-weight:700; transition:color .18s, transform .2s; } .c9 .gb-tx small{ display:block; margin-top:1px; font-size:10.6px; color:#5a6695; }
+  .c9 .chap:hover .gb-tx b{ color:var(--blue-deep); transform:translateX(2px); }
+  .c9 .gb-chev{ width:18px; height:18px; flex:none; color:var(--grey-soft); opacity:.7; transition:transform .22s cubic-bezier(.34,1.56,.64,1), color .2s, opacity .2s; }
+  .c9 .gb-chev svg{ width:18px; height:18px; stroke-width:2.2; }
+  .c9 .chap:hover .gb-chev{ transform:translateX(5px); color:var(--blue); opacity:1; }
+
   /* ===== 8 · Ask Vela · chat input ===== */
   .c8 .vela-chatbar{ height:50px; padding:7px 8px 7px 14px; border:1px solid #d4dff4; border-radius:11px; background:rgba(255,255,255,.82); display:flex; align-items:center; gap:10px; box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 8px 20px rgba(23,42,96,.055); }
   .c8 .vela-chatbar input{ flex:1; min-width:0; height:100%; border:0; outline:0; background:transparent; font:inherit; font-size:12px; color:#17245d; }
@@ -218,6 +232,16 @@
   var c8 = panel('c8',
     '<form class="vela-chatbar" onsubmit="return false"><input type="text" placeholder="Ask Vela anything…"><button class="send-btn" type="submit" aria-label="Send">'+ARROW+'</button></form>');
 
+  // 9 — Guidebook · chapter list (hover)
+  var WIFI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4.5 11a11 11 0 0 1 15 0M7.5 14.5a6.5 6.5 0 0 1 9 0"/><circle cx="12" cy="18.5" r="1.3" fill="currentColor" stroke="none"/></svg>';
+  var HOME='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>';
+  var PIN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>';
+  var DOC2='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>';
+  var GBCH=[{ic:WIFI,t:'Wi-Fi & access',s:'Network, password, door code'},{ic:DOC2,t:'House rules',s:'Quiet hours, smoking, pets'},{ic:HOME,t:'Home & appliances',s:'A/C, kitchen, washer'},{ic:PIN,t:'The area',s:'Restaurants, beach, transport'}];
+  var c9 = panel('c9',
+    '<div class="eye">Guidebook</div><p class="sub-ctx">Everything about the property, in one place.</p>'+
+    GBCH.map(function(c){ return '<div class="chap"><span class="gb-ic">'+c.ic+'</span><span class="gb-tx"><b>'+c.t+'</b><small>'+c.s+'</small></span><span class="gb-chev">'+CHEV+'</span></div>'; }).join(''));
+
   var items=[
     {n:'1', name:'Section headers (Option 3)', desc:'Eyebrow + hairline rule + coloured left tick. Shown with the Progress and Good-to-know sections (info icon + 1/6 count).', html:c1},
     {n:'2', name:'Quick actions · capsule B4.4', desc:'Soft left-to-right blue gradient capsule, plain icon + bare chevron (V4).', html:c2},
@@ -226,7 +250,8 @@
     {n:'5', name:'Deals carousel · 3b★2', desc:'Duotone photo cards + price coin (→ Add on hover), peek, edge fade, dots, snap.', html:c5},
     {n:'6', name:'Deals hero · 4a★1·B', desc:'Photo hero with a light frosted-glass info card (title, old/new price, Add).', html:c6},
     {n:'7', name:'Sponsored banner · A (slim)', desc:'Slim 75px full-bleed ad slot pinned at the bottom of the panel, Airalo gradient over the photo, “Patrocinado” marker.', html:c7},
-    {n:'8', name:'Ask Vela · chat input', desc:'The conversational input bar. Lives here as a component — removed from the live screens.', html:c8}
+    {n:'8', name:'Ask Vela · chat input', desc:'The conversational input bar. Lives here as a component — removed from the live screens.', html:c8},
+    {n:'9', name:'Guidebook · chapter list', desc:'Property guide as a tappable chapter list (icon + title + hint + chevron) with hover animations.', html:c9}
   ];
   document.getElementById('grid').innerHTML = items.map(function(it){
     return '<div class="col"><div class="clabel"><span class="cnum">'+it.n+'</span><span class="cname">'+it.name+'</span></div><p class="cdesc">'+it.desc+'</p>'+it.html+'</div>';
