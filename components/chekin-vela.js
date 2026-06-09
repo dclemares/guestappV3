@@ -64,7 +64,7 @@
     "  background:rgba(18,75,255,.075);color:#1047ff;font-size:11px;font-weight:700;}",
     "chekin-vela .vela-intro{margin:0 0 16px;max-width:280px;font-size:12.6px;line-height:1.5;font-weight:500;color:#48547f;}",
     "chekin-vela .vela-divider{height:1px;width:100%;margin:0 0 16px;background:rgba(203,214,236,.82);}",
-    "chekin-vela .vela-scroll{position:relative;z-index:1;flex:1;min-height:0;overflow-y:auto;overflow-x:clip;overflow-clip-margin:30px;padding-right:4px;scrollbar-width:none;}",
+    "chekin-vela .vela-scroll{position:relative;z-index:1;flex:1;min-height:0;overflow-y:auto;padding-right:4px;scrollbar-width:none;}",
     "chekin-vela .vela-scroll::-webkit-scrollbar{display:none;}",
     "chekin-vela .rec-title{display:flex;align-items:center;gap:9px;margin-bottom:6px;font-size:13.2px;font-weight:700;}",
     "chekin-vela .rec-title svg{width:14px;height:14px;color:#1047ff;flex:none;}",
@@ -174,7 +174,7 @@
     "chekin-vela .vela-ctx .ctx-more{display:flex;align-items:center;gap:5px;margin-top:11px;padding:0;border:0;background:none;cursor:pointer;font:inherit;font-size:11.5px;font-weight:700;color:#1047ff;}chekin-vela .vela-ctx .ctx-more svg{width:14px;height:14px;stroke-width:2.4;}",
 
     /* ===== Sponsored banner (A, full-bleed) ===== */
-    "chekin-vela .vela-banner{position:relative;margin:4px -26px 12px -24px;height:124px;background-size:cover;background-position:center;overflow:hidden;}",
+    "chekin-vela .vela-banner{position:relative;flex:none;margin:14px -22px 0 -24px;height:124px;background-size:cover;background-position:center;overflow:hidden;}",
     "chekin-vela .vela-banner::after{content:\"\";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,90,80,.82) 6%,rgba(236,63,134,.66) 46%,rgba(123,63,240,.42));}",
     "chekin-vela .vela-banner .bn-tag{position:absolute;z-index:6;top:11px;right:14px;height:17px;display:inline-flex;align-items:center;padding:0 7px;border-radius:999px;font-size:8px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;background:rgba(255,255,255,.26);color:#fff;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}",
     "chekin-vela .vela-banner .bn-in{position:absolute;inset:0;z-index:3;padding:13px 24px;display:flex;flex-direction:column;}",
@@ -408,12 +408,17 @@
       var recoIcon = this.getAttribute('reco-icon') || 'sparkle';
       var flat = this.hasAttribute('flat-text');
       var items = this._cache || [];
+      // Sponsored banners render full-bleed OUTSIDE the scroll (pinned above the
+      // chatbar) so they can reach the panel edges without the scroll clipping them.
+      var banners = [], rest = [];
+      items.forEach(function (it) { (it && it.type === 'banner' ? banners : rest).push(it); });
       // Avoid a double rule: when the content opens with a section header (and
       // there is no reco header), the section's own hairline replaces the divider.
-      var firstIsSection = items[0] && items[0].type === 'section';
+      var firstIsSection = rest[0] && rest[0].type === 'section';
       var showDivider = showReco || !firstIsSection;
 
-      var list = items.map(function (it) { return renderItem(it, flat); }).join('');
+      var list = rest.map(function (it) { return renderItem(it, flat); }).join('');
+      var bannerHTML = banners.map(bannerItem).join('');
       this.innerHTML =
         '<div class="vela-inner">' +
           '<div class="vela-avatar">' + SPARK + '<span class="online-dot"></span></div>' +
@@ -427,6 +432,7 @@
               : '') +
             list +
           '</div>' +
+          bannerHTML +
           '<form class="vela-chatbar" onsubmit="return false">' +
             '<input type="text" placeholder="Ask Vela anything…">' +
             '<button class="send-btn" type="submit" aria-label="Send">' + SEND + '</button>' +
