@@ -104,6 +104,7 @@
     "chekin-vela .vela-sec::before{content:\"\";position:absolute;left:0;right:0;bottom:0;height:1px;background:rgba(203,214,236,.82);}",
     "chekin-vela .vela-sec::after{content:\"\";position:absolute;left:0;bottom:0;width:26px;height:2px;border-radius:2px;background:var(--tk,#385bf8);}",
     "chekin-vela .vela-sec.amber{--tk:#c98a16;}chekin-vela .vela-sec.green{--tk:#0f9f80;}chekin-vela .vela-sec.blue{--tk:#385bf8;}",
+    "chekin-vela .vela-sec-sub{margin:-4px 0 13px;font-family:'Poppins',sans-serif;font-size:11.6px;line-height:1.45;font-weight:500;color:#65709a;}",
 
     /* ===== Quick action capsule (B4.4) ===== */
     "chekin-vela .vela-cap{display:flex;align-items:center;gap:11px;min-height:48px;padding:0 12px 0 14px;border-radius:999px;cursor:pointer;transition:.15s;border:1px solid transparent;background:linear-gradient(90deg,rgba(56,91,248,.12),rgba(56,91,248,.03));margin-bottom:9px;}",
@@ -130,7 +131,7 @@
     "chekin-vela .vela-carwrap.atEnd::after{opacity:0;}",
     "chekin-vela .vela-car{display:flex;gap:12px;overflow-x:auto;overflow-y:visible;padding:8px 2px 30px;scroll-snap-type:x mandatory;scrollbar-width:none;}",
     "chekin-vela .vela-car::-webkit-scrollbar{display:none;}",
-    "chekin-vela .vela-dc{position:relative;scroll-snap-align:start;flex:0 0 134px;border-radius:16px;overflow:visible;background:#fff;box-shadow:0 7px 16px rgba(23,42,96,.12);}",
+    "chekin-vela .vela-dc{position:relative;scroll-snap-align:start;flex:0 0 148px;border-radius:16px;overflow:visible;background:#fff;box-shadow:0 7px 16px rgba(23,42,96,.12);}",
     "chekin-vela .vela-dc .dc-img{position:relative;height:104px;border-radius:16px 16px 0 0;background-size:cover;background-position:center;overflow:hidden;}",
     "chekin-vela .vela-dc .dc-img::after{content:\"\";position:absolute;inset:0;background:linear-gradient(150deg,rgba(56,91,248,.42),rgba(16,71,255,.12));mix-blend-mode:multiply;}",
     "chekin-vela .vela-dc .dc-save{position:absolute;top:9px;left:9px;z-index:3;height:18px;display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;background:#fff;color:#c98a16;font-size:9px;font-weight:800;letter-spacing:.04em;}",
@@ -256,7 +257,8 @@
 
   function sectionItem(it) {
     var tone = it.tone === 'amber' ? ' amber' : it.tone === 'green' ? ' green' : ' blue';
-    return '<div class="vela-sec' + tone + '">' + esc(it.label || '') + '</div>';
+    return '<div class="vela-sec' + tone + '">' + esc(it.label || '') + '</div>' +
+      (it.sub ? '<p class="vela-sec-sub">' + esc(it.sub) + '</p>' : '');
   }
   function capsuleItem(it) {
     return '<div class="vela-cap"><span class="cap-ic">' + icon(it.icon) + '</span>' +
