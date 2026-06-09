@@ -303,9 +303,8 @@
           (it.reason ? '<span class="insight-reason">' + esc(it.reason) + '</span>' : '') +
         '</div>'
       : '';
-    var icon = (it.icon && IC[it.icon]) ? IC[it.icon] : IC.sparkle;
     return '<div class="vela-flat">' + top +
-      '<div class="rec-title">' + icon + esc(title) + '</div>' +
+      '<div class="rec-title">' + esc(title) + '</div>' +
       (sub ? '<p class="rec-sub">' + esc(sub) + '</p>' : '') +
     '</div>';
   }

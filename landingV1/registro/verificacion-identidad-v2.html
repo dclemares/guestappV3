@@ -192,9 +192,10 @@ button{ font:inherit; }
 .cam-alt a:hover{ opacity:.82; }
 .cam-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; border-radius:18px; }
 .cam-guide-empty{ border-color:rgba(20,30,70,.38); }
-.vela-qr-card .qr-box{ width:108px; height:108px; margin:12px auto 2px; padding:9px; background:#fff;
+.vela-qr{ margin-top:6px; }
+.vela-qr .qr-box{ width:108px; height:108px; margin:12px 0 2px; padding:9px; background:#fff;
   border:1px solid #e7e9f3; border-radius:12px; box-shadow:0 4px 14px rgba(22,40,90,.08); }
-.vela-qr-card .qr-box svg{ display:block; }
+.vela-qr .qr-box svg{ display:block; }
 .cap-spin{ width:15px; height:15px; flex:none; border-radius:50%; border:2px solid var(--line); border-top-color:var(--blue); animation:cap-rot .7s linear infinite; }
 @keyframes cap-rot{ to{ transform:rotate(360deg); } }
 .cap-demo-row{ display:flex; justify-content:center; margin-top:18px; }
@@ -633,11 +634,11 @@ button{ font:inherit; }
   <!-- RIGHT VELA PANEL -->
   <chekin-vela flat-text
     intro="I'll guide you through verification: which documents work, how to get a clear photo, and why we ask for each step."
-    reco-title="Privacy & data" reco-icon="sun"
-    reco-subtitle="How we protect your information.">
+    reco-title="" reco-icon="sparkle">
     <script type="application/json">
     [
-      {"chip":"Privacy","reason":"GDPR compliant","strong":"Your data is safe","text":" Everything you share is encrypted and used only for your registration. Your photos are deleted from our system after your check-in date at the property."}
+      {"type":"section","label":"Privacy & data","tone":"blue"},
+      {"strong":"Your data is safe","text":"Everything you share is encrypted and used only for your registration. Your photos are deleted from our system after your check-in date at the property."}
     ]
     </script>
   </chekin-vela>
@@ -686,39 +687,35 @@ function curDef(){ return STEP_DEFS[state.steps[state.sub]]; }
 var capTimer = null, capRAF = null;
 function clearCapTimers(){ if(capTimer){ clearTimeout(capTimer); capTimer=null; } if(capRAF){ clearInterval(capRAF); capRAF=null; } }
 
-/* ---- Vela content per screen ---- */
-var VELA_HEAD = {
-  intro:   ['Privacy & data', 'How we protect your information.'],
-  doc:     ['Choosing your document', 'Any of these works to verify you.'],
-  capture: ['How to take the best photo', 'A clear shot speeds up your verification.'],
-  face:    ['How to take the best selfie', 'A clear face helps us match you faster.'],
-  form:    ['Good to know', 'Why we ask for your details.']
-};
+/* ---- Vela content per screen (API nueva: type:section eyebrow + tips icon/strong/text) ---- */
 var VELA = {
   intro: [
-    {"chip":"Privacy","reason":"GDPR compliant","strong":"Your data is safe","text":" Everything you share is encrypted and used only for your registration. Your photos are deleted from our system after your check-in date at the property."}
+    {"type":"section","label":"Privacy & data","tone":"blue"},
+    {"strong":"Your data is safe","text":"Everything you share is encrypted and used only for your registration. Your photos are deleted from our system after your check-in date at the property."}
   ],
   doc: [
-    {"chip":"Tip","reason":"Faster","strong":"Pick whichever you have on hand","text":" Any of the three works to verify you."}
+    {"type":"section","label":"Choosing your document","tone":"blue"},
+    {"strong":"Pick whichever you have on hand","text":"Any of the three works to verify you."}
   ],
   capture: [
-    {"chip":"Lighting","reason":"Sharp capture","strong":"Good light, no glare","text":" Keep the whole DNI visible, well lit and free of reflections — don't cover any part of it."},
-    {"chip":"Framing","reason":"Best angle","strong":"Rest it on a table","text":" Lay the document flat on a surface and take the photo from directly above to frame it inside the marks."}
+    {"type":"section","label":"How to take the best photo","tone":"blue"},
+    {"strong":"Good light, no glare","text":"Keep the whole DNI visible, well lit and free of reflections — don't cover any part of it."},
+    {"strong":"Rest it on a table","text":"Lay the document flat on a surface and take the photo from directly above to frame it inside the marks."}
   ],
   face: [
-    {"chip":"Lighting","reason":"Clear face","strong":"Good, even light","text":" Take it in the shade — avoid backlight so your whole face is clearly lit."},
-    {"chip":"Face","reason":"Fully visible","strong":"Nothing covering your face","text":" Remove glasses, hats, masks or anything that hides your face."}
+    {"type":"section","label":"How to take the best selfie","tone":"blue"},
+    {"strong":"Good, even light","text":"Take it in the shade — avoid backlight so your whole face is clearly lit."},
+    {"strong":"Nothing covering your face","text":"Remove glasses, hats, masks or anything that hides your face."}
   ],
   form: [
-    {"chip":"Imported","reason":"From your document","strong":"We filled in your details","text":" Your details were imported from the document scan — please check everything is correct."},
-    {"chip":"Required by law","reason":"Guest record","strong":"Why we ask for this","text":" By local law, every tourist accommodation must keep a record of its guests, so we need a small amount of personal information from you."},
-    {"chip":"Faster","reason":"Before arrival","strong":"Save time on arrival","text":" Completing your check-in online before you arrive saves you time."}
+    {"type":"section","label":"Good to know","tone":"amber"},
+    {"strong":"We filled in your details","text":"Your details were imported from the document scan — please check everything is correct."},
+    {"strong":"Why we ask for this","text":"By local law, every tourist accommodation must keep a record of its guests, so we need a small amount of personal information from you."}
   ]
 };
 function setVela(key){
   var el = document.querySelector('chekin-vela');
   if(el){
-    if(VELA_HEAD[key]){ el.setAttribute('reco-title', VELA_HEAD[key][0]); el.setAttribute('reco-subtitle', VELA_HEAD[key][1]); }
     if(VELA[key]){ try{ el.items = VELA[key]; }catch(e){} }
     el.classList.toggle('has-prog', state.screen==='capture' || state.screen==='form');
   }
@@ -780,7 +777,7 @@ function velaProgressHTML(sub, allDone, activeProgress){
     var icon = done ? check : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">'+(ICONS[key]||ICONS.front)+'</svg>';
     html += '<span class="vp-node '+cls+'">'+icon+'</span>';
   });
-  return html + '</div><div class="vela-divider" style="margin-top:18px;"></div></div>';
+  return html + '</div></div>';   // sin divisor extra: el eyebrow de la siguiente sección ya separa
 }
 function injectVelaProgress(sub, allDone, activeProgress){
   var el = document.querySelector('chekin-vela'); if(!el) return;
@@ -804,13 +801,13 @@ function qrSVG(){
 function injectVelaQR(){
   var el = document.querySelector('chekin-vela'); if(!el) return;
   var scroll = el.querySelector('.vela-scroll'); if(!scroll) return;
-  if(scroll.querySelector('.vela-qr-card')) return;
+  if(scroll.querySelector('.vela-qr')) return;
   scroll.insertAdjacentHTML('beforeend',
-    '<article class="insight-card vela-qr-card">'+
-      '<div class="insight-top"><span class="insight-chip">No camera?</span></div>'+
-      '<p class="insight-text"><strong>Use your phone instead.</strong> Scan this code to continue the verification on your mobile.</p>'+
+    '<div class="vela-qr">'+
+      '<div class="vela-sec blue"><span>No camera?</span></div>'+
+      '<div class="vela-flat"><div class="rec-title">Use your phone instead</div><p class="rec-sub">Scan this code to continue the verification on your mobile.</p></div>'+
       '<div class="qr-box">'+qrSVG()+'</div>'+
-    '</article>');
+    '</div>');
 }
 
 /* ====== captura en 3 momentos por paso ======
