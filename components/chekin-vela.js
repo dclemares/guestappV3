@@ -64,7 +64,7 @@
     "  background:rgba(18,75,255,.075);color:#1047ff;font-size:11px;font-weight:700;}",
     "chekin-vela .vela-intro{margin:0 0 16px;max-width:280px;font-size:12.6px;line-height:1.5;font-weight:500;color:#48547f;}",
     "chekin-vela .vela-divider{height:1px;width:100%;margin:0 0 16px;background:rgba(203,214,236,.82);}",
-    "chekin-vela .vela-scroll{position:relative;z-index:1;flex:1;min-height:0;overflow-y:auto;padding-right:4px;scrollbar-width:none;}",
+    "chekin-vela .vela-scroll{position:relative;z-index:1;flex:1;min-height:0;overflow-y:auto;overflow-x:clip;overflow-clip-margin:30px;padding-right:4px;scrollbar-width:none;}",
     "chekin-vela .vela-scroll::-webkit-scrollbar{display:none;}",
     "chekin-vela .rec-title{display:flex;align-items:center;gap:9px;margin-bottom:6px;font-size:13.2px;font-weight:700;}",
     "chekin-vela .rec-title svg{width:14px;height:14px;color:#1047ff;flex:none;}",
