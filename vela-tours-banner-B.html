@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Free tours banner · Editorial block (B)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{ --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --grey:#65709a; --grey-soft:#8b95bd; }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:40px 34px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.18), rgba(79,107,255,0) 72%), linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1100px; margin:0 auto 28px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+  .grid{ display:flex; flex-direction:column; gap:30px; max-width:1100px; margin:0 auto; }
+  .row{ display:flex; gap:26px; align-items:flex-start; flex-wrap:wrap; }
+  .item{ width:360px; }
+  .item .label{ display:block; margin:0 0 10px; font-size:12.5px; font-weight:800; }
+  .item .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .item .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800; background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+  .stage{ width:345px; padding:14px; border-radius:18px; background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.8); box-shadow:0 14px 36px rgba(22,40,90,.10); }
+
+  /* ===== shared editorial block ===== */
+  .bn{ position:relative; width:100%; height:92px; border-radius:14px; overflow:hidden; padding:14px 16px; color:#fff; display:flex; flex-direction:column; justify-content:center; }
+  .bn .spon{ position:absolute; right:13px; top:11px; font-size:7.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; opacity:.82; z-index:3; }
+  .bn .kik{ font-size:8.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.9; position:relative; z-index:2; }
+  .bn b{ font-size:17px; font-weight:800; letter-spacing:-.02em; line-height:1.08; margin-top:3px; position:relative; z-index:2; }
+  .bn .foot{ display:flex; align-items:center; gap:10px; margin-top:8px; position:relative; z-index:2; }
+  .bn small{ font-size:10.3px; font-weight:600; opacity:.95; max-width:175px; line-height:1.25; }
+  .bn .cta{ margin-left:auto; flex:none; height:28px; padding:0 14px; border-radius:999px; font:inherit; font-size:11px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:5px; }
+  .bn .cta svg{ width:13px; height:13px; stroke-width:2.4; }
+  .cta-out{ border:1.5px solid rgba(255,255,255,.85); background:transparent; color:#fff; }
+  .cta-solid-amber{ border:0; background:#ffd24a; color:#3a2a00; }
+  .cta-solid-white{ border:0; background:#fff; color:var(--navy); }
+
+  /* B1 · Sunset (refined original) */
+  .b1{ background:linear-gradient(120deg,#ff5d6c,#ff7a3d 55%,#ffb24d); }
+  .b1::after{ content:''; position:absolute; right:-14px; bottom:-26px; width:96px; height:96px; border-radius:50%; background:rgba(255,255,255,.13); }
+
+  /* B2 · Indigo (Vela brand) */
+  .b2{ background:linear-gradient(125deg,#1047ff,#4f6bff 55%,#7b8cff); }
+  .b2::after{ content:''; position:absolute; right:-20px; top:-20px; width:90px; height:90px; border-radius:50%; background:rgba(255,255,255,.10); }
+
+  /* B3 · Night (premium navy + amber CTA) */
+  .b3{ background:linear-gradient(120deg,#0a1640,#142a6e 60%,#243d8f); }
+  .b3 .kik{ color:#ffd24a; opacity:1; }
+
+  /* B4 · Diagonal two-tone */
+  .b4{ background:#1047ff; }
+  .b4::before{ content:''; position:absolute; inset:0; background:linear-gradient(115deg, transparent 46%, #ff5d6c 46%); }
+
+  /* B5 · Line-art landmark */
+  .b5{ background:linear-gradient(120deg,#11227a,#385bf8); }
+  .b5 .art{ position:absolute; right:-6px; bottom:-8px; width:140px; height:100px; opacity:.22; z-index:1; color:#fff; }
+  .b5 .art svg{ width:100%; height:100%; }
+
+  /* B6 · Big type minimal */
+  .b6{ background:#ff5d6c; }
+  .b6 b{ font-size:20px; font-weight:900; }
+  .b6 .arrow{ display:inline-flex; align-items:center; gap:6px; margin-top:9px; font-size:12px; font-weight:800; position:relative; z-index:2; }
+  .b6 .arrow svg{ width:15px; height:15px; stroke-width:2.6; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · sponsored · free tours · editorial block</div>
+    <h1>Editorial block — variations</h1>
+    <p>Same bold-typography, no-photo direction as Option B. Different palettes, background motifs and CTA styles. Pick a favourite (or mix elements).</p>
+  </div>
+  <div class="grid" id="grid"></div>
+
+<script>
+  var ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  // simple Madrid landmark line-art (Metrópolis dome + columns)
+  var ART='<svg viewBox="0 0 140 100" fill="none" stroke="currentColor" stroke-width="2">'+
+    '<path d="M60 14c8 0 14 6 14 14H46c0-8 6-14 14-14Z"/>'+
+    '<path d="M60 6v8M55 30h30v6H55z"/>'+
+    '<path d="M52 36v54M60 36v54M68 36v54M76 36v54M84 36v54"/>'+
+    '<path d="M44 90h52M40 96h60"/>'+
+    '<path d="M104 50v40M112 50v40M120 50v40M100 50h26M96 90h34"/>'+
+    '<path d="M104 50l9-10 9 10"/></svg>';
+
+  var b1='<div class="bn b1"><span class="spon">Patrocinado</span><span class="kik">Free walking tours</span>'+
+    '<b>Descubre Madrid<br>con guías locales</b>'+
+    '<div class="foot"><small>Apúntate gratis · paga lo que quieras</small><button class="cta cta-out">Reservar '+ARR+'</button></div></div>';
+
+  var b2='<div class="bn b2"><span class="spon">Patrocinado</span><span class="kik">Free walking tours</span>'+
+    '<b>Madrid a pie,<br>con un local</b>'+
+    '<div class="foot"><small>Tour gratuito · cada día a las 10:00</small><button class="cta cta-solid-white">Reservar</button></div></div>';
+
+  var b3='<div class="bn b3"><span class="spon">Patrocinado</span><span class="kik">★ Free walking tour</span>'+
+    '<b>Conoce el viejo<br>Madrid gratis</b>'+
+    '<div class="foot"><small>Guías locales · grupos pequeños</small><button class="cta cta-solid-amber">Reservar</button></div></div>';
+
+  var b4='<div class="bn b4"><span class="spon">Patrocinado</span><span class="kik">Free walking tours</span>'+
+    '<b>Madrid, gratis<br>a pie</b>'+
+    '<div class="foot"><small>Apúntate y paga lo que quieras</small><button class="cta cta-solid-white">Reservar</button></div></div>';
+
+  var b5='<div class="bn b5"><span class="art">'+ART+'</span><span class="spon">Patrocinado</span><span class="kik">Free walking tours</span>'+
+    '<b>Recorre Madrid<br>con guías locales</b>'+
+    '<div class="foot"><small>Tour gratuito · centro histórico</small><button class="cta cta-out">Reservar '+ARR+'</button></div></div>';
+
+  var b6='<div class="bn b6"><span class="spon">Patrocinado</span><span class="kik">Free walking tours</span>'+
+    '<b>Madrid gratis,<br>a tu ritmo</b>'+
+    '<span class="arrow">Reservar tour '+ARR+'</span></div>';
+
+  var items=[
+    {tag:'B1', name:'Sunset (refined)', desc:'Tu favorita pulida: degradado coral→ámbar, círculo decorativo, CTA outline con flecha.', html:b1},
+    {tag:'B2', name:'Indigo (brand Vela)', desc:'Degradado azul de la marca Vela. CTA blanca sólida. Más integrado con el panel.', html:b2},
+    {tag:'B3', name:'Night premium', desc:'Navy profundo, eyebrow ámbar con estrella, CTA ámbar sólida. Sensación premium.', html:b3},
+    {tag:'B4', name:'Diagonal two-tone', desc:'Corte diagonal azul/coral. Muy gráfico y rompedor, claramente “anuncio”.', html:b4},
+    {tag:'B5', name:'Line-art landmark', desc:'Degradado azul con silueta line-art de un monumento de Madrid de fondo.', html:b5},
+    {tag:'B6', name:'Big type minimal', desc:'Color plano coral, título XXL (900) y CTA tipo enlace con flecha. Minimal.', html:b6}
+  ];
+  document.getElementById('grid').innerHTML =
+    '<div class="row">'+items.map(function(it){
+      return '<div class="item"><span class="tag">Option '+it.tag+'</span><div class="label">'+it.name+'<small>'+it.desc+'</small></div><div class="stage">'+it.html+'</div></div>';
+    }).join('')+'</div>';
+</script>
+</body>
+</html>
