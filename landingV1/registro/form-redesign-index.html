@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Form redesign — 5 directions</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{ --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --grey:#6b6b95; --line:#dedeeb; --font:'Montserrat',sans-serif; --font-2:'Poppins',sans-serif; }
+*{ box-sizing:border-box; }
+body{ margin:0; font-family:var(--font); color:var(--navy); background:linear-gradient(160deg,#e9eefc,#f4f6f9 60%,#eef0f7); min-height:100vh; padding:64px 24px; }
+.wrap{ max-width:720px; margin:0 auto; }
+.kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+h1{ margin:10px 0 6px; font-size:32px; font-weight:800; letter-spacing:-.02em; }
+.lead{ margin:0 0 30px; font-family:var(--font-2); color:var(--grey); font-size:15px; }
+a.card{ display:block; text-decoration:none; color:inherit; background:rgba(255,255,255,.7); border:1px solid rgba(255,255,255,.8); border-radius:16px; padding:18px 20px; margin-bottom:14px; box-shadow:0 10px 30px rgba(22,40,90,.08); transition:transform .12s ease, box-shadow .12s ease; }
+a.card:hover{ transform:translateY(-2px); box-shadow:0 16px 38px rgba(22,40,90,.14); }
+.n{ display:inline-flex; width:26px; height:26px; border-radius:8px; background:rgba(56,91,248,.12); color:var(--blue-deep); font-weight:800; font-size:13px; align-items:center; justify-content:center; margin-right:10px; }
+.t{ font-size:16px; font-weight:800; }
+.d{ margin:8px 0 0; font-family:var(--font-2); font-size:13px; color:var(--grey); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">Guest Registration · form</div>
+  <h1>Form redesign — 5 directions</h1>
+  <p class="lead">All five drop the card boxes and use the summary-style section headers (icon + uppercase title). They differ in how fields and section rhythm are handled. Open each, then tell me which to iterate on.</p>
+
+  <a class="card" href="form-redesign-1.html"><span class="t"><span class="n">1</span>Hairline classic</span><p class="d">Full-width hairline between sections, underline fields. The most literal merge of the summary header + the v2-minimal no-box style.</p></a>
+  <a class="card" href="form-redesign-2.html"><span class="t"><span class="n">2</span>Eyebrow accent bar</span><p class="d">No dividers — each header is an uppercase eyebrow with a short blue accent bar (the Vela eyebrow language). Underline fields, airy rhythm.</p></a>
+  <a class="card" href="form-redesign-3.html"><span class="t"><span class="n">3</span>Soft filled</span><p class="d">Tinted icon-chip headers and borderless soft-filled inputs. Friendlier and softer than pure underlines, still box-free.</p></a>
+  <a class="card" href="form-redesign-4.html"><span class="t"><span class="n">4</span>Two-column ledger</span><p class="d">Section title sits in a sticky left column, fields on the right. Settings-page feel, very scannable.</p></a>
+  <a class="card" href="form-redesign-5.html"><span class="t"><span class="n">5</span>Summary rows</span><p class="d">Single-column label-left rows with hairlines — directly echoes the guest-summary list. Values align right like an editable summary.</p></a>
+</div>
+</body>
+</html>

@@ -193,8 +193,7 @@ button{ font:inherit; }
 .cam-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; border-radius:18px; }
 .cam-guide-empty{ border-color:rgba(20,30,70,.38); }
 .vela-qr{ margin-top:6px; }
-.vela-qr .qr-box{ width:108px; height:108px; margin:12px 0 2px; padding:9px; background:#fff;
-  border:1px solid #e7e9f3; border-radius:12px; box-shadow:0 4px 14px rgba(22,40,90,.08); }
+.vela-qr .qr-box{ width:120px; height:120px; margin:14px auto 2px; }
 .vela-qr .qr-box svg{ display:block; }
 .cap-spin{ width:15px; height:15px; flex:none; border-radius:50%; border:2px solid var(--line); border-top-color:var(--blue); animation:cap-rot .7s linear infinite; }
 @keyframes cap-rot{ to{ transform:rotate(360deg); } }
@@ -359,14 +358,45 @@ button{ font:inherit; }
 .field-help:hover .fh-text,
 .field-help:focus .fh-text,
 .field-help:focus-visible .fh-text{ max-width:62px; opacity:1; transform:translateX(0); margin-left:8px; }
-/* Vela response (animation) */
-.vela-answer{ border:1px solid rgba(56,91,248,.30); background:linear-gradient(180deg, rgba(56,91,248,.10), rgba(56,91,248,.03));
-  border-radius:14px; padding:12px 13px; margin:0 0 14px; animation:va-in .42s cubic-bezier(.2,.8,.3,1.1) both; }
-.vela-answer .va-head{ display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#1047ff; margin-bottom:6px; }
-.vela-answer .va-head svg{ width:14px; height:14px; }
-.vela-answer p{ margin:0; font-size:12.5px; line-height:1.5; color:var(--navy-2); }
-.vela-answer p strong{ font-weight:800; }
+/* Vela response — contextual chat bubble (from the "Contextual in bubble" component) */
+.vela-answer{ display:flex; gap:9px; align-items:flex-start; margin:0 0 14px;
+  animation:va-in .42s cubic-bezier(.2,.8,.3,1.1) both; }
+.vela-answer .va-mini{ width:26px; height:26px; flex:none; border-radius:50%; margin-top:1px;
+  background:linear-gradient(145deg,var(--blue-deep),var(--blue-2)); display:flex; align-items:center; justify-content:center; }
+.vela-answer .va-mini svg{ width:15px; height:15px; color:#fff; }
+.vela-answer .va-bubble{ position:relative; flex:1; min-width:0; padding:11px 12px;
+  background:rgba(56,91,248,.06); border:1px solid rgba(56,91,248,.12); border-radius:4px 14px 14px 14px; }
+.vela-answer .va-bubble p{ margin:0; font-size:12.4px; line-height:1.55; color:var(--navy-2); }
+.vela-answer .va-bubble p strong{ color:var(--navy); font-weight:700; }
 @keyframes va-in{ from{ opacity:0; transform:translateY(-10px) scale(.97); } to{ opacity:1; transform:none; } }
+/* Skip-for-now CTA — sits on the kicker line, far right of the central column */
+.cap-head-top{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.skip-cta{ display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 15px; flex:none;
+  border:1px solid var(--line); border-radius:9999px; background:#fff; color:var(--grey);
+  font:inherit; font-size:12.5px; font-weight:700; cursor:pointer; box-shadow:0 4px 14px rgba(22,40,90,.05);
+  transition:color .15s ease, border-color .15s ease, background .15s ease; }
+.skip-cta:hover{ color:var(--navy-2); border-color:#cdd4e6; background:#f7f9fd; }
+.skip-cta svg{ width:14px; height:14px; }
+/* Skip-verification modal */
+.modal-overlay{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:24px;
+  background:rgba(7,21,77,.42); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); animation:modal-fade .2s ease both; }
+.modal-overlay[hidden]{ display:none; }
+.modal-card{ width:100%; max-width:420px; background:#fff; border-radius:20px; padding:30px 28px 26px; text-align:center;
+  box-shadow:0 30px 70px -20px rgba(7,21,77,.5); animation:modal-pop .28s cubic-bezier(.2,.8,.3,1.1) both; }
+.modal-ic{ width:54px; height:54px; margin:0 auto 16px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:rgba(247,185,85,.16); color:#d08a16; }
+.modal-ic svg{ width:26px; height:26px; }
+.modal-title{ margin:0 0 10px; font-size:21px; font-weight:800; letter-spacing:-.01em; color:var(--navy-2); }
+.modal-text{ margin:0 0 24px; font-family:var(--font-2); font-size:14px; line-height:1.55; color:var(--grey); }
+.modal-actions{ display:flex; flex-direction:column; gap:10px; }
+.modal-btn{ height:48px; border-radius:13px; border:0; font:inherit; font-size:14.5px; font-weight:700; cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease, background .15s ease, color .15s ease, border-color .15s ease; }
+.modal-btn.ghost{ background:#fff; color:var(--grey); border:1px solid var(--line); }
+.modal-btn.ghost:hover{ background:#f7f9fd; color:var(--navy-2); border-color:#cdd4e6; }
+.modal-btn.primary{ background:linear-gradient(135deg,var(--blue-deep),var(--blue-2)); color:#fff; box-shadow:0 14px 30px -12px rgba(16,71,255,.55); }
+.modal-btn.primary:hover{ transform:translateY(-1px); box-shadow:0 18px 36px -12px rgba(16,71,255,.6); }
+@keyframes modal-fade{ from{ opacity:0; } to{ opacity:1; } }
+@keyframes modal-pop{ from{ opacity:0; transform:translateY(12px) scale(.97); } to{ opacity:1; transform:none; } }
 </style>
 <script src="../../components/chekin-navbar.js?v=warning-badges" defer></script>
 <script src="../../components/chekin-vela.js?v=vela-components-17" defer></script>
@@ -645,6 +675,19 @@ button{ font:inherit; }
 
 </div>
 
+<!-- Skip verification modal -->
+<div class="modal-overlay" id="skipModal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="skipModalTitle">
+    <div class="modal-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.3 2.4 17a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/></svg></div>
+    <h2 class="modal-title" id="skipModalTitle">Skip verification?</h2>
+    <p class="modal-text">You'll need to verify your identity later to complete your registration successfully. Any details you've filled in so far will be lost.</p>
+    <div class="modal-actions">
+      <button type="button" class="modal-btn ghost" id="skipConfirm">Skip for now</button>
+      <button type="button" class="modal-btn primary" id="skipCancel">Continue verification</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ============================================================
    Identity verification — simple state machine
@@ -708,7 +751,7 @@ var VELA = {
     {"strong":"Nothing covering your face","text":"Remove glasses, hats, masks or anything that hides your face."}
   ],
   form: [
-    {"type":"section","label":"Good to know","tone":"amber"},
+    {"type":"section","label":"Good to know","tone":"blue"},
     {"strong":"We filled in your details","text":"Your details were imported from the document scan — please check everything is correct."},
     {"strong":"Why we ask for this","text":"By local law, every tourist accommodation must keep a record of its guests, so we need a small amount of personal information from you."}
   ]
@@ -862,7 +905,8 @@ function renderCapture(){
     : (info.kind==='face' ? 'Look at the camera — it captures automatically.' : 'No need to tap anything — the photo is taken automatically.');
   var frameCls = 'cam-frame ph'+(info.kind==='face'?' face':'')+(phase===2?' ok':'')+(phase===3?' err':'');
 
-  var html = '<div class="page-head"><div class="kicker">Guest Registration</div><h1>'+title+'</h1><p class="intro">'+sub+'</p></div>';
+  var skipBtn = '<button type="button" class="skip-cta" id="skipCta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>Skip for now</button>';
+  var html = '<div class="page-head"><div class="cap-head-top"><div class="kicker">Guest Registration</div>'+skipBtn+'</div><h1>'+title+'</h1><p class="intro">'+sub+'</p></div>';
   html += '<div class="'+frameCls+'" id="capFrame">'+camContent(info, phase)+'</div>';
   // "No camera? Upload a file": solo en doc y solo en fase 0 (no durante carga ni fallo); en selfie no se muestra
   if(info.kind==='doc' && phase===0){
@@ -875,6 +919,7 @@ function renderCapture(){
 
   var demo = document.getElementById('demoBtn'); if(demo) demo.addEventListener('click', placeImage);
   var up = document.getElementById('upload'); if(up) up.addEventListener('click', placeImage);
+  var sk = document.getElementById('skipCta'); if(sk) sk.addEventListener('click', openSkipModal);
   var er = document.getElementById('errRetry'); var eu = document.getElementById('errUpload');
   function retry(){ state.failedOnce = true; state.phase = 0; renderCapture(); }
   if(er) er.addEventListener('click', retry);
@@ -916,6 +961,21 @@ function capNextStep(){
   clearCapTimers();
   if(state.sub < state.steps.length - 1){ state.sub++; state.phase = 0; renderCapture(); }
   else { show('form'); window.scrollTo(0,0); resizeSig(); }   // verification completed → form (inside the flow)
+}
+
+/* ---- skip-verification modal ---- */
+var skipModal = document.getElementById('skipModal');
+function openSkipModal(){ if(skipModal) skipModal.hidden = false; }
+function closeSkipModal(){ if(skipModal) skipModal.hidden = true; }
+if(skipModal){
+  document.getElementById('skipCancel').addEventListener('click', closeSkipModal);
+  document.getElementById('skipConfirm').addEventListener('click', function(){
+    closeSkipModal();
+    clearCapTimers();
+    show('form'); window.scrollTo(0,0); resizeSig();   // skip → land in the form
+  });
+  skipModal.addEventListener('click', function(e){ if(e.target === skipModal) closeSkipModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !skipModal.hidden) closeSkipModal(); });
 }
 
 /* ---- navigation ---- */
@@ -1016,8 +1076,8 @@ function askVelaDocNumber(){
   var el = document.querySelector('chekin-vela'); if(!el) return;
   var scroll = el.querySelector('.vela-scroll'); if(!scroll) return;
   var old = scroll.querySelector('.vela-answer'); if(old) old.remove();
-  var html = '<div class="vela-answer"><div class="va-head">'+VSPARK+'Vela</div>'+
-    '<p><strong>Where do I find my document number?</strong> On a DNI it\'s the code at the top-right of the front — 8 digits and a letter (e.g. 99999999R). On a passport it\'s at the top of the photo page.</p></div>';
+  var html = '<div class="vela-answer"><div class="va-mini">'+VSPARK+'</div>'+
+    '<div class="va-bubble"><p><strong>Where do I find my document number?</strong> On a DNI it\'s the code at the top-right of the front — 8 digits and a letter (e.g. 99999999R). On a passport it\'s at the top of the photo page.</p></div></div>';
   scroll.insertAdjacentHTML('beforeend', html);   // abajo del todo, tras los consejos
   scroll.scrollTo({ top:scroll.scrollHeight, behavior:'smooth' });
 }

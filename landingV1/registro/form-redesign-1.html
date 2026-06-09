@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Form redesign · 1 — Hairline classic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --blue:#385bf8; --blue-deep:#1047ff; --blue-2:#5d7cff;
+  --navy:#07154d; --navy-2:#161643;
+  --teal:#35e5bc;
+  --grey:#6b6b95; --grey-soft:#9696b9;
+  --line:#dedeeb; --line-soft:#e9edf6;
+  --bg:#f4f6f8; --card:#ffffff;
+  --font:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --font-2:'Poppins',sans-serif;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; height:100%; }
+body{
+  font-family:var(--font); color:var(--navy);
+  background:
+    radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.20), rgba(79,107,255,0) 72%),
+    linear-gradient(160deg, #e9eefc 0%, #f4f6f9 60%, #eef0f7 100%);
+  background-attachment:fixed; background-repeat:no-repeat;
+  min-height:100vh; -webkit-font-smoothing:antialiased;
+}
+.app{ min-height:100vh; }
+.main{ margin-left:288px; margin-right:380px; padding:48px 56px 96px; }
+
+.form-head{ margin-bottom:30px; }
+.form-kicker{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+.form-head h1{ margin:10px 0 8px; font-size:34px; font-weight:800; letter-spacing:-.02em; }
+.form-head p{ margin:0; font-family:var(--font-2); font-size:15px; color:var(--grey); max-width:480px; }
+.form{ display:flex; flex-direction:column; max-width:680px; }
+
+/* ---- STYLE 1 · Hairline classic: summary-style header + no boxes ---- */
+.sec{ padding:28px 0; border-top:1px solid var(--line-soft); }
+.sec:first-of-type{ border-top:0; padding-top:4px; }
+.sec-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:20px; }
+.sec-title{ display:flex; align-items:center; gap:10px; margin:0; font-size:13px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:#4f5b86; }
+.sec-title svg{ width:17px; height:17px; flex:none; color:var(--blue); stroke-width:2; }
+.why{ display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--blue); cursor:pointer; text-decoration:none; }
+.why svg{ width:14px; height:14px; }
+
+.grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px 26px; }
+.field{ display:flex; flex-direction:column; gap:9px; }
+.field.full{ grid-column:1 / -1; }
+.field label{ font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--grey-soft); }
+.field label .opt{ color:var(--grey-soft); font-weight:700; text-transform:none; letter-spacing:0; }
+.control{ height:42px; padding:0 2px; border:0; border-bottom:1.5px solid var(--line); border-radius:0; background:transparent;
+  font:inherit; font-size:16px; color:var(--navy); outline:none; width:100%; transition:border-color .18s ease; }
+.control::placeholder{ color:#b9bdd2; font-weight:500; }
+.control:focus{ border-bottom-color:var(--blue); }
+
+.select{ position:relative; }
+.select > .control{ display:flex; align-items:center; cursor:pointer; user-select:none; }
+.select > .control .val{ flex:1; display:inline-flex; align-items:center; gap:7px; }
+.select > .control .val.placeholder{ color:#b9bdd2; font-weight:500; }
+.select > .control .chev{ width:16px; height:16px; color:var(--grey); transition:transform .2s ease; }
+.select.open > .control .chev{ transform:rotate(180deg); }
+.select .menu{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:20; padding:6px;
+  background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 18px 40px -16px rgba(22,22,67,.30);
+  max-height:240px; overflow-y:auto; display:none; }
+.select.open .menu{ display:block; }
+.opt-row{ display:flex; align-items:center; gap:10px; padding:9px 11px; border-radius:9px; cursor:pointer; font-size:14px; }
+.opt-row:hover{ background:rgba(56,91,248,.07); }
+.opt-flag{ font-size:16px; }
+
+.phone{ display:flex; align-items:flex-end; gap:12px; }
+.phone .pref{ display:flex; align-items:center; gap:7px; height:42px; padding:0 2px; border-bottom:1.5px solid var(--line); font-size:16px; font-weight:600; white-space:nowrap; }
+.phone .control{ flex:1; }
+
+.sig-wrap{ position:relative; border:1.5px dashed #c4cef0; border-radius:12px; background:rgba(250,251,255,.6); height:150px; overflow:hidden; }
+.sig-wrap canvas{ position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:crosshair; }
+.sig-hint{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; pointer-events:none; color:var(--navy); }
+.sig-hint svg{ width:24px; height:24px; color:var(--blue); }
+.sig-hint b{ font-size:14px; font-weight:700; }
+.sig-hint span{ font-size:12px; color:var(--grey-soft); font-weight:500; }
+.sig-clear{ margin-top:12px; display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 4px; border:0; background:transparent; color:var(--grey); font:inherit; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
+.sig-clear svg{ width:14px; height:14px; }
+
+.agree-row{ display:flex; align-items:flex-start; gap:12px; padding:8px 0; cursor:pointer; }
+.chk{ width:21px; height:21px; flex:none; border:1.6px solid var(--line); border-radius:6px; background:#fff; display:flex; align-items:center; justify-content:center; transition:all .15s ease; margin-top:1px; }
+.chk svg{ width:13px; height:13px; color:#fff; opacity:0; transform:scale(.6); transition:all .15s ease; }
+.agree-row.on .chk{ background:var(--blue); border-color:var(--blue); }
+.agree-row.on .chk svg{ opacity:1; transform:scale(1); }
+.agree-text{ font-size:14px; line-height:1.45; color:var(--navy); }
+.agree-text .opt{ color:var(--grey-soft); font-style:italic; }
+.legal{ margin:16px 0 0; font-size:12.5px; line-height:1.5; color:var(--grey-soft); }
+.legal a{ color:var(--navy); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
+
+.submit-row{ display:flex; justify-content:flex-end; padding-top:34px; border-top:1px solid var(--line-soft); }
+.submit{ display:inline-flex; align-items:center; gap:11px; height:52px; padding:0 32px; border:0; border-radius:14px;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-2)); color:#fff; font:inherit; font-size:15px; font-weight:700; cursor:pointer;
+  box-shadow:0 14px 30px -12px rgba(16,71,255,.55); transition:transform .12s ease, box-shadow .12s ease; }
+.submit:hover{ transform:translateY(-1px); box-shadow:0 18px 36px -12px rgba(16,71,255,.6); }
+.submit svg{ width:17px; height:17px; }
+
+@media (max-width:1279px){ .main{ margin-right:0; } }
+@media (max-width:767px){ .main{ margin-left:0; padding:28px 22px 80px; } .grid{ grid-template-columns:1fr; } }
+</style>
+<script src="../../components/chekin-navbar.js?v=warning-badges" defer></script>
+<script src="../../components/chekin-vela.js?v=vela-components-17" defer></script>
+</head>
+<body>
+<div class="app">
+
+  <chekin-navbar active="registration"></chekin-navbar>
+
+  <main class="main">
+    <div class="form-head">
+      <div class="form-kicker">Guest Registration</div>
+      <h1>Review your details</h1>
+      <p>We've pre-filled your form from your document — check everything before sending it to your host.</p>
+    </div>
+
+    <form class="form" autocomplete="off" onsubmit="return false">
+
+      <section class="sec">
+        <div class="sec-head">
+          <h2 class="sec-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>Nationality</h2>
+          <a class="why"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.5a2.4 2.4 0 1 1 3.4 2.2c-.8.4-1 .8-1 1.6"/><circle cx="12" cy="16.4" r=".6" fill="currentColor"/></svg>Why do we ask?</a>
+        </div>
+        <div class="grid">
+          <div class="field full" data-select data-value="ES">
+            <div class="select">
+              <div class="control" tabindex="0"><span class="val"><span class="opt-flag">🇪🇸</span>Spain</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="menu">
+                <div class="opt-row" data-v="ES"><span class="opt-flag">🇪🇸</span>Spain</div>
+                <div class="opt-row" data-v="FR"><span class="opt-flag">🇫🇷</span>France</div>
+                <div class="opt-row" data-v="DE"><span class="opt-flag">🇩🇪</span>Germany</div>
+                <div class="opt-row" data-v="PT"><span class="opt-flag">🇵🇹</span>Portugal</div>
+                <div class="opt-row" data-v="GB"><span class="opt-flag">🇬🇧</span>United Kingdom</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2 class="sec-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/></svg>Legal name</h2></div>
+        <div class="grid">
+          <div class="field"><label>First name</label><input class="control" value="Carmen"></div>
+          <div class="field"><label>Last name</label><input class="control" value="Spanish"></div>
+          <div class="field full"><label>Second last name <span class="opt">· optional</span></label><input class="control" value="Spanish"></div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2 class="sec-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M5 16c.6-1.6 2-2.4 3.5-2.4S11.4 14.4 12 16M14 9h4M14 12.5h4M14 15.5h2.5"/></svg>Personal information</h2></div>
+        <div class="grid">
+          <div class="field"><label>Date of birth</label><input class="control" value="01 / 01 / 1980"></div>
+          <div class="field" data-select data-value="Female">
+            <label>Gender</label>
+            <div class="select">
+              <div class="control" tabindex="0"><span class="val">Female</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="menu">
+                <div class="opt-row" data-v="Female">Female</div>
+                <div class="opt-row" data-v="Male">Male</div>
+                <div class="opt-row" data-v="Other">Other</div>
+                <div class="opt-row" data-v="Prefer not to say">Prefer not to say</div>
+              </div>
+            </div>
+          </div>
+          <div class="field" data-select data-value="ES">
+            <label>Country of residence</label>
+            <div class="select">
+              <div class="control" tabindex="0"><span class="val"><span class="opt-flag">🇪🇸</span>Spain</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="menu">
+                <div class="opt-row" data-v="ES"><span class="opt-flag">🇪🇸</span>Spain</div>
+                <div class="opt-row" data-v="FR"><span class="opt-flag">🇫🇷</span>France</div>
+                <div class="opt-row" data-v="PT"><span class="opt-flag">🇵🇹</span>Portugal</div>
+                <div class="opt-row" data-v="GB"><span class="opt-flag">🇬🇧</span>United Kingdom</div>
+              </div>
+            </div>
+          </div>
+          <div class="field"><label>City of residence</label><input class="control" value="Madrid"></div>
+          <div class="field"><label>Residence address</label><input class="control" value="Avda de Madrid s/n"></div>
+          <div class="field"><label>Postal code</label><input class="control" value="28001"></div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2 class="sec-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Document details</h2></div>
+        <div class="grid">
+          <div class="field" data-select data-value="National ID card">
+            <label>Document type</label>
+            <div class="select">
+              <div class="control" tabindex="0"><span class="val">National ID card</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="menu">
+                <div class="opt-row" data-v="Passport">Passport</div>
+                <div class="opt-row" data-v="National ID card">National ID card</div>
+                <div class="opt-row" data-v="Driver's license">Driver's license</div>
+              </div>
+            </div>
+          </div>
+          <div class="field"><label>Document number</label><input class="control" value="99999999R"></div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2 class="sec-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Contact information</h2></div>
+        <div class="grid">
+          <div class="field"><label>Email</label><input class="control" type="email" placeholder="you@email.com"></div>
+          <div class="field">
+            <label>Phone number <span class="opt">· optional</span></label>
+            <div class="phone"><span class="pref">🇪🇸 +34</span><input class="control" placeholder="612 345 678"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2 class="sec-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 18c3-1 4-9 7-9s2 6 4 6 3-3 7-3"/><path d="m14 20 6-6"/></svg>Signature</h2></div>
+        <div class="sig-wrap" data-sig>
+          <canvas></canvas>
+          <div class="sig-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 18c3-1 4-9 7-9s2 6 4 6 3-3 7-3"/><path d="m14 20 6-6"/></svg>
+            <b>Draw your signature here</b>
+            <span>Use your mouse or finger</span>
+          </div>
+        </div>
+        <button type="button" class="sig-clear" data-sig-clear><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>Clear signature</button>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2 class="sec-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Agreements</h2></div>
+        <div class="agree-row" data-check>
+          <span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>
+          <span class="agree-text">Send me a copy of the <strong>contract</strong> by email.</span>
+        </div>
+        <div class="agree-row" data-check>
+          <span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg></span>
+          <span class="agree-text"><span class="opt">(Optional)</span> I agree to receive marketing emails and other communications from the host.</span>
+        </div>
+        <p class="legal">By submitting you agree to sign the form with your name and accept the <a>Contract</a> and our <a>Privacy Policy</a>.</p>
+      </section>
+
+      <div class="submit-row">
+        <button class="submit" type="submit">Submit to host <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </form>
+  </main>
+
+  <chekin-vela flat-text
+    intro="I can help you fill in your details, explain why each field is needed, and get you checked in faster."
+    reco-title="">
+    <script type="application/json">
+    [
+      {"type":"section","label":"Good to know","tone":"blue"},
+      {"strong":"We filled in your details","text":"Your details were imported from the document scan — please check everything is correct."},
+      {"strong":"Why we ask for this","text":"By local law, every tourist accommodation must keep a record of its guests."}
+    ]
+    </script>
+  </chekin-vela>
+
+</div>
+
+<script>
+/* ---- custom selects ---- */
+document.querySelectorAll('[data-select]').forEach(function(wrap){
+  var sel = wrap.querySelector('.select');
+  var control = sel.querySelector('.control');
+  var valEl = sel.querySelector('.val');
+  control.addEventListener('click', function(e){
+    e.stopPropagation();
+    document.querySelectorAll('.select.open').forEach(function(s){ if(s!==sel) s.classList.remove('open'); });
+    sel.classList.toggle('open');
+  });
+  sel.querySelectorAll('.opt-row').forEach(function(row){
+    row.addEventListener('click', function(){
+      valEl.innerHTML = row.innerHTML;
+      valEl.classList.remove('placeholder');
+      wrap.setAttribute('data-value', row.getAttribute('data-v'));
+      wrap.classList.add('filled');
+      sel.classList.remove('open');
+    });
+  });
+});
+document.addEventListener('click', function(){
+  document.querySelectorAll('.select.open').forEach(function(s){ s.classList.remove('open'); });
+});
+/* ---- checkboxes ---- */
+document.querySelectorAll('[data-check]').forEach(function(row){
+  row.addEventListener('click', function(){ row.classList.toggle('on'); });
+});
+/* ---- signature pad ---- */
+document.querySelectorAll('[data-sig]').forEach(function(wrap){
+  var canvas = wrap.querySelector('canvas');
+  var hint = wrap.querySelector('.sig-hint');
+  var ctx = canvas.getContext('2d');
+  var drawing = false, dirty = false;
+  function resize(){
+    var r = wrap.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = r.width * dpr; canvas.height = r.height * dpr;
+    ctx.scale(dpr, dpr);
+    ctx.lineWidth = 2.4; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#161643';
+  }
+  function pos(e){ var r = canvas.getBoundingClientRect(); var p = e.touches ? e.touches[0] : e; return { x: p.clientX - r.left, y: p.clientY - r.top }; }
+  function start(e){ e.preventDefault(); drawing = true; var p = pos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); if(!dirty){ dirty = true; wrap.classList.add('signed'); hint.style.display='none'; } }
+  function move(e){ if(!drawing) return; e.preventDefault(); var p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+  function end(){ drawing = false; }
+  setTimeout(resize, 30);
+  window.addEventListener('resize', function(){ var data = canvas.toDataURL(); resize(); var img = new Image(); img.onload = function(){ ctx.drawImage(img,0,0,canvas.width/(window.devicePixelRatio||1),canvas.height/(window.devicePixelRatio||1)); }; img.src = data; });
+  canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', end);
+  canvas.addEventListener('touchstart', start, {passive:false}); canvas.addEventListener('touchmove', move, {passive:false});
+  canvas.addEventListener('touchend', end);
+  var clearBtn = wrap.parentElement.querySelector('[data-sig-clear]');
+  if(clearBtn) clearBtn.addEventListener('click', function(){ ctx.clearRect(0,0,canvas.width,canvas.height); dirty=false; wrap.classList.remove('signed'); hint.style.display='flex'; });
+});
+</script>
+</body>
+</html>
