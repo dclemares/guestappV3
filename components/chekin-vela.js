@@ -174,16 +174,17 @@
     "chekin-vela .vela-ctx .ctx-more{display:flex;align-items:center;gap:5px;margin-top:11px;padding:0;border:0;background:none;cursor:pointer;font:inherit;font-size:11.5px;font-weight:700;color:#1047ff;}chekin-vela .vela-ctx .ctx-more svg{width:14px;height:14px;stroke-width:2.4;}",
 
     /* ===== Sponsored banner (A, slim 75px, full-bleed, pinned bottom) ===== */
-    "chekin-vela .vela-banner{position:relative;flex:none;margin:14px -22px 0 -24px;height:75px;background-size:cover;background-position:center;overflow:hidden;}",
+    "chekin-vela .vela-banner{position:relative;flex:none;margin:14px -22px -24px -24px;height:75px;background-size:cover;background-position:center;overflow:hidden;}",
     "chekin-vela .vela-banner::after{content:\"\";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,90,80,.85) 4%,rgba(236,63,134,.7) 44%,rgba(123,63,240,.5));}",
-    "chekin-vela .vela-banner .bn-tag{position:absolute;z-index:6;top:7px;right:14px;height:15px;display:inline-flex;align-items:center;padding:0 6px;border-radius:999px;font-size:7.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:rgba(255,255,255,.26);color:#fff;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}",
     "chekin-vela .vela-banner .bn-in{position:absolute;inset:0;z-index:3;padding:0 14px 0 24px;display:flex;align-items:center;gap:11px;}",
     "chekin-vela .vela-banner .bn-mark{position:relative;width:20px;height:24px;flex:none;}chekin-vela .vela-banner .bn-mark i{position:absolute;bottom:0;width:11px;border-radius:7px 7px 3px 3px;}",
     "chekin-vela .vela-banner .bn-mark i.a{left:0;height:17px;background:linear-gradient(180deg,#ff8a5b,#ff4f6d);}chekin-vela .vela-banner .bn-mark i.b{left:7px;height:24px;background:linear-gradient(180deg,#ec3f86,#7b3ff0);}",
     "chekin-vela .vela-banner .bn-copy{flex:1;min-width:0;color:#fff;}",
     "chekin-vela .vela-banner .bn-copy b{display:block;font-size:12.5px;font-weight:800;line-height:1.18;letter-spacing:-.01em;}",
     "chekin-vela .vela-banner .bn-copy small{display:block;margin-top:2px;font-size:10px;font-weight:600;opacity:.95;}",
-    "chekin-vela .vela-banner .bn-cta{flex:none;height:30px;padding:0 13px;border:0;border-radius:9px;background:#fff;color:#16183a;font:inherit;font-size:11px;font-weight:800;cursor:pointer;}",
+    "chekin-vela .vela-banner .bn-right{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:7px;}",
+    "chekin-vela .vela-banner .bn-tag{height:15px;display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;font-size:7.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:rgba(255,255,255,.26);color:#fff;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}",
+    "chekin-vela .vela-banner .bn-cta{height:30px;padding:0 14px;border:0;border-radius:9px;background:#fff;color:#16183a;font:inherit;font-size:11px;font-weight:800;cursor:pointer;}",
 
     "@media (max-width:1279px){chekin-vela{display:none;}}"
   ].join('\n');
@@ -299,10 +300,11 @@
   }
   function bannerItem(it) {
     var sub = (it.logo || 'airalo') + (it.price ? ' · ' + (it.priceLabel ? esc(it.priceLabel) + ' ' : '') + esc(it.price) : '');
-    return '<div class="vela-banner" style="background-image:url(' + url(it.img) + ')"><span class="bn-tag">' + esc(it.tag || 'Patrocinado') + '</span>' +
+    return '<div class="vela-banner" style="background-image:url(' + url(it.img) + ')">' +
       '<div class="bn-in"><span class="bn-mark"><i class="a"></i><i class="b"></i></span>' +
       '<span class="bn-copy"><b>' + esc(it.headline || '') + '</b><small>' + sub + '</small></span>' +
-      '<button class="bn-cta">' + esc(it.cta || 'Ver planes') + '</button></div></div>';
+      '<span class="bn-right"><span class="bn-tag">' + esc(it.tag || 'Patrocinado') + '</span>' +
+      '<button class="bn-cta">' + esc(it.cta || 'Ver planes') + '</button></span></div></div>';
   }
   var TYPES = { section: sectionItem, capsule: capsuleItem, deal: couponItem, 'deals-carousel': carouselItem, 'deal-hero': heroItem, 'deal-contextual': contextualItem, banner: bannerItem };
 

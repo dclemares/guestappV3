@@ -122,8 +122,7 @@
   .c7.vela{ overflow:hidden; padding-bottom:0; }
   .c7 .vela-banner{ position:relative; margin:12px -16px 0; height:75px; background-size:cover; background-position:center; overflow:hidden; }
   .c7 .vela-banner::after{ content:''; position:absolute; inset:0; background:linear-gradient(115deg, rgba(255,90,80,.85) 4%, rgba(236,63,134,.7) 44%, rgba(123,63,240,.5)); }
-  .c7 .bn-tag{ position:absolute; z-index:6; top:7px; right:12px; height:15px; display:inline-flex; align-items:center; padding:0 6px; border-radius:999px; font-size:7.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; background:rgba(255,255,255,.26); color:#fff; backdrop-filter:blur(4px); }
-  .c7 .bn-in{ position:absolute; inset:0; z-index:3; padding:0 15px; display:flex; align-items:center; gap:11px; }
+  .c7 .bn-in{ position:absolute; inset:0; z-index:3; padding:0 14px; display:flex; align-items:center; gap:11px; }
   .c7 .bn-mark{ position:relative; width:20px; height:24px; flex:none; }
   .c7 .bn-mark i{ position:absolute; bottom:0; width:11px; border-radius:7px 7px 3px 3px; }
   .c7 .bn-mark i.a{ left:0; height:17px; background:linear-gradient(180deg,#ff8a5b,#ff4f6d); }
@@ -131,7 +130,9 @@
   .c7 .bn-copy{ flex:1; min-width:0; color:#fff; }
   .c7 .bn-copy b{ display:block; font-size:12.5px; font-weight:800; line-height:1.18; letter-spacing:-.01em; }
   .c7 .bn-copy small{ display:block; margin-top:2px; font-size:10px; font-weight:600; opacity:.95; }
-  .c7 .bn-cta{ flex:none; height:30px; padding:0 13px; border:0; border-radius:9px; background:#fff; color:#16183a; font:inherit; font-size:11px; font-weight:800; cursor:pointer; }
+  .c7 .bn-right{ flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:7px; }
+  .c7 .bn-tag{ height:15px; display:inline-flex; align-items:center; padding:0 8px; border-radius:999px; font-size:7.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; background:rgba(255,255,255,.26); color:#fff; backdrop-filter:blur(4px); }
+  .c7 .bn-cta{ height:30px; padding:0 14px; border:0; border-radius:9px; background:#fff; color:#16183a; font:inherit; font-size:11px; font-weight:800; cursor:pointer; }
 
   /* ===== 8 · Ask Vela · chat input ===== */
   .c8 .vela-chatbar{ height:50px; padding:7px 8px 7px 14px; border:1px solid #d4dff4; border-radius:11px; background:rgba(255,255,255,.82); display:flex; align-items:center; gap:10px; box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 8px 20px rgba(23,42,96,.055); }
@@ -205,10 +206,10 @@
   // 7 — Sponsored banner A (slim 75px, pinned bottom)
   var c7 = panel('c7',
     '<p class="vintro">Travelling abroad? Here’s something that might help on your trip.</p>'+
-    '<div class="vela-banner" style="background-image:url('+BEACH+')"><span class="bn-tag">Patrocinado</span>'+
+    '<div class="vela-banner" style="background-image:url('+BEACH+')">'+
       '<div class="bn-in"><span class="bn-mark"><i class="a"></i><i class="b"></i></span>'+
       '<span class="bn-copy"><b>Activa tu eSIM, sin roaming</b><small>airalo · Desde 4,00€</small></span>'+
-      '<button class="bn-cta">Ver planes</button></div></div>');
+      '<span class="bn-right"><span class="bn-tag">Patrocinado</span><button class="bn-cta">Ver planes</button></span></div></div>');
 
   // 8 — Ask Vela · chat input (lives here; removed from the live screens)
   var ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
