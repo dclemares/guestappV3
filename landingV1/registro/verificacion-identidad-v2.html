@@ -137,6 +137,12 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
 .cam-frame{ position:relative; width:100%; max-width:420px; margin:18px auto 0; aspect-ratio:4/3; border-radius:18px;
   background:linear-gradient(150deg, var(--frame-1), var(--frame-2)); }
 .cam-frame.face{ background:linear-gradient(150deg,#8b8fa6,#9ea2b6); aspect-ratio:4/3.4; }
+/* placeholder limpio (phase 0): sin foto de fondo, esquinas azules */
+.cam-frame.ph{ background:#eef1fb; border:1px solid var(--line); }
+.cam-frame.ph .bracket{ border-color:var(--blue); }
+.cam-frame.ph .cam-guide{ background:#fff; border-color:rgba(56,91,248,.35); }
+.cam-frame.ph.face{ background:#eef1fb; }
+.cam-frame.ph.face .face-oval{ border:2.4px dashed rgba(56,91,248,.55); color:rgba(56,91,248,.5); background:rgba(255,255,255,.55); }
 .bracket{ position:absolute; width:28px; height:28px; border:2.6px solid #fff; }
 .bracket.tl{ top:15px; left:15px; border-right:0; border-bottom:0; border-top-left-radius:9px; }
 .bracket.tr{ top:15px; right:15px; border-left:0; border-bottom:0; border-top-right-radius:9px; }
@@ -201,6 +207,17 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
   background:rgba(15,159,128,.30); backdrop-filter:blur(1px); animation:cap-fade .3s ease-out both; }
 .cap-check{ width:72px; height:72px; border-radius:50%; background:var(--cap-green); color:#fff; display:flex; align-items:center; justify-content:center;
   box-shadow:0 10px 30px rgba(15,159,128,.5); animation:cap-pop .45s cubic-bezier(.2,.7,.3,1) both; }
+/* error recuperable */
+.cam-error{ position:absolute; inset:0; z-index:6; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; text-align:center; padding:22px;
+  background:rgba(214,40,57,.34); backdrop-filter:blur(1px); animation:cap-fade .3s ease-out both; }
+.cam-error .err-ic{ width:60px; height:60px; border-radius:50%; background:#e0394a; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 26px rgba(214,40,57,.5); animation:cap-pop .4s cubic-bezier(.2,.7,.3,1) both; }
+.cam-error .err-ic svg{ width:34px; height:34px; stroke-width:2.6; }
+.cam-error b{ color:#fff; font-size:16px; font-weight:800; text-shadow:0 2px 8px rgba(0,0,0,.35); }
+.cam-error span{ color:#fff; font-size:12.5px; font-weight:600; max-width:280px; line-height:1.45; text-shadow:0 1px 5px rgba(0,0,0,.3); }
+.cam-error .err-actions{ display:flex; gap:10px; margin-top:4px; }
+.cam-error .err-btn{ height:38px; padding:0 18px; border:0; border-radius:9999px; font:inherit; font-size:13.5px; font-weight:700; cursor:pointer; }
+.cam-error .err-btn.primary{ background:#fff; color:#c01f30; }
+.cam-error .err-btn.ghost{ background:rgba(255,255,255,.18); color:#fff; }
 .cap-check svg{ width:40px; height:40px; stroke-width:3; }
 .cap-label{ color:#fff; font-size:16px; font-weight:700; text-shadow:0 2px 8px rgba(0,0,0,.35); animation:cap-rise .4s ease-out .08s both; }
 .cap-ring{ width:20px; height:20px; flex:none; border-radius:50%; display:flex; align-items:center; justify-content:center;
@@ -398,7 +415,33 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
           <p class="intro">Select the document you'll scan.</p>
         </div>
 
-        <section class="section">
+        <section class="section" style="margin-top:0">
+          <div class="section-head">
+            <h2 class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
+              Nationality
+            </h2>
+          </div>
+          <div style="padding:14px 18px">
+            <div class="field full" id="natField" data-select data-value="">
+              <div class="select">
+                <div class="control" tabindex="0"><span class="val placeholder">Select your nationality</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></div>
+                <div class="menu">
+                  <div class="fopt-row" data-v="ES"><span class="opt-flag">🇪🇸</span>Spain</div>
+                  <div class="fopt-row" data-v="FR"><span class="opt-flag">🇫🇷</span>France</div>
+                  <div class="fopt-row" data-v="DE"><span class="opt-flag">🇩🇪</span>Germany</div>
+                  <div class="fopt-row" data-v="IT"><span class="opt-flag">🇮🇹</span>Italy</div>
+                  <div class="fopt-row" data-v="PT"><span class="opt-flag">🇵🇹</span>Portugal</div>
+                  <div class="fopt-row" data-v="GB"><span class="opt-flag">🇬🇧</span>United Kingdom</div>
+                  <div class="fopt-row" data-v="US"><span class="opt-flag">🇺🇸</span>United States</div>
+                  <div class="fopt-row" data-v="BR"><span class="opt-flag">🇧🇷</span>Brazil</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="docSection" style="opacity:.4;pointer-events:none">
           <div class="section-head">
             <h2 class="section-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16M14 9.5h4M14 13h3"/></svg>
@@ -406,12 +449,12 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
             </h2>
           </div>
           <div class="opt-list">
-            <label class="opt-row doc-opt selected" data-doc="passport">
+            <label class="opt-row doc-opt" data-doc="passport">
               <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2.4"/><circle cx="12" cy="9" r="2.6"/><path d="M9 15.5h6"/></svg></span>
               <span class="opt-name">Passport</span>
               <span class="doc-radio"></span>
             </label>
-            <label class="opt-row doc-opt" data-doc="id">
+            <label class="opt-row doc-opt selected" data-doc="id">
               <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16M14 9.5h4M14 13h3"/></svg></span>
               <span class="opt-name">National ID</span>
               <span class="doc-radio"></span>
@@ -424,7 +467,7 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
           </div>
         </section>
 
-        <button class="v-cta" id="docContinue">Continue <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="v-cta" id="docContinue" disabled style="opacity:.5;pointer-events:none">Continue <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </section>
 
       <!-- 3 · CAPTURE (rendered by JS) -->
@@ -447,7 +490,7 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
             <div class="card-head">
               <div class="card-title"><span class="card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg></span>Nationality</div>
             </div>
-            <div class="field full" data-select data-value="ES">
+            <div class="field full" id="formNat" data-select data-value="ES">
               <div class="select">
                 <div class="control" tabindex="0"><span class="val"><span class="opt-flag">🇪🇸</span>Spain</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></div>
                 <div class="menu">
@@ -596,7 +639,38 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
 var screens = document.querySelectorAll('.screen');
 var captureBody = document.getElementById('captureBody');
 
-var state = { screen:'intro', doc:'passport', sub:0, phase:0 };  // sub: 0 front · 1 back · 2 face | phase: 0 sin colocar · 1 colocada · 2 validada
+/* ---- scenario params (Approach A): ?doc=passport|id|license · ?fail=front|back|selfie · ?selfie=0 ---- */
+var PARAMS = new URLSearchParams(location.search);
+var EU = ['ES','FR','DE','IT','PT','GB','NL','BE','IE','AT','SE','DK','FI','PL','GR'];
+var failParam = PARAMS.get('fail');                       // front|back|selfie
+var FAIL_KEY = failParam === 'selfie' ? 'face' : failParam;   // map to internal step key
+var state = {
+  screen:'intro',
+  doc: PARAMS.get('doc') || 'id',          // passport | id | license
+  nat: 'ES',
+  noSelfie: PARAMS.get('selfie') === '0',
+  steps: [],                               // built by buildSteps()
+  sub: 0,                                  // index into steps
+  phase: 0,                                // 0 sin colocar · 1 colocada · 2 validada · 3 error
+  failKey: FAIL_KEY,                       // step key that should fail once
+  failedOnce: false                        // consumed after first failure
+};
+
+/* definición de cada tipo de paso (sustituye al CAP fijo) */
+var STEP_DEFS = {
+  front:    { kind:'doc', side:'front', img:'assets/dni-anverso.jpg', title:'Photo of the <span class="accent">front</span>',        place:'Place your document inside the frame', okLabel:'Photo taken!',   okTitle:'Photo saved!', failReason:'There was glare on the document — try again with less reflection.' },
+  back:     { kind:'doc', side:'back',  img:'assets/dni-reverso.jpg', title:'Now flip to the <span class="accent">back</span>',        place:'Place your document inside the frame', okLabel:'Photo taken!',   okTitle:'Photo saved!', failReason:'The back came out blurry — hold steady and try again.' },
+  passport: { kind:'doc', side:'front', img:'assets/dni-anverso.jpg', title:'Photo of the <span class="accent">passport</span> page', place:'Place the photo page inside the frame',  okLabel:'Photo taken!',   okTitle:'Photo saved!', failReason:'There was glare on the page — try again with less reflection.' },
+  face:     { kind:'face',              img:'assets/selfie.jpg',      title:'Confirm it\'s <span class="accent">you</span>',            place:'Look at the camera',                   okLabel:'Selfie captured!', okTitle:'Selfie ready!', failReason:'We couldn\'t see your face clearly — face the light and try again.' }
+};
+
+/* secuencia de pasos derivada del estado */
+function buildSteps(){
+  var s = (state.doc === 'passport') ? ['passport'] : ['front','back'];
+  if(!state.noSelfie) s.push('face');
+  return s;
+}
+function curDef(){ return STEP_DEFS[state.steps[state.sub]]; }
 var capTimer = null, capRAF = null;
 function clearCapTimers(){ if(capTimer){ clearTimeout(capTimer); capTimer=null; } if(capRAF){ clearInterval(capRAF); capRAF=null; } }
 
@@ -638,7 +712,7 @@ function setVela(key){
   }
   // tras re-renderizar Vela, re-inyectar el indicador de progreso si procede
   if(state.screen==='capture') injectVelaProgress(state.sub, false);
-  else if(state.screen==='form') injectVelaProgress(3, false, 100);
+  else if(state.screen==='form') injectVelaProgress(state.steps.length, true, 100);
   else if(state.screen==='intro') injectVelaQR();
 }
 
@@ -646,7 +720,7 @@ function setVela(key){
 function show(name){
   state.screen = name;
   screens.forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-screen')===name); });
-  setVela(name==='capture' && state.sub===2 ? 'face' : name);
+  setVela(name==='capture' && curDef() && curDef().kind==='face' ? 'face' : name);
   clearCapTimers();
 }
 
@@ -668,16 +742,18 @@ function backGuide(){
 }
 /* indicador de progreso de verificación que vive DENTRO del panel Vela */
 function velaProgressHTML(sub, allDone, activeProgress){
-  var icons = [
-    '<rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16"/>',
-    '<rect x="3" y="6" width="18" height="12" rx="2.4"/><path d="M3 10h18"/>',
-    '<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.4 7-5.4S18.2 16.4 19 20"/>',
-    '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>'
-  ];
+  var ICONS = {
+    front:'<rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16"/>',
+    passport:'<rect x="5" y="3" width="14" height="18" rx="2.4"/><circle cx="12" cy="9" r="2.6"/><path d="M9 15.5h6"/>',
+    back:'<rect x="3" y="6" width="18" height="12" rx="2.4"/><path d="M3 10h18"/>',
+    face:'<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.4 7-5.4S18.2 16.4 19 20"/>',
+    form:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>'
+  };
+  var keys = (state.steps && state.steps.length ? state.steps.slice() : ['front','back','face']).concat(['form']);
   var check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path d="m5 12 5 5L20 7"/></svg>';
   var shield = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
   var html = '<div class="vela-prog"><div class="rec-title">'+shield+'Registration progress</div><p class="rec-sub">Where you are in your registration.</p><div class="vela-prog-steps">';
-  icons.forEach(function(ic, i){
+  keys.forEach(function(key, i){
     if(i>0){
       // este conector ENTRA al nodo i: se rellena mientras el paso i está activo,
       // queda verde cuando ya hemos pasado el nodo i.
@@ -689,7 +765,7 @@ function velaProgressHTML(sub, allDone, activeProgress){
     var done = allDone || i < sub;
     var active = !allDone && i === sub;
     var cls = done ? 'done' : (active ? 'active' : '');
-    var icon = done ? check : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">'+ic+'</svg>';
+    var icon = done ? check : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">'+(ICONS[key]||ICONS.front)+'</svg>';
     html += '<span class="vp-node '+cls+'">'+icon+'</span>';
   });
   return html + '</div><div class="vela-divider" style="margin-top:18px;"></div></div>';
@@ -728,13 +804,8 @@ function injectVelaQR(){
 /* ====== captura en 3 momentos por paso ======
    phase 0: imagen aún no colocada · phase 1: imagen colocada · phase 2: validada
    Se avanza con un control de DEMO (no es UI de producto). */
-var CAP = [
-  { kind:'doc', side:'front', img:'assets/dni-anverso.jpg', title:'Photo of the <span class="accent">front</span>', place:'Place your document inside the frame', scan:'Hold still… capturing', okTitle:'Photo saved!', okLabel:'Photo taken!' },
-  { kind:'doc', side:'back',  img:'assets/dni-reverso.jpg', title:'Now flip to the <span class="accent">back</span>', place:'Place your document inside the frame', scan:'Hold still… capturing', okTitle:'Photo saved!', okLabel:'Photo taken!' },
-  { kind:'face', img:'assets/selfie.jpg', title:'Confirm it\'s <span class="accent">you</span>', place:'Look at the camera', scan:'Detecting face…', okTitle:'Selfie ready!', okLabel:'Selfie captured!' }
-];
-
 function camBadge(phase, info){
+  if(phase===3) return '<div class="cam-status"><span class="cam-dot cam-dot-wait" style="background:#e0394a;box-shadow:0 0 0 4px rgba(214,40,57,.2)"></span> Couldn\'t read it</div>';
   if(phase===0) return '<div class="cam-status"><span class="cam-dot cam-dot-wait"></span> '+info.place+'</div>';
   if(phase===1) return '<div class="cam-status"><span class="cap-ring" id="capRing"><i></i></span><span id="capText">'+(info.kind==='face'?'Detecting face':'Hold still')+' · 0%</span></div>';
   return '<div class="cam-status"><span class="cap-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 12 5 5L20 7"/></svg></span><span style="color:var(--cap-green)">Capture complete</span></div>';
@@ -742,23 +813,32 @@ function camBadge(phase, info){
 function camContent(info, phase){
   if(phase===0){
     if(info.kind==='doc'){
-      // mesa + mockup del documento (símil) como guía de colocación
-      var guide = info.side==='front' ? frontGuide() : backGuide();
-      return '<img class="cam-photo" src="assets/mesa.jpg" alt="">'+brackets()+guide+'<div class="cam-scan"></div>'+camBadge(0, info);
+      // placeholder limpio (sin foto de fondo) como guía de colocación
+      var guide = info.side==='back' ? backGuide() : frontGuide();
+      return brackets()+guide+camBadge(0, info);
     }
-    return '<img class="cam-photo" src="assets/habitacion.jpg" alt="">'+brackets()+'<div class="face-oval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.4 7-5.4S18.2 16.4 19 20"/></svg></div><div class="cam-scan"></div>'+camBadge(0, info);
+    return brackets()+'<div class="face-oval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.4 7-5.4S18.2 16.4 19 20"/></svg></div>'+camBadge(0, info);
   }
   var photo = '<img class="cam-photo" src="'+info.img+'" alt="">';
   if(phase===1){
     // imagen colocada + barra de escaneo barriendo encima
     return photo+brackets()+'<div class="cam-scan"></div>'+camBadge(1, info);
   }
+  if(phase===3){
+    // error de lectura (recuperable)
+    var retryUpload = info.kind==='doc' ? '<button class="err-btn ghost" id="errUpload">Upload a file</button>' : '';
+    var errOv = '<div class="cam-error"><span class="err-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 8v5"/><circle cx="12" cy="16.4" r="0.4" fill="currentColor"/><path d="M10.3 4.3 3 17a2 2 0 0 0 1.7 3h14.6a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0Z"/></svg></span>'+
+      '<b>We couldn\'t read your '+(info.kind==='face'?'selfie':info.side)+'</b>'+
+      '<span>'+info.failReason+'</span>'+
+      '<div class="err-actions"><button class="err-btn primary" id="errRetry">Try again</button>'+retryUpload+'</div></div>';
+    return photo+brackets()+errOv+camBadge(3, info);
+  }
   // validada
   var overlay = '<div class="cam-success"><span class="cap-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 13 4 4L19 7"/></svg></span><span class="cap-label">'+info.okLabel+'</span></div>';
   return photo+brackets()+overlay+camBadge(2, info);
 }
 function demoLabel(){
-  return CAP[state.sub].kind==='face' ? 'Demo · take selfie' : 'Demo · place document';
+  return curDef().kind==='face' ? 'Demo · take selfie' : 'Demo · place document';
 }
 function syncVelaConn(){
   var f = document.getElementById('velaConnFill'); if(!f) return;
@@ -768,11 +848,11 @@ function syncVelaConn(){
 }
 
 function renderCapture(){
-  var info = CAP[state.sub], phase = state.phase;
+  var info = curDef(), phase = state.phase;
   var title = phase===2 ? info.okTitle : info.title;
   var sub = phase===2 ? 'Moving to the next step…'
     : (info.kind==='face' ? 'Look at the camera — it captures automatically.' : 'No need to tap anything — the photo is taken automatically.');
-  var frameCls = 'cam-frame'+(info.kind==='face'?' face':'')+(phase===2?' ok':'');
+  var frameCls = 'cam-frame'+(info.kind==='face'?' face':'')+(phase===0?' ph':'')+(phase===2?' ok':'');
 
   var html = '<div class="page-head"><div class="kicker">Guest Registration</div><h1>'+title+'</h1><p class="intro">'+sub+'</p></div>';
   html += '<div class="'+frameCls+'" id="capFrame">'+camContent(info, phase)+'</div>';
@@ -787,8 +867,12 @@ function renderCapture(){
 
   var demo = document.getElementById('demoBtn'); if(demo) demo.addEventListener('click', placeImage);
   var up = document.getElementById('upload'); if(up) up.addEventListener('click', placeImage);
+  var er = document.getElementById('errRetry'); var eu = document.getElementById('errUpload');
+  function retry(){ state.failedOnce = true; state.phase = 0; renderCapture(); }
+  if(er) er.addEventListener('click', retry);
+  if(eu) eu.addEventListener('click', retry);
 
-  setVela(state.sub===2 ? 'face' : 'capture');
+  setVela(curDef().kind==='face' ? 'face' : 'capture');
   syncVelaConn();
 }
 
@@ -797,7 +881,7 @@ var CAPTURE_MS = 2200, VALIDATED_MS = 1300;
 function updateRing(p){
   var ring = document.getElementById('capRing'), txt = document.getElementById('capText'), fill = document.getElementById('velaConnFill');
   if(ring) ring.style.background = 'conic-gradient(var(--blue) '+(p*3.6)+'deg, var(--line) 0)';
-  if(txt) txt.textContent = (CAP[state.sub].kind==='face'?'Detecting face':'Hold still')+' · '+Math.round(p)+'%';
+  if(txt) txt.textContent = (curDef().kind==='face'?'Detecting face':'Hold still')+' · '+Math.round(p)+'%';
   if(fill) fill.style.width = p+'%';
 }
 function placeImage(){
@@ -810,19 +894,24 @@ function placeImage(){
     updateRing(p);
     if(p>=100){
       clearInterval(capRAF); capRAF = null;
-      state.phase = 2; renderCapture();        // validada
-      capTimer = setTimeout(capNextStep, VALIDATED_MS);
+      var key = state.steps[state.sub];
+      if(state.failKey === key && !state.failedOnce){
+        state.phase = 3; renderCapture();      // error recuperable
+      } else {
+        state.phase = 2; renderCapture();      // validada
+        capTimer = setTimeout(capNextStep, VALIDATED_MS);
+      }
     }
   }, 40);
 }
 function capNextStep(){
   clearCapTimers();
-  if(state.sub < 2){ state.sub++; state.phase = 0; renderCapture(); }
+  if(state.sub < state.steps.length - 1){ state.sub++; state.phase = 0; renderCapture(); }
   else { show('form'); window.scrollTo(0,0); resizeSig(); }   // verificación completada → formulario (dentro del flujo)
 }
 
 /* ---- navigation ---- */
-function goCapture(){ state.sub = 0; state.phase = 0; show('capture'); renderCapture(); }
+function goCapture(){ state.steps = buildSteps(); state.sub = 0; state.phase = 0; state.failedOnce = false; show('capture'); renderCapture(); }
 
 document.getElementById('start').addEventListener('click', function(){ show('doc'); });
 document.getElementById('docContinue').addEventListener('click', goCapture);
@@ -834,6 +923,27 @@ document.querySelectorAll('.doc-opt').forEach(function(opt){
     opt.classList.add('selected');
     state.doc = opt.getAttribute('data-doc');
   });
+});
+
+/* ---- nacionalidad: filtra documentos (regla de ejemplo) ---- */
+function allowedDocs(nat){ return EU.indexOf(nat) >= 0 ? ['passport','id','license'] : ['passport']; }
+function applyNationality(code){
+  state.nat = code;
+  var allow = allowedDocs(code);
+  document.querySelectorAll('#docSection .doc-opt').forEach(function(o){
+    o.style.display = allow.indexOf(o.getAttribute('data-doc')) >= 0 ? '' : 'none';
+  });
+  if(allow.indexOf(state.doc) < 0) state.doc = allow[0];
+  document.querySelectorAll('#docSection .doc-opt').forEach(function(o){ o.classList.toggle('selected', o.getAttribute('data-doc')===state.doc); });
+  var sec=document.getElementById('docSection'); sec.style.opacity=''; sec.style.pointerEvents='';
+  var cta=document.getElementById('docContinue'); cta.disabled=false; cta.style.opacity=''; cta.style.pointerEvents='';
+  // prefill del campo Nationality del formulario
+  var src=document.querySelector('#natField .fopt-row[data-v="'+code+'"]');
+  var fn=document.getElementById('formNat');
+  if(src && fn){ var val=fn.querySelector('.val'); if(val){ val.innerHTML=src.innerHTML; val.classList.remove('placeholder'); } fn.setAttribute('data-value', code); }
+}
+document.querySelectorAll('#natField .fopt-row').forEach(function(row){
+  row.addEventListener('click', function(){ applyNationality(row.getAttribute('data-v')); });
 });
 
 /* ============ FORM (custom selects, checkboxes, signature pad) ============ */
@@ -907,10 +1017,15 @@ var _dh = document.getElementById('docNumHelp');
 if(_dh) _dh.addEventListener('click', askVelaDocNumber);
 
 /* init — wait for the Web Component to register before touching .items */
+var HAS_SCENARIO = PARAMS.has('doc') || PARAMS.has('fail') || PARAMS.has('selfie');
+function boot(){
+  setVela(state.screen);
+  if(HAS_SCENARIO){ goCapture(); }   // arranca directo en captura para el caso de uso
+}
 if(window.customElements){
-  customElements.whenDefined('chekin-vela').then(function(){ setVela(state.screen); });
+  customElements.whenDefined('chekin-vela').then(boot);
 } else {
-  setVela('intro');
+  boot();
 }
 </script>
 </body>

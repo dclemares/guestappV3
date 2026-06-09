@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IV — Casos de uso</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; } html,body{ margin:0; }
+  :root{ --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82); }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:48px 40px 90px;
+    background:radial-gradient(circle 300px at 320px 200px, rgba(79,107,255,.18), rgba(79,107,255,0) 70%), linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1100px; margin:0 auto 26px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 6px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:720px; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; max-width:1100px; margin:0 auto; }
+  .case{ background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.82); border-radius:16px; padding:18px 18px 16px; box-shadow:0 12px 30px rgba(22,40,90,.10); display:flex; flex-direction:column; }
+  .case .tag{ align-self:flex-start; height:20px; display:inline-flex; align-items:center; padding:0 9px; border-radius:999px; font-size:10px; font-weight:800; letter-spacing:.04em; background:rgba(56,91,248,.12); color:var(--blue-deep); margin-bottom:10px; }
+  .case.err .tag{ background:rgba(214,40,57,.12); color:#c01f30; }
+  .case h3{ margin:0 0 6px; font-size:16px; font-weight:800; }
+  .case p{ margin:0 0 14px; font-family:'Poppins',sans-serif; font-size:12.8px; line-height:1.5; color:var(--grey); flex:1; }
+  .case code{ font-family:ui-monospace,Menlo,monospace; font-size:11px; color:var(--grey-soft); }
+  .case a{ align-self:flex-start; display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 16px; border-radius:9999px; text-decoration:none;
+    background:linear-gradient(135deg,var(--blue-deep),#5d7cff); color:#fff; font-size:13px; font-weight:700; box-shadow:0 12px 24px -12px rgba(16,71,255,.6); }
+  .case a svg{ width:15px; height:15px; stroke-width:2.4; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Guest App V3 · IV</div>
+    <h1>Verificación de identidad — Casos de uso</h1>
+    <p>Cada tarjeta abre el flujo de IV (V2) en un escenario concreto. Los escenarios se controlan por parámetros de URL: <code>?doc=</code>, <code>?fail=</code>, <code>?selfie=0</code>.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+<script>
+  var V2='landingV1/registro/verificacion-identidad-v2.html';
+  var ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var CASES=[
+    {tag:'Happy path', cls:'', title:'DNI · completo', desc:'Documento por delante y por detrás + selfie, todo correcto.', href:V2},
+    {tag:'Error', cls:'err', title:'Error · lectura del anverso', desc:'La lectura del documento por delante falla; se ofrece reintento (y el reintento funciona).', href:V2+'?doc=id&fail=front'},
+    {tag:'Error', cls:'err', title:'Error · lectura del reverso', desc:'La lectura del reverso falla; reintento que continúa el flujo.', href:V2+'?doc=id&fail=back'},
+    {tag:'Error', cls:'err', title:'Error · lectura del selfie', desc:'La detección de cara falla; reintento que continúa el flujo.', href:V2+'?doc=id&fail=selfie'},
+    {tag:'Variante', cls:'', title:'Pasaporte · una sola toma', desc:'El pasaporte tiene una única cara, así que solo se captura una imagen (sin reverso).', href:V2+'?doc=passport'},
+    {tag:'Variante', cls:'', title:'Sin selfie', desc:'Proceso de IV sin paso de selfie: solo documento.', href:V2+'?doc=id&selfie=0'}
+  ];
+  document.getElementById('grid').innerHTML = CASES.map(function(c){
+    return '<div class="case '+c.cls+'"><span class="tag">'+c.tag+'</span><h3>'+c.title+'</h3><p>'+c.desc+'</p>'+
+      '<a href="'+c.href+'" target="_blank" rel="noopener">Abrir caso '+ARR+'</a></div>';
+  }).join('');
+</script>
+</body>
+</html>
