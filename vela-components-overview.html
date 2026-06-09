@@ -120,20 +120,25 @@
 
   /* ===== 7 · Sponsored banner · A (slim) — from vela-banner-abd (A) ===== */
   .c7.vela{ overflow:hidden; padding-bottom:0; }
-  .c7 .logo{ display:inline-flex; align-items:center; gap:7px; }
-  .c7 .mark{ position:relative; width:22px; height:26px; flex:none; }
-  .c7 .mark i{ position:absolute; bottom:0; width:12px; border-radius:8px 8px 3px 3px; }
-  .c7 .mark i.a{ left:0; height:19px; background:linear-gradient(180deg,#ff8a5b,#ff4f6d); }
-  .c7 .mark i.b{ left:8px; height:26px; background:linear-gradient(180deg,#ec3f86,#7b3ff0); }
-  .c7 .wm{ font-weight:800; font-size:14px; letter-spacing:-.01em; color:#fff; }
-  .c7 .adA{ position:relative; margin:12px -16px 0; height:124px; background-size:cover; background-position:center; }
-  .c7 .adA::after{ content:''; position:absolute; inset:0; background:linear-gradient(115deg, rgba(255,90,80,.82) 6%, rgba(236,63,134,.66) 46%, rgba(123,63,240,.42)); }
-  .c7 .adtag{ position:absolute; z-index:6; top:11px; right:12px; height:17px; display:inline-flex; align-items:center; padding:0 7px; border-radius:999px; font-size:8px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; background:rgba(255,255,255,.26); color:#fff; backdrop-filter:blur(4px); }
-  .c7 .in{ position:absolute; inset:0; z-index:3; padding:13px 15px; display:flex; flex-direction:column; }
-  .c7 .in h4{ margin:8px 0 0; font-size:14px; font-weight:800; line-height:1.24; color:#fff; max-width:225px; }
-  .c7 .foot{ margin-top:auto; display:flex; align-items:center; gap:10px; }
-  .c7 .price{ color:#fff; font-size:12.5px; font-weight:600; } .c7 .price b{ font-size:14px; font-weight:800; }
-  .c7 .adcta{ margin-left:auto; height:31px; padding:0 16px; border:0; border-radius:9px; background:#fff; color:#16183a; font:inherit; font-size:11.5px; font-weight:800; cursor:pointer; }
+  .c7 .vela-banner{ position:relative; margin:12px -16px 0; height:75px; background-size:cover; background-position:center; overflow:hidden; }
+  .c7 .vela-banner::after{ content:''; position:absolute; inset:0; background:linear-gradient(115deg, rgba(255,90,80,.85) 4%, rgba(236,63,134,.7) 44%, rgba(123,63,240,.5)); }
+  .c7 .bn-tag{ position:absolute; z-index:6; top:7px; right:12px; height:15px; display:inline-flex; align-items:center; padding:0 6px; border-radius:999px; font-size:7.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; background:rgba(255,255,255,.26); color:#fff; backdrop-filter:blur(4px); }
+  .c7 .bn-in{ position:absolute; inset:0; z-index:3; padding:0 15px; display:flex; align-items:center; gap:11px; }
+  .c7 .bn-mark{ position:relative; width:20px; height:24px; flex:none; }
+  .c7 .bn-mark i{ position:absolute; bottom:0; width:11px; border-radius:7px 7px 3px 3px; }
+  .c7 .bn-mark i.a{ left:0; height:17px; background:linear-gradient(180deg,#ff8a5b,#ff4f6d); }
+  .c7 .bn-mark i.b{ left:7px; height:24px; background:linear-gradient(180deg,#ec3f86,#7b3ff0); }
+  .c7 .bn-copy{ flex:1; min-width:0; color:#fff; }
+  .c7 .bn-copy b{ display:block; font-size:12.5px; font-weight:800; line-height:1.18; letter-spacing:-.01em; }
+  .c7 .bn-copy small{ display:block; margin-top:2px; font-size:10px; font-weight:600; opacity:.95; }
+  .c7 .bn-cta{ flex:none; height:30px; padding:0 13px; border:0; border-radius:9px; background:#fff; color:#16183a; font:inherit; font-size:11px; font-weight:800; cursor:pointer; }
+
+  /* ===== 8 · Ask Vela · chat input ===== */
+  .c8 .vela-chatbar{ height:50px; padding:7px 8px 7px 14px; border:1px solid #d4dff4; border-radius:11px; background:rgba(255,255,255,.82); display:flex; align-items:center; gap:10px; box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 8px 20px rgba(23,42,96,.055); }
+  .c8 .vela-chatbar input{ flex:1; min-width:0; height:100%; border:0; outline:0; background:transparent; font:inherit; font-size:12px; color:#17245d; }
+  .c8 .vela-chatbar input::placeholder{ color:#6b6b95; }
+  .c8 .send-btn{ width:36px; height:36px; flex:none; border:0; border-radius:9px; background:#1047ff; color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .c8 .send-btn svg{ width:17px; height:17px; stroke-width:2; }
 </style>
 </head>
 <body>
@@ -197,13 +202,18 @@
     '<div class="hc" style="background-image:url('+ROOM+')"><span class="save">-30%</span>'+
       '<div class="glass"><span class="tb"><b>Early check-in</b><small>Access from 11:00</small></span><span class="pr"><s>€35</s>€25</span><button class="add">Add</button></div></div>');
 
-  // 7 — Sponsored banner A (slim) — banner-abd A
+  // 7 — Sponsored banner A (slim 75px, pinned bottom)
   var c7 = panel('c7',
     '<p class="vintro">Travelling abroad? Here’s something that might help on your trip.</p>'+
-    '<div class="adA" style="background-image:url('+BEACH+')"><span class="adtag">Patrocinado</span>'+
-      '<div class="in"><span class="logo"><span class="mark"><i class="a"></i><i class="b"></i></span><span class="wm">airalo</span></span>'+
-      '<h4>Activa tu eSIM al instante y olvídate del roaming.</h4>'+
-      '<div class="foot"><span class="price">Desde <b>4,00€</b></span><button class="adcta">Ver planes</button></div></div></div>');
+    '<div class="vela-banner" style="background-image:url('+BEACH+')"><span class="bn-tag">Patrocinado</span>'+
+      '<div class="bn-in"><span class="bn-mark"><i class="a"></i><i class="b"></i></span>'+
+      '<span class="bn-copy"><b>Activa tu eSIM, sin roaming</b><small>airalo · Desde 4,00€</small></span>'+
+      '<button class="bn-cta">Ver planes</button></div></div>');
+
+  // 8 — Ask Vela · chat input (lives here; removed from the live screens)
+  var ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var c8 = panel('c8',
+    '<form class="vela-chatbar" onsubmit="return false"><input type="text" placeholder="Ask Vela anything…"><button class="send-btn" type="submit" aria-label="Send">'+ARROW+'</button></form>');
 
   var items=[
     {n:'1', name:'Section headers (Option 3)', desc:'Eyebrow + hairline rule + coloured left tick. Shown with the Progress and Good-to-know sections (info icon + 1/6 count).', html:c1},
@@ -212,7 +222,8 @@
     {n:'4', name:'Contextual deal · V4 in bubble', desc:'Vela proposes in a chat bubble; the V4 coupon (photo + tear + tinted redeem + ribbon) lives inside the reply, then “See 2 more extras”.', html:c4},
     {n:'5', name:'Deals carousel · 3b★2', desc:'Duotone photo cards + price coin (→ Add on hover), peek, edge fade, dots, snap.', html:c5},
     {n:'6', name:'Deals hero · 4a★1·B', desc:'Photo hero with a light frosted-glass info card (title, old/new price, Add).', html:c6},
-    {n:'7', name:'Sponsored banner · A (slim)', desc:'Full-bleed ad slot, Airalo gradient over the photo, “Patrocinado” marker.', html:c7}
+    {n:'7', name:'Sponsored banner · A (slim)', desc:'Slim 75px full-bleed ad slot pinned at the bottom of the panel, Airalo gradient over the photo, “Patrocinado” marker.', html:c7},
+    {n:'8', name:'Ask Vela · chat input', desc:'The conversational input bar. Lives here as a component — removed from the live screens.', html:c8}
   ];
   document.getElementById('grid').innerHTML = items.map(function(it){
     return '<div class="col"><div class="clabel"><span class="cnum">'+it.n+'</span><span class="cname">'+it.name+'</span></div><p class="cdesc">'+it.desc+'</p>'+it.html+'</div>';
