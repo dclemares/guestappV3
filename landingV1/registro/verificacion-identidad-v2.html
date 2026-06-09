@@ -77,7 +77,7 @@ button{ font:inherit; }
 .section-head{ min-height:48px; padding:0 18px; display:flex; align-items:center; border-bottom:1px solid rgba(214,222,242,.72); background:rgba(255,255,255,.50); }
 .section-title{ display:flex; align-items:center; gap:10px; margin:0; font-size:13px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#4f5b86; }
 .section-title svg{ width:17px; height:17px; color:var(--blue); stroke-width:2; }
-/* la tarjeta de nacionalidad no recorta su desplegable (el resto de .section sí, para redondear la lista) */
+/* the nationality card does not clip its dropdown (the rest of .section does, to round the list) */
 #natSection{ overflow:visible; }
 #natSection .section-head{ border-radius:18px 18px 0 0; }
 
@@ -119,19 +119,23 @@ button{ font:inherit; }
 .minor-note.show{ display:flex; }
 .minor-note svg{ width:17px; height:17px; flex:none; margin-top:1px; }
 
-/* ============ PROGRESO DE VERIFICACIÓN (dentro de Vela) ============ */
+/* ============ VERIFICATION PROGRESS (inside Vela) ============ */
 .vela-prog{ margin:0; }
-.vela-prog-steps{ display:flex; align-items:center; gap:0; margin-top:12px; padding:0 8px; }
+/* eyebrow Option-3 (mismo lenguaje que el overview / componente #10) */
+.vela-prog .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 12px; font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+.vela-prog .eye::before{ content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+.vela-prog .eye::after{ content:""; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--blue); }
+.vela-prog-steps{ display:flex; align-items:center; gap:0; margin-top:16px; padding:0 8px; }
 /* el divisor bajo la cabecera de Vela se mantiene visible en todas las pantallas (consistencia del header) */
-.vp-node{ position:relative; z-index:2; width:34px; height:34px; flex:none; border-radius:50%; background:#e3e8fe; border:1px solid rgba(56,91,248,.28);
+.vp-node{ position:relative; z-index:2; width:34px; height:34px; flex:none; border-radius:50%; background:#e9edfb; border:1px solid rgba(56,91,248,.28);
   box-shadow:0 0 0 4px #eef1fe; display:flex; align-items:center; justify-content:center; color:#385bf8; transition:all .25s ease; }
 .vp-node svg{ width:16px; height:16px; stroke-width:2; }
 .vp-node.active{ background:#385bf8; border-color:#385bf8; color:#fff; box-shadow:0 0 0 5px #dbe1fe; animation:vp-pulse 1.6s ease-in-out infinite; }
-.vp-node.done{ background:#e8f6f2; border-color:transparent; color:#238f7e; box-shadow:0 0 0 5px #f0faf7; }
+.vp-node.done{ background:#e3f5ef; border-color:transparent; color:#0f9f80; box-shadow:0 0 0 5px rgba(15,159,128,.12); }
 .vp-conn{ position:relative; z-index:1; flex:1; height:4px; margin:0 -2px; background:#e3e6f0; border-radius:999px; overflow:hidden; }
-.vp-fill{ position:relative; display:block; height:100%; width:0; border-radius:999px; background:linear-gradient(90deg,#c5e5dd 0%,#d4eee8 100%); box-shadow:0 0 6px rgba(86,142,130,.10); transition:width .18s linear; overflow:hidden; }
+.vp-fill{ position:relative; display:block; height:100%; width:0; border-radius:999px; background:linear-gradient(90deg,#0f9f80 0%,#2fe0b4 100%); box-shadow:0 0 6px rgba(15,159,128,.16); transition:width .18s linear; overflow:hidden; }
 .vp-fill.active::after{ content:""; position:absolute; inset:-1px; width:34%; min-width:28px; border-radius:inherit; background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.34),rgba(255,255,255,0)); transform:translateX(-120%); animation:vp-shimmer 1.15s ease-in-out infinite; }
-.vp-fill.done{ background:linear-gradient(90deg,#c5e5dd 0%,#d4eee8 100%); box-shadow:0 0 5px rgba(86,142,130,.08); transition:width .38s ease, background .3s ease; }
+.vp-fill.done{ background:linear-gradient(90deg,#0f9f80 0%,#2fe0b4 100%); box-shadow:0 0 5px rgba(15,159,128,.14); transition:width .38s ease, background .3s ease; }
 .vp-fill.done::after{ display:none; }
 @keyframes vp-pulse{ 0%,100%{ box-shadow:0 0 0 5px #d3dbfe; } 50%{ box-shadow:0 0 0 5px #e9ecfe; } }
 @keyframes vp-shimmer{ 0%{ transform:translateX(-120%); } 100%{ transform:translateX(320%); } }
@@ -140,7 +144,7 @@ button{ font:inherit; }
 .cam-frame{ position:relative; width:100%; max-width:420px; margin:18px auto 0; aspect-ratio:4/3; border-radius:18px;
   background:linear-gradient(150deg, var(--frame-1), var(--frame-2)); }
 .cam-frame.face{ background:linear-gradient(150deg,#8b8fa6,#9ea2b6); aspect-ratio:4/3.4; }
-/* fase 0: marco con borde blanco y esquinas azules redondeadas (sobre la vista de cámara) */
+/* phase 0: frame with white border and rounded blue corners (over the camera view) */
 .cam-frame.ph{ background:#fff; border:4px solid rgba(255,255,255,.94); box-shadow:0 16px 38px -16px rgba(22,40,90,.34); }
 .cam-frame.ph .cam-photo{ border-radius:14px; }   /* iguala el radio interior del borde para que no asome el fondo en las esquinas */
 .cam-frame.ph .bracket{ display:none; }
@@ -354,7 +358,7 @@ button{ font:inherit; }
 .field-help:hover .fh-text,
 .field-help:focus .fh-text,
 .field-help:focus-visible .fh-text{ max-width:62px; opacity:1; transform:translateX(0); margin-left:8px; }
-/* respuesta de Vela (animación) */
+/* Vela response (animation) */
 .vela-answer{ border:1px solid rgba(56,91,248,.30); background:linear-gradient(180deg, rgba(56,91,248,.10), rgba(56,91,248,.03));
   border-radius:14px; padding:12px 13px; margin:0 0 14px; animation:va-in .42s cubic-bezier(.2,.8,.3,1.1) both; }
 .vela-answer .va-head{ display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#1047ff; margin-bottom:6px; }
@@ -518,8 +522,8 @@ button{ font:inherit; }
             <div class="card-head"><div class="card-title"><span class="card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/></svg></span>Legal name</div></div>
             <div class="grid">
               <div class="field"><label>First name</label><input class="control" value="Carmen"></div>
-              <div class="field"><label>Last name</label><input class="control" value="Española"></div>
-              <div class="field full"><label>Second last name <span class="opt">(optional)</span></label><input class="control" value="Española"></div>
+              <div class="field"><label>Last name</label><input class="control" value="Spanish"></div>
+              <div class="field full"><label>Second last name <span class="opt">(optional)</span></label><input class="control" value="Spanish"></div>
             </div>
           </section>
 
@@ -659,12 +663,12 @@ var state = {
   noSelfie: PARAMS.get('selfie') === '0',
   steps: [],                               // built by buildSteps()
   sub: 0,                                  // index into steps
-  phase: 0,                                // 0 sin colocar · 1 colocada · 2 validada · 3 error
+  phase: 0,                                // 0 sin colocar · 1 colocada · 2 validated · 3 error
   failKey: FAIL_KEY,                       // step key that should fail once
   failedOnce: false                        // consumed after first failure
 };
 
-/* definición de cada tipo de paso (sustituye al CAP fijo) */
+/* definition of each step type (replaces the fixed CAP) */
 var STEP_DEFS = {
   front:    { kind:'doc', side:'front', img:'assets/dni-anverso.jpg', title:'Photo of the <span class="accent">front</span>',        place:'Place your document inside the frame', okLabel:'Photo taken!',   okTitle:'Photo saved!', failReason:'There was glare on the document — try again with less reflection.' },
   back:     { kind:'doc', side:'back',  img:'assets/dni-reverso.jpg', title:'Now flip to the <span class="accent">back</span>',        place:'Place your document inside the frame', okLabel:'Photo taken!',   okTitle:'Photo saved!', failReason:'The back came out blurry — hold steady and try again.' },
@@ -748,7 +752,7 @@ function backGuide(){
     '<div class="mrz">P&lt;ESPGARCIA&lt;&lt;MARIA&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>AB1234567ESP9103142F&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>'+
   '</div>';
 }
-/* indicador de progreso de verificación que vive DENTRO del panel Vela */
+/* verification progress indicator that lives INSIDE the Vela panel */
 function velaProgressHTML(sub, allDone, activeProgress){
   var ICONS = {
     front:'<rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5 16c.6-1.5 2-2.3 3.5-2.3S11.4 14.5 12 16"/>',
@@ -760,10 +764,10 @@ function velaProgressHTML(sub, allDone, activeProgress){
   var keys = (state.steps && state.steps.length ? state.steps.slice() : ['front','back','face']).concat(['form']);
   var check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path d="m5 12 5 5L20 7"/></svg>';
   var shield = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
-  var html = '<div class="vela-prog"><div class="rec-title">'+shield+'Registration progress</div><p class="rec-sub">Where you are in your registration.</p><div class="vela-prog-steps">';
+  var html = '<div class="vela-prog"><div class="eye">Your verification</div><div class="rec-title">'+shield+'Where you are in your registration.</div><p class="rec-sub">A few quick steps — we’ll guide you through each one.</p><div class="vela-prog-steps">';
   keys.forEach(function(key, i){
     if(i>0){
-      // este conector ENTRA al nodo i: se rellena mientras el paso i está activo,
+      // this connector ENTERS node i: it fills while step i is active,
       // queda verde cuando ya hemos pasado el nodo i.
       var cdone = allDone || i < sub;
       var ccur  = !allDone && i === sub;
@@ -785,7 +789,7 @@ function injectVelaProgress(sub, allDone, activeProgress){
   scroll.insertAdjacentHTML('afterbegin', velaProgressHTML(sub, allDone, activeProgress));
 }
 
-/* QR decorativo autocontenido (símil) — patrones de esquina + módulos deterministas */
+/* self-contained decorative QR (mock) — corner patterns + deterministic modules */
 function qrSVG(){
   var N = 25, cells = '';
   function loc(x, y, ox, oy){ var lx=x-ox, ly=y-oy; if(lx<0||ly<0||lx>6||ly>6) return null;
@@ -810,7 +814,7 @@ function injectVelaQR(){
 }
 
 /* ====== captura en 3 momentos por paso ======
-   phase 0: imagen aún no colocada · phase 1: imagen colocada · phase 2: validada
+   phase 0: image not placed yet · phase 1: image placed · phase 2: validated
    Se avanza con un control de DEMO (no es UI de producto). */
 function camBadge(phase, info){
   if(phase===3) return '<div class="cam-status"><span class="cam-dot cam-dot-wait" style="background:#e0394a;box-shadow:0 0 0 4px rgba(214,40,57,.2)"></span> Validation failed</div>';
@@ -821,7 +825,7 @@ function camBadge(phase, info){
 function camContent(info, phase){
   if(phase===0){
     if(info.kind==='doc'){
-      // mesa vacía como vista de cámara en vivo + guía de colocación
+      // empty table as live camera view + placement guide
       var guide = info.side==='back' ? backGuide() : frontGuide();
       return '<img class="cam-photo" src="assets/mesa.jpg" alt="">'+brackets()+guide+'<div class="cam-scan"></div>'+camBadge(0, info);
     }
@@ -829,7 +833,7 @@ function camContent(info, phase){
   }
   var photo = '<img class="cam-photo" src="'+info.img+'" alt="">';
   if(phase===1){
-    // imagen colocada + barra de escaneo barriendo encima
+    // image placed + barra de escaneo barriendo encima
     return photo+brackets()+'<div class="cam-scan"></div>'+camBadge(1, info);
   }
   if(phase===3){
@@ -841,7 +845,7 @@ function camContent(info, phase){
       '<div class="err-actions"><button class="err-btn primary" id="errRetry">Try again</button>'+retryUpload+'</div></div>';
     return photo+brackets()+errOv+camBadge(3, info);
   }
-  // validada
+  // validated
   var overlay = '<div class="cam-success"><span class="cap-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 13 4 4L19 7"/></svg></span><span class="cap-label">'+info.okLabel+'</span></div>';
   return photo+brackets()+overlay+camBadge(2, info);
 }
@@ -894,7 +898,7 @@ function updateRing(p){
 }
 function placeImage(){
   if(state.phase!==0) return;
-  state.phase = 1; renderCapture();            // imagen colocada + anillo de progreso
+  state.phase = 1; renderCapture();            // image placed + anillo de progreso
   clearCapTimers();
   var start = Date.now();
   capRAF = setInterval(function(){
@@ -906,7 +910,7 @@ function placeImage(){
       if(state.failKey === key && !state.failedOnce){
         state.phase = 3; renderCapture();      // error recuperable
       } else {
-        state.phase = 2; renderCapture();      // validada
+        state.phase = 2; renderCapture();      // validated
         capTimer = setTimeout(capNextStep, VALIDATED_MS);
       }
     }
@@ -915,7 +919,7 @@ function placeImage(){
 function capNextStep(){
   clearCapTimers();
   if(state.sub < state.steps.length - 1){ state.sub++; state.phase = 0; renderCapture(); }
-  else { show('form'); window.scrollTo(0,0); resizeSig(); }   // verificación completada → formulario (dentro del flujo)
+  else { show('form'); window.scrollTo(0,0); resizeSig(); }   // verification completed → form (inside the flow)
 }
 
 /* ---- navigation ---- */
@@ -933,7 +937,7 @@ document.querySelectorAll('.doc-opt').forEach(function(opt){
   });
 });
 
-/* ---- nacionalidad: filtra documentos (regla de ejemplo) ---- */
+/* ---- nationality: filters documents (example rule) ---- */
 function allowedDocs(nat){ return EU.indexOf(nat) >= 0 ? ['passport','id','license'] : ['passport']; }
 function applyNationality(code){
   state.nat = code;
@@ -945,7 +949,7 @@ function applyNationality(code){
   document.querySelectorAll('#docSection .doc-opt').forEach(function(o){ o.classList.toggle('selected', o.getAttribute('data-doc')===state.doc); });
   var sec=document.getElementById('docSection'); sec.style.display=''; sec.style.opacity=''; sec.style.pointerEvents='';
   var cta=document.getElementById('docContinue'); cta.disabled=false; cta.style.opacity=''; cta.style.pointerEvents='';
-  // prefill del campo Nationality del formulario
+  // prefill the form Nationality field
   var src=document.querySelector('#natField .fopt-row[data-v="'+code+'"]');
   var fn=document.getElementById('formNat');
   if(src && fn){ var val=fn.querySelector('.val'); if(val){ val.innerHTML=src.innerHTML; val.classList.remove('placeholder'); } fn.setAttribute('data-value', code); }
@@ -1010,7 +1014,7 @@ document.querySelectorAll('[data-sig]').forEach(function(wrap){
 var _fs = document.getElementById('formSubmit');
 if(_fs) _fs.addEventListener('click', function(){ _fs.innerHTML = 'Sent to host ✓'; _fs.style.background = 'var(--cap-green)'; });
 
-/* Vela: dónde encontrar el número de documento (animación dentro del panel) */
+/* Vela: where to find the document number (animation inside the panel) */
 var VSPARK = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.7 5.5L19 10l-5.3 1.5L12 17l-1.7-5.5L5 10l5.3-1.5z"/></svg>';
 function askVelaDocNumber(){
   var el = document.querySelector('chekin-vela'); if(!el) return;

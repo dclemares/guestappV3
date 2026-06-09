@@ -87,33 +87,33 @@
   var STAR='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 5.6 6.1.7-4.6 4.1 1.3 6L12 16.9 6.6 19.5l1.3-6L3.3 9.3l6.1-.7L12 3Z"/></svg>';
   var MAD='landingV1/assets/deals/madrid.jpg';
 
-  var A = '<div class="tA"><div class="ph" style="background-image:url('+MAD+')"><span class="free">GRATIS</span></div>'+
-    '<span class="spon">Patrocinado</span>'+
-    '<div class="body"><b>Free walking tour</b><small>Madrid · todos los días 10:00</small>'+
-    '<button class="cta">Reservar</button></div></div>';
+  var A = '<div class="tA"><div class="ph" style="background-image:url('+MAD+')"><span class="free">FREE</span></div>'+
+    '<span class="spon">Sponsored</span>'+
+    '<div class="body"><b>Free walking tour</b><small>Madrid · every day 10:00</small>'+
+    '<button class="cta">Book</button></div></div>';
 
-  var B = '<div class="tB"><span class="spon">Patrocinado</span>'+
+  var B = '<div class="tB"><span class="spon">Sponsored</span>'+
     '<span class="kik">Free walking tours</span>'+
-    '<b>Descubre Madrid<br>con guías locales</b>'+
-    '<div class="foot"><small>Apúntate gratis · paga lo que quieras</small><button class="cta">Reservar</button></div></div>';
+    '<b>Discover Madrid<br>with local guides</b>'+
+    '<div class="foot"><small>Join for free · pay what you want</small><button class="cta">Book</button></div></div>';
 
-  var C = '<div class="tC"><span class="spon">Patrocinado</span>'+
+  var C = '<div class="tC"><span class="spon">Sponsored</span>'+
     '<div class="th" style="background-image:url('+MAD+')"><span class="pin">'+PIN+'</span></div>'+
     '<div class="body"><b>Free walking tour</b>'+
-    '<div class="rate"><span class="stars">'+STAR+STAR+STAR+STAR+STAR+'</span> 4,9 · 2.3k reseñas</div>'+
-    '<span class="free">Gratis · Madrid centro</span></div>'+
-    '<button class="cta">Reservar</button></div>';
+    '<div class="rate"><span class="stars">'+STAR+STAR+STAR+STAR+STAR+'</span> 4,9 · 2.3k reviews</div>'+
+    '<span class="free">Free · central Madrid</span></div>'+
+    '<button class="cta">Book</button></div>';
 
   var D = '<div class="tD"><div class="stub" style="background-image:url('+MAD+')"><span class="stamp">FREE</span></div>'+
-    '<span class="perf"></span><span class="spon">Patrocinado</span>'+
+    '<span class="perf"></span><span class="spon">Sponsored</span>'+
     '<div class="body"><small>Tour pass · Madrid</small><b>Free walking tour</b>'+
-    '<button class="cta">Reservar gratis</button></div></div>';
+    '<button class="cta">Book for free</button></div></div>';
 
   var items=[
-    {tag:'A', name:'Photo split', desc:'Foto a la izquierda + panel blanco con título, horario y CTA. Badge “GRATIS” sobre la foto.', html:A},
-    {tag:'B', name:'Editorial colour block', desc:'Bloque de color cálido, tipografía grande, sin foto de fondo. CTA outline. Muy “anuncio”.', html:B},
-    {tag:'C', name:'Rating card', desc:'Card blanca con miniatura + pin, valoración con estrellas y “Gratis”. Genera confianza.', html:C},
-    {tag:'D', name:'Free pass ticket', desc:'Metáfora de pase gratuito: stub con sello “FREE”, perforación y CTA. Lúdico.', html:D}
+    {tag:'A', name:'Photo split', desc:'Photo on the left + white panel with title, schedule, and CTA. “FREE” badge over the photo.', html:A},
+    {tag:'B', name:'Editorial colour block', desc:'Warm color block, large typography, no background photo. Outline CTA. Very ad-like.', html:B},
+    {tag:'C', name:'Rating card', desc:'White card with thumbnail + pin, star rating, and “Free”. Builds trust.', html:C},
+    {tag:'D', name:'Free pass ticket', desc:'Free-pass metaphor: stub with “FREE” stamp, perforation, and CTA. Playful.', html:D}
   ];
   document.getElementById('grid').innerHTML =
     '<div class="row">'+items.map(function(it){

@@ -3,24 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Chekin · Sistema de diseño</title>
+<title>Chekin · Design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <!-- Montserrat (Google Fonts) -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<!-- Sistema de diseño compartido -->
+<!-- Shared design system -->
 <link rel="stylesheet" href="chekin-design-system.css" />
 <style>
   :root {
-    /* === Tipografía ===================================================== */
+    /* === Typography ===================================================== */
     --font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
 
-    --fs-h1: 28px;   /* Título de página */
-    --fs-h2: 22px;   /* Subtítulo / sección */
-    --fs-h3: 18px;   /* Título de caja */
+    --fs-h1: 28px;   /* Page title */
+    --fs-h2: 22px;   /* Subtitle / section */
+    --fs-h3: 18px;   /* Box title */
     --fs-body-lg: 16px;
     --fs-body: 15px;
-    --fs-sm: 13px;   /* pequeño / label */
+    --fs-sm: 13px;   /* small / label */
     --fs-caption: 12px;
 
     --fw-regular: 400;
@@ -38,7 +38,7 @@
     --space-12: 48px; --space-16: 64px;
 
     --box-pad: var(--space-6);        /* 24px uniforme en cajas */
-    --box-gap: var(--space-6);        /* separación entre cajas */
+    --box-gap: var(--space-6);        /* spacing between boxes */
     --page-pad-y: var(--space-12);    /* 48px sup */
     --page-pad-x: var(--space-12);    /* 48px lat */
     --page-pad-bottom: 88px;
@@ -116,36 +116,36 @@
 <body>
   <div class="wrap">
     <span class="doc-kicker">Guest App V3 · Foundations</span>
-    <h1 class="doc-title">Sistema de diseño</h1>
-    <p class="doc-sub">Una sola lógica para todas las páginas de contenido: tipografía Montserrat, escala de tamaños y espaciado uniforme en cajas.</p>
+    <h1 class="doc-title">Design system</h1>
+    <p class="doc-sub">One shared logic for all content pages: Montserrat typography, size scale, and uniform card spacing.</p>
 
-    <!-- TIPOGRAFÍA -->
+    <!-- TYPOGRAPHY -->
     <section class="block">
-      <h2 class="block-h">Tipografía · Montserrat</h2>
+      <h2 class="block-h">Typography · Montserrat</h2>
       <div class="card">
         <div class="spec">
-          <div class="meta"><b>Título de página · h1</b>28px / 700 / 1.2</div>
+          <div class="meta"><b>Page title · h1</b>28px / 700 / 1.2</div>
           <div class="sample t-h1">Welcome to Casa del Mar</div>
         </div>
         <div class="spec">
-          <div class="meta"><b>Subtítulo · h2</b>22px / 600 / 1.4</div>
-          <div class="sample t-h2">Completa tu registro antes de llegar</div>
+          <div class="meta"><b>Subtitle · h2</b>22px / 600 / 1.4</div>
+          <div class="sample t-h2">Complete your registration before arrival</div>
         </div>
         <div class="spec">
-          <div class="meta"><b>Título de caja · h3</b>18px / 600 / 1.4</div>
-          <div class="sample t-h3">Datos del huésped</div>
+          <div class="meta"><b>Box title · h3</b>18px / 600 / 1.4</div>
+          <div class="sample t-h3">Guest details</div>
         </div>
         <div class="spec">
           <div class="meta"><b>Cuerpo destacado</b>16px / 400 / 1.55</div>
-          <div class="sample t-bodylg">Texto introductorio algo más grande para guiar al usuario.</div>
+          <div class="sample t-bodylg">Slightly larger introductory text to guide the user.</div>
         </div>
         <div class="spec">
           <div class="meta"><b>Cuerpo</b>15px / 400 / 1.55</div>
-          <div class="sample t-body">Texto base de párrafos, descripciones y contenido general de la interfaz.</div>
+          <div class="sample t-body">Base text for paragraphs, descriptions, and general interface content.</div>
         </div>
         <div class="spec">
-          <div class="meta"><b>Pequeño / label</b>13px / 500 / 1.4</div>
-          <div class="sample t-sm">NOMBRE COMPLETO</div>
+          <div class="meta"><b>Small / label</b>13px / 500 / 1.4</div>
+          <div class="sample t-sm">FULL NAME</div>
         </div>
         <div class="spec">
           <div class="meta"><b>Caption</b>12px / 500 / 1.4</div>
@@ -162,8 +162,8 @@
         <div class="inner">
           <div class="card" style="box-shadow:none;border:0;">
             <div class="stack">
-              <h3 class="t-h3">Título de caja</h3>
-              <p class="t-body" style="margin:0;">El contenido respira con 24&nbsp;px en los cuatro lados. La separación entre cajas apiladas también es de 24&nbsp;px.</p>
+              <h3 class="t-h3">Box title</h3>
+              <p class="t-body" style="margin:0;">Content breathes with 24&nbsp;px on all four sides. The spacing between stacked boxes is also 24&nbsp;px.</p>
             </div>
           </div>
         </div>

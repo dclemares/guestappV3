@@ -117,14 +117,17 @@ h1{ margin:10px 0 8px; font-size:34px; line-height:1.1; font-weight:800; letter-
   .guest-side{ width:100%; min-height:40px; align-items:flex-start; padding:0 18px 0 30px; clip-path:none; }
 }
 
-/* ===== Registration progress (recuento de huéspedes, dentro de Vela) ===== */
+/* ===== Registration progress (guest count, inside Vela) ===== */
 .vela-prog{ margin:0; }
-chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
-.reg-stat{ display:flex; align-items:baseline; gap:6px; margin-top:9px; padding-left:23px; }
+/* eyebrow Option-3 (mismo lenguaje que el overview / componente #11) */
+.vela-prog .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 12px; font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+.vela-prog .eye::before{ content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+.vela-prog .eye::after{ content:""; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--blue); }
+.reg-stat{ display:flex; align-items:baseline; gap:6px; margin-top:11px; padding-left:23px; }
 .reg-num{ font-size:26px; font-weight:800; letter-spacing:-.02em; color:var(--navy-2); line-height:1; }
 .reg-total{ font-size:15px; font-weight:700; color:var(--grey-soft); }
 .reg-lbl{ margin-left:5px; font-family:var(--font-2); font-size:12px; color:var(--grey); }
-.reg-bar{ margin:11px 0 0; height:7px; border-radius:99px; background:#e3e6f0; overflow:hidden; }
+.reg-bar{ margin:12px 0 0 23px; height:7px; border-radius:99px; background:#e3e6f0; overflow:hidden; }
 .reg-bar-fill{ height:100%; border-radius:99px; background:linear-gradient(90deg,#0f9f80,#2fe0b4); transition:width .5s ease; }
 .reg-dots{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-top:13px; }
 .reg-dot{ width:26px; height:26px; flex:none; border-radius:50%; border:1.6px solid var(--line); background:#fff;
@@ -262,14 +265,16 @@ chekin-vela.has-prog .vela-inner > .vela-divider{ display:none; }
 (function(){
   var SHIELD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
   var CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path d="m5 12 5 5L20 7"/></svg>';
-  /* Recuento de huéspedes de la reserva: registrados de un total */
+  /* Booking guest count: registered out of total */
   var REGISTERED=1, TOTAL=6;
   function progHTML(){
-    return '<div class="vela-prog"><div class="rec-title">'+SHIELD+'Register every guest before arrival.</div>'+
+    var pct = Math.round(REGISTERED/TOTAL*100);
+    return '<div class="vela-prog"><div class="eye">Your progress</div><div class="rec-title">'+SHIELD+'Register every guest before arrival.</div>'+
       '<p class="rec-sub">Finish the pending registrations so your guests can check in without waiting.</p>'+
       '<div class="reg-stat"><span class="reg-num">'+REGISTERED+'</span>'+
         '<span class="reg-total">/ '+TOTAL+'</span>'+
         '<span class="reg-lbl">guests registered</span></div>'+
+      '<div class="reg-bar"><span class="reg-bar-fill" style="width:'+pct+'%"></span></div>'+
       '<div class="vela-divider" style="margin-top:18px;"></div></div>';
   }
   function inject(){

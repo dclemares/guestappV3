@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Flujo completo — Guest App V3</title>
+<title>Full flow — Guest App V3</title>
 <style>
   *{ box-sizing:border-box; }
   html,body{ margin:0; height:100%; background:#0b1020; overflow:hidden; }
@@ -22,7 +22,7 @@
 </style>
 </head>
 <body>
-  <iframe id="stage" title="Guest App V3 — flujo completo"
+  <iframe id="stage" title="Guest App V3 — full flow"
     allow="camera; microphone; autoplay; fullscreen"></iframe>
 
   <button class="flow-ctrl" id="flow-restart">
@@ -55,10 +55,10 @@
     stage.src = STEPS[step];
   }
 
-  // El hero es una cinemática CSS. Su barra de carga ("spl-fill") dura 3s desde
-  // que arranca el render. Detectamos el inicio del render (aparece ".spl-kb") y,
-  // 3s después (barra completa), saltamos directos a la landing — sin mostrar el
-  // dashboard final del hero. Sin botón de saltar.
+  // The hero is a CSS cinematic. Its loading bar ("spl-fill") lasts 3s from
+  // the moment rendering starts. We detect the render start (".spl-kb" appears) and,
+  // 3s later (bar complete), jump straight to the landing — without showing the
+  // final hero dashboard. No skip button.
   function armHero(){
     stage.onload = function(){
       var started = false;
@@ -68,7 +68,7 @@
           if(!started && d && d.querySelector('.spl-kb')){
             started = true;
             clearInterval(heroPoll); heroPoll = null;
-            heroTimer = setTimeout(advance, 3000);   // 3s = barra de carga completa
+            heroTimer = setTimeout(advance, 3000);   // 3s = full loading bar
           }
         }catch(e){}
       }, 80);

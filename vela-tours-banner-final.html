@@ -59,7 +59,7 @@
   <div class="page-h">
     <div class="kick">Vela · sponsored · free tours · final</div>
     <h1>Free tours banner — pick the sticker</h1>
-    <p>BP6 base · foto BP1 (Gran Vía) · sin degradado de color (solo un tinte plano leve para legibilidad) · texto “Descubre Madrid con guías locales” · pegatina “Apúntate gratis”. Tres estilos de pegatina:</p>
+    <p>BP6 base · BP1 photo (Gran Via) · no color gradient (only a light flat tint for legibility) · text “Discover Madrid with local guides” · sticker “Join for free”. Three sticker styles:</p>
   </div>
 
   <div class="row" id="row"></div>
@@ -69,18 +69,18 @@
   function base(sticker){
     return '<div class="fb"><div class="tint"></div>'+sticker+
       '<div class="ct"><span class="kik">Free walking tours</span>'+
-      '<b>Descubre Madrid<br>con guías locales</b>'+
-      '<span class="arrow">Reservar tour '+ARR+'</span></div>'+
-      '<span class="spon">Patrocinado</span></div>';
+      '<b>Discover Madrid<br>with local guides</b>'+
+      '<span class="arrow">Book tour '+ARR+'</span></div>'+
+      '<span class="spon">Sponsored</span></div>';
   }
-  var A=base('<span class="stk-a">Apúntate<br>GRATIS</span>');
-  var B=base('<span class="stk-b">Apúntate gratis</span>');
-  var C=base('<span class="stk-c"><span>Apúntate<br>GRATIS</span></span>');
+  var A=base('<span class="stk-a">JOIN<br>FREE</span>');
+  var B=base('<span class="stk-b">Join for free</span>');
+  var C=base('<span class="stk-c"><span>JOIN<br>FREE</span></span>');
 
   var items=[
-    {tag:'A', name:'Round seal · amber', desc:'Sello circular ámbar con borde blanco, ligeramente girado. Sensación de “chapa / pegatina”.', html:A},
+    {tag:'A', name:'Round seal · amber', desc:'Amber round seal with white border, slightly rotated. Feels like a badge/sticker.', html:A},
     {tag:'B', name:'Tag pill · white', desc:'Etiqueta blanca tipo pegatina con puntito, girada. Limpia y discreta.', html:B},
-    {tag:'C', name:'Starburst · coral', desc:'Pegatina estrellada coral, muy “oferta”. Llama mucho la atención.', html:C}
+    {tag:'C', name:'Starburst · coral', desc:'Coral starburst sticker, very offer-like. Very attention-grabbing.', html:C}
   ];
   document.getElementById('row').innerHTML = items.map(function(it){
     return '<div class="item"><span class="tag">Sticker '+it.tag+'</span><div class="label">'+it.name+'<small>'+it.desc+'</small></div><div class="stage">'+it.html+'</div></div>';

@@ -72,40 +72,40 @@
 
   function bn(cls,img,pos,inner){
     return '<div class="bn '+cls+'" style="background-image:url('+P+img+');'+(pos?'background-position:'+pos+';':'')+'">'+
-      '<div class="ov"></div><span class="spon">Patrocinado</span><div class="ct">'+inner+'</div></div>';
+      '<div class="ov"></div><span class="spon">Sponsored</span><div class="ct">'+inner+'</div></div>';
   }
 
   var bp1=bn('bp1','madrid4.jpg','center 30%',
-    '<span class="kik">Free walking tours</span><b>Descubre Madrid<br>con guías locales</b>'+
-    '<div class="foot"><small>Apúntate gratis · paga lo que quieras</small><button class="cta cta-out">Reservar '+ARR+'</button></div>');
+    '<span class="kik">Free walking tours</span><b>Discover Madrid<br>with local guides</b>'+
+    '<div class="foot"><small>Join for free · pay what you want</small><button class="cta cta-out">Book '+ARR+'</button></div>');
 
   var bp2=bn('bp2','madrid2.jpg','center 35%',
     '<span class="kik">Free walking tours</span><b>Madrid a pie,<br>con un local</b>'+
-    '<div class="foot"><small>Tour gratuito · cada día a las 10:00</small><button class="cta cta-white">Reservar</button></div>');
+    '<div class="foot"><small>Free tour · every day at 10:00</small><button class="cta cta-white">Book</button></div>');
 
   var bp3=bn('bp3','madrid4.jpg','center 40%',
-    '<span class="kik">★ Free walking tour</span><b>Conoce el viejo<br>Madrid gratis</b>'+
-    '<div class="foot"><small>Guías locales · grupos pequeños</small><button class="cta cta-amber">Reservar</button></div>');
+    '<span class="kik">★ Free walking tour</span><b>Discover old<br>Madrid for free</b>'+
+    '<div class="foot"><small>Local guides · small groups</small><button class="cta cta-amber">Book</button></div>');
 
   var bp4=bn('bp4','tourgroup.jpg','center 22%',
-    '<span class="kik">Free walking tours</span><b>Explora Madrid<br>a tu ritmo</b>'+
-    '<div class="foot"><small>Gratis · paga lo que quieras</small><button class="cta cta-white">Reservar</button></div>');
+    '<span class="kik">Free walking tours</span><b>Explore Madrid<br>at your own pace</b>'+
+    '<div class="foot"><small>Free · pay what you want</small><button class="cta cta-white">Book</button></div>');
 
   var bp5=bn('bp5','madrid2.jpg','center 35%',
-    '<span class="kik">Free walking tours</span><b>Recorre Madrid<br>con guías locales</b>'+
-    '<div class="foot"><small>Tour gratuito · centro histórico</small><button class="cta cta-out">Reservar '+ARR+'</button></div>');
+    '<span class="kik">Free walking tours</span><b>Walk Madrid<br>with local guides</b>'+
+    '<div class="foot"><small>Free tour · historic center</small><button class="cta cta-out">Book '+ARR+'</button></div>');
 
   var bp6=bn('bp6','tourgroup.jpg','center 24%',
-    '<span class="kik">Free walking tours</span><b>Madrid gratis,<br>a tu ritmo</b>'+
-    '<span class="arrow">Reservar tour '+ARR+'</span>');
+    '<span class="kik">Free walking tours</span><b>Madrid for free,<br>at your own pace</b>'+
+    '<span class="arrow">Book tour '+ARR+'</span>');
 
   var items=[
-    {tag:'BP1', name:'Sunset + skyline', desc:'Foto Gran Vía al atardecer + degradado coral→ámbar. CTA outline glass con flecha.', html:bp1},
-    {tag:'BP2', name:'Indigo + skyline', desc:'Skyline de Madrid de día + degradado azul de marca Vela. CTA blanca.', html:bp2},
-    {tag:'BP3', name:'Night premium', desc:'Atardecer + velo navy oscuro, eyebrow ámbar con ★ y CTA ámbar. Premium.', html:bp3},
-    {tag:'BP4', name:'Traveller + block', desc:'Foto de viajera explorando a la derecha, bloque azul sólido con el texto a la izquierda.', html:bp4},
-    {tag:'BP5', name:'Duotone blue', desc:'Skyline en duotono azul integral. Tipografía grande, CTA outline.', html:bp5},
-    {tag:'BP6', name:'Big type + traveller', desc:'Foto de viajera + tinte coral, título XXL (900) y CTA tipo enlace con flecha.', html:bp6}
+    {tag:'BP1', name:'Sunset + skyline', desc:'Gran Via sunset photo + coral-to-amber gradient. Glass outline CTA with arrow.', html:bp1},
+    {tag:'BP2', name:'Indigo + skyline', desc:'Daytime Madrid skyline + Vela brand blue gradient. White CTA.', html:bp2},
+    {tag:'BP3', name:'Night premium', desc:'Sunset + dark navy veil, amber eyebrow with star and amber CTA. Premium.', html:bp3},
+    {tag:'BP4', name:'Traveller + block', desc:'Traveller photo on the right, solid blue text block on the left.', html:bp4},
+    {tag:'BP5', name:'Duotone blue', desc:'Full blue duotone skyline. Large typography, outline CTA.', html:bp5},
+    {tag:'BP6', name:'Big type + traveller', desc:'Traveller photo + coral tint, XXL title (900), and link-style CTA with arrow.', html:bp6}
   ];
   document.getElementById('grid').innerHTML =
     '<div class="row">'+items.map(function(it){

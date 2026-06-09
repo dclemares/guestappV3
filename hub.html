@@ -101,9 +101,9 @@
 <body>
   <div class="wrap">
     <header class="hero">
-      <span class="kicker"><span class="dot"></span> Entorno local · Guest App V3</span>
+      <span class="kicker"><span class="dot"></span> Local environment · Guest App V3</span>
       <h1>Hub <span class="grad">Guest App V3</span></h1>
-      <p class="sub">Listado de módulos del producto. Cada módulo agrupa sus versiones; al seleccionar una se abre en una pestaña nueva.</p>
+      <p class="sub">Product module list. Each module groups its versions; selecting one opens it in a new tab.</p>
     </header>
 
     <div class="list" id="list"></div>
@@ -112,63 +112,63 @@
   </div>
 
   <script>
-    // Para añadir una versión: agrega un objeto a "versions" del módulo correspondiente.
-    // Para añadir un módulo nuevo: agrega un objeto a MODULES con su array "versions".
-    // status: "soon" en un módulo lo muestra atenuado (en construcción).
+    // To add a version: add an object to the corresponding module's "versions" array.
+    // To add a new module: add an object to MODULES with its "versions" array.
+    // status: "soon" on a module shows it dimmed (under construction).
     const MODULES = [
       {
-        name: "Flujo completo",
-        desc: "Recorrido encadenado en una sola URL (vista única): intro cinematográfico → landing → resumen de huéspedes → registro de huésped (V2). No cambia de URL entre pantallas.",
+        name: "Full flow",
+        desc: "Chained journey in a single URL (single view): cinematic intro → landing → guest summary → guest registration (V2). The URL does not change between screens.",
         versions: [
-          { label: "Flujo completo", note: "Hero · Cinematic → Landing → (Start) Guest Summary → (Add guest) Guest Registration V2", href: "flujo-completo.html" }
+          { label: "Full flow", note: "Hero · Cinematic → Landing → (Start) Guest Summary → (Add guest) Guest Registration V2", href: "flujo-completo.html" }
         ]
       },
       {
         name: "Landing",
-        desc: "Pantalla de entrada del huésped: journey de check-in, registro y pagos.",
+        desc: "Guest entry screen: check-in journey, registration, and payments.",
         versions: [
-          { label: "landingV1", note: "Build actual de Guestapp V3", href: "landingV1/" }
+          { label: "landingV1", note: "Current Guestapp V3 build", href: "landingV1/" }
         ]
       },
       {
         name: "Guest Registration",
-        desc: "Formulario \"Add your details\" en el hueco central, con navbar y panel Vela. Tres tratamientos visuales sobre el estilo de marca.",
+        desc: "\"Add your details\" form in the central area, with navbar and Vela panel. Three visual treatments over the brand style.",
         versions: [
-          { label: "V1 · Cards", note: "Secciones en cards con cabecera de icono y botón gradiente", href: "landingV1/registro/v1-cards.html" },
-          { label: "V2 · Minimal", note: "Labels uppercase, inputs con línea inferior, navy editorial", href: "landingV1/registro/v2-minimal.html" },
-          { label: "V3 · Guided", note: "Escaneo de documento, floating-labels y ayudas contextuales", href: "landingV1/registro/v3-guided.html" }
+          { label: "V1 · Cards", note: "Sections in cards with icon header and gradient button", href: "landingV1/registro/v1-cards.html" },
+          { label: "V2 · Minimal", note: "Uppercase labels, underline inputs, editorial navy", href: "landingV1/registro/v2-minimal.html" },
+          { label: "V3 · Guided", note: "Document scanning, floating labels, and contextual help", href: "landingV1/registro/v3-guided.html" }
         ]
       },
       {
-        name: "Verificación de identidad",
-        desc: "Flujo enfocado de verificación: intro, elección de documento, captura de anverso/reverso y comprobación facial. Dentro del shell con navbar y panel Vela.",
+        name: "Identity verification",
+        desc: "Focused verification flow: intro, document choice, front/back capture, and facial check. Inside the shell with navbar and Vela panel.",
         versions: [
-          { label: "V1 · Identity verification", note: "Flujo de verificación: documento, anverso/reverso y rostro", href: "landingV1/registro/verificacion-identidad.html" },
-          { label: "V2 · Guest Registration", note: "Reenmarcado como registro, con 4º paso (formulario) en el progreso", href: "landingV1/registro/verificacion-identidad-v2.html" },
-          { label: "IV · Casos de uso", note: "Hub de escenarios: errores de lectura, pasaporte (1 toma), sin selfie — abren V2 con parámetros", href: "iv-casos.html" }
+          { label: "V1 · Identity verification", note: "Verification flow: document, front/back, and face", href: "landingV1/registro/verificacion-identidad.html" },
+          { label: "V2 · Guest Registration", note: "Reframed as registration, with a 4th step (form) in progress", href: "landingV1/registro/verificacion-identidad-v2.html" },
+          { label: "IV · Use cases", note: "Scenario hub: reading errors, passport (1 capture), no selfie — opens V2 with parameters", href: "iv-casos.html" }
         ]
       },
       {
         name: "Guest Summary",
-        desc: "Resumen de huéspedes de la reserva: responsable, invitados acompañantes y menores de edad.",
+        desc: "Booking guest summary: responsible guest, accompanying guests, and minors.",
         versions: [
-          { label: "Guest Summary", note: "Listado editable de adultos y menores con Vela adaptada", href: "landingV1/guest-summary.html" }
+          { label: "Guest Summary", note: "Editable adult and minor list with adapted Vela", href: "landingV1/guest-summary.html" }
         ]
       },
       {
-        name: "Animaciones",
-        desc: "Animaciones y pantallas de intro a pantalla completa para el journey del huésped.",
+        name: "Animations",
+        desc: "Full-screen intro animations and screens for the guest journey.",
         versions: [
-          { label: "Hero · Cinematic", note: "Full-bleed cinematográfico con texto abajo-izquierda", href: "animations/hero-cinematic.html" }
+          { label: "Hero · Cinematic", note: "Full-bleed cinematic layout with bottom-left text", href: "animations/hero-cinematic.html" }
         ]
       },
       {
-        name: "Vela · Componentes",
-        desc: "Biblioteca de los componentes del panel Vela: section headers, quick actions, deals (carrusel/hero/cupón), deal contextual y banner patrocinado. Todos implementados en el componente chekin-vela.",
+        name: "Vela · Components",
+        desc: "Vela panel component library: section headers, quick actions, deals (carousel/hero/coupon), contextual deal, and sponsored banner. All implemented in the chekin-vela component.",
         versions: [
           { label: "Component library", note: "Section headers · capsules · deals carousel/hero/coupon · contextual · sponsored banner", href: "vela-components-overview.html" },
-          { label: "Landing", note: "Panel Vela completo: guidebook + offers (deals carousel) + free tours (promo) + Airalo (banner)", href: "vela-landing.html" },
-          { label: "Vela deals only", note: "Panel Vela solo con deals carousel + free tours (promo) + Airalo (banner)", href: "vela-deals-only.html" }
+          { label: "Landing", note: "Full Vela panel: guidebook + offers (deals carousel) + free tours (promo) + Airalo (banner)", href: "vela-landing.html" },
+          { label: "Vela deals only", note: "Vela panel with only deals carousel + free tours (promo) + Airalo (banner)", href: "vela-deals-only.html" }
         ]
       }
     ];
@@ -177,7 +177,7 @@
     list.innerHTML = MODULES.map(m => {
       const soon = m.status === "soon";
       const count = m.versions.length;
-      const countLabel = count === 1 ? "1 versión" : count + " versiones";
+      const countLabel = count === 1 ? "1 version" : count + " versions";
 
       const rows = count
         ? m.versions.map(v => `
@@ -187,10 +187,10 @@
                   <span class="version-label">${v.label}</span>
                   ${v.note ? `<span class="version-note">${v.note}</span>` : ""}
                 </span>
-                <span class="version-open">Abrir <span class="ext">↗</span><span class="arrow">→</span></span>
+                <span class="version-open">Open <span class="ext">↗</span><span class="arrow">→</span></span>
               </a>
             </li>`).join("")
-        : `<li><div class="version"><span class="version-note">Sin versiones todavía</span></div></li>`;
+        : `<li><div class="version"><span class="version-note">No versions yet</span></div></li>`;
 
       return `
         <section class="module${soon ? " soon" : ""}">

@@ -1,8 +1,8 @@
 /* ============================================================================
-   Chekin · Guest App V3 — Sistema de diseño compartido
-   Una sola lógica para todas las páginas de CONTENIDO.
+   Chekin · Guest App V3 — Shared design system
+   One shared logic for all CONTENT pages.
    Fuera de alcance: landing de marketing (landingV1/index.html) e intro
-   cinematográfico (animations/hero-cinematic.html).
+   cinematic (animations/hero-cinematic.html).
 
    Uso:  <link rel="stylesheet" href="/styles/chekin-design-system.css" />
    ========================================================================== */
@@ -11,15 +11,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* ---- Tipografía -------------------------------------------------------- */
+  /* ---- Typography -------------------------------------------------------- */
   --chekin-font-family-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  --chekin-font-size-h1: 28px;        /* Título de página */
-  --chekin-font-size-h2: 22px;        /* Subtítulo / sección */
-  --chekin-font-size-h3: 18px;        /* Título de caja */
+  --chekin-font-size-h1: 28px;        /* Page title */
+  --chekin-font-size-h2: 22px;        /* Subtitle / section */
+  --chekin-font-size-h3: 18px;        /* Box title */
   --chekin-font-size-body-lg: 16px;   /* Cuerpo destacado */
   --chekin-font-size-body: 15px;      /* Cuerpo */
-  --chekin-font-size-sm: 13px;        /* Pequeño / label */
+  --chekin-font-size-sm: 13px;        /* Small / label */
   --chekin-font-size-caption: 12px;   /* Caption */
 
   --chekin-font-weight-regular: 400;
@@ -38,7 +38,7 @@
   --chekin-space-16: 64px;
 
   --chekin-box-pad: var(--chekin-space-6);     /* 24px uniforme en cajas */
-  --chekin-box-gap: var(--chekin-space-6);     /* separación entre cajas */
+  --chekin-box-gap: var(--chekin-space-6);     /* spacing between boxes */
   --chekin-page-pad-y: var(--chekin-space-12); /* 48px */
   --chekin-page-pad-x: var(--chekin-space-12); /* 48px */
   --chekin-page-pad-bottom: 88px;
@@ -54,7 +54,7 @@
   --chekin-shadow-raised: 0px 5px 15px rgba(26,148,255,.16);
   --chekin-shadow-pop: 0px 12px 32px rgba(26,148,255,.18);
 
-  /* ---- Color (subconjunto canónico) ------------------------------------- */
+  /* ---- Color (canonical subset) ------------------------------------- */
   --chekin-color-brand: #385bf8;
   --chekin-color-brand-hover: #5975f5;
   --chekin-text-primary: #161643;
@@ -66,7 +66,7 @@
   --chekin-surface-card: #ffffff;
 }
 
-/* ---- Base: aplicar fuente al enlazar el sistema --------------------------- */
+/* ---- Base: apply font when linking the system --------------------------- */
 body {
   font-family: var(--chekin-font-family-primary);
   color: var(--chekin-text-primary);
@@ -74,7 +74,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ---- Clases de rol tipográfico ------------------------------------------- */
+/* ---- Typographic role classes ------------------------------------------- */
 .ds-h1 {
   font-size: var(--chekin-font-size-h1);
   font-weight: var(--chekin-font-weight-bold);

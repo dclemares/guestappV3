@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>IV — Casos de uso</title>
+<title>IV — Use cases</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@400;500;600&display=swap');
   *{ box-sizing:border-box; } html,body{ margin:0; }
@@ -29,24 +29,24 @@
 <body>
   <div class="page-h">
     <div class="kick">Guest App V3 · IV</div>
-    <h1>Verificación de identidad — Casos de uso</h1>
-    <p>Cada tarjeta abre el flujo de IV (V2) en un escenario concreto. Los escenarios se controlan por parámetros de URL: <code>?doc=</code>, <code>?fail=</code>, <code>?selfie=0</code>.</p>
+    <h1>Identity verification — Use cases</h1>
+    <p>Each card opens the IV flow (V2) in a specific scenario. Scenarios are controlled by URL parameters: <code>?doc=</code>, <code>?fail=</code>, <code>?selfie=0</code>.</p>
   </div>
   <div class="grid" id="grid"></div>
 <script>
   var V2='landingV1/registro/verificacion-identidad-v2.html';
   var ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   var CASES=[
-    {tag:'Happy path', cls:'', title:'DNI · completo', desc:'Documento por delante y por detrás + selfie, todo correcto.', href:V2},
-    {tag:'Error', cls:'err', title:'Error · lectura del anverso', desc:'La lectura del documento por delante falla; se ofrece reintento (y el reintento funciona).', href:V2+'?doc=id&fail=front'},
-    {tag:'Error', cls:'err', title:'Error · lectura del reverso', desc:'La lectura del reverso falla; reintento que continúa el flujo.', href:V2+'?doc=id&fail=back'},
-    {tag:'Error', cls:'err', title:'Error · lectura del selfie', desc:'La detección de cara falla; reintento que continúa el flujo.', href:V2+'?doc=id&fail=selfie'},
-    {tag:'Variante', cls:'', title:'Pasaporte · una sola toma', desc:'El pasaporte tiene una única cara, así que solo se captura una imagen (sin reverso).', href:V2+'?doc=passport'},
-    {tag:'Variante', cls:'', title:'Sin selfie', desc:'Proceso de IV sin paso de selfie: solo documento.', href:V2+'?doc=id&selfie=0'}
+    {tag:'Happy path', cls:'', title:'National ID · complete', desc:'Front and back document + selfie, everything correct.', href:V2},
+    {tag:'Error', cls:'err', title:'Error · front-side reading', desc:'The front-side document reading fails; retry is offered and works.', href:V2+'?doc=id&fail=front'},
+    {tag:'Error', cls:'err', title:'Error · back-side reading', desc:'The back-side reading fails; retry continues the flow.', href:V2+'?doc=id&fail=back'},
+    {tag:'Error', cls:'err', title:'Error · selfie reading', desc:'Face detection fails; retry continues the flow.', href:V2+'?doc=id&fail=selfie'},
+    {tag:'Variant', cls:'', title:'Passport · single capture', desc:'The passport has a single side, so only one image is captured (no back side).', href:V2+'?doc=passport'},
+    {tag:'Variant', cls:'', title:'No selfie', desc:'IV process without selfie step: document only.', href:V2+'?doc=id&selfie=0'}
   ];
   document.getElementById('grid').innerHTML = CASES.map(function(c){
     return '<div class="case '+c.cls+'"><span class="tag">'+c.tag+'</span><h3>'+c.title+'</h3><p>'+c.desc+'</p>'+
-      '<a href="'+c.href+'" target="_blank" rel="noopener">Abrir caso '+ARR+'</a></div>';
+      '<a href="'+c.href+'" target="_blank" rel="noopener">Open caso '+ARR+'</a></div>';
   }).join('');
 </script>
 </body>

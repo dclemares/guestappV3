@@ -375,7 +375,7 @@
         '<div class="bn-ed">' +
         (s.kik ? '<span class="bn-kik">' + esc(s.kik) + '</span>' : '') +
         '<b>' + head + '</b>' +
-        '<span class="bn-link">' + esc(s.cta || 'Reservar') + ' ' + SEND + '</span>' +
+        '<span class="bn-link">' + esc(s.cta || 'Book') + ' ' + SEND + '</span>' +
         '</div>' +
         (s.sticker ? '<span class="bn-star"><span>' + star + '</span></span>' : '') +
         '</div>';
@@ -385,8 +385,8 @@
     return '<div class="bn-slide' + (on ? ' on' : '') + theme + '" style="background-image:url(' + url(s.img) + ')">' +
       '<div class="bn-in">' + bannerMark(s) +
       '<span class="bn-copy"><b>' + esc(s.headline || '') + '</b><small>' + sub + '</small></span>' +
-      '<span class="bn-right"><span class="bn-tag">' + esc(s.tag || 'Patrocinado') + '</span>' +
-      '<button class="bn-cta">' + esc(s.cta || 'Ver planes') + '</button></span></div></div>';
+      '<span class="bn-right"><span class="bn-tag">' + esc(s.tag || 'Sponsored') + '</span>' +
+      '<button class="bn-cta">' + esc(s.cta || 'View plans') + '</button></span></div></div>';
   }
   function bannerItem(it) {
     var slides = (it.slides && it.slides.length) ? it.slides : [it];
@@ -400,7 +400,7 @@
       (it.sticker ? '<span class="pr-star"><span>' + star + '</span></span>' : '') +
       (it.kik ? '<span class="pr-kik">' + esc(it.kik) + '</span>' : '') +
       '<h4>' + head + '</h4>' +
-      '<button class="pr-cta">' + esc(it.cta || 'Reservar') + ' ' + SEND + '</button>' +
+      '<button class="pr-cta">' + esc(it.cta || 'Book') + ' ' + SEND + '</button>' +
       '</div>';
   }
   function guidebookItem(it) {
