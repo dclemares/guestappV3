@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Free tours banner · UI options</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{ --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --grey:#65709a; --grey-soft:#8b95bd; --line:rgba(203,214,236,.82); --green:#0f9f80; }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:40px 34px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.18), rgba(79,107,255,0) 72%), linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1100px; margin:0 auto 28px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:680px; }
+  .grid{ display:flex; flex-direction:column; gap:30px; max-width:1100px; margin:0 auto; }
+  .row{ display:flex; gap:26px; align-items:flex-start; flex-wrap:wrap; }
+  .item{ width:360px; }
+  .item .label{ display:block; margin:0 0 10px; font-size:12.5px; font-weight:800; }
+  .item .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .item .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800; background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+  .stage{ width:345px; padding:14px; border-radius:18px; background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.8); box-shadow:0 14px 36px rgba(22,40,90,.10); }
+
+  .spon{ font-size:7.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+
+  /* ===== A · Photo split ===== */
+  .tA{ position:relative; width:100%; height:90px; border-radius:14px; overflow:hidden; display:flex; background:#fff; box-shadow:0 8px 20px rgba(23,42,96,.12); }
+  .tA .ph{ position:relative; width:120px; flex:none; background-size:cover; background-position:center; }
+  .tA .ph .free{ position:absolute; left:8px; top:8px; height:18px; display:inline-flex; align-items:center; padding:0 8px; border-radius:999px; background:var(--green); color:#fff; font-size:9px; font-weight:800; letter-spacing:.04em; }
+  .tA .body{ flex:1; min-width:0; padding:11px 13px; display:flex; flex-direction:column; justify-content:center; gap:2px; }
+  .tA .body b{ font-size:13.5px; font-weight:800; letter-spacing:-.01em; white-space:nowrap; }
+  .tA .body small{ font-size:10.6px; color:#5a6695; }
+  .tA .cta{ align-self:flex-start; margin-top:7px; height:28px; padding:0 13px; border:0; border-radius:8px; background:var(--blue); color:#fff; font:inherit; font-size:11px; font-weight:800; cursor:pointer; }
+  .tA .spon{ position:absolute; right:11px; top:9px; color:var(--grey-soft); }
+
+  /* ===== B · Editorial colour block ===== */
+  .tB{ position:relative; width:100%; height:90px; border-radius:14px; overflow:hidden; padding:13px 15px; color:#fff;
+    background:linear-gradient(120deg,#ff5d6c,#ff8a3d 60%,#ffb24d); display:flex; flex-direction:column; justify-content:center; }
+  .tB::after{ content:''; position:absolute; right:-10px; bottom:-22px; width:90px; height:90px; border-radius:50%; background:rgba(255,255,255,.12); }
+  .tB .kik{ font-size:8.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.9; }
+  .tB b{ font-size:17px; font-weight:800; letter-spacing:-.02em; line-height:1.1; margin-top:3px; }
+  .tB .foot{ display:flex; align-items:center; gap:10px; margin-top:8px; }
+  .tB small{ font-size:10.5px; font-weight:600; opacity:.95; }
+  .tB .cta{ margin-left:auto; height:28px; padding:0 14px; border:1.5px solid rgba(255,255,255,.85); border-radius:999px; background:transparent; color:#fff; font:inherit; font-size:11px; font-weight:800; cursor:pointer; }
+  .tB .spon{ position:absolute; right:13px; top:11px; color:rgba(255,255,255,.85); }
+
+  /* ===== C · Rating card ===== */
+  .tC{ position:relative; width:100%; height:90px; border-radius:14px; overflow:hidden; display:flex; align-items:center; gap:12px; padding:12px 14px; background:#fff; border:1px solid rgba(214,224,246,.85); box-shadow:0 8px 20px rgba(23,42,96,.1); }
+  .tC .th{ position:relative; width:62px; height:62px; flex:none; border-radius:13px; background-size:cover; background-position:center; }
+  .tC .th .pin{ position:absolute; right:-6px; bottom:-6px; width:24px; height:24px; border-radius:50%; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(56,91,248,.4); border:2px solid #fff; }
+  .tC .th .pin svg{ width:13px; height:13px; stroke-width:2; }
+  .tC .body{ flex:1; min-width:0; padding-right:6px; }
+  .tC .body b{ display:block; font-size:13.5px; font-weight:800; white-space:nowrap; }
+  .tC .rate{ display:flex; align-items:center; gap:5px; margin-top:3px; font-size:10.6px; color:#5a6695; }
+  .tC .rate .stars{ color:#f5a623; display:inline-flex; } .tC .rate .stars svg{ width:12px; height:12px; }
+  .tC .free{ display:inline-block; margin-top:6px; font-size:11px; font-weight:800; color:var(--green); }
+  .tC .cta{ flex:none; height:30px; padding:0 14px; border:0; border-radius:9px; background:var(--blue); color:#fff; font:inherit; font-size:11px; font-weight:800; cursor:pointer; }
+  .tC .spon{ position:absolute; right:11px; top:8px; color:var(--grey-soft); }
+
+  /* ===== D · Free pass ticket ===== */
+  .tD{ position:relative; width:100%; height:90px; border-radius:14px; overflow:hidden; display:flex; background:#fff; box-shadow:0 8px 20px rgba(23,42,96,.12); }
+  .tD .stub{ position:relative; width:74px; flex:none; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; }
+  .tD .stub::after{ content:''; position:absolute; inset:0; background:linear-gradient(160deg, rgba(56,91,248,.7), rgba(123,63,240,.6)); }
+  .tD .stamp{ position:relative; z-index:2; width:46px; height:46px; border-radius:50%; border:2px dashed rgba(255,255,255,.9); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:800; transform:rotate(-10deg); }
+  .tD .perf{ position:relative; width:1px; border-left:2px dashed rgba(203,214,236,.95); margin:8px 0; }
+  .tD .perf::before,.tD .perf::after{ content:''; position:absolute; left:-7px; width:13px; height:13px; border-radius:50%; background:#eef1f7; }
+  .tD .perf::before{ top:-10px; } .tD .perf::after{ bottom:-10px; }
+  .tD .body{ flex:1; min-width:0; padding:11px 13px; display:flex; flex-direction:column; justify-content:center; }
+  .tD .body small{ font-size:8.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--grey-soft); }
+  .tD .body b{ font-size:13.5px; font-weight:800; margin-top:2px; }
+  .tD .cta{ align-self:flex-start; margin-top:8px; height:27px; padding:0 13px; border:0; border-radius:8px; background:var(--blue); color:#fff; font:inherit; font-size:11px; font-weight:800; cursor:pointer; }
+  .tD .spon{ position:absolute; right:11px; top:9px; color:var(--grey-soft); }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · sponsored · free tours</div>
+    <h1>Free tours banner — new UI options</h1>
+    <p>Completely different treatments for the Madrid free-tours ad (no Civitatis). Pick one and I’ll wire it into the rotating banner.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+
+<script>
+  var PIN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>';
+  var STAR='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 5.6 6.1.7-4.6 4.1 1.3 6L12 16.9 6.6 19.5l1.3-6L3.3 9.3l6.1-.7L12 3Z"/></svg>';
+  var MAD='landingV1/assets/deals/madrid.jpg';
+
+  var A = '<div class="tA"><div class="ph" style="background-image:url('+MAD+')"><span class="free">GRATIS</span></div>'+
+    '<span class="spon">Patrocinado</span>'+
+    '<div class="body"><b>Free walking tour</b><small>Madrid · todos los días 10:00</small>'+
+    '<button class="cta">Reservar</button></div></div>';
+
+  var B = '<div class="tB"><span class="spon">Patrocinado</span>'+
+    '<span class="kik">Free walking tours</span>'+
+    '<b>Descubre Madrid<br>con guías locales</b>'+
+    '<div class="foot"><small>Apúntate gratis · paga lo que quieras</small><button class="cta">Reservar</button></div></div>';
+
+  var C = '<div class="tC"><span class="spon">Patrocinado</span>'+
+    '<div class="th" style="background-image:url('+MAD+')"><span class="pin">'+PIN+'</span></div>'+
+    '<div class="body"><b>Free walking tour</b>'+
+    '<div class="rate"><span class="stars">'+STAR+STAR+STAR+STAR+STAR+'</span> 4,9 · 2.3k reseñas</div>'+
+    '<span class="free">Gratis · Madrid centro</span></div>'+
+    '<button class="cta">Reservar</button></div>';
+
+  var D = '<div class="tD"><div class="stub" style="background-image:url('+MAD+')"><span class="stamp">FREE</span></div>'+
+    '<span class="perf"></span><span class="spon">Patrocinado</span>'+
+    '<div class="body"><small>Tour pass · Madrid</small><b>Free walking tour</b>'+
+    '<button class="cta">Reservar gratis</button></div></div>';
+
+  var items=[
+    {tag:'A', name:'Photo split', desc:'Foto a la izquierda + panel blanco con título, horario y CTA. Badge “GRATIS” sobre la foto.', html:A},
+    {tag:'B', name:'Editorial colour block', desc:'Bloque de color cálido, tipografía grande, sin foto de fondo. CTA outline. Muy “anuncio”.', html:B},
+    {tag:'C', name:'Rating card', desc:'Card blanca con miniatura + pin, valoración con estrellas y “Gratis”. Genera confianza.', html:C},
+    {tag:'D', name:'Free pass ticket', desc:'Metáfora de pase gratuito: stub con sello “FREE”, perforación y CTA. Lúdico.', html:D}
+  ];
+  document.getElementById('grid').innerHTML =
+    '<div class="row">'+items.map(function(it){
+      return '<div class="item"><span class="tag">Option '+it.tag+'</span><div class="label">'+it.name+'<small>'+it.desc+'</small></div><div class="stage">'+it.html+'</div></div>';
+    }).join('')+'</div>';
+</script>
+</body>
+</html>
