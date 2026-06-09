@@ -760,8 +760,7 @@ function velaProgressHTML(sub, allDone, activeProgress){
   };
   var keys = (state.steps && state.steps.length ? state.steps.slice() : ['front','back','face']).concat(['form']);
   var check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path d="m5 12 5 5L20 7"/></svg>';
-  var shield = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
-  var html = '<div class="vela-prog"><div class="eye">Your verification</div><div class="rec-title">'+shield+'Where you are in your registration.</div><p class="rec-sub">A few quick steps — we’ll guide you through each one.</p><div class="vela-prog-steps">';
+  var html = '<div class="vela-prog"><div class="eye">Your verification</div><div class="rec-title">Where you are in your registration.</div><p class="rec-sub">A few quick steps — we’ll guide you through each one.</p><div class="vela-prog-steps">';
   keys.forEach(function(key, i){
     if(i>0){
       // this connector ENTERS node i: it fills while step i is active,
