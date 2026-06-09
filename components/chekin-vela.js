@@ -215,14 +215,22 @@
     "chekin-vela .vela-banner .bn-right{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:7px;}",
     "chekin-vela .vela-banner .bn-tag{height:15px;display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;font-size:7.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:rgba(255,255,255,.26);color:#fff;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}",
     "chekin-vela .vela-banner .bn-cta{height:30px;padding:0 14px;border:0;border-radius:9px;background:#fff;color:#16183a;font:inherit;font-size:11px;font-weight:800;cursor:pointer;}",
-    "chekin-vela .vela-banner .bn-slide.ed::after{background:rgba(8,12,30,.30);}",
+    "chekin-vela .vela-banner .bn-slide.ed{cursor:pointer;}",
+    "chekin-vela .vela-banner .bn-slide.ed .bn-photo{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center 30%;transform:scale(1);transition:transform .7s cubic-bezier(.2,.7,.2,1);}",
+    "chekin-vela .vela-banner .bn-slide.ed::after{z-index:1;background:rgba(8,12,30,.30);transition:background .45s ease;}",
     "chekin-vela .vela-banner .bn-ed{position:absolute;inset:0;z-index:3;padding:0 70px 0 24px;display:flex;flex-direction:column;justify-content:center;color:#fff;}",
-    "chekin-vela .vela-banner .bn-kik{font-size:8px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;opacity:.95;text-shadow:0 1px 5px rgba(0,0,0,.5);}",
+    "chekin-vela .vela-banner .bn-kik{font-size:8px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;opacity:.95;text-shadow:0 1px 5px rgba(0,0,0,.5);transition:letter-spacing .4s ease;}",
     "chekin-vela .vela-banner .bn-ed b{font-size:14.5px;font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-top:2px;text-shadow:0 2px 10px rgba(0,0,0,.5);}",
-    "chekin-vela .vela-banner .bn-link{display:inline-flex;align-items:center;gap:5px;margin-top:5px;font-size:11px;font-weight:800;text-shadow:0 1px 6px rgba(0,0,0,.5);}chekin-vela .vela-banner .bn-link svg{width:13px;height:13px;stroke-width:2.4;}",
-    "chekin-vela .vela-banner .bn-star{position:absolute;right:14px;top:50%;transform:translateY(-50%) rotate(-6deg);z-index:4;width:58px;height:58px;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:9px;font-weight:900;line-height:1.05;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3));}",
+    "chekin-vela .vela-banner .bn-link{display:inline-flex;align-items:center;gap:5px;margin-top:5px;font-size:11px;font-weight:800;text-shadow:0 1px 6px rgba(0,0,0,.5);}chekin-vela .vela-banner .bn-link svg{width:13px;height:13px;stroke-width:2.4;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}",
+    "chekin-vela .vela-banner .bn-star{position:absolute;right:14px;top:50%;z-index:4;width:58px;height:58px;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:9px;font-weight:900;line-height:1.05;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3));transform:translateY(-50%) rotate(-6deg);transform-origin:center;}",
     "chekin-vela .vela-banner .bn-star::before{content:\"\";position:absolute;inset:0;background:#ff4c5c;clip-path:polygon(50% 0,61% 12%,76% 6%,79% 23%,95% 25%,90% 41%,100% 50%,90% 59%,95% 75%,79% 77%,76% 94%,61% 88%,50% 100%,39% 88%,24% 94%,21% 77%,5% 75%,10% 59%,0 50%,10% 41%,5% 25%,21% 23%,24% 6%,39% 12%);}",
     "chekin-vela .vela-banner .bn-star span{position:relative;z-index:2;}",
+    "chekin-vela .vela-banner .bn-slide.ed:hover .bn-photo{transform:scale(1.08);}",
+    "chekin-vela .vela-banner .bn-slide.ed:hover::after{background:rgba(8,12,30,.16);}",
+    "chekin-vela .vela-banner .bn-slide.ed:hover .bn-kik{letter-spacing:.2em;}",
+    "chekin-vela .vela-banner .bn-slide.ed:hover .bn-link svg{transform:translateX(5px);}",
+    "chekin-vela .vela-banner .bn-slide.ed:hover .bn-star{animation:velaStarPop .55s cubic-bezier(.34,1.56,.64,1) forwards;}",
+    "@keyframes velaStarPop{0%{transform:translateY(-50%) rotate(-6deg) scale(1);}45%{transform:translateY(-50%) rotate(6deg) scale(1.2);}72%{transform:translateY(-50%) rotate(-3deg) scale(1.06);}100%{transform:translateY(-50%) rotate(0deg) scale(1.12);}}",
 
     "@media (max-width:1279px){chekin-vela{display:none;}}"
   ].join('\n');
@@ -350,7 +358,8 @@
     if (s.variant === 'editorial') {
       var head = esc(s.headline || '').replace(/\n/g, '<br>');
       var star = esc(s.sticker || '').replace(/\n/g, '<br>');
-      return '<div class="bn-slide ed' + (on ? ' on' : '') + '" style="background-image:url(' + url(s.img) + ')">' +
+      return '<div class="bn-slide ed' + (on ? ' on' : '') + '">' +
+        '<span class="bn-photo" style="background-image:url(' + url(s.img) + ')"></span>' +
         '<div class="bn-ed">' +
         (s.kik ? '<span class="bn-kik">' + esc(s.kik) + '</span>' : '') +
         '<b>' + head + '</b>' +
