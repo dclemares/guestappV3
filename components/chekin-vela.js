@@ -121,8 +121,8 @@
     "chekin-vela .send-btn svg{width:17px;height:17px;stroke-width:2;}",
 
     /* ===== Section header (Option 3) ===== */
-    "chekin-vela .vela-sec{position:relative;display:block;padding-bottom:9px;margin:6px 0 12px;font-size:9.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#8b95bd;}",
-    "chekin-vela .vela-sec:first-child{margin-top:0;}",
+    "chekin-vela .vela-sec{position:relative;display:block;padding-bottom:9px;margin:24px 0 12px;font-size:9.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#8b95bd;}",
+    "chekin-vela .vela-sec:first-child{margin-top:2px;}",
     "chekin-vela .vela-sec::before{content:\"\";position:absolute;left:0;right:0;bottom:0;height:1px;background:rgba(203,214,236,.82);}",
     "chekin-vela .vela-sec::after{content:\"\";position:absolute;left:0;bottom:0;width:26px;height:2px;border-radius:2px;background:var(--tk,#385bf8);}",
     "chekin-vela .vela-sec.amber{--tk:#c98a16;}chekin-vela .vela-sec.green{--tk:#0f9f80;}chekin-vela .vela-sec.blue{--tk:#385bf8;}",
