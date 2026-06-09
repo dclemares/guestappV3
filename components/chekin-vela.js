@@ -198,9 +198,14 @@
     "chekin-vela .vela-ctx .ctx-ribbon{position:absolute;top:8px;right:-22px;transform:rotate(45deg);z-index:3;background:#c98a16;color:#fff;font-size:8px;font-weight:800;letter-spacing:.06em;padding:2px 22px;}",
     "chekin-vela .vela-ctx .ctx-more{display:flex;align-items:center;gap:5px;margin-top:11px;padding:0;border:0;background:none;cursor:pointer;font:inherit;font-size:11.5px;font-weight:700;color:#1047ff;}chekin-vela .vela-ctx .ctx-more svg{width:14px;height:14px;stroke-width:2.4;}",
 
-    /* ===== Sponsored banner (A, slim 75px, full-bleed, pinned bottom) ===== */
-    "chekin-vela .vela-banner{position:relative;z-index:6;flex:none;margin:14px -22px -24px -24px;height:75px;background-size:cover;background-position:center;overflow:hidden;}",
-    "chekin-vela .vela-banner::after{content:\"\";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,90,80,.85) 4%,rgba(236,63,134,.7) 44%,rgba(123,63,240,.5));}",
+    /* ===== Sponsored banner (A, slim 75px, full-bleed, pinned bottom, rotating) ===== */
+    "chekin-vela .vela-banner{position:relative;z-index:6;flex:none;margin:14px -22px -24px -24px;height:75px;overflow:hidden;}",
+    "chekin-vela .vela-banner .bn-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .6s ease;pointer-events:none;}",
+    "chekin-vela .vela-banner .bn-slide.on{opacity:1;pointer-events:auto;}",
+    "chekin-vela .vela-banner .bn-slide::after{content:\"\";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,90,80,.85) 4%,rgba(236,63,134,.7) 44%,rgba(123,63,240,.5));}",
+    "chekin-vela .vela-banner .bn-slide.t-blue::after{background:linear-gradient(115deg,rgba(16,71,255,.86) 4%,rgba(56,91,248,.6) 48%,rgba(123,63,240,.42));}",
+    "chekin-vela .vela-banner .bn-slide.t-warm::after{background:linear-gradient(115deg,rgba(255,138,64,.86) 4%,rgba(236,99,63,.62) 48%,rgba(196,63,123,.42));}",
+    "chekin-vela .vela-banner .bn-ico{width:26px;height:26px;flex:none;border-radius:8px;background:rgba(255,255,255,.92);color:#1047ff;display:flex;align-items:center;justify-content:center;}chekin-vela .vela-banner .bn-ico svg{width:15px;height:15px;stroke-width:1.9;}",
     "chekin-vela .vela-banner .bn-in{position:absolute;inset:0;z-index:3;padding:0 14px 0 24px;display:flex;align-items:center;gap:11px;}",
     "chekin-vela .vela-banner .bn-mark{position:relative;width:20px;height:24px;flex:none;}chekin-vela .vela-banner .bn-mark i{position:absolute;bottom:0;width:11px;border-radius:7px 7px 3px 3px;}",
     "chekin-vela .vela-banner .bn-mark i.a{left:0;height:17px;background:linear-gradient(180deg,#ff8a5b,#ff4f6d);}chekin-vela .vela-banner .bn-mark i.b{left:7px;height:24px;background:linear-gradient(180deg,#ec3f86,#7b3ff0);}",
@@ -328,13 +333,24 @@
       (it.more ? '<button class="ctx-more">' + esc(it.more) + ' ' + CHEV + '</button>' : '') +
       '</div></div>';
   }
+  function bannerMark(s) {
+    if ((s.logo || '').toLowerCase() === 'airalo' || s.mark === 'airalo') return '<span class="bn-mark"><i class="a"></i><i class="b"></i></span>';
+    if (s.icon) return '<span class="bn-ico">' + (IC[s.icon] || IC.sparkle) + '</span>';
+    return '<span class="bn-mark"><i class="a"></i><i class="b"></i></span>';
+  }
+  function bannerSlide(s, on) {
+    var sub = (s.logo || 'airalo') + (s.price ? ' · ' + (s.priceLabel ? esc(s.priceLabel) + ' ' : '') + esc(s.price) : '');
+    var theme = s.theme === 'blue' ? ' t-blue' : s.theme === 'warm' ? ' t-warm' : '';
+    return '<div class="bn-slide' + (on ? ' on' : '') + theme + '" style="background-image:url(' + url(s.img) + ')">' +
+      '<div class="bn-in">' + bannerMark(s) +
+      '<span class="bn-copy"><b>' + esc(s.headline || '') + '</b><small>' + sub + '</small></span>' +
+      '<span class="bn-right"><span class="bn-tag">' + esc(s.tag || 'Patrocinado') + '</span>' +
+      '<button class="bn-cta">' + esc(s.cta || 'Ver planes') + '</button></span></div></div>';
+  }
   function bannerItem(it) {
-    var sub = (it.logo || 'airalo') + (it.price ? ' · ' + (it.priceLabel ? esc(it.priceLabel) + ' ' : '') + esc(it.price) : '');
-    return '<div class="vela-banner" style="background-image:url(' + url(it.img) + ')">' +
-      '<div class="bn-in"><span class="bn-mark"><i class="a"></i><i class="b"></i></span>' +
-      '<span class="bn-copy"><b>' + esc(it.headline || '') + '</b><small>' + sub + '</small></span>' +
-      '<span class="bn-right"><span class="bn-tag">' + esc(it.tag || 'Patrocinado') + '</span>' +
-      '<button class="bn-cta">' + esc(it.cta || 'Ver planes') + '</button></span></div></div>';
+    var slides = (it.slides && it.slides.length) ? it.slides : [it];
+    return '<div class="vela-banner"' + (slides.length > 1 ? ' data-rotate="1"' : '') + '>' +
+      slides.map(function (s, i) { return bannerSlide(s, i === 0); }).join('') + '</div>';
   }
   function guidebookItem(it) {
     return '<div class="vela-gb">' + (it.chapters || []).map(function (c) {
@@ -382,6 +398,8 @@
     get items() { return this._cache || []; }
 
     _teardownScrollHint() {
+      (this._bannerTimers || []).forEach(clearInterval);
+      this._bannerTimers = [];
       if (this._scrollEl && this._scrollHintUpdate) this._scrollEl.removeEventListener('scroll', this._scrollHintUpdate);
       if (this._scrollHintObserver) this._scrollHintObserver.disconnect();
       if (this._scrollHintResize) this._scrollHintResize.disconnect();
@@ -411,6 +429,22 @@
       }
       requestAnimationFrame(update);
       setTimeout(update, 80);
+    }
+
+    _setupBanners() {
+      var self = this;
+      var banners = this.querySelectorAll('.vela-banner[data-rotate]');
+      Array.prototype.forEach.call(banners, function (b) {
+        var slides = [].slice.call(b.querySelectorAll('.bn-slide'));
+        if (slides.length < 2) return;
+        var i = 0;
+        var id = setInterval(function () {
+          slides[i].classList.remove('on');
+          i = (i + 1) % slides.length;
+          slides[i].classList.add('on');
+        }, 10000);
+        self._bannerTimers.push(id);
+      });
     }
 
     _setupCarousels() {
@@ -478,6 +512,7 @@
         '</div>';
       this._setupScrollHint();
       this._setupCarousels();
+      this._setupBanners();
     }
   }
 
