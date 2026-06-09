@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Free tours banner · Editorial + photo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{ --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --grey:#65709a; --grey-soft:#8b95bd; }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:40px 34px 80px;
+    background:radial-gradient(circle 260px at 300px 180px, rgba(79,107,255,.18), rgba(79,107,255,0) 72%), linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .page-h{ max-width:1100px; margin:0 auto 28px; }
+  .page-h .kick{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); }
+  .page-h h1{ margin:6px 0 4px; font-size:30px; font-weight:800; letter-spacing:-.02em; }
+  .page-h p{ margin:0; font-family:'Poppins',sans-serif; font-size:14px; color:var(--grey); max-width:700px; }
+  .grid{ display:flex; flex-direction:column; gap:30px; max-width:1100px; margin:0 auto; }
+  .row{ display:flex; gap:26px; align-items:flex-start; flex-wrap:wrap; }
+  .item{ width:360px; }
+  .item .label{ display:block; margin:0 0 10px; font-size:12.5px; font-weight:800; }
+  .item .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
+  .item .tag{ display:inline-flex; height:20px; align-items:center; padding:0 8px; border-radius:999px; font-size:10px; font-weight:800; background:var(--blue); color:#fff; margin-bottom:8px; letter-spacing:.04em; }
+  .stage{ width:345px; padding:14px; border-radius:18px; background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.8); box-shadow:0 14px 36px rgba(22,40,90,.10); }
+
+  /* ===== editorial block over photo ===== */
+  .bn{ position:relative; width:100%; height:96px; border-radius:14px; overflow:hidden; color:#fff;
+    background-size:cover; background-position:center; }
+  .bn .ov{ position:absolute; inset:0; z-index:1; }
+  .bn .ct{ position:relative; z-index:2; height:100%; padding:14px 16px; display:flex; flex-direction:column; justify-content:center; }
+  .bn .spon{ position:absolute; right:13px; top:11px; font-size:7.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; opacity:.9; z-index:3; text-shadow:0 1px 4px rgba(0,0,0,.4); }
+  .bn .kik{ font-size:8.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.95; }
+  .bn b{ font-size:17px; font-weight:800; letter-spacing:-.02em; line-height:1.08; margin-top:3px; text-shadow:0 1px 8px rgba(0,0,0,.25); }
+  .bn .foot{ display:flex; align-items:center; gap:10px; margin-top:8px; }
+  .bn small{ font-size:10.3px; font-weight:600; opacity:.96; max-width:170px; line-height:1.25; text-shadow:0 1px 6px rgba(0,0,0,.3); }
+  .bn .cta{ margin-left:auto; flex:none; height:28px; padding:0 14px; border-radius:999px; font:inherit; font-size:11px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:5px; }
+  .bn .cta svg{ width:13px; height:13px; stroke-width:2.4; }
+  .cta-out{ border:1.5px solid rgba(255,255,255,.9); background:rgba(255,255,255,.12); color:#fff; backdrop-filter:blur(3px); }
+  .cta-amber{ border:0; background:#ffd24a; color:#3a2a00; }
+  .cta-white{ border:0; background:#fff; color:var(--navy); }
+
+  /* BP1 sunset */
+  .bp1 .ov{ background:linear-gradient(100deg, rgba(255,76,92,.94) 0%, rgba(255,118,61,.72) 46%, rgba(255,170,70,.12) 100%); }
+  /* BP2 indigo */
+  .bp2 .ov{ background:linear-gradient(100deg, rgba(13,52,200,.95) 0%, rgba(56,91,248,.6) 55%, rgba(123,140,255,.1) 100%); }
+  /* BP3 night premium */
+  .bp3 .ov{ background:linear-gradient(100deg, rgba(5,11,34,.95) 0%, rgba(16,34,90,.78) 52%, rgba(16,34,90,.28) 100%); }
+  .bp3 .kik{ color:#ffd24a; opacity:1; }
+  /* BP4 side photo + colour block */
+  .bp4 .ov{ background:linear-gradient(90deg, #0d34c8 0%, #0d34c8 50%, rgba(13,52,200,.35) 66%, rgba(13,52,200,0) 92%); }
+  /* BP5 duotone blue */
+  .bp5{ filter:none; }
+  .bp5 .ov{ background:linear-gradient(120deg, rgba(17,34,122,.86), rgba(56,91,248,.66)); mix-blend-mode:normal; }
+  /* BP6 big type minimal */
+  .bp6 .ov{ background:linear-gradient(100deg, rgba(255,76,92,.92) 0%, rgba(255,76,92,.5) 60%, rgba(255,76,92,.2) 100%); }
+  .bp6 b{ font-size:20px; font-weight:900; }
+  .bp6 .arrow{ display:inline-flex; align-items:center; gap:6px; margin-top:9px; font-size:12px; font-weight:800; }
+  .bp6 .arrow svg{ width:15px; height:15px; stroke-width:2.6; }
+</style>
+</head>
+<body>
+  <div class="page-h">
+    <div class="kick">Vela · sponsored · free tours · editorial + photo</div>
+    <h1>Editorial block — with photo backgrounds</h1>
+    <p>Option B style, now with real Madrid / travel photos behind the colour overlay. The gradient keeps the bold text readable while the image gives it life. Pick one.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+
+<script>
+  var ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var P='landingV1/assets/deals/';
+
+  function bn(cls,img,pos,inner){
+    return '<div class="bn '+cls+'" style="background-image:url('+P+img+');'+(pos?'background-position:'+pos+';':'')+'">'+
+      '<div class="ov"></div><span class="spon">Patrocinado</span><div class="ct">'+inner+'</div></div>';
+  }
+
+  var bp1=bn('bp1','madrid4.jpg','center 30%',
+    '<span class="kik">Free walking tours</span><b>Descubre Madrid<br>con guías locales</b>'+
+    '<div class="foot"><small>Apúntate gratis · paga lo que quieras</small><button class="cta cta-out">Reservar '+ARR+'</button></div>');
+
+  var bp2=bn('bp2','madrid2.jpg','center 35%',
+    '<span class="kik">Free walking tours</span><b>Madrid a pie,<br>con un local</b>'+
+    '<div class="foot"><small>Tour gratuito · cada día a las 10:00</small><button class="cta cta-white">Reservar</button></div>');
+
+  var bp3=bn('bp3','madrid4.jpg','center 40%',
+    '<span class="kik">★ Free walking tour</span><b>Conoce el viejo<br>Madrid gratis</b>'+
+    '<div class="foot"><small>Guías locales · grupos pequeños</small><button class="cta cta-amber">Reservar</button></div>');
+
+  var bp4=bn('bp4','tourgroup.jpg','center 22%',
+    '<span class="kik">Free walking tours</span><b>Explora Madrid<br>a tu ritmo</b>'+
+    '<div class="foot"><small>Gratis · paga lo que quieras</small><button class="cta cta-white">Reservar</button></div>');
+
+  var bp5=bn('bp5','madrid2.jpg','center 35%',
+    '<span class="kik">Free walking tours</span><b>Recorre Madrid<br>con guías locales</b>'+
+    '<div class="foot"><small>Tour gratuito · centro histórico</small><button class="cta cta-out">Reservar '+ARR+'</button></div>');
+
+  var bp6=bn('bp6','tourgroup.jpg','center 24%',
+    '<span class="kik">Free walking tours</span><b>Madrid gratis,<br>a tu ritmo</b>'+
+    '<span class="arrow">Reservar tour '+ARR+'</span>');
+
+  var items=[
+    {tag:'BP1', name:'Sunset + skyline', desc:'Foto Gran Vía al atardecer + degradado coral→ámbar. CTA outline glass con flecha.', html:bp1},
+    {tag:'BP2', name:'Indigo + skyline', desc:'Skyline de Madrid de día + degradado azul de marca Vela. CTA blanca.', html:bp2},
+    {tag:'BP3', name:'Night premium', desc:'Atardecer + velo navy oscuro, eyebrow ámbar con ★ y CTA ámbar. Premium.', html:bp3},
+    {tag:'BP4', name:'Traveller + block', desc:'Foto de viajera explorando a la derecha, bloque azul sólido con el texto a la izquierda.', html:bp4},
+    {tag:'BP5', name:'Duotone blue', desc:'Skyline en duotono azul integral. Tipografía grande, CTA outline.', html:bp5},
+    {tag:'BP6', name:'Big type + traveller', desc:'Foto de viajera + tinte coral, título XXL (900) y CTA tipo enlace con flecha.', html:bp6}
+  ];
+  document.getElementById('grid').innerHTML =
+    '<div class="row">'+items.map(function(it){
+      return '<div class="item"><span class="tag">Option '+it.tag+'</span><div class="label">'+it.name+'<small>'+it.desc+'</small></div><div class="stage">'+it.html+'</div></div>';
+    }).join('')+'</div>';
+</script>
+</body>
+</html>
