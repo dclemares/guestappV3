@@ -84,7 +84,7 @@
     "chekin-vela .vela-chap .gb-chev svg{width:18px;height:18px;stroke-width:2.2;}",
     "chekin-vela .vela-chap:hover .gb-chev{transform:translateX(5px);color:#385bf8;opacity:1;}",
     "chekin-vela .vela-divider{height:1px;width:100%;margin:0 0 16px;background:rgba(203,214,236,.82);}",
-    "chekin-vela .vela-scroll{position:relative;z-index:1;flex:1;min-height:0;overflow-y:auto;padding-right:4px;scrollbar-width:none;}",
+    "chekin-vela .vela-scroll{position:relative;z-index:1;flex:1;min-height:0;overflow-y:auto;padding:2px 14px 24px 14px;margin:0 -14px;scrollbar-width:none;}",
     "chekin-vela .vela-scroll::-webkit-scrollbar{display:none;}",
     "chekin-vela[dock-bottom] .vela-scroll{display:flex;flex-direction:column;}",
     "chekin-vela[dock-bottom] .vela-scroll > :first-child{margin-top:auto;}",
@@ -153,7 +153,7 @@
     "chekin-vela .vela-carwrap{position:relative;}",
     "chekin-vela .vela-carwrap::after{content:\"\";position:absolute;top:0;bottom:14px;right:0;width:28px;pointer-events:none;background:linear-gradient(90deg,rgba(248,250,255,0),rgba(248,250,255,.96));border-radius:0 16px 16px 0;transition:opacity .2s ease;}",
     "chekin-vela .vela-carwrap.atEnd::after{opacity:0;}",
-    "chekin-vela .vela-car{display:flex;gap:12px;overflow-x:auto;overflow-y:visible;padding:8px 2px 20px;scroll-snap-type:x mandatory;scrollbar-width:none;}",
+    "chekin-vela .vela-car{display:flex;gap:12px;overflow-x:auto;overflow-y:visible;padding:8px 4px 26px;scroll-snap-type:x mandatory;scrollbar-width:none;}",
     "chekin-vela .vela-car::-webkit-scrollbar{display:none;}",
     "chekin-vela .vela-dc{position:relative;scroll-snap-align:start;flex:0 0 118px;border-radius:16px;overflow:visible;background:#fff;box-shadow:0 7px 16px rgba(23,42,96,.12);}",
     "chekin-vela .vela-dc .dc-img{position:relative;height:104px;border-radius:16px 16px 0 0;background-size:cover;background-position:center;overflow:hidden;}",
@@ -167,7 +167,7 @@
     "chekin-vela .vela-dc:hover .dc-coin{background:#385bf8;transform:scale(1.1);box-shadow:0 10px 22px rgba(56,91,248,.44);}",
     "chekin-vela .vela-dc:hover .dc-coin .p{opacity:0;transform:translateY(-10px) scale(.8);}",
     "chekin-vela .vela-dc:hover .dc-coin .a{opacity:1;transform:translateY(0) scale(1);}",
-    "chekin-vela .vela-dots{display:flex;gap:6px;justify-content:center;margin:-8px 0 0;position:relative;z-index:1;}",
+    "chekin-vela .vela-dots{display:flex;gap:6px;justify-content:center;margin:-10px 0 0;position:relative;z-index:1;}",
     "chekin-vela .vela-dots .dot{width:7px;height:7px;border-radius:50%;background:rgba(56,91,248,.25);transition:width .25s ease,background .25s ease;}",
     "chekin-vela .vela-dots .dot.on{width:20px;border-radius:4px;background:#385bf8;}",
 
@@ -231,11 +231,13 @@
     "chekin-vela .vela-banner .bn-slide.ed:hover .bn-link svg{transform:translateX(5px);}",
     "chekin-vela .vela-banner .bn-slide.ed:hover .bn-star{animation:velaStarPop .55s cubic-bezier(.34,1.56,.64,1) forwards;}",
     "@keyframes velaStarPop{0%{transform:translateY(-50%) rotate(-6deg) scale(1);}45%{transform:translateY(-50%) rotate(6deg) scale(1.2);}72%{transform:translateY(-50%) rotate(-3deg) scale(1.06);}100%{transform:translateY(-50%) rotate(0deg) scale(1.12);}}",
-    "chekin-vela .vela-promo{position:relative;margin:34px 0 10px;border-radius:16px;padding:15px 16px 16px;color:#fff;overflow:visible;background:linear-gradient(122deg,#1047ff,#4f6bff 48%,#7b3ff0);box-shadow:0 16px 32px rgba(70,63,240,.34);cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;}",
-    "chekin-vela .vela-promo:hover{transform:translateY(-2px);box-shadow:0 22px 40px rgba(70,63,240,.42);}",
-    "chekin-vela .vela-promo .pr-kik{font-size:8.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;opacity:.92;}",
-    "chekin-vela .vela-promo h4{margin:5px 0 0;font-size:15px;font-weight:800;line-height:1.22;letter-spacing:-.01em;max-width:205px;}",
-    "chekin-vela .vela-promo .pr-cta{margin-top:12px;height:32px;padding:0 16px;border:0;border-radius:9px;background:#fff;color:#16183a;font:inherit;font-size:11.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}chekin-vela .vela-promo .pr-cta svg{width:13px;height:13px;stroke-width:2.4;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}",
+    "chekin-vela .vela-promo{position:relative;margin:30px 0 10px;border-radius:16px;padding:15px 16px 16px;color:#fff;overflow:visible;background-color:#1a1f3a;background-size:cover;background-position:center 35%;background-repeat:no-repeat;box-shadow:0 10px 20px -6px rgba(23,42,96,.34);cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;}",
+    "chekin-vela .vela-promo::before{content:\"\";position:absolute;inset:0;border-radius:16px;background:linear-gradient(118deg,rgba(8,12,30,.66),rgba(8,12,30,.34) 58%,rgba(8,12,30,.2));transition:background .4s ease;}",
+    "chekin-vela .vela-promo:hover{transform:translateY(-2px);box-shadow:0 14px 24px -8px rgba(23,42,96,.42);}",
+    "chekin-vela .vela-promo:hover::before{background:linear-gradient(118deg,rgba(8,12,30,.54),rgba(8,12,30,.24) 58%,rgba(8,12,30,.12));}",
+    "chekin-vela .vela-promo .pr-kik{position:relative;z-index:2;font-size:8.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;opacity:.95;text-shadow:0 1px 5px rgba(0,0,0,.55);}",
+    "chekin-vela .vela-promo h4{position:relative;z-index:2;margin:5px 0 0;font-size:15px;font-weight:800;line-height:1.22;letter-spacing:-.01em;max-width:205px;text-shadow:0 2px 10px rgba(0,0,0,.55);}",
+    "chekin-vela .vela-promo .pr-cta{position:relative;z-index:2;margin-top:12px;height:32px;padding:0 16px;border:0;border-radius:9px;background:#fff;color:#16183a;font:inherit;font-size:11.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}chekin-vela .vela-promo .pr-cta svg{width:13px;height:13px;stroke-width:2.4;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}",
     "chekin-vela .vela-promo:hover .pr-cta svg{transform:translateX(4px);}",
     "chekin-vela .vela-promo .pr-star{position:absolute;top:-22px;right:16px;z-index:7;width:64px;height:64px;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:9px;font-weight:900;line-height:1.05;filter:drop-shadow(0 10px 18px rgba(7,21,77,.34));transform:rotate(8deg);transform-origin:center;transition:transform .4s cubic-bezier(.34,1.56,.64,1);}",
     "chekin-vela .vela-promo:hover .pr-star{transform:rotate(-2deg) scale(1.1);}",
@@ -394,7 +396,7 @@
   function promoItem(it) {
     var head = esc(it.headline || '').replace(/\n/g, '<br>');
     var star = esc(it.sticker || '').replace(/\n/g, '<br>');
-    return '<div class="vela-promo">' +
+    return '<div class="vela-promo" style="background-image:url(' + url(it.img) + ')">' +
       (it.sticker ? '<span class="pr-star"><span>' + star + '</span></span>' : '') +
       (it.kik ? '<span class="pr-kik">' + esc(it.kik) + '</span>' : '') +
       '<h4>' + head + '</h4>' +

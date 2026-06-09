@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vela — Landing</title>
+<script src="components/chekin-vela.js?v=vela-components-17" defer></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@400;500;600&display=swap');
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  :root{ --blue:#385bf8; --blue-deep:#1047ff; --navy:#07154d; --grey:#65709a; --grey-soft:#8b95bd; }
+  body{ font-family:'Montserrat',sans-serif; color:var(--navy); min-height:100vh; padding:56px 60px 80px;
+    background:radial-gradient(circle 320px at 300px 220px, rgba(79,107,255,.18), rgba(79,107,255,0) 70%), linear-gradient(160deg,#e9eefc 0%,#f4f6f9 60%,#eef0f7 100%); background-attachment:fixed; }
+  .intro{ max-width:560px; }
+  .intro .kick{ display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); background:rgba(56,91,248,.08); border:1px solid rgba(56,91,248,.18); padding:6px 12px; border-radius:999px; }
+  .intro h1{ margin:18px 0 10px; font-size:36px; font-weight:800; letter-spacing:-.02em; }
+  .intro p{ margin:0 0 14px; font-family:'Poppins',sans-serif; font-size:15px; line-height:1.55; color:var(--grey); }
+  .intro ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .intro li{ display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:600; color:var(--navy); }
+  .intro li i{ width:8px; height:8px; border-radius:50%; flex:none; background:var(--blue); }
+  .note{ margin-top:26px; font-family:'Poppins',sans-serif; font-size:12.5px; color:var(--grey-soft); }
+  @media (max-width:1279px){ .note-wide{ display:block; color:#b14b4b; font-weight:600; } }
+  .note-wide{ display:none; }
+</style>
+</head>
+<body>
+  <div class="intro">
+    <span class="kick"><span></span>Vela · Landing</span>
+    <h1>Vela — Landing</h1>
+    <p>Versión completa del panel Vela tal y como aparece en la landing: <b>guidebook</b>, <b>offers</b> (deals carousel), banner de <b>free walking tours</b> y banner patrocinado de <b>Airalo</b>.</p>
+    <ul>
+      <li><i></i>Guidebook — capítulos (Wi-Fi &amp; access, House rules…)</li>
+      <li><i></i>Offers for your stay — deals carousel</li>
+      <li><i></i>Free walking tours — banner editorial con foto y pegatina</li>
+      <li><i></i>Airalo eSIM — banner patrocinado anclado abajo</li>
+    </ul>
+    <p class="note">El panel Vela aparece fijado a la derecha (como en la app real). <span class="note-wide">⚠️ Ensancha la ventana a ≥1280px para verlo.</span></p>
+  </div>
+
+  <chekin-vela flat-text hide-header reco-title=""
+    heading="Everything for your stay"
+    heading-sub="Your property guidebook, recommendations and extras — all in one place.">
+    <script type="application/json">
+    [
+      {"type":"section","label":"Guidebook","tone":"blue","sub":"Everything about the property, in one place.","see":"See all"},
+      {"type":"guidebook","chapters":[
+        {"icon":"wifi","title":"Wi-Fi & access","sub":"Network, password, door code"},
+        {"icon":"doc","title":"House rules","sub":"Quiet hours, smoking, pets"}
+      ]},
+      {"type":"section","label":"Offers for your stay","tone":"blue","sub":"Picked for your arrival and trip — small extras to make check-in smoother.","see":"See all"},
+      {"type":"deals-carousel","deals":[
+        {"img":"landingV1/assets/deals/room.jpg","title":"Early check-in","sub":"Access from 11:00","price":"€25"},
+        {"img":"landingV1/assets/deals/transfer.jpg","title":"Airport transfer","sub":"Direct ride","price":"€45"},
+        {"img":"landingV1/assets/deals/parking.jpg","title":"Parking spot","sub":"On-site, per night","price":"€15"},
+        {"img":"landingV1/assets/deals/habitacion.jpg","title":"Late check-out","sub":"Until 14:00","price":"€20"},
+        {"img":"landingV1/assets/deals/mesa.jpg","title":"Welcome groceries","sub":"Stocked on arrival","price":"€18"},
+        {"img":"landingV1/assets/deals/beach.jpg","title":"Beach gear","sub":"Towels & parasol","price":"€12"}
+      ]},
+      {"type":"promo","img":"landingV1/assets/deals/madrid4.jpg","kik":"Free walking tours","headline":"Descubre Madrid\ncon guías locales","cta":"Reservar tour","sticker":"Apúntate\nGRATIS"},
+      {"type":"banner","slides":[
+        {"logo":"airalo","img":"landingV1/assets/deals/beach.jpg","headline":"Activa tu eSIM, sin roaming","priceLabel":"Desde","price":"4,00€","cta":"Ver planes","tag":"Patrocinado"}
+      ]}
+    ]
+    </script>
+  </chekin-vela>
+</body>
+</html>

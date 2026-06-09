@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Vela — Transfers · Uber-style proposals</title>
+<title>Vela — Transfers · sponsored banners</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@400;500;600&display=swap');
   *{ box-sizing:border-box; }
@@ -22,159 +22,109 @@
   .item .label small{ display:block; margin-top:2px; font-family:'Poppins',sans-serif; font-weight:500; font-size:11.5px; color:var(--grey); }
   .stage{ width:345px; padding:14px; border-radius:18px; background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.8); box-shadow:0 14px 36px rgba(22,40,90,.10); }
 
-  .card{ position:relative; width:100%; border-radius:16px; overflow:hidden; background:#fff; box-shadow:0 10px 26px rgba(23,42,96,.13); }
-  .btn{ border:0; cursor:pointer; font:inherit; font-weight:800; border-radius:11px; display:inline-flex; align-items:center; justify-content:center; gap:7px; }
-  .btn svg{ width:15px; height:15px; stroke-width:2.4; }
-  .btn-dark{ background:#10142b; color:#fff; }
-  .btn-blue{ background:var(--blue); color:#fff; }
+  .spon{ position:absolute; z-index:5; font-size:7.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
 
-  /* ===== shared map ===== */
-  .map{ display:block; width:100%; }
+  .bn{ position:relative; width:100%; border-radius:14px; overflow:hidden; color:#fff; box-shadow:0 10px 24px rgba(23,42,96,.16); }
+  .bn .link{ display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:800; }
+  .bn .link svg{ width:13px; height:13px; stroke-width:2.4; }
+  .btn{ border:0; cursor:pointer; font:inherit; font-weight:800; border-radius:9px; display:inline-flex; align-items:center; gap:6px; }
+  .btn svg{ width:13px; height:13px; stroke-width:2.4; }
 
-  /* ===== T1 · Mini-map + request sheet ===== */
-  .t1 .top{ position:relative; height:138px; }
-  .t1 .eta{ position:absolute; left:12px; top:11px; height:24px; display:inline-flex; align-items:center; gap:6px; padding:0 10px; border-radius:999px; background:rgba(255,255,255,.95); box-shadow:0 4px 12px rgba(7,21,77,.18); font-size:10.5px; font-weight:800; color:var(--navy); }
-  .t1 .eta i{ width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px rgba(15,159,128,.2); }
-  .t1 .sheet{ padding:13px 15px 15px; }
-  .t1 .route{ display:flex; flex-direction:column; gap:0; margin-bottom:12px; }
-  .t1 .stop{ display:flex; align-items:center; gap:10px; font-size:12px; font-weight:700; color:var(--ink); }
-  .t1 .stop small{ font-weight:500; color:var(--grey); font-size:10.5px; margin-left:auto; }
-  .t1 .dot{ width:9px; height:9px; border-radius:50%; flex:none; }
-  .t1 .dot.a{ background:var(--blue); } .t1 .dot.b{ border-radius:2px; background:#10142b; }
-  .t1 .conn{ width:9px; display:flex; justify-content:center; }
-  .t1 .conn span{ width:2px; height:14px; background:repeating-linear-gradient(#c3cde6 0 3px, transparent 3px 6px); }
-  .t1 .pay{ display:flex; align-items:center; margin-bottom:12px; }
-  .t1 .pay b{ font-size:18px; font-weight:800; } .t1 .pay s{ color:var(--grey-soft); font-size:12px; margin-left:7px; }
-  .t1 .pay span{ margin-left:auto; font-size:10.5px; font-weight:700; color:var(--green); background:rgba(15,159,128,.1); padding:4px 8px; border-radius:7px; }
-  .t1 .btn{ width:100%; height:44px; font-size:13px; }
+  /* ===== TB1 · Editorial photo (free-tours style) ===== */
+  .tb1{ height:96px; background:url(landingV1/assets/deals/transfer.jpg) center 55% / cover; }
+  .tb1 .tint{ position:absolute; inset:0; background:rgba(8,12,30,.34); }
+  .tb1 .in{ position:absolute; inset:0; z-index:3; padding:0 76px 0 16px; display:flex; flex-direction:column; justify-content:center; }
+  .tb1 .kik{ font-size:8px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; opacity:.95; text-shadow:0 1px 5px rgba(0,0,0,.5); }
+  .tb1 b{ font-size:14.5px; font-weight:900; line-height:1.12; letter-spacing:-.02em; margin-top:3px; text-shadow:0 2px 10px rgba(0,0,0,.5); max-width:185px; }
+  .tb1 .link{ margin-top:6px; text-shadow:0 1px 6px rgba(0,0,0,.5); }
+  .tb1 .spon{ right:13px; bottom:8px; color:#fff; opacity:.8; text-shadow:0 1px 4px rgba(0,0,0,.6); }
+  .tb1 .star{ position:absolute; right:13px; top:50%; transform:translateY(-50%) rotate(-6deg); z-index:4; width:58px; height:58px; color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; font-size:10px; font-weight:900; line-height:1.04; filter:drop-shadow(0 7px 13px rgba(0,0,0,.3)); }
+  .tb1 .star::before{ content:''; position:absolute; inset:0; background:#ff4c5c; clip-path:polygon(50% 0,61% 12%,76% 6%,79% 23%,95% 25%,90% 41%,100% 50%,90% 59%,95% 75%,79% 77%,76% 94%,61% 88%,50% 100%,39% 88%,24% 94%,21% 77%,5% 75%,10% 59%,0 50%,10% 41%,5% 25%,21% 23%,24% 6%,39% 12%); }
+  .tb1 .star span{ position:relative; z-index:2; }
 
-  /* ===== T2 · Vehicle tiers ===== */
-  .t2{ background:#fff; padding:15px; }
-  .t2 .hd{ font-size:14.5px; font-weight:800; letter-spacing:-.01em; }
-  .t2 .sumr{ display:flex; align-items:center; gap:7px; margin:5px 0 13px; font-size:10.8px; color:var(--grey); font-weight:600; }
-  .t2 .sumr svg{ width:13px; height:13px; color:var(--blue); }
-  .t2 .opt{ display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:13px; border:1.5px solid var(--line); margin-bottom:9px; cursor:pointer; transition:border-color .18s, background .18s, transform .18s; }
-  .t2 .opt:hover{ transform:translateY(-1px); }
-  .t2 .opt.sel{ border-color:var(--blue); background:rgba(56,91,248,.05); }
-  .t2 .opt .veh{ width:48px; height:34px; flex:none; display:flex; align-items:center; justify-content:center; color:#2b3566; }
-  .t2 .opt .veh svg{ width:46px; height:30px; }
-  .t2 .opt .vx{ flex:1; min-width:0; }
-  .t2 .opt .vx b{ display:block; font-size:12.7px; font-weight:800; }
-  .t2 .opt .vx small{ font-size:10.4px; color:var(--grey); }
-  .t2 .opt .pr{ text-align:right; flex:none; }
-  .t2 .opt .pr b{ font-size:14px; font-weight:800; } .t2 .opt .pr small{ display:block; font-size:9.5px; color:var(--grey-soft); }
-  .t2 .opt.sel .pr b{ color:var(--blue-deep); }
-  .t2 .btn{ width:100%; height:44px; font-size:13px; margin-top:4px; }
+  /* ===== TB2 · Brand block + car (reference style) ===== */
+  .tb2{ height:104px; background:linear-gradient(120deg,#2b46d8,#4f6bff 60%,#6f86ff); }
+  .tb2 .car{ position:absolute; right:-18px; bottom:-6px; width:168px; height:104px; background:url(landingV1/assets/deals/transfer.jpg) center / cover; -webkit-mask-image:linear-gradient(90deg, transparent, #000 38%); mask-image:linear-gradient(90deg, transparent, #000 38%); opacity:.92; }
+  .tb2 .in{ position:absolute; inset:0; z-index:3; padding:13px 15px; display:flex; flex-direction:column; }
+  .tb2 .pill{ align-self:flex-start; height:20px; display:inline-flex; align-items:center; gap:5px; padding:0 9px; border-radius:999px; background:#ffd24a; color:#3a2a00; font-size:9px; font-weight:900; letter-spacing:.03em; text-transform:uppercase; }
+  .tb2 b{ font-size:15px; font-weight:900; line-height:1.12; letter-spacing:-.02em; margin:7px 0 0; max-width:185px; text-shadow:0 2px 8px rgba(0,0,0,.2); }
+  .tb2 .chips{ display:flex; gap:6px; margin-top:auto; }
+  .tb2 .chip{ height:18px; display:inline-flex; align-items:center; padding:0 8px; border-radius:999px; background:rgba(255,255,255,.18); font-size:8.5px; font-weight:700; -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); }
+  .tb2 .spon{ right:12px; top:11px; color:#fff; opacity:.85; }
 
-  /* ===== T3 · Live arrival ===== */
-  .t3{ background:linear-gradient(160deg,#10142b,#1c2350); color:#fff; padding:16px 16px 15px; }
-  .t3 .glow{ position:absolute; top:-40px; right:-30px; width:150px; height:150px; border-radius:50%; background:radial-gradient(circle, rgba(56,91,248,.55), transparent 70%); }
-  .t3 .hd{ position:relative; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#9fb0ff; }
-  .t3 .big{ position:relative; font-size:21px; font-weight:900; letter-spacing:-.02em; margin-top:3px; }
-  .t3 .big span{ color:#7e95ff; }
-  .t3 .carlane{ position:relative; height:46px; margin:13px 0 6px; }
-  .t3 .track{ position:absolute; left:0; right:0; top:33px; height:3px; border-radius:3px; background:rgba(255,255,255,.16); overflow:hidden; }
-  .t3 .track i{ position:absolute; left:0; top:0; bottom:0; width:62%; border-radius:3px; background:linear-gradient(90deg,#4f6bff,#9fb0ff); }
-  .t3 .car{ position:absolute; top:6px; left:54%; transform:translateX(-50%); color:#fff; }
-  .t3 .car svg{ width:50px; height:32px; filter:drop-shadow(0 6px 10px rgba(0,0,0,.4)); }
-  .t3 .flag{ position:absolute; right:0; top:24px; color:#9fb0ff; } .t3 .flag svg{ width:18px; height:18px; }
-  .t3 .drv{ position:relative; display:flex; align-items:center; gap:11px; margin-top:10px; padding-top:13px; border-top:1px solid rgba(255,255,255,.12); }
-  .t3 .av{ width:40px; height:40px; border-radius:50%; flex:none; background:linear-gradient(145deg,#4f6bff,#9fb0ff); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#fff; }
-  .t3 .di{ flex:1; min-width:0; }
-  .t3 .di b{ display:flex; align-items:center; gap:6px; font-size:13px; font-weight:800; }
-  .t3 .di b .rt{ display:inline-flex; align-items:center; gap:2px; font-size:10.5px; color:#ffd24a; font-weight:800; } .t3 .di b .rt svg{ width:11px; height:11px; }
-  .t3 .di small{ font-size:10.5px; color:#aeb8e6; }
-  .t3 .plate{ flex:none; font-size:11px; font-weight:800; letter-spacing:.06em; padding:6px 9px; border-radius:8px; background:rgba(255,255,255,.12); }
+  /* ===== TB3 · Map strip + fixed price ===== */
+  .tb3{ height:96px; display:flex; background:#fff; color:var(--navy); }
+  .tb3 .mapwrap{ position:relative; width:128px; flex:none; }
+  .tb3 .map{ display:block; width:100%; height:100%; }
+  .tb3 .body{ flex:1; min-width:0; padding:12px 14px 12px 13px; display:flex; flex-direction:column; justify-content:center; }
+  .tb3 .kik{ font-size:8px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); }
+  .tb3 b{ font-size:13.5px; font-weight:800; letter-spacing:-.01em; margin-top:2px; }
+  .tb3 .pay{ display:flex; align-items:baseline; gap:6px; margin-top:3px; }
+  .tb3 .pay b{ font-size:16px; } .tb3 .pay span{ font-size:9.5px; font-weight:700; color:var(--green); background:rgba(15,159,128,.1); padding:2px 6px; border-radius:6px; }
+  .tb3 .btn{ align-self:flex-start; margin-top:9px; height:30px; padding:0 14px; background:#10142b; color:#fff; font-size:11px; }
+  .tb3 .spon{ left:8px; top:8px; right:auto; color:#fff; background:rgba(16,20,43,.5); padding:2px 5px; border-radius:5px; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px); }
 
-  /* ===== T4 · Premium hero (Uber Black vibe) ===== */
-  .t4{ position:relative; height:200px; color:#fff; background:#0c1020; }
-  .t4 .ph{ position:absolute; inset:0; background:url(landingV1/assets/deals/transfer.jpg) center 60% / cover; }
-  .t4 .ph::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(8,12,30,.35) 0%, rgba(8,12,30,.55) 52%, rgba(8,12,30,.94) 100%); }
-  .t4 .in{ position:absolute; inset:0; z-index:2; padding:15px 16px 16px; display:flex; flex-direction:column; }
-  .t4 .badge{ align-self:flex-start; height:23px; display:inline-flex; align-items:center; gap:6px; padding:0 10px; border-radius:999px; background:rgba(255,255,255,.16); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); font-size:9.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
-  .t4 .badge i{ width:6px; height:6px; border-radius:50%; background:#ffd24a; }
-  .t4 h4{ margin:auto 0 0; font-size:19px; font-weight:900; letter-spacing:-.02em; line-height:1.12; max-width:240px; }
-  .t4 .meta{ display:flex; gap:8px; margin:9px 0 11px; }
-  .t4 .chip{ height:26px; display:inline-flex; align-items:center; gap:6px; padding:0 11px; border-radius:999px; background:rgba(255,255,255,.14); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); font-size:11px; font-weight:700; }
-  .t4 .chip svg{ width:13px; height:13px; }
-  .t4 .foot{ display:flex; align-items:center; gap:12px; }
-  .t4 .price{ font-size:11px; font-weight:600; opacity:.9; } .t4 .price b{ display:block; font-size:19px; font-weight:900; opacity:1; }
-  .t4 .btn{ margin-left:auto; height:42px; padding:0 20px; font-size:12.5px; background:#fff; color:#10142b; }
+  /* ===== TB4 · Premium dark (Uber Black) ===== */
+  .tb4{ height:104px; background:#0c1020; }
+  .tb4 .ph{ position:absolute; inset:0; background:url(landingV1/assets/deals/transfer.jpg) right center / cover; }
+  .tb4 .ph::after{ content:''; position:absolute; inset:0; background:linear-gradient(100deg, rgba(8,11,26,.96) 38%, rgba(8,11,26,.55) 64%, rgba(8,11,26,.2)); }
+  .tb4 .in{ position:absolute; inset:0; z-index:3; padding:13px 15px; display:flex; flex-direction:column; justify-content:center; }
+  .tb4 .kik{ font-size:8px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:#9fb0ff; }
+  .tb4 b{ font-size:14.5px; font-weight:900; line-height:1.14; letter-spacing:-.02em; margin-top:3px; max-width:175px; }
+  .tb4 .foot{ display:flex; align-items:center; gap:10px; margin-top:9px; }
+  .tb4 .price{ font-size:9.5px; font-weight:600; opacity:.85; } .tb4 .price b{ display:inline; font-size:15px; font-weight:900; opacity:1; margin-left:3px; }
+  .tb4 .btn{ margin-left:auto; height:30px; padding:0 15px; background:#fff; color:#10142b; font-size:11px; }
+  .tb4 .spon{ right:13px; top:11px; color:#fff; opacity:.7; }
 </style>
 </head>
 <body>
   <div class="page-h">
-    <div class="kick">Vela · transfers · Uber-style</div>
-    <h1>Airport transfers — Uber-style concepts</h1>
-    <p>Cuatro enfoques creativos para el traslado al aeropuerto dentro de Vela: desde un mini-mapa con ruta hasta un selector de vehículos, un estado “en camino” en vivo y un hero premium tipo Uber Black. Elige uno (o mezcla).</p>
+    <div class="kick">Vela · sponsored · transfers</div>
+    <h1>Airport transfers — sponsored banner</h1>
+    <p>El traslado como <b>banner publicitario</b> dentro de Vela (con estética tipo Uber). Cuatro tratamientos: foto editorial, bloque de marca + coche, tira de mapa con precio fijo y hero premium oscuro. Elige uno y lo integro (con interacciones de hover, como el de free tours).</p>
   </div>
 
   <div class="row" id="row"></div>
 
 <script>
   var ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-  var STAR='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 5.6 6.1.7-4.6 4.1 1.3 6L12 16.9 6.6 19.5l1.3-6L3.3 9.3l6.1-.7L12 3Z"/></svg>';
   var PLANE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10.2 3.3c.5-.5 1.4-.5 1.7.3l2 5.2 5.6 1.9c.9.3.9 1.6 0 1.9l-5.6 1.9-2 5.2c-.3.8-1.2.8-1.6.1l-1.4-4.9-4.9-1.4c-.8-.3-.8-1.4 0-1.6l4.9-1.5 1.3-6.7Z"/></svg>';
-  var CLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
-  var FLAG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 21V4M5 5h11l-2 4 2 4H5"/></svg>';
-  // side-view car
-  function car(){ return '<svg viewBox="0 0 64 40" fill="currentColor"><path d="M6 30c-2 0-3-1-3-3v-3c0-2 1-3 3-4l6-2 7-6c2-1 4-2 7-2h11c3 0 5 1 7 3l5 5 6 2c2 1 3 2 3 4v3c0 2-1 3-3 3h-3a6 6 0 0 1-12 0H21a6 6 0 0 1-12 0H6Z" opacity=".95"/><circle cx="15" cy="30" r="4.4" fill="#10142b"/><circle cx="15" cy="30" r="1.7" fill="#fff"/><circle cx="45" cy="30" r="4.4" fill="#10142b"/><circle cx="45" cy="30" r="1.7" fill="#fff"/></svg>'; }
-  // stylized map
-  function mapSVG(){ return '<svg class="map" viewBox="0 0 345 138" preserveAspectRatio="xMidYMid slice">'+
-    '<rect width="345" height="138" fill="#e8eef8"/>'+
-    '<g fill="#dde6f5">'+
-      '<rect x="14" y="14" width="78" height="40" rx="5"/><rect x="104" y="10" width="60" height="34" rx="5"/><rect x="178" y="16" width="70" height="30" rx="5"/><rect x="262" y="12" width="70" height="40" rx="5"/>'+
-      '<rect x="20" y="74" width="64" height="48" rx="5"/><rect x="96" y="80" width="74" height="46" rx="5"/><rect x="240" y="72" width="92" height="52" rx="5"/>'+
-    '</g>'+
-    '<g stroke="#ffffff" stroke-width="9" fill="none" stroke-linecap="round">'+
-      '<path d="M0 64 H345"/><path d="M94 0 V138"/><path d="M224 0 V138"/><path d="M0 132 H345"/>'+
-    '</g>'+
-    '<path d="M42 112 C 110 104, 120 70, 175 64 C 230 58, 240 46, 296 40" stroke="#385bf8" stroke-width="4.5" fill="none" stroke-linecap="round"/>'+
-    '<circle cx="42" cy="112" r="7.5" fill="#385bf8" stroke="#fff" stroke-width="3"/>'+
-    '<g transform="translate(296,40)"><path d="M0 -16 C 9 -16 14 -9 14 -2 C 14 7 0 18 0 18 C 0 18 -14 7 -14 -2 C -14 -9 -9 -16 0 -16Z" fill="#10142b" stroke="#fff" stroke-width="2.5"/><circle cx="0" cy="-2" r="4.5" fill="#fff"/></g>'+
-    '<g transform="translate(150,62) rotate(-12)" fill="#10142b"><rect x="-13" y="-8" width="26" height="14" rx="4"/><circle cx="-7" cy="7" r="2.6"/><circle cx="7" cy="7" r="2.6"/></g>'+
+  function mapSVG(){ return '<svg class="map" viewBox="0 0 128 96" preserveAspectRatio="xMidYMid slice">'+
+    '<rect width="128" height="96" fill="#e8eef8"/>'+
+    '<g fill="#dde6f5"><rect x="8" y="8" width="40" height="26" rx="4"/><rect x="60" y="6" width="40" height="22" rx="4"/><rect x="10" y="58" width="44" height="30" rx="4"/><rect x="70" y="56" width="50" height="34" rx="4"/></g>'+
+    '<g stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"><path d="M0 46 H128"/><path d="M56 0 V96"/></g>'+
+    '<path d="M22 78 C 56 72, 56 40, 104 30" stroke="#385bf8" stroke-width="4" fill="none" stroke-linecap="round"/>'+
+    '<circle cx="22" cy="78" r="6.5" fill="#385bf8" stroke="#fff" stroke-width="2.5"/>'+
+    '<g transform="translate(104,30)"><path d="M0 -13 C 7 -13 11 -7 11 -1 C 11 6 0 15 0 15 C 0 15 -11 6 -11 -1 C -11 -7 -7 -13 0 -13Z" fill="#10142b" stroke="#fff" stroke-width="2"/><circle cx="0" cy="-1" r="3.6" fill="#fff"/></g>'+
     '</svg>'; }
 
-  var T1 = '<div class="card t1"><div class="top">'+mapSVG()+'<span class="eta"><i></i>Coche a 4 min</span></div>'+
-    '<div class="sheet">'+
-      '<div class="route">'+
-        '<div class="stop"><span class="dot a"></span>Casa del Mar<small>Recogida</small></div>'+
-        '<div class="conn"><span></span></div>'+
-        '<div class="stop"><span class="dot b"></span>Barajas T4<small>32 min</small></div>'+
-      '</div>'+
-      '<div class="pay"><b>28€</b><s>35€</s><span>Precio fijo</span></div>'+
-      '<button class="btn btn-dark">Pedir traslado '+ARR+'</button>'+
-    '</div></div>';
+  var TB1='<div class="bn tb1"><div class="tint"></div><span class="spon">Patrocinado</span>'+
+    '<span class="star"><span>−20%</span></span>'+
+    '<div class="in"><span class="kik">Traslados · aeropuerto y ciudad</span>'+
+    '<b>Llega al aeropuerto sin estrés</b>'+
+    '<span class="link">Reservar '+ARR+'</span></div></div>';
 
-  function opt(sel,svg,name,sub,price,per){ return '<div class="opt'+(sel?' sel':'')+'"><span class="veh">'+svg+'</span>'+
-    '<span class="vx"><b>'+name+'</b><small>'+sub+'</small></span>'+
-    '<span class="pr"><b>'+price+'</b><small>'+per+'</small></span></div>'; }
-  var T2 = '<div class="card t2"><div class="hd">Elige tu traslado</div>'+
-    '<div class="sumr">'+PLANE+' Casa del Mar → Barajas T4 · 32 min</div>'+
-    opt(true, car(), 'Economy', '4 plazas · sedán', '28€', 'precio fijo')+
-    opt(false, car(), 'Comfort', '4 plazas · gama alta', '38€', 'precio fijo')+
-    opt(false, car(), 'Van XL', 'hasta 6 plazas', '55€', 'precio fijo')+
-    '<button class="btn btn-blue">Confirmar · 28€</button></div>';
+  var TB2='<div class="bn tb2"><span class="car"></span><span class="spon">Patrocinado</span>'+
+    '<div class="in"><span class="pill">🔥 Oferta especial</span>'+
+    '<b>Traslados aeropuerto y ciudad</b>'+
+    '<div class="chips"><span class="chip">Cancelación gratis</span><span class="chip">Asistencia 24/7</span></div></div></div>';
 
-  var T3 = '<div class="card t3"><span class="glow"></span>'+
-    '<div class="hd">Tu traslado</div><div class="big">Llega en <span>4 min</span></div>'+
-    '<div class="carlane"><div class="track"><i></i></div><span class="car">'+car()+'</span><span class="flag">'+FLAG+'</span></div>'+
-    '<div class="drv"><span class="av">C</span>'+
-      '<span class="di"><b>Carlos M. <span class="rt">'+STAR+'4,9</span></b><small>Audi A3 · gris</small></span>'+
-      '<span class="plate">1234 ABC</span></div></div>';
+  var TB3='<div class="bn tb3"><div class="mapwrap">'+mapSVG()+'</div>'+
+    '<div class="body"><span class="kik">Traslado puerta a puerta</span>'+
+    '<div class="pay"><b>desde 28€</b><span>Precio fijo</span></div>'+
+    '<button class="btn">Reservar traslado '+ARR+'</button></div>'+
+    '<span class="spon">Patrocinado</span></div>';
 
-  var T4 = '<div class="card t4"><div class="ph"></div><div class="in">'+
-    '<span class="badge"><i></i>Uber-style · precio fijo</span>'+
-    '<h4>Tu traslado al aeropuerto, listo</h4>'+
-    '<div class="meta"><span class="chip">'+CLOCK+' Sáb 12 · 09:30</span><span class="chip">'+PLANE+' Barajas T4</span></div>'+
-    '<div class="foot"><span class="price">desde<b>28€</b></span><button class="btn">Reservar '+ARR+'</button></div>'+
-    '</div></div>';
+  var TB4='<div class="bn tb4"><div class="ph"></div><span class="spon">Patrocinado</span>'+
+    '<div class="in"><span class="kik">Traslado privado</span>'+
+    '<b>Tu coche al aeropuerto</b>'+
+    '<div class="foot"><span class="price">desde<b>28€</b></span><button class="btn">Reservar '+ARR+'</button></div></div></div>';
 
   var items=[
-    {tag:'T1', name:'Mini-mapa + ruta', desc:'Mapa estilizado con ruta y coche, ETA en vivo, recogida→destino, precio fijo y CTA. La home de Uber en miniatura.', html:T1},
-    {tag:'T2', name:'Selector de vehículos', desc:'Lista de categorías (Economy / Comfort / Van XL) con precio fijo, una seleccionada. Como el selector de producto de Uber.', html:T2},
-    {tag:'T3', name:'En camino (live)', desc:'Estado en vivo: “Llega en 4 min”, coche avanzando por la barra, conductor con rating y matrícula. Oscuro, premium.', html:T3},
-    {tag:'T4', name:'Hero premium', desc:'Foto del coche + degradado, fecha/hora y terminal en chips, precio y CTA. Vibe Uber Black / reserva anticipada.', html:T4}
+    {tag:'TB1', name:'Foto editorial', desc:'Mismo estilo que el free-tours: foto del coche, tinte, título grande, CTA enlace y pegatina starburst (−20%).', html:TB1},
+    {tag:'TB2', name:'Bloque marca + coche', desc:'Tu referencia adaptada: degradado azul, “Oferta especial”, coche fundido a la derecha y chips de garantías.', html:TB2},
+    {tag:'TB3', name:'Tira de mapa', desc:'Mini-mapa con ruta a la izquierda + precio fijo y CTA. Estética Uber pero como banner de anuncio.', html:TB3},
+    {tag:'TB4', name:'Hero premium oscuro', desc:'Vibe Uber Black: fondo oscuro con el coche, “desde 28€” y CTA blanca. Premium.', html:TB4}
   ];
   document.getElementById('row').innerHTML = items.map(function(it){
     return '<div class="item"><span class="tag">'+it.tag+'</span><div class="label">'+it.name+'<small>'+it.desc+'</small></div><div class="stage">'+it.html+'</div></div>';
