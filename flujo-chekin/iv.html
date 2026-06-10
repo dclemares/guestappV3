@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify your identity · Casa del Mar</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="shell.css">
+<style>
+  /* intro journey rail */
+  .jrow{display:flex;gap:13px;align-items:flex-start;padding:14px;border:1px solid var(--line);border-radius:12px}
+  .jrow .ic{width:38px;height:38px;border-radius:11px;background:var(--blue-chip);color:var(--blue);display:grid;place-items:center;flex-shrink:0}
+  .jrow .ic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7}
+  .jrow .nm{font:700 14px var(--font-primary)}
+  .jrow .ds{font:500 12px/1.45 var(--font-primary);color:var(--ink2);margin-top:2px}
+
+  /* doc type radios */
+  .doc-opt{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--line);border-radius:12px;cursor:pointer;background:#fff;width:100%;text-align:left}
+  .doc-opt .ic{width:34px;height:34px;border-radius:9px;background:var(--field);color:var(--ink2);display:grid;place-items:center;flex-shrink:0}
+  .doc-opt .ic svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7}
+  .doc-opt .nm{flex:1;font:700 13.5px var(--font-primary)}
+  .doc-opt .rad{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;position:relative}
+  .doc-opt.sel{border-color:var(--blue);background:var(--blue-chip)}
+  .doc-opt.sel .ic{background:var(--blue);color:#fff}
+  .doc-opt.sel .rad{border-color:var(--blue)}
+  .doc-opt.sel .rad::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--blue)}
+
+  /* dropdown */
+  .dd{position:relative}
+  .dd-menu{position:absolute;left:0;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;z-index:40;display:none;max-height:240px;overflow:auto}
+  .dd.open .dd-menu{display:block}
+  .dd-menu button{width:100%;display:flex;align-items:center;gap:9px;padding:10px;border:none;background:transparent;border-radius:8px;cursor:pointer;font:600 13.5px var(--font-primary);color:var(--ink);text-align:left}
+  .dd-menu button:hover{background:var(--blue-chip)}
+
+  /* capture frame */
+  .cap-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .frame{width:100%;max-width:320px;aspect-ratio:1.05;border-radius:18px;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#1B2A66,#385CF8);display:grid;place-items:center}
+  .frame.face{aspect-ratio:.86}
+  .frame .bracket{position:absolute;width:34px;height:34px;border:3px solid #fff;opacity:.92}
+  .frame .bracket.tl{top:14px;left:14px;border-right:none;border-bottom:none;border-radius:8px 0 0 0}
+  .frame .bracket.tr{top:14px;right:14px;border-left:none;border-bottom:none;border-radius:0 8px 0 0}
+  .frame .bracket.bl{bottom:14px;left:14px;border-right:none;border-top:none;border-radius:0 0 0 8px}
+  .frame .bracket.br{bottom:14px;right:14px;border-left:none;border-top:none;border-radius:0 0 8px 0}
+  .frame .doc-ghost{width:62%;height:42%;border-radius:8px;background:rgba(255,255,255,.16);display:flex;flex-direction:column;justify-content:center;gap:7px;padding:14px}
+  .frame .doc-ghost i{height:6px;border-radius:3px;background:rgba(255,255,255,.3);display:block}
+  .frame .doc-ghost i:nth-child(1){width:50%}
+  .frame .doc-ghost i:nth-child(2){width:80%}
+  .frame .doc-ghost i:nth-child(3){width:65%}
+  .frame .oval{width:58%;height:74%;border:2.5px dashed rgba(255,255,255,.7);border-radius:50%}
+  .frame .scan{position:absolute;left:8%;right:8%;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,#7CF2D2,transparent);top:14%;box-shadow:0 0 14px rgba(124,242,210,.8);display:none}
+  .frame.scanning .scan{display:block;animation:scan 1.3s ease-in-out infinite}
+  @keyframes scan{0%,100%{top:14%}50%{top:82%}}
+  .frame .check{position:absolute;inset:0;background:rgba(15,159,128,.18);display:none;place-items:center}
+  .frame.done .check{display:grid}
+  .frame .check .c{width:64px;height:64px;border-radius:50%;background:var(--success);display:grid;place-items:center;animation:pop .3s cubic-bezier(.2,1.4,.4,1)}
+  @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  .frame .check .c svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:3}
+  .frame.done{background:linear-gradient(135deg,#0E7A62,#13A586)}
+
+  .ring{display:none;align-items:center;gap:8px}
+  .frame.scanning ~ .ring{display:inline-flex}
+
+  .status-badge{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 13px;border-radius:999px;font:600 12px var(--font-primary)}
+  .status-badge.wait{background:var(--warn-bg);color:var(--warn)}
+  .status-badge.proc{background:var(--blue-chip);color:var(--blue)}
+  .status-badge.ok{background:var(--success-bg);color:var(--success)}
+  .status-badge .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+  .err-card{background:var(--danger-bg);border:1px solid rgba(255,36,103,.2);border-radius:12px;padding:13px;display:none}
+  .err-card .t{font:700 13px var(--font-primary);color:var(--danger)}
+  .err-card .d{font:500 12px/1.45 var(--font-primary);color:var(--ink2);margin-top:3px}
+
+  .skip-link{display:block;text-align:center;font:600 13px var(--font-primary);color:var(--ink2);background:none;border:none;cursor:pointer;width:100%;padding:6px}
+
+  /* steps progress dots */
+  .dots{display:flex;align-items:center;gap:6px;justify-content:center}
+  .dots .d{width:8px;height:8px;border-radius:50%;background:var(--line)}
+  .dots .d.on{background:var(--blue)}
+  .dots .d.done{background:var(--success)}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(22,22,67,.45);display:none;place-items:center;z-index:60;padding:24px}
+  .modal.show{display:grid}
+  .modal .box{background:#fff;border-radius:16px;padding:22px;max-width:340px;width:100%}
+  .modal .box h3{font:700 17px var(--font-primary);margin:0 0 8px}
+  .modal .box p{font:500 13px/1.5 var(--font-primary);color:var(--ink2);margin:0 0 16px}
+  .modal .box .row{display:flex;flex-direction:column;gap:8px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <button class="icon-btn" id="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+    <div class="titl">
+      <div class="t">Verify your identity</div>
+      <div class="s" id="topsub">Guest registration</div>
+    </div>
+    <button class="vela-btn" aria-label="Ask Vela"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/><path d="M18.5 14l.75 2.25 2.25.75-2.25.75-.75 2.25-.75-2.25-2.25-.75 2.25-.75z"/></svg></button>
+  </header>
+
+  <!-- ============ INTRO ============ -->
+  <div class="body screen" data-screen="intro">
+    <div>
+      <div class="kicker">Guest Registration</div>
+      <h1 class="h-screen">Verify your identity</h1>
+      <p class="sub">Three quick steps. It takes less than a minute.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="jrow"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></svg></div><div><div class="nm">Scan your document</div><div class="ds">Passport, national ID or driver's license</div></div></div>
+      <div class="jrow"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></div><div><div class="nm">Confirm it's you</div><div class="ds">A quick face scan, matched to your document photo</div></div></div>
+      <div class="jrow"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div><div class="nm">Confirm your details</div><div class="ds">Check the information on your entry form before it's sent</div></div></div>
+    </div>
+    <div class="vela-hint">
+      <div class="av"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/><path d="M18.5 14l.75 2.25 2.25.75-2.25.75-.75 2.25-.75-2.25-2.25-.75 2.25-.75z"/></svg></div>
+      <div class="tx"><b>Your data is safe.</b> Everything you share is encrypted and deleted from our system after your check-in date.</div>
+    </div>
+  </div>
+
+  <!-- ============ DOC SELECT ============ -->
+  <div class="body screen" data-screen="doc" hidden>
+    <div>
+      <div class="kicker">Guest Registration</div>
+      <h1 class="h-screen">Choose your document</h1>
+      <p class="sub">Select the document you'll scan.</p>
+    </div>
+
+    <div class="field">
+      <label>Nationality</label>
+      <div class="dd" id="natDD">
+        <div class="select-ctl" id="natCtl"><span class="val placeholder" id="natVal">Select your nationality</span><svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+        <div class="dd-menu" id="natMenu">
+          <button data-c="ES">🇪🇸 Spain</button>
+          <button data-c="FR">🇫🇷 France</button>
+          <button data-c="DE">🇩🇪 Germany</button>
+          <button data-c="IT">🇮🇹 Italy</button>
+          <button data-c="PT">🇵🇹 Portugal</button>
+          <button data-c="GB">🇬🇧 United Kingdom</button>
+          <button data-c="US">🇺🇸 United States</button>
+          <button data-c="BR">🇧🇷 Brazil</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="docSection" hidden>
+      <div class="field" style="gap:10px">
+        <label>Document type</label>
+        <button class="doc-opt" data-doc="passport"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M9 16h6"/></svg></div><div class="nm">Passport</div><div class="rad"></div></button>
+        <button class="doc-opt sel" data-doc="id"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></svg></div><div class="nm">National ID</div><div class="rad"></div></button>
+        <button class="doc-opt" data-doc="license"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h4M7 13h10M7 16h7"/></svg></div><div class="nm">Driver's license</div><div class="rad"></div></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CAPTURE ============ -->
+  <div class="body screen" data-screen="capture" hidden>
+    <div class="dots" id="dots"></div>
+    <div>
+      <h1 class="h-screen" id="capTitle" style="text-align:center">Photo of the front</h1>
+      <p class="sub" id="capSub" style="text-align:center">Place your document inside the frame</p>
+    </div>
+    <div class="cap-wrap">
+      <div class="frame" id="frame">
+        <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
+        <div class="doc-ghost" id="ghost"><i></i><i></i><i></i></div>
+        <div class="oval" id="oval" style="display:none"></div>
+        <div class="scan"></div>
+        <div class="check"><div class="c"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></div></div>
+      </div>
+      <div class="status-badge wait" id="badge"><span class="dot"></span><span id="badgeTxt">Place your document inside the frame</span></div>
+    </div>
+    <div class="err-card" id="errCard"><div class="t" id="errTitle">Document validation failed</div><div class="d" id="errDesc">There was glare on the document — try again with less reflection.</div></div>
+    <div class="vela-hint" id="capHint">
+      <div class="av"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/><path d="M18.5 14l.75 2.25 2.25.75-2.25.75-.75 2.25-.75-2.25-2.25-.75 2.25-.75z"/></svg></div>
+      <div class="tx" id="capHintTx"><b>Good light, no glare.</b> Keep the whole document visible, well lit and free of reflections — rest it flat on a table.</div>
+    </div>
+  </div>
+
+  <!-- bottom CTA (changes per screen) -->
+  <div class="cta-bar" id="ctaBar">
+    <button class="btn btn-primary" id="primaryBtn">Begin verification</button>
+    <button class="skip-link" id="skipLink" style="display:none">Skip for now</button>
+  </div>
+</div>
+
+<!-- skip modal -->
+<div class="modal" id="skipModal">
+  <div class="box">
+    <h3>Skip verification?</h3>
+    <p>You'll need to verify your identity later. Any details you've filled in so far will be lost.</p>
+    <div class="row">
+      <button class="btn btn-primary" id="skipConfirm">Skip for now</button>
+      <button class="btn btn-ghost" id="skipCancel">Continue verification</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var qp = new URLSearchParams(location.search);
+  var FORCE_FAIL = qp.get('fail');          // front|back|selfie
+  var NO_SELFIE  = qp.get('selfie') === '0';
+
+  var state = { screen:'intro', doc:'id', nat:null, steps:[], sub:0, phase:0, failedOnce:false };
+
+  var screens = {};
+  document.querySelectorAll('.screen').forEach(function(s){ screens[s.dataset.screen] = s; });
+  var topsub = document.getElementById('topsub');
+  var primaryBtn = document.getElementById('primaryBtn');
+  var skipLink = document.getElementById('skipLink');
+
+  function show(name){
+    state.screen = name;
+    Object.keys(screens).forEach(function(k){ screens[k].hidden = (k !== name); });
+  }
+
+  // ---------- INTRO ----------
+  function toForm(){ try{ window.parent.postMessage('flow:to-form','*'); }catch(e){} }
+
+  // ---------- DOC SELECT ----------
+  var natDD = document.getElementById('natDD'), natCtl = document.getElementById('natCtl'),
+      natVal = document.getElementById('natVal'), natMenu = document.getElementById('natMenu'),
+      docSection = document.getElementById('docSection');
+  natCtl.addEventListener('click', function(e){ e.stopPropagation(); natDD.classList.toggle('open'); });
+  document.addEventListener('click', function(){ natDD.classList.remove('open'); });
+  natMenu.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click', function(){
+      state.nat = b.dataset.c;
+      natVal.textContent = b.textContent;
+      natVal.classList.remove('placeholder');
+      natDD.classList.remove('open');
+      docSection.hidden = false;
+      primaryBtn.disabled = false;
+    });
+  });
+  document.querySelectorAll('.doc-opt').forEach(function(o){
+    o.addEventListener('click', function(){
+      document.querySelectorAll('.doc-opt').forEach(function(x){ x.classList.remove('sel'); });
+      o.classList.add('sel');
+      state.doc = o.dataset.doc;
+    });
+  });
+
+  // ---------- CAPTURE ----------
+  var STEP_DEFS = {
+    front: { title:'Photo of the <b>front</b>', sub:'Place your document inside the frame', wait:'Place your document inside the frame',
+             err:{t:'Document validation failed', d:'There was glare on the document — try again with less reflection.'},
+             hint:'<b>Good light, no glare.</b> Keep the whole document visible, well lit and free of reflections — rest it flat on a table.' },
+    back:  { title:'Now flip to the <b>back</b>', sub:'Place your document inside the frame', wait:'Place your document inside the frame',
+             err:{t:'Document validation failed', d:'The back came out blurry — hold steady and try again.'},
+             hint:'<b>Good light, no glare.</b> Lay the document flat and capture it from directly above.' },
+    face:  { title:"Confirm it's <b>you</b>", sub:'Look at the camera', wait:'Look at the camera', face:true,
+             err:{t:'Selfie validation failed', d:"We couldn't see your face clearly — face the light and try again."},
+             hint:'<b>Good, even light.</b> Avoid backlight, and remove glasses, hats or anything covering your face.' }
+  };
+
+  var dotsEl=document.getElementById('dots'), frame=document.getElementById('frame'),
+      ghost=document.getElementById('ghost'), oval=document.getElementById('oval'),
+      badge=document.getElementById('badge'), badgeTxt=document.getElementById('badgeTxt'),
+      capTitle=document.getElementById('capTitle'), capSub=document.getElementById('capSub'),
+      errCard=document.getElementById('errCard'), errTitle=document.getElementById('errTitle'),
+      errDesc=document.getElementById('errDesc'), capHintTx=document.getElementById('capHintTx');
+
+  function buildSteps(){
+    var s = [];
+    if(state.doc !== 'passport'){ s.push('front'); s.push('back'); }
+    else { s.push('front'); }
+    if(!NO_SELFIE) s.push('face');
+    state.steps = s; state.sub = 0; state.failedOnce = false;
+  }
+
+  function renderDots(){
+    dotsEl.innerHTML='';
+    state.steps.forEach(function(_,i){
+      var d=document.createElement('div'); d.className='d';
+      if(i<state.sub) d.classList.add('done'); else if(i===state.sub) d.classList.add('on');
+      dotsEl.appendChild(d);
+    });
+  }
+
+  function renderCapture(){
+    var key = state.steps[state.sub], def = STEP_DEFS[key];
+    renderDots();
+    capTitle.innerHTML = def.title;
+    capSub.textContent = def.sub;
+    frame.className = 'frame' + (def.face ? ' face' : '');
+    ghost.style.display = def.face ? 'none' : 'flex';
+    oval.style.display = def.face ? 'block' : 'none';
+    badge.className = 'status-badge wait'; badgeTxt.textContent = def.wait;
+    errCard.style.display = 'none';
+    capHintTx.innerHTML = def.hint;
+    state.phase = 0;
+    primaryBtn.textContent = def.face ? 'Demo · take selfie' : 'Demo · place document';
+    primaryBtn.disabled = false;
+    skipLink.style.display = 'block';
+  }
+
+  function processCapture(){
+    if(state.phase !== 0) return;
+    state.phase = 1;
+    primaryBtn.disabled = true; skipLink.style.display='none';
+    frame.classList.add('scanning');
+    var key = state.steps[state.sub], def = STEP_DEFS[key];
+    badge.className='status-badge proc';
+    var label = def.face?'Detecting face · ':'Hold still · ';
+    var DURATION = 1600, t0 = Date.now();
+    badgeTxt.textContent = label+'0%';
+    var iv = setInterval(function(){
+      var pct = Math.min(100, Math.round((Date.now()-t0)/DURATION*100));  // time-based: robust to tick throttling
+      badgeTxt.textContent = label+pct+'%';
+      if(pct>=100){ clearInterval(iv); finishCapture(); }
+    }, 60);
+  }
+
+  function finishCapture(){
+    var key = state.steps[state.sub], def = STEP_DEFS[key];
+    frame.classList.remove('scanning');
+    var willFail = FORCE_FAIL === key && !state.failedOnce;
+    if(willFail){
+      state.failedOnce = true; state.phase = 3;
+      badge.className='status-badge'; badge.style.background='var(--danger-bg)'; badge.style.color='var(--danger)';
+      badgeTxt.textContent = 'Validation failed';
+      errTitle.textContent = def.err.t; errDesc.textContent = def.err.d;
+      errCard.style.display='block';
+      primaryBtn.textContent='Try again'; primaryBtn.disabled=false; skipLink.style.display='block';
+      return;
+    }
+    state.phase = 2;
+    frame.classList.add('done');
+    badge.className='status-badge ok'; badge.style.background=''; badge.style.color='';
+    badgeTxt.textContent='Capture complete';
+    capTitle.innerHTML = def.face ? 'Selfie ready!' : 'Photo saved!';
+    capSub.textContent = 'Moving to the next step…';
+    setTimeout(function(){
+      if(state.sub < state.steps.length - 1){ state.sub++; renderCapture(); }
+      else { toForm(); }   // all steps done → load form
+    }, 1000);
+  }
+
+  // ---------- primary button router ----------
+  primaryBtn.addEventListener('click', function(){
+    if(state.screen === 'intro'){ show('doc'); primaryBtn.textContent='Continue'; primaryBtn.disabled = !state.nat; skipLink.style.display='none'; return; }
+    if(state.screen === 'doc'){ if(!state.nat) return; buildSteps(); show('capture'); renderCapture(); return; }
+    if(state.screen === 'capture'){
+      if(state.phase === 0 || state.phase === 3){ if(state.phase===3){ renderCaptureRetry(); } processCapture(); }
+    }
+  });
+  function renderCaptureRetry(){
+    var key = state.steps[state.sub], def = STEP_DEFS[key];
+    frame.className='frame'+(def.face?' face':''); errCard.style.display='none';
+    badge.className='status-badge wait'; badge.style.background=''; badge.style.color=''; badgeTxt.textContent=def.wait;
+    capTitle.innerHTML=def.title; capSub.textContent=def.sub; state.phase=0;
+  }
+
+  // ---------- skip modal ----------
+  var skipModal=document.getElementById('skipModal');
+  skipLink.addEventListener('click', function(){ skipModal.classList.add('show'); });
+  document.getElementById('skipCancel').addEventListener('click', function(){ skipModal.classList.remove('show'); });
+  document.getElementById('skipConfirm').addEventListener('click', function(){ skipModal.classList.remove('show'); toForm(); });
+
+  // ---------- back ----------
+  document.getElementById('back').addEventListener('click', function(){
+    if(state.screen==='capture'){ show('doc'); primaryBtn.textContent='Continue'; primaryBtn.disabled=!state.nat; skipLink.style.display='none'; }
+    else if(state.screen==='doc'){ show('intro'); primaryBtn.textContent='Begin verification'; primaryBtn.disabled=false; skipLink.style.display='none'; }
+    else { try{ window.parent.postMessage('flow:restart','*'); }catch(e){} }
+  });
+
+  show('intro');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guests · Casa del Mar</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="shell.css">
+<style>
+  .gsec .head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .gsec .head .ic{width:26px;height:26px;border-radius:8px;background:var(--field);color:var(--ink2);display:grid;place-items:center}
+  .gsec .head .ic svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .gsec .head .t{font:700 12px var(--font-primary);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
+
+  .guest-row{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff;position:relative;overflow:hidden}
+  .guest-row .rail{position:absolute;left:0;top:0;bottom:0;width:3px}
+  .guest-row.ok .rail{background:var(--success)}
+  .guest-row.todo .rail{background:#F7B955}
+  .guest-row .avi{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:700 13px var(--font-primary);flex-shrink:0}
+  .guest-row.ok .avi{background:var(--success-bg);color:var(--success)}
+  .guest-row.todo .avi{background:var(--warn-bg);color:var(--warn)}
+  .guest-row .nm{font:700 14px var(--font-primary)}
+  .guest-row .ds{font:500 11.5px var(--font-primary);color:var(--ink2);margin-top:2px}
+  .guest-row .chev{margin-left:auto;width:16px;height:16px;stroke:var(--ink3);fill:none;stroke-width:2.2;flex-shrink:0}
+
+  .add-row{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+    height:48px;border-radius:12px;border:1.5px dashed var(--line);background:#fff;cursor:pointer;
+    font:600 13.5px var(--font-primary);color:var(--blue)}
+  .add-row:hover{background:var(--blue-chip);border-color:rgba(56,92,248,.4)}
+  .add-row svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+
+  .stack{display:flex;flex-direction:column;gap:10px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <button class="icon-btn" id="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+    <div class="titl">
+      <div class="t">Guests</div>
+      <div class="s">Casa del Mar</div>
+    </div>
+    <button class="vela-btn" aria-label="Ask Vela"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/><path d="M18.5 14l.75 2.25 2.25.75-2.25.75-.75 2.25-.75-2.25-2.25-.75 2.25-.75z"/></svg></button>
+  </header>
+
+  <div class="body">
+    <div>
+      <div class="kicker">Guest Summary</div>
+      <h1 class="h-screen">Guests for this booking</h1>
+      <p class="sub">Manage who is staying at Casa del Mar and make sure every guest is ready before arrival.</p>
+    </div>
+
+    <!-- progress -->
+    <div class="card">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px">
+        <div style="font:700 13px var(--font-primary)">Your progress</div>
+        <span style="font:600 12px var(--font-primary);color:var(--ink2);font-variant-numeric:tabular-nums">1 / 6 guests registered</span>
+      </div>
+      <div class="bar"><i style="width:16.6%"></i></div>
+      <div style="font:500 11.5px/1.5 var(--font-primary);color:var(--ink2);margin-top:8px">Finish the pending registrations so your guests can check in without waiting.</div>
+    </div>
+
+    <!-- responsible -->
+    <div class="gsec">
+      <div class="head"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div class="t">Responsible for booking</div></div>
+      <div class="guest-row ok">
+        <div class="rail"></div>
+        <div class="avi">DC</div>
+        <div><div class="nm">Daniel Clemares Faerna</div><div class="ds"><span class="chip ok"><span class="dot"></span>Complete</span></div></div>
+      </div>
+    </div>
+
+    <!-- other guests -->
+    <div class="gsec">
+      <div class="head"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20a6 6 0 0 1 12 0M15 20a5 5 0 0 1 6-4.5"/></svg></div><div class="t">Other guests</div></div>
+      <div class="stack">
+        <button class="guest-row todo add-trigger" aria-label="Finish registration for Marta Garcia Lopez" style="text-align:left;cursor:pointer">
+          <div class="rail"></div>
+          <div class="avi">MG</div>
+          <div><div class="nm">Marta Garcia Lopez</div><div class="ds"><span class="chip todo"><span class="dot"></span>Incomplete</span> · Finish registration</div></div>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="add-row add-trigger"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add guest</button>
+      </div>
+    </div>
+
+    <!-- minors -->
+    <div class="gsec">
+      <div class="head"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3"/><path d="M6 20a6 6 0 0 1 12 0"/></svg></div><div class="t">Minors · under 18</div></div>
+      <button class="add-row add-trigger"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add guest</button>
+    </div>
+
+    <!-- vela hint: minors lighter flow -->
+    <div class="vela-hint">
+      <div class="av"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/><path d="M18.5 14l.75 2.25 2.25.75-2.25.75-.75 2.25-.75-2.25-2.25-.75 2.25-.75z"/></svg></div>
+      <div class="tx"><b>Minors have a lighter flow.</b> They only fill the guest form — identity verification isn't required.</div>
+    </div>
+  </div>
+
+  <div class="cta-bar">
+    <button class="btn btn-primary add-trigger">Add guest</button>
+  </div>
+</div>
+
+<script>
+  function toV2(){ try{ window.parent.postMessage('flow:to-v2','*'); }catch(e){} }
+  document.querySelectorAll('.add-trigger').forEach(function(b){ b.addEventListener('click', toV2); });
+  document.getElementById('back').addEventListener('click', function(){ try{ window.parent.postMessage('flow:restart','*'); }catch(e){} });
+</script>
+</body>
+</html>

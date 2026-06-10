@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Full flow · Chekin style — Guest App V3</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#F4F6F9;overflow:hidden}
+  #stage{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#F4F6F9}
+  .flow-ctrl{position:fixed;z-index:20;display:inline-flex;align-items:center;gap:7px;
+    padding:9px 15px;border:1px solid #E5E6EE;border-radius:10px;cursor:pointer;
+    font:600 12.5px 'Montserrat',-apple-system,sans-serif;color:#161643;
+    background:rgba(255,255,255,.92);backdrop-filter:blur(8px);transition:background .15s}
+  .flow-ctrl:hover{background:#fff}
+  .flow-ctrl svg{width:14px;height:14px}
+  #flow-restart{bottom:18px;left:22px;opacity:.85}
+  #flow-restart:hover{opacity:1}
+</style>
+</head>
+<body>
+  <iframe id="stage" title="Guest App V3 — Chekin-style full flow"
+    allow="camera; microphone; autoplay; fullscreen"></iframe>
+
+  <button class="flow-ctrl" id="flow-restart">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+    Restart flow
+  </button>
+
+<script>
+  // Same flow contract as flujo-completo-2, pointing at the new Chekin-style screens.
+  var STEPS = {
+    landing: 'landing.html',
+    summary: 'summary.html',
+    v2:      'iv.html',
+    form:    'form.html'
+  };
+  var stage = document.getElementById('stage');
+  function go(step){ stage.src = STEPS[step]; }
+
+  document.getElementById('flow-restart').addEventListener('click', function(){ go('landing'); });
+
+  window.addEventListener('message', function(e){
+    if(e.data === 'flow:to-summary') go('summary');
+    else if(e.data === 'flow:to-v2') go('v2');
+    else if(e.data === 'flow:to-form') go('form');
+    else if(e.data === 'flow:restart') go('landing');
+  });
+
+  go('landing');
+</script>
+</body>
+</html>
