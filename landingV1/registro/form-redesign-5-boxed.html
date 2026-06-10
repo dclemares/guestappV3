@@ -51,7 +51,7 @@ body{
 .field{ display:flex; flex-direction:row; align-items:center; gap:18px; min-height:54px; padding:8px 18px; border-bottom:1px solid rgba(233,237,246,.82); }
 .field:last-child{ border-bottom:0; }
 .field.full{ grid-column:1 / -1; }
-.field label{ width:170px; flex:none; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--grey-soft); }
+.field label{ width:auto; flex:none; max-width:62%; white-space:nowrap; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--grey-soft); }
 .field label .opt{ color:var(--grey-soft); font-weight:700; text-transform:none; letter-spacing:0; }
 .control{ flex:1; height:38px; padding:0 10px; border:0; border-radius:9px; background:transparent;
   font:inherit; font-size:15px; font-weight:600; color:var(--navy); outline:none; width:100%; text-align:right; transition:background .15s ease; }
@@ -73,10 +73,13 @@ body{
 .opt-row{ display:flex; align-items:center; gap:10px; padding:9px 11px; border-radius:9px; cursor:pointer; font-size:14px; }
 .opt-row:hover{ background:rgba(56,91,248,.07); }
 .opt-flag{ font-size:16px; }
+.sel-search{ position:sticky; top:0; z-index:1; display:block; width:100%; height:34px; margin-bottom:6px; padding:0 11px; border:1px solid var(--line); border-radius:8px; background:#fff; font:inherit; font-size:13px; font-weight:500; color:var(--navy); text-align:left; outline:none; }
+.sel-search:focus{ border-color:var(--blue); box-shadow:0 0 0 3px rgba(56,91,248,.12); }
+.sel-search::placeholder{ color:var(--grey-soft); text-align:left; }
 
 /* optional tag */
 .optional{ display:inline-flex; align-items:center; margin-left:7px; padding:2px 8px; border-radius:999px; background:rgba(150,150,185,.14);
-  font-size:9px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:#8089ab; vertical-align:middle; }
+  font-size:9px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:#8089ab; vertical-align:middle; white-space:nowrap; }
 
 /* phone with country-code select (row layout, right-aligned) */
 .phone{ display:flex; align-items:center; justify-content:flex-end; gap:10px; }
@@ -152,10 +155,24 @@ input[type="date"].control::-webkit-calendar-picker-indicator{ opacity:0; cursor
 @keyframes modal-fade{ from{ opacity:0; } to{ opacity:1; } }
 @keyframes modal-pop{ from{ opacity:0; transform:translateY(12px) scale(.97); } to{ opacity:1; transform:none; } }
 
+/* verification progress (injected at the top of the Vela panel) */
+.vela-prog{ margin:0 0 4px; }
+.vela-prog .eye{ position:relative; display:block; padding-bottom:9px; margin:0 0 12px; font-size:9.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--grey-soft); }
+.vela-prog .eye::before{ content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+.vela-prog .eye::after{ content:""; position:absolute; left:0; bottom:0; width:26px; height:2px; border-radius:2px; background:var(--blue); }
+.vela-prog .vp-title{ display:flex; align-items:center; gap:9px; margin-bottom:6px; font-size:13.2px; font-weight:700; color:var(--navy); }
+.vela-prog .vp-title svg{ width:14px; height:14px; color:var(--blue-deep); flex:none; }
+.vela-prog .vp-sub{ margin:0 0 0 23px; font-family:var(--font-2); font-size:11.6px; line-height:1.45; color:var(--grey); }
+.vela-prog-steps{ display:flex; align-items:center; gap:0; margin-top:16px; padding:0 8px; }
+.vp-node{ position:relative; z-index:2; width:34px; height:34px; flex:none; border-radius:50%; background:#e3f5ef; border:1px solid transparent; box-shadow:0 0 0 5px rgba(15,159,128,.12); display:flex; align-items:center; justify-content:center; color:#0f9f80; }
+.vp-node svg{ width:16px; height:16px; stroke-width:2.4; }
+.vp-conn{ position:relative; z-index:1; flex:1; height:4px; margin:0 -2px; background:#e3e6f0; border-radius:999px; overflow:hidden; }
+.vp-conn .vp-fill{ display:block; height:100%; width:100%; border-radius:999px; background:linear-gradient(90deg,#0f9f80,#2fe0b4); }
+
 @media (max-width:1279px){ .main{ margin-right:0; } }
 @media (max-width:767px){ .main{ margin-left:0; padding:28px 22px 80px; } .grid{ grid-template-columns:1fr; } }
 </style>
-<script src="../../components/chekin-navbar.js?v=warning-badges" defer></script>
+<script src="../../components/chekin-navbar.js?v=nav-flow2" defer></script>
 <script src="../../components/chekin-vela.js?v=vela-components-17" defer></script>
 </head>
 <body>
@@ -406,6 +423,20 @@ document.querySelectorAll('[data-select]').forEach(function(wrap){
       clearOpenSel();
     });
   });
+  // type-to-search for longer option lists
+  var _rows = Array.prototype.slice.call(sel.querySelectorAll('.opt-row'));
+  if(_rows.length > 4){
+    var menu = sel.querySelector('.menu');
+    var search = document.createElement('input');
+    search.type='text'; search.className='sel-search'; search.placeholder='Search…'; search.setAttribute('autocomplete','off');
+    menu.insertBefore(search, menu.firstChild);
+    search.addEventListener('click', function(e){ e.stopPropagation(); });
+    search.addEventListener('input', function(){
+      var q=search.value.trim().toLowerCase();
+      _rows.forEach(function(r){ r.style.display = (!q || r.textContent.toLowerCase().indexOf(q)>=0) ? '' : 'none'; });
+    });
+    control.addEventListener('click', function(){ requestAnimationFrame(function(){ if(sel.classList.contains('open')){ search.value=''; _rows.forEach(function(r){ r.style.display=''; }); search.focus(); } }); });
+  }
 });
 document.addEventListener('click', clearOpenSel);
 /* ---- checkboxes ---- */
@@ -452,6 +483,28 @@ if(doneModal){
   doneModal.addEventListener('click', function(e){ if(e.target === doneModal) closeDone(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !doneModal.hidden) closeDone(); });
 }
+
+/* ---- inject "Where you are in your registration" progress at the top of the Vela panel (all done) ---- */
+(function(){
+  var CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m5 12 5 5L20 7"/></svg>';
+  var SHIELD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
+  function inject(){
+    var el=document.querySelector('chekin-vela'); if(!el) return false;
+    var scroll=el.querySelector('.vela-scroll'); if(!scroll) return false;
+    if(scroll.querySelector('.vela-prog')) return true;
+    var node='<span class="vp-node">'+CHECK+'</span>';
+    var conn='<span class="vp-conn"><span class="vp-fill"></span></span>';
+    var steps=node+conn+node+conn+node+conn+node;   // front · back · selfie · form, all complete
+    var html='<div class="vela-prog"><div class="eye">Your verification</div>'+
+      '<div class="vp-title">'+SHIELD+'Where you are in your registration.</div>'+
+      '<p class="vp-sub">Identity verified — your details are ready to review.</p>'+
+      '<div class="vela-prog-steps">'+steps+'</div></div>';
+    scroll.insertAdjacentHTML('afterbegin', html);
+    return true;
+  }
+  var t=setInterval(function(){ if(inject()) clearInterval(t); }, 120);
+  setTimeout(function(){ clearInterval(t); }, 6000);
+})();
 </script>
 </body>
 </html>

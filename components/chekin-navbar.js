@@ -129,8 +129,14 @@
     var userMail = this.getAttribute('user-email') || 'carmen@email.com';
     var initials = userName.trim().split(/\s+/).map(function (w) { return w[0]; }).slice(0, 2).join('').toUpperCase();
 
+    // Flow 2 uses a trimmed navbar (only Home + Registration).
+    var flow2 = /[?&]flow=2/.test(location.search);
+    var groups = flow2
+      ? GROUPS.map(function (g) { return { label: g.label, items: g.items.filter(function (it) { return ['home', 'registration'].indexOf(it.key) >= 0; }) }; }).filter(function (g) { return g.items.length; })
+      : GROUPS;
+
     var menu = '';
-    GROUPS.forEach(function (g) {
+    groups.forEach(function (g) {
       var items = g.items.map(function (it) { return navItem(it, active); }).join('');
       if (g.label) {
         menu += '<div class="nav-group"><div class="nav-label">' + esc(g.label) + '</div>' + items + '</div>';
