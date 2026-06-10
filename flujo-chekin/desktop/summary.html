@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guests · Casa del Mar — Desktop</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="shell-desktop.css">
+<style>
+  .gsec .ghead{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .gsec .ghead .ic{width:28px;height:28px;border-radius:8px;background:var(--field);color:var(--ink2);display:grid;place-items:center}
+  .gsec .ghead .ic svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .gsec .ghead .t{font:700 12px var(--font-primary);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
+  .guest-row{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff;position:relative;overflow:hidden;width:100%;text-align:left;cursor:default}
+  .guest-row.todo{cursor:pointer}
+  .guest-row .rail3{position:absolute;left:0;top:0;bottom:0;width:3px}
+  .guest-row.ok .rail3{background:var(--success)}
+  .guest-row.todo .rail3{background:#F7B955}
+  .guest-row .avi{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font:700 14px var(--font-primary);flex-shrink:0}
+  .guest-row.ok .avi{background:var(--success-bg);color:var(--success)}
+  .guest-row.todo .avi{background:var(--warn-bg);color:var(--warn)}
+  .guest-row .nm{font:700 15px var(--font-primary)}
+  .guest-row .ds{font:500 12px var(--font-primary);color:var(--ink2);margin-top:3px}
+  .guest-row .chev{margin-left:auto;width:18px;height:18px;stroke:var(--ink3);fill:none;stroke-width:2.2;flex-shrink:0}
+  .add-row{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:12px;border:1.5px dashed var(--line);background:#fff;cursor:pointer;font:600 14px var(--font-primary);color:var(--blue)}
+  .add-row:hover{background:var(--blue-chip);border-color:rgba(56,92,248,.4)}
+  .add-row svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+  .stack{display:flex;flex-direction:column;gap:10px}
+</style>
+</head>
+<body>
+<div class="dapp">
+
+  <aside class="side">
+    <div class="prop"><div class="av"><svg viewBox="0 0 24 24"><path d="M3 9 12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div><div><div class="name">Casa del Mar</div><div class="ref">8059.191.347</div></div></div>
+    <nav>
+      <div class="n-item" data-home><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Home</div>
+      <div class="sgroup">Before your stay</div>
+      <div class="n-item active"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Registration<span class="badge">2 left</span></div>
+      <div class="n-item"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg>Payments<span class="badge">€340</span></div>
+      <div class="sgroup">Your stay</div>
+      <div class="n-item"><svg viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="3.5"/><path d="m10 13 10-10M16 7l3 3"/></svg>Virtual keys</div>
+      <div class="n-item"><svg viewBox="0 0 24 24"><path d="M4 4h10a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 8h6M8 12h6"/></svg>Guidebooks</div>
+      <div class="n-item"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3L22 9.3l-5 4.8 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.8 6.9-1z"/></svg>Recommendations</div>
+    </nav>
+    <div class="me"><div class="av">CS</div><div><div class="n">Carmen Specimen</div><div class="e">carmen@email.com</div></div></div>
+  </aside>
+
+  <main class="main narrow">
+    <div class="head">
+      <div>
+        <div class="kicker">Guest Summary</div>
+        <h1>Guests for this booking</h1>
+        <div class="sub">Manage who is staying at Casa del Mar and make sure every guest is ready before arrival.</div>
+      </div>
+      <button class="ask" id="askVela"><span class="sp"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/></svg></span>Ask Vela</button>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px">
+        <div style="font:700 14px var(--font-primary)">Your progress</div>
+        <span style="font:600 13px var(--font-primary);color:var(--ink2);font-variant-numeric:tabular-nums">1 / 6 guests registered</span>
+      </div>
+      <div class="bar"><i style="width:16.6%"></i></div>
+      <div style="font:500 12.5px/1.5 var(--font-primary);color:var(--ink2);margin-top:8px">Finish the pending registrations so your guests can check in without waiting.</div>
+    </div>
+
+    <div class="gsec">
+      <div class="ghead"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div class="t">Responsible for booking</div></div>
+      <div class="guest-row ok"><div class="rail3"></div><div class="avi">DC</div><div><div class="nm">Daniel Clemares Faerna</div><div class="ds"><span class="chip ok"><span class="dot"></span>Complete</span></div></div></div>
+    </div>
+
+    <div class="gsec">
+      <div class="ghead"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20a6 6 0 0 1 12 0M15 20a5 5 0 0 1 6-4.5"/></svg></div><div class="t">Other guests</div></div>
+      <div class="stack">
+        <button class="guest-row todo add-trigger"><div class="rail3"></div><div class="avi">MG</div><div><div class="nm">Marta Garcia Lopez</div><div class="ds"><span class="chip todo"><span class="dot"></span>Incomplete</span> · Finish registration</div></div><svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+        <button class="add-row add-trigger"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add guest</button>
+      </div>
+    </div>
+
+    <div class="gsec">
+      <div class="ghead"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3"/><path d="M6 20a6 6 0 0 1 12 0"/></svg></div><div class="t">Minors · under 18</div></div>
+      <button class="add-row add-trigger"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add guest</button>
+    </div>
+
+    <div class="vela-hint">
+      <div class="av"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/><path d="M18.5 14l.75 2.25 2.25.75-2.25.75-.75 2.25-.75-2.25-2.25-.75 2.25-.75z"/></svg></div>
+      <div class="tx"><b>Minors have a lighter flow.</b> They only fill the guest form — identity verification isn't required.</div>
+    </div>
+  </main>
+
+  <aside class="rail">
+    <div class="rcard">
+      <div class="hd"><span class="t">Booking</span></div>
+      <dl>
+        <div class="row"><dt>Property</dt><dd>Casa del Mar</dd></div>
+        <div class="row"><dt>Guests</dt><dd>1 / 6 registered</dd></div>
+        <div class="row"><dt>Check-in</dt><dd>Jun · 15:00</dd></div>
+      </dl>
+    </div>
+    <div class="rcard">
+      <div class="body">
+        <div class="t">Quick actions</div>
+        <p>Invite guests or share the booking link so they register themselves.</p>
+        <button class="btn btn-primary btn-block add-trigger">Add guest</button>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  function toV2(){ try{ window.parent.postMessage('flow:to-v2','*'); }catch(e){} }
+  document.querySelectorAll('.add-trigger').forEach(function(b){ b.addEventListener('click', toV2); });
+  document.querySelectorAll('[data-home]').forEach(function(b){ b.addEventListener('click', function(){ try{ window.parent.postMessage('flow:restart','*'); }catch(e){} }); });
+  var av=document.getElementById('askVela'); if(av) av.addEventListener('click', function(){ alert('Vela — coming soon ✨'); });
+</script>
+</body>
+</html>

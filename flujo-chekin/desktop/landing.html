@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check in · Casa del Mar — Desktop</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../shell.css">
+<link rel="stylesheet" href="shell-desktop.css">
+<style>
+  /* boxed check-in journey (same component as mobile, desktop sizes) */
+  .checklist{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;padding:0}
+  .ptop{display:flex;align-items:center;gap:16px;padding:18px 20px 16px;border-bottom:1px solid var(--line)}
+  .ring{position:relative;width:60px;height:60px;flex-shrink:0}
+  .ring svg{transform:rotate(-90deg);width:60px;height:60px}
+  .ring .tr{stroke:var(--line-soft);fill:none;stroke-width:7}
+  .ring .fl{stroke:url(#jg);fill:none;stroke-width:7;stroke-linecap:round;stroke-dasharray:163.36;stroke-dashoffset:163.36;transition:stroke-dashoffset 1.1s cubic-bezier(.3,.9,.3,1)}
+  .ring .ctr{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 15px var(--font-primary);color:var(--blue);font-variant-numeric:tabular-nums}
+  .ptop .pt{flex:1;min-width:0}
+  .ptop .pt .t{font:700 15px var(--font-primary)}
+  .ptop .pt .d{font:500 12.5px var(--font-primary);color:var(--ink2);margin-top:2px}
+  .ptop .eta{font:600 12px var(--font-primary);color:var(--warn);background:var(--warn-bg);padding:5px 11px;border-radius:999px;white-space:nowrap}
+  .cl-list{position:relative}
+  .cl-list::before{content:"";position:absolute;left:40px;top:30px;bottom:30px;width:2px;background:var(--line);z-index:0}
+  .cl-row{position:relative;z-index:1;display:flex;align-items:center;gap:16px;padding:15px 20px;border:none;border-top:1px solid var(--line);background:none;cursor:pointer;width:100%;text-align:left;transition:background .12s}
+  .cl-row:first-child{border-top:none}
+  .cl-row:hover{background:#FBFBFE}
+  .cl-row .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;border:3px solid #fff}
+  .cl-row .ic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .cl-row.done .ic{background:var(--success-bg);color:var(--success)}
+  .cl-row.pending .ic{background:var(--blue);color:#fff}
+  .cl-row.todo .ic{background:var(--field);color:var(--ink2)}
+  .cl-row .lt{flex:1;min-width:0}
+  .cl-row .lt .t{font:700 15px/20px var(--font-primary)}
+  .cl-row .lt .d{font:400 13px/18px var(--font-primary);color:var(--ink2);margin-top:2px}
+  .cl-row .st{font:600 11px var(--font-primary);padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+  .cl-row.done .st{background:var(--success-bg);color:var(--success)}
+  .cl-row.pending .st{background:var(--blue-chip);color:var(--blue)}
+  .cl-row.todo .st{background:var(--field);color:var(--ink2)}
+  .cl-row .chev{width:20px;height:20px;stroke:var(--ink3);fill:none;stroke-width:2;flex-shrink:0}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="jg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#385CF8"/><stop offset="1" stop-color="#6B8CFF"/></linearGradient>
+</defs></svg>
+
+<div class="dapp">
+
+  <!-- Sidebar -->
+  <aside class="side">
+    <div class="prop">
+      <div class="av"><svg viewBox="0 0 24 24"><path d="M3 9 12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+      <div><div class="name">Casa del Mar</div><div class="ref">8059.191.347</div></div>
+    </div>
+    <nav>
+      <div class="n-item active"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Home</div>
+      <div class="sgroup">Before your stay</div>
+      <div class="n-item" data-start><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Registration<span class="badge">2 left</span></div>
+      <div class="n-item"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg>Payments<span class="badge">€340</span></div>
+      <div class="sgroup">Your stay</div>
+      <div class="n-item"><svg viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="3.5"/><path d="m10 13 10-10M16 7l3 3"/></svg>Virtual keys</div>
+      <div class="n-item"><svg viewBox="0 0 24 24"><path d="M4 4h10a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 8h6M8 12h6"/></svg>Guidebooks</div>
+      <div class="n-item"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3L22 9.3l-5 4.8 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.8 6.9-1z"/></svg>Recommendations</div>
+      <div class="sgroup">Check-out</div>
+      <div class="n-item"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Check-out instructions</div>
+    </nav>
+    <div class="me"><div class="av">CS</div><div><div class="n">Carmen Specimen</div><div class="e">carmen@email.com</div></div></div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="head">
+      <div>
+        <div class="kicker">Welcome back</div>
+        <h1>Welcome, Carmen 👋</h1>
+        <div class="sub">Finish your check-in and make the most of your stay in Seville.</div>
+      </div>
+      <button class="ask" id="askVela"><span class="sp"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/></svg></span>Ask Vela</button>
+    </div>
+
+    <!-- check-in strip -->
+    <div class="strip">
+      <div class="strip-top">
+        <span class="pin"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Seville, Spain · 4 min from the centre</span>
+        <span class="live"><span class="dot"></span>Arrival in 5 days</span>
+      </div>
+      <div class="strip-grid">
+        <div class="slot"><div class="l">Check-in</div><div class="h">15:00</div><div class="d">Jun 2026</div></div>
+        <div class="mid"><div class="nights">2 NIGHTS</div><div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div></div>
+        <div class="slot right"><div class="l">Check-out</div><div class="h">11:00</div><div class="d">Jun 2026</div></div>
+      </div>
+    </div>
+
+    <!-- Vela nudge -->
+    <div class="nudge">
+      <div class="av"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/><path d="M18.5 14l.75 2.25 2.25.75-2.25.75-.75 2.25-.75-2.25-2.25-.75 2.25-.75z"/></svg></div>
+      <div class="b">
+        <div class="l">Suggested by Vela</div>
+        <div class="t">Finish ID verification now and unlock your digital keys.</div>
+        <div class="d">Verifying ahead of arrival means you walk straight in — no waiting at the property.</div>
+        <div class="actions">
+          <button class="btn btn-primary" data-start>Start verification <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+          <button class="btn btn-ghost" id="askVela2">Ask Vela</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- checklist -->
+    <section>
+      <div class="sec-head"><h2>Complete your check-in</h2><div class="meta"><b>1</b> of 4 done</div></div>
+      <div class="checklist">
+        <div class="ptop">
+          <div class="ring"><svg viewBox="0 0 60 60"><circle class="tr" cx="30" cy="30" r="26"/><circle class="fl" id="ringFill" cx="30" cy="30" r="26"/></svg><div class="ctr" id="ringPct">0%</div></div>
+          <div class="pt"><div class="t">You're 25% checked in</div><div class="d">3 steps left · about 6 minutes</div></div>
+          <span class="eta">Due before arrival</span>
+        </div>
+        <div class="cl-list">
+          <button class="cl-row done"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></div><div class="lt"><div class="t">Guest details</div><div class="d">All guests added and verified.</div></div><span class="st">Completed</span><svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+          <button class="cl-row pending" data-start><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></svg></div><div class="lt"><div class="t">ID verification</div><div class="d">Scan your document with NFC — ~90 seconds.</div></div><span class="st">Next up</span><svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+          <button class="cl-row todo"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></div><div class="lt"><div class="t">Security deposit</div><div class="d">€200 pre-authorisation — released on check-out.</div></div><span class="st">Not started</span><svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+          <button class="cl-row todo"><div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></div><div class="lt"><div class="t">Balance payment</div><div class="d">€340 due — unlocks your digital keys.</div></div><span class="st">Not started</span><svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- your stay -->
+    <section>
+      <div class="sec-head"><h2>Your stay</h2></div>
+      <div class="stay">
+        <div class="scard"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="3.5"/><path d="m10 13 10-10M16 7l3 3"/></svg></div><div class="t">Virtual keys</div><div class="d">Unlock once check-in is complete.</div><button class="btn btn-dark btn-sm">View</button></div>
+        <div class="scard"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h10a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 8h6M8 12h6"/></svg></div><div class="t">Guidebooks</div><div class="d">Wi-Fi, appliances & house rules.</div><button class="btn btn-dark btn-sm">Browse</button></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Right rail -->
+  <aside class="rail">
+    <div class="rcard">
+      <div class="hd"><span class="t">Your reservation</span><span class="chip ok"><span class="dot"></span>Confirmed</span></div>
+      <dl>
+        <div class="row"><dt>Property</dt><dd>Casa del Mar</dd></div>
+        <div class="row"><dt>Booking ref</dt><dd>8059.191.347</dd></div>
+        <div class="row"><dt>Guests</dt><dd>1 / 6 registered</dd></div>
+        <div class="row"><dt>Check-in</dt><dd>Jun · 15:00</dd></div>
+        <div class="row"><dt>Check-out</dt><dd>Jun · 11:00</dd></div>
+      </dl>
+    </div>
+    <div class="rcard">
+      <div class="body">
+        <div class="t">Need a hand?</div>
+        <p>Vela can help you verify ID, finish forms and plan your trip — 24/7.</p>
+        <button class="btn btn-primary btn-block" id="askVela3">Ask Vela</button>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  function toSummary(){ try{ window.parent.postMessage('flow:to-summary','*'); }catch(e){} }
+  document.querySelectorAll('[data-start]').forEach(function(b){ b.addEventListener('click', toSummary); });
+  ['askVela','askVela2','askVela3'].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener('click', function(){ alert('Vela — coming soon ✨'); }); });
+
+  // progress ring 25%
+  (function(){
+    var TARGET=25,C=163.36,fill=document.getElementById('ringFill'),pct=document.getElementById('ringPct');
+    setTimeout(function(){ fill.style.strokeDashoffset=(C*(1-TARGET/100)).toFixed(2); },120);
+    var t0=Date.now(),DUR=1100,iv=setInterval(function(){ var v=Math.min(TARGET,Math.round((Date.now()-t0)/DUR*TARGET)); pct.textContent=v+'%'; if(v>=TARGET) clearInterval(iv); },40);
+  })();
+</script>
+</body>
+</html>

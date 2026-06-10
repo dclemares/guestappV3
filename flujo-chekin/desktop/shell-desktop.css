@@ -1,0 +1,126 @@
+/* ============================================================
+   Chekin Guest-App — DESKTOP shell (Carlos's Journey layout)
+   3-column grid: navy sidebar · main · right rail.
+   Loaded AFTER ../shell.css — reuses its flat components
+   (.btn, .field, .input, .dd, .checklist, .frame, .agree, .sig,
+    .modal, .chip, .vela-hint) and overrides layout/containers.
+   Kept flat: NO shadows, hairline borders, rectangular buttons.
+   ============================================================ */
+
+html,body{height:auto;background:var(--screen)}
+
+/* buttons auto-width on desktop (mobile shell makes them full-width) */
+.btn{width:auto}
+.btn-block{width:100%}
+
+/* ───── 3-column layout ───── */
+.dapp{display:grid;grid-template-columns:260px 1fr 320px;min-height:100vh;background:var(--screen)}
+
+/* ───── Sidebar ───── */
+.side{background:var(--ink);color:#fff;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.side .prop{display:flex;align-items:center;gap:12px;padding:18px;border-bottom:1px solid rgba(255,255,255,.07)}
+.side .prop .av{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,rgba(56,92,248,.55),rgba(140,165,255,.35));display:grid;place-items:center;flex-shrink:0}
+.side .prop .av svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.7}
+.side .prop .name{font:700 15px/20px var(--font-primary)}
+.side .prop .ref{font:500 11px var(--font-primary);color:rgba(255,255,255,.5);margin-top:2px;font-variant-numeric:tabular-nums}
+.side nav{padding:12px 10px;flex:1;display:flex;flex-direction:column;gap:3px}
+.side .sgroup{font:700 10.5px var(--font-primary);color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;padding:14px 12px 6px}
+.side .n-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:9px;cursor:pointer;font:500 14px/20px var(--font-primary);color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:background .14s,color .14s}
+.side .n-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;flex-shrink:0}
+.side .n-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.side .n-item.active{background:linear-gradient(135deg,rgba(56,92,248,.4),rgba(56,92,248,.18));color:#fff}
+.side .n-item .badge{margin-left:auto;font:700 10.5px var(--font-primary);padding:2px 8px;border-radius:999px;background:rgba(140,165,255,.2);color:#C4D2FF}
+.side .n-item .badge.new{background:rgba(107,224,168,.22);color:#7BE3B0}
+.side .n-item .check{margin-left:auto;width:16px;height:16px;border-radius:50%;background:var(--success);display:grid;place-items:center;flex-shrink:0}
+.side .n-item .check svg{width:9px;height:9px;stroke:#fff;stroke-width:3}
+.side .me{margin-top:auto;padding:14px 16px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px}
+.side .me .av{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;display:grid;place-items:center;font:700 11px var(--font-primary)}
+.side .me .n{font:600 13px/16px var(--font-primary)}
+.side .me .e{font:500 11px var(--font-primary);color:rgba(255,255,255,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+
+/* ───── Main ───── */
+.main{padding:28px 36px 64px;display:flex;flex-direction:column;gap:22px;min-width:0}
+.main.narrow{max-width:760px;width:100%;margin:0 auto}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.head h1{font:700 27px/32px var(--font-primary);margin:0;letter-spacing:-.015em;color:var(--ink)}
+.head .sub{font:500 13.5px var(--font-primary);color:var(--ink2);margin-top:6px}
+.head .kicker{margin-bottom:4px}
+
+/* Ask Vela trigger */
+.ask{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);font:600 13.5px var(--font-primary);cursor:pointer;white-space:nowrap}
+.ask:hover{background:var(--blue-chip);border-color:rgba(56,92,248,.4)}
+.ask .sp{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#385CF8,#8CA5FF);display:grid;place-items:center;flex-shrink:0}
+.ask .sp svg{width:12px;height:12px;fill:#fff;stroke:none}
+
+/* Check-in strip (dates) — flat */
+.strip{position:relative;overflow:hidden;background:linear-gradient(135deg,#15153F 0%,#23235D 44%,#2E46C8 100%);color:#fff;border-radius:20px;padding:24px 28px}
+.strip::before{content:"";position:absolute;top:-80px;right:-40px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(107,224,168,.2),transparent 62%);pointer-events:none}
+.strip-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.strip-top .pin{display:inline-flex;align-items:center;gap:8px;font:600 12px var(--font-primary);color:#C9D0FF}
+.strip-top .pin svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.strip-top .live{display:inline-flex;align-items:center;gap:7px;font:600 11px var(--font-primary);color:#fff;background:rgba(255,255,255,.12);padding:5px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.14)}
+.strip-top .live .dot{width:6px;height:6px;border-radius:50%;background:#5EE6BE}
+.strip-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center}
+.strip .slot .l{font:700 11px var(--font-primary);color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.strip .slot .h{font:600 32px/34px var(--font-primary);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.strip .slot .d{font:500 12px var(--font-primary);color:rgba(255,255,255,.72);margin-top:5px;text-transform:uppercase;letter-spacing:.06em}
+.strip .slot.right{text-align:right}
+.strip .mid{display:flex;flex-direction:column;align-items:center;gap:7px}
+.strip .mid .nights{font:700 11px var(--font-primary);color:#C9D0FF}
+.strip .arrow{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;border:1px solid rgba(255,255,255,.16)}
+.strip .arrow svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2}
+
+/* Vela nudge — flat */
+.nudge{display:flex;gap:14px;padding:18px 20px;background:linear-gradient(135deg,#F0F3FF,#EFF6FF);border:1px solid #DCE3FF;border-radius:14px}
+.nudge .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#385CF8,#8CA5FF);color:#fff;display:grid;place-items:center;flex-shrink:0}
+.nudge .av svg{width:18px;height:18px;fill:#fff;stroke:none}
+.nudge .b{flex:1;min-width:0}
+.nudge .l{font:700 10.5px var(--font-primary);color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.nudge .t{font:700 14.5px/20px var(--font-primary)}
+.nudge .d{font:500 13px/19px var(--font-primary);color:var(--ink2);margin-top:4px}
+.nudge .actions{display:flex;gap:8px;margin-top:12px}
+
+/* section heading inside main */
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.sec-head h2{font:700 17px/22px var(--font-primary);margin:0;letter-spacing:-.005em;color:var(--ink)}
+.sec-head .meta{font:600 13px var(--font-primary);color:var(--ink2)}
+.sec-head .meta b{color:var(--blue)}
+
+/* stay grid */
+.stay{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stay .scard{padding:22px 20px;text-align:center;border:1px solid var(--line);border-radius:14px;background:#fff}
+.stay .scard .ic{width:50px;height:50px;border-radius:50%;background:var(--blue-chip);color:var(--blue);display:grid;place-items:center;margin:0 auto 10px}
+.stay .scard .ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
+.stay .scard .t{font:700 16px var(--font-primary)}
+.stay .scard .d{font:400 13px/18px var(--font-primary);color:var(--ink2);margin:4px 0 14px}
+
+/* ───── Right rail ───── */
+.rail{padding:28px 22px 56px;display:flex;flex-direction:column;gap:16px;border-left:1px solid var(--line);background:#fff}
+.rail .rcard{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.rail .rcard .hd{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px 12px;border-bottom:1px solid var(--line)}
+.rail .rcard .hd .t{font:700 14px var(--font-primary)}
+.rail dl{margin:0;padding:12px 16px 16px;display:grid;gap:10px}
+.rail .row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.rail dt{font:500 12.5px var(--font-primary);color:var(--ink2);margin:0}
+.rail dd{margin:0;font:600 12.5px var(--font-primary);font-variant-numeric:tabular-nums}
+.rail .rcard .body{padding:14px 16px 16px}
+.rail .rcard .body .t{font:700 13.5px var(--font-primary)}
+.rail .rcard .body p{margin:6px 0 12px;font:400 12.5px/17px var(--font-primary);color:var(--ink2)}
+
+/* desktop overrides for reused checklist (slightly larger) */
+.checklist .cl-row .lt .t{font-size:15px}
+.checklist .cl-list::before{left:36px}
+.checklist .cl-row .ic{width:40px;height:40px}
+
+/* responsive collapse */
+@media (max-width:1180px){
+  .dapp{grid-template-columns:240px 1fr}
+  .rail{grid-column:1/-1;border-left:none;border-top:1px solid var(--line)}
+}
+@media (max-width:820px){
+  .dapp{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center}
+  .side nav{display:none}
+  .side .me{margin:0 0 0 auto;border:none}
+  .main{padding:22px 20px 56px}
+}
